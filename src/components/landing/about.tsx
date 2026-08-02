@@ -61,27 +61,27 @@ export function About() {
     <section id="historia" className="relative py-16" style={{ background: 'linear-gradient(to bottom, #ffffff, #f9fafb)' }}>
       <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
-          {/* Layout 2 Colunas: 50% Foto + 50% Conteúdo */}
-          <div className="mb-16 grid items-start gap-12 lg:grid-cols-2">
+          {/* Layout 2 Colunas: 50% Foto + 50% Conteúdo - Mesma Altura */}
+          <div className="mb-16 grid items-stretch gap-12 lg:grid-cols-2">
             {/* Foto Esquerda - 50% */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative"
+              className="relative h-full"
             >
-              <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+              <div className="relative h-full overflow-hidden rounded-2xl shadow-2xl">
                 <img 
                   src={sobreImg} 
                   alt="Padre Kelmon"
-                  className="w-full h-auto object-cover"
+                  className="h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 ring-2 ring-inset ring-white/10 rounded-2xl" />
               </div>
             </motion.div>
 
-            {/* Conteúdo Direita: Título + Texto + Citação */}
-            <div className="flex flex-col">
+            {/* Conteúdo Direita: Título + Texto + Citação - 50% */}
+            <div className="flex flex-col justify-between h-full">
               {/* Título */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
