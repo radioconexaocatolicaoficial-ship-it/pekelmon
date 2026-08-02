@@ -30,6 +30,32 @@ const FacebookIcon = () => (
 export function Media() {
 
   // Redes Sociais - URLs reais dos posts
+  // INSTRUÇÕES: Substitua os códigos pelos IDs reais dos posts
+  // 
+  // INSTAGRAM: 
+  // 1. Acesse https://www.instagram.com/pekelmon/
+  // 2. Abra os 4 últimos posts
+  // 3. Copie o código da URL (ex: /p/ABC123/)
+  // 4. Substitua CODIGO_POST_X pelo código real
+  //
+  // YOUTUBE:
+  // 1. Acesse https://www.youtube.com/@PadreKelmonBr/videos
+  // 2. Abra os 4 últimos vídeos
+  // 3. Copie o ID do vídeo (ex: ?v=XYZ789)
+  // 4. Substitua VIDEO_ID_X pelo ID real
+  //
+  // TIKTOK:
+  // 1. Acesse https://www.tiktok.com/@pekelmon
+  // 2. Abra os 4 últimos vídeos
+  // 3. Copie o ID do vídeo da URL
+  // 4. Substitua VIDEO_ID_X pelo ID real
+  //
+  // FACEBOOK:
+  // 1. Acesse https://www.facebook.com/PadreKelmon
+  // 2. Abra os 4 últimos posts
+  // 3. Copie o ID do post da URL
+  // 4. Substitua POST_ID_X pelo ID real
+  
   const socialMedia = [
     {
       name: "Instagram",
