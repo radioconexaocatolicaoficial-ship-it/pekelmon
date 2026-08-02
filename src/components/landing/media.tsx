@@ -1,19 +1,10 @@
 import { Instagram, Youtube, Music, Facebook, ExternalLink } from "lucide-react";
 
 import { Reveal, SectionHeading } from "./primitives";
-import gallery1 from "@/assets/gallery-1.jpg";
-import gallery2 from "@/assets/gallery-2.jpg";
-import gallery3 from "@/assets/gallery-3.jpg";
-import gallery4 from "@/assets/gallery-4.jpg";
-import gallery5 from "@/assets/gallery-5.jpg";
-import heroPortrait from "@/assets/hero-portrait.png";
 
 export function Media() {
 
-  // Imagens temporárias para forçar visualização
-  const tempImages = [gallery1, gallery2, gallery3, gallery4];
-
-  // Redes Sociais com 4 posts placeholder cada
+  // Redes Sociais - URLs reais dos posts
   const socialMedia = [
     {
       name: "Instagram",
@@ -22,10 +13,10 @@ export function Media() {
       icon: Instagram,
       color: "#E4405F",
       posts: [
-        { id: 1, title: "Post Instagram 1", description: "Último post do Instagram @pekelmon", image: tempImages[0] },
-        { id: 2, title: "Post Instagram 2", description: "Penúltimo post do Instagram @pekelmon", image: tempImages[1] },
-        { id: 3, title: "Post Instagram 3", description: "Antepenúltimo post do Instagram @pekelmon", image: tempImages[2] },
-        { id: 4, title: "Post Instagram 4", description: "4º último post do Instagram @pekelmon", image: tempImages[3] },
+        { id: 1, postUrl: "https://www.instagram.com/p/CODIGO_POST_1/", embedUrl: "https://www.instagram.com/p/CODIGO_POST_1/embed" },
+        { id: 2, postUrl: "https://www.instagram.com/p/CODIGO_POST_2/", embedUrl: "https://www.instagram.com/p/CODIGO_POST_2/embed" },
+        { id: 3, postUrl: "https://www.instagram.com/p/CODIGO_POST_3/", embedUrl: "https://www.instagram.com/p/CODIGO_POST_3/embed" },
+        { id: 4, postUrl: "https://www.instagram.com/p/CODIGO_POST_4/", embedUrl: "https://www.instagram.com/p/CODIGO_POST_4/embed" },
       ]
     },
     {
@@ -35,10 +26,10 @@ export function Media() {
       icon: Youtube,
       color: "#FF0000",
       posts: [
-        { id: 1, title: "Vídeo YouTube 1", description: "Último vídeo do YouTube @PadreKelmonBr", image: gallery5 },
-        { id: 2, title: "Vídeo YouTube 2", description: "Penúltimo vídeo do YouTube @PadreKelmonBr", image: heroPortrait },
-        { id: 3, title: "Vídeo YouTube 3", description: "Antepenúltimo vídeo do YouTube @PadreKelmonBr", image: tempImages[0] },
-        { id: 4, title: "Vídeo YouTube 4", description: "4º último vídeo do YouTube @PadreKelmonBr", image: tempImages[1] },
+        { id: 1, postUrl: "https://www.youtube.com/watch?v=VIDEO_ID_1", embedUrl: "https://www.youtube.com/embed/VIDEO_ID_1" },
+        { id: 2, postUrl: "https://www.youtube.com/watch?v=VIDEO_ID_2", embedUrl: "https://www.youtube.com/embed/VIDEO_ID_2" },
+        { id: 3, postUrl: "https://www.youtube.com/watch?v=VIDEO_ID_3", embedUrl: "https://www.youtube.com/embed/VIDEO_ID_3" },
+        { id: 4, postUrl: "https://www.youtube.com/watch?v=VIDEO_ID_4", embedUrl: "https://www.youtube.com/embed/VIDEO_ID_4" },
       ]
     },
     {
@@ -48,10 +39,10 @@ export function Media() {
       icon: Music,
       color: "#000000",
       posts: [
-        { id: 1, title: "Vídeo TikTok 1", description: "Último vídeo do TikTok @pekelmon", image: tempImages[2] },
-        { id: 2, title: "Vídeo TikTok 2", description: "Penúltimo vídeo do TikTok @pekelmon", image: tempImages[3] },
-        { id: 3, title: "Vídeo TikTok 3", description: "Antepenúltimo vídeo do TikTok @pekelmon", image: gallery5 },
-        { id: 4, title: "Vídeo TikTok 4", description: "4º último vídeo do TikTok @pekelmon", image: heroPortrait },
+        { id: 1, postUrl: "https://www.tiktok.com/@pekelmon/video/VIDEO_ID_1", embedUrl: "https://www.tiktok.com/embed/VIDEO_ID_1" },
+        { id: 2, postUrl: "https://www.tiktok.com/@pekelmon/video/VIDEO_ID_2", embedUrl: "https://www.tiktok.com/embed/VIDEO_ID_2" },
+        { id: 3, postUrl: "https://www.tiktok.com/@pekelmon/video/VIDEO_ID_3", embedUrl: "https://www.tiktok.com/embed/VIDEO_ID_3" },
+        { id: 4, postUrl: "https://www.tiktok.com/@pekelmon/video/VIDEO_ID_4", embedUrl: "https://www.tiktok.com/embed/VIDEO_ID_4" },
       ]
     },
     {
@@ -61,10 +52,10 @@ export function Media() {
       icon: Facebook,
       color: "#1877F2",
       posts: [
-        { id: 1, title: "Post Facebook 1", description: "Último post do Facebook PadreKelmon", image: tempImages[0] },
-        { id: 2, title: "Post Facebook 2", description: "Penúltimo post do Facebook PadreKelmon", image: tempImages[1] },
-        { id: 3, title: "Post Facebook 3", description: "Antepenúltimo post do Facebook PadreKelmon", image: tempImages[2] },
-        { id: 4, title: "Post Facebook 4", description: "4º último post do Facebook PadreKelmon", image: tempImages[3] },
+        { id: 1, postUrl: "https://www.facebook.com/PadreKelmon/posts/POST_ID_1", embedUrl: "" },
+        { id: 2, postUrl: "https://www.facebook.com/PadreKelmon/posts/POST_ID_2", embedUrl: "" },
+        { id: 3, postUrl: "https://www.facebook.com/PadreKelmon/posts/POST_ID_3", embedUrl: "" },
+        { id: 4, postUrl: "https://www.facebook.com/PadreKelmon/posts/POST_ID_4", embedUrl: "" },
       ]
     },
   ];
@@ -117,18 +108,20 @@ export function Media() {
                     {social.posts.map((post, postIndex) => (
                       <Reveal key={`${social.name}-${post.id}`} delay={0.05 * postIndex}>
                         <a
-                          href={social.url}
+                          href={post.postUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="group relative block overflow-hidden rounded-xl border-2 border-gray-200 bg-white transition-all hover:-translate-y-1 hover:border-blue-500 hover:shadow-lg"
                         >
-                          {/* Imagem do Post */}
+                          {/* Iframe Embed ou Placeholder */}
                           <div className="relative aspect-square overflow-hidden bg-gray-100">
-                            {post.image ? (
-                              <img 
-                                src={post.image} 
-                                alt={post.title}
-                                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                            {post.embedUrl && !post.embedUrl.includes('CODIGO') && !post.embedUrl.includes('VIDEO_ID') && !post.embedUrl.includes('POST_ID') ? (
+                              <iframe
+                                src={post.embedUrl}
+                                className="h-full w-full"
+                                frameBorder="0"
+                                allowFullScreen
+                                title={`${social.name} Post ${post.id}`}
                               />
                             ) : (
                               <div 
@@ -136,27 +129,24 @@ export function Media() {
                                 style={{ background: 'linear-gradient(135deg, #f3f4f6, #e5e7eb)' }}
                               >
                                 <div className="text-center p-4">
-                                  <Icon className="mx-auto size-12 mb-2" style={{ color: social.color, opacity: 0.3 }} />
-                                  <div className="text-xs font-bold text-gray-500">
-                                    SEM IMAGEM
+                                  <Icon className="mx-auto size-16 mb-3" style={{ color: social.color, opacity: 0.4 }} />
+                                  <div className="text-xs font-bold text-gray-600 mb-2">
+                                    {social.name}
+                                  </div>
+                                  <div className="text-[10px] text-gray-500 leading-tight px-2">
+                                    Substituir CODIGO/VIDEO_ID/POST_ID pela URL real do post
                                   </div>
                                 </div>
                               </div>
                             )}
-                            {/* Badge do Número */}
-                            <div className="absolute top-2 right-2 flex size-7 items-center justify-center rounded-full font-bold text-white text-xs shadow-lg" style={{ backgroundColor: social.color }}>
-                              {post.id}
-                            </div>
                           </div>
 
                           {/* Info */}
                           <div className="p-3 bg-gray-50">
-                            <p className="text-xs text-gray-600 line-clamp-2 font-medium">
-                              {post.description}
-                            </p>
-                            <div className="mt-2 flex items-center gap-1 text-xs font-semibold" style={{ color: social.color }}>
-                              <ExternalLink className="size-3" />
-                              Acessar {social.name}
+                            <div className="flex items-center gap-2 text-xs font-semibold" style={{ color: social.color }}>
+                              <Icon className="size-4" />
+                              <span>Ver no {social.name}</span>
+                              <ExternalLink className="ml-auto size-3" />
                             </div>
                           </div>
 
