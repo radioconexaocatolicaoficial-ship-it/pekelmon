@@ -1,8 +1,17 @@
 import { Instagram, Youtube, Music, Facebook, ExternalLink } from "lucide-react";
 
 import { Reveal, SectionHeading } from "./primitives";
+import gallery1 from "@/assets/gallery-1.jpg";
+import gallery2 from "@/assets/gallery-2.jpg";
+import gallery3 from "@/assets/gallery-3.jpg";
+import gallery4 from "@/assets/gallery-4.jpg";
+import gallery5 from "@/assets/gallery-5.jpg";
+import heroPortrait from "@/assets/hero-portrait.jpg";
 
 export function Media() {
+
+  // Imagens temporárias para forçar visualização
+  const tempImages = [gallery1, gallery2, gallery3, gallery4];
 
   // Redes Sociais com 4 posts placeholder cada
   const socialMedia = [
@@ -13,10 +22,10 @@ export function Media() {
       icon: Instagram,
       color: "#E4405F",
       posts: [
-        { id: 1, title: "Post Instagram 1", description: "Substituir por imagem real do último post do Instagram @pekelmon", image: "" },
-        { id: 2, title: "Post Instagram 2", description: "Substituir por imagem real do penúltimo post do Instagram @pekelmon", image: "" },
-        { id: 3, title: "Post Instagram 3", description: "Substituir por imagem real do antepenúltimo post do Instagram @pekelmon", image: "" },
-        { id: 4, title: "Post Instagram 4", description: "Substituir por imagem real do 4º último post do Instagram @pekelmon", image: "" },
+        { id: 1, title: "Post Instagram 1", description: "Último post do Instagram @pekelmon", image: tempImages[0] },
+        { id: 2, title: "Post Instagram 2", description: "Penúltimo post do Instagram @pekelmon", image: tempImages[1] },
+        { id: 3, title: "Post Instagram 3", description: "Antepenúltimo post do Instagram @pekelmon", image: tempImages[2] },
+        { id: 4, title: "Post Instagram 4", description: "4º último post do Instagram @pekelmon", image: tempImages[3] },
       ]
     },
     {
@@ -26,10 +35,10 @@ export function Media() {
       icon: Youtube,
       color: "#FF0000",
       posts: [
-        { id: 1, title: "Vídeo YouTube 1", description: "Substituir por thumbnail do último vídeo do YouTube @PadreKelmonBr", image: "" },
-        { id: 2, title: "Vídeo YouTube 2", description: "Substituir por thumbnail do penúltimo vídeo do YouTube @PadreKelmonBr", image: "" },
-        { id: 3, title: "Vídeo YouTube 3", description: "Substituir por thumbnail do antepenúltimo vídeo do YouTube @PadreKelmonBr", image: "" },
-        { id: 4, title: "Vídeo YouTube 4", description: "Substituir por thumbnail do 4º último vídeo do YouTube @PadreKelmonBr", image: "" },
+        { id: 1, title: "Vídeo YouTube 1", description: "Último vídeo do YouTube @PadreKelmonBr", image: gallery5 },
+        { id: 2, title: "Vídeo YouTube 2", description: "Penúltimo vídeo do YouTube @PadreKelmonBr", image: heroPortrait },
+        { id: 3, title: "Vídeo YouTube 3", description: "Antepenúltimo vídeo do YouTube @PadreKelmonBr", image: tempImages[0] },
+        { id: 4, title: "Vídeo YouTube 4", description: "4º último vídeo do YouTube @PadreKelmonBr", image: tempImages[1] },
       ]
     },
     {
@@ -39,10 +48,10 @@ export function Media() {
       icon: Music,
       color: "#000000",
       posts: [
-        { id: 1, title: "Vídeo TikTok 1", description: "Substituir por thumbnail do último vídeo do TikTok @pekelmon", image: "" },
-        { id: 2, title: "Vídeo TikTok 2", description: "Substituir por thumbnail do penúltimo vídeo do TikTok @pekelmon", image: "" },
-        { id: 3, title: "Vídeo TikTok 3", description: "Substituir por thumbnail do antepenúltimo vídeo do TikTok @pekelmon", image: "" },
-        { id: 4, title: "Vídeo TikTok 4", description: "Substituir por thumbnail do 4º último vídeo do TikTok @pekelmon", image: "" },
+        { id: 1, title: "Vídeo TikTok 1", description: "Último vídeo do TikTok @pekelmon", image: tempImages[2] },
+        { id: 2, title: "Vídeo TikTok 2", description: "Penúltimo vídeo do TikTok @pekelmon", image: tempImages[3] },
+        { id: 3, title: "Vídeo TikTok 3", description: "Antepenúltimo vídeo do TikTok @pekelmon", image: gallery5 },
+        { id: 4, title: "Vídeo TikTok 4", description: "4º último vídeo do TikTok @pekelmon", image: heroPortrait },
       ]
     },
     {
@@ -52,10 +61,10 @@ export function Media() {
       icon: Facebook,
       color: "#1877F2",
       posts: [
-        { id: 1, title: "Post Facebook 1", description: "Substituir por imagem do último post do Facebook PadreKelmon", image: "" },
-        { id: 2, title: "Post Facebook 2", description: "Substituir por imagem do penúltimo post do Facebook PadreKelmon", image: "" },
-        { id: 3, title: "Post Facebook 3", description: "Substituir por imagem do antepenúltimo post do Facebook PadreKelmon", image: "" },
-        { id: 4, title: "Post Facebook 4", description: "Substituir por imagem do 4º último post do Facebook PadreKelmon", image: "" },
+        { id: 1, title: "Post Facebook 1", description: "Último post do Facebook PadreKelmon", image: tempImages[0] },
+        { id: 2, title: "Post Facebook 2", description: "Penúltimo post do Facebook PadreKelmon", image: tempImages[1] },
+        { id: 3, title: "Post Facebook 3", description: "Antepenúltimo post do Facebook PadreKelmon", image: tempImages[2] },
+        { id: 4, title: "Post Facebook 4", description: "4º último post do Facebook PadreKelmon", image: tempImages[3] },
       ]
     },
   ];
@@ -67,7 +76,7 @@ export function Media() {
           <SectionHeading
             eyebrow="Mídia"
             title="Padre Kelmon nas Redes Sociais"
-            subtitle="Acompanhe as publicações, vídeos e mensagens do Padre Kelmon nas principais plataformas digitais."
+            subtitle="Acompanhe diariamente as publicações, vídeos, mensagens e posicionamentos do Padre Kelmon nas principais plataformas digitais. Fique por dentro da agenda, conheça as propostas e participe ativamente desta caminhada por São Paulo e pelo Brasil através das redes sociais oficiais."
           />
 
           {/* Seção de Redes Sociais */}
@@ -113,22 +122,30 @@ export function Media() {
                           rel="noopener noreferrer"
                           className="group relative block overflow-hidden rounded-xl border-2 border-gray-200 bg-white transition-all hover:-translate-y-1 hover:border-blue-500 hover:shadow-lg"
                         >
-                          {/* Imagem Placeholder */}
-                          <div 
-                            className="relative flex aspect-square items-center justify-center"
-                            style={{ background: 'linear-gradient(135deg, #f3f4f6, #e5e7eb)' }}
-                          >
-                            <div className="text-center p-4">
-                              <Icon className="mx-auto size-12 mb-2" style={{ color: social.color, opacity: 0.3 }} />
-                              <div className="text-xs font-bold text-gray-500">
-                                PLACEHOLDER
+                          {/* Imagem do Post */}
+                          <div className="relative aspect-square overflow-hidden bg-gray-100">
+                            {post.image ? (
+                              <img 
+                                src={post.image} 
+                                alt={post.title}
+                                className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                              />
+                            ) : (
+                              <div 
+                                className="flex h-full w-full items-center justify-center"
+                                style={{ background: 'linear-gradient(135deg, #f3f4f6, #e5e7eb)' }}
+                              >
+                                <div className="text-center p-4">
+                                  <Icon className="mx-auto size-12 mb-2" style={{ color: social.color, opacity: 0.3 }} />
+                                  <div className="text-xs font-bold text-gray-500">
+                                    SEM IMAGEM
+                                  </div>
+                                </div>
                               </div>
-                              <div className="text-[10px] text-gray-400 mt-1">
-                                Post {post.id}
-                              </div>
-                              <div className="mt-2 text-[9px] text-gray-400 leading-tight">
-                                Substituir por imagem real
-                              </div>
+                            )}
+                            {/* Badge do Número */}
+                            <div className="absolute top-2 right-2 flex size-7 items-center justify-center rounded-full font-bold text-white text-xs shadow-lg" style={{ backgroundColor: social.color }}>
+                              {post.id}
                             </div>
                           </div>
 
