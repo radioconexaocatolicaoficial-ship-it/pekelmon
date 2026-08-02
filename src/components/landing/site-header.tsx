@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu, X, Home, BookText, Flag, Images, Play, TrendingUp, UserPlus } from "lucide-react";
+import { Menu, X, Home, BookText, Flag, Film, TrendingUp, UserPlus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { CANDIDATE } from "@/lib/campaign-data";
@@ -9,8 +9,7 @@ const LINKS = [
   { href: "inicio", label: "Início", icon: Home },
   { href: "historia", label: "Sobre", icon: BookText },
   { href: "bandeiras", label: "Pautas", icon: Flag },
-  { href: "galeria", label: "Galeria", icon: Images },
-  { href: "videos", label: "Vídeos", icon: Play },
+  { href: "midia", label: "Mídia", icon: Film },
   { href: "numeros", label: "Números", icon: TrendingUp },
   { href: "cadastro", label: "Cadastro", icon: UserPlus },
 ];

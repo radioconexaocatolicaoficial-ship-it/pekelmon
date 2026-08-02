@@ -5,8 +5,7 @@ import { Hero } from "@/components/landing/hero";
 import { Highlights } from "@/components/landing/highlights";
 import { About } from "@/components/landing/about";
 import { Bandeiras } from "@/components/landing/bandeiras";
-import { Gallery } from "@/components/landing/gallery";
-import { Videos } from "@/components/landing/videos";
+import { Media } from "@/components/landing/media";
 import { Stats } from "@/components/landing/stats";
 import { CallToAction } from "@/components/landing/call-to-action";
 import { SignupForm } from "@/components/landing/signup-form";
@@ -75,8 +74,7 @@ function Index() {
         <Highlights />
         <About />
         <Bandeiras />
-        <Gallery />
-        <Videos />
+        <Media />
         <Stats />
         <CallToAction />
         <SignupForm />
