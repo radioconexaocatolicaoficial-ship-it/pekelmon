@@ -13,6 +13,14 @@ import appCss from "../styles.css?url";
 import { Toaster } from "../components/ui/sonner";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
+// Remove hash da URL na inicialização
+if (typeof window !== 'undefined') {
+  // Remove o hash ao carregar
+  if (window.location.hash) {
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+}
+
 
 function NotFoundComponent() {
   return (
@@ -117,6 +125,25 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  // Remove hash da URL sempre que mudar
+  useEffect(() => {
+    const removeHash = () => {
+      if (window.location.hash) {
+        window.history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    };
+
+    // Remove ao montar
+    removeHash();
+
+    // Remove ao navegar
+    window.addEventListener('hashchange', removeHash);
+    
+    return () => {
+      window.removeEventListener('hashchange', removeHash);
+    };
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
