@@ -11,12 +11,20 @@ import { CallToAction } from "@/components/landing/call-to-action";
 import { SignupForm } from "@/components/landing/signup-form";
 import { SocialLinks } from "@/components/landing/social-links";
 import { SiteFooter } from "@/components/landing/site-footer";
+import { getSocialFeeds } from "@/lib/social-feeds";
 
 const TITLE = "Padre Kelmon — Deputado Federal por São Paulo";
 const DESCRIPTION =
   "Padre Kelmon, pré-candidato a Deputado Federal por São Paulo pelo PL. Conheça sua história, suas bandeiras e cadastre-se para apoiar a campanha.";
 
 export const Route = createFileRoute("/")({
+  loader: async ({ context }) => {
+    await context.queryClient.ensureQueryData({
+      queryKey: ["social-feeds", "v7-x-latest"],
+      queryFn: () => getSocialFeeds(),
+      staleTime: 15 * 60 * 1000,
+    });
+  },
   component: Index,
   head: () => ({
     meta: [

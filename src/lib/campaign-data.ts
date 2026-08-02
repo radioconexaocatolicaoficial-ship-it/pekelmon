@@ -23,9 +23,10 @@ export const CANDIDATE = {
   role: "Pré-candidato a Deputado Federal por São Paulo",
   party: "PL",
   instagram: "https://www.instagram.com/pekelmon/",
-  facebook: "https://www.facebook.com/padrekelmonoficial",
-  youtube: "https://www.youtube.com/@padrekelmon",
-  x: "https://x.com/padrekelmon",
+  facebook: "https://www.facebook.com/PadreKelmon",
+  youtube: "https://www.youtube.com/@PadreKelmonBr",
+  x: "https://x.com/PeKelmon",
+  tiktok: "https://www.tiktok.com/@pekelmon",
 };
 
 export type TimelineItem = {

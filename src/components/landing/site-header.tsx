@@ -14,6 +14,15 @@ const LINKS = [
   { href: "cadastro", label: "Cadastro", icon: UserPlus },
 ];
 
+const HEADER_SCROLL_OFFSET = 112;
+
+function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.scrollY - HEADER_SCROLL_OFFSET;
+  window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+}
+
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -37,12 +46,12 @@ export function SiteHeader() {
         style={{ maxWidth: '1140px', paddingLeft: '0', paddingRight: '0' }}
       >
         <div className="px-5 lg:px-0 flex items-center justify-between w-full">
-        <a 
-          href="#inicio" 
+        <a
+          href="#inicio"
           className="flex items-center"
           onClick={(e) => {
             e.preventDefault();
-            document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' });
+            scrollToSection("inicio");
           }}
         >
           <img 
@@ -61,7 +70,7 @@ export function SiteHeader() {
                   href={`#${l.href}`}
                   onClick={(e) => {
                     e.preventDefault();
-                    document.getElementById(l.href)?.scrollIntoView({ behavior: 'smooth' });
+                    scrollToSection(l.href);
                   }}
                   className="flex items-center gap-2 text-sm font-bold text-gray-700 transition-colors hover:text-blue-600"
                 >
@@ -75,11 +84,11 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <Button asChild variant="campaign" size="sm" className="hidden sm:inline-flex">
-            <a 
+            <a
               href="#cadastro"
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('cadastro')?.scrollIntoView({ behavior: 'smooth' });
+                scrollToSection("cadastro");
               }}
             >
               Quero apoiar
@@ -109,8 +118,9 @@ export function SiteHeader() {
                     href={`#${l.href}`}
                     onClick={(e) => {
                       e.preventDefault();
-                      document.getElementById(l.href)?.scrollIntoView({ behavior: 'smooth' });
                       setOpen(false);
+                      // Wait for mobile menu to close so offset is correct
+                      requestAnimationFrame(() => scrollToSection(l.href));
                     }}
                     className="flex items-center gap-3 border-b border-gray-100 py-4 text-sm font-bold text-gray-700 hover:text-blue-600"
                   >
@@ -122,12 +132,12 @@ export function SiteHeader() {
             })}
           </ul>
           <Button asChild variant="campaign" className="mt-5 w-full">
-            <a 
-              href="#cadastro" 
+            <a
+              href="#cadastro"
               onClick={(e) => {
                 e.preventDefault();
-                document.getElementById('cadastro')?.scrollIntoView({ behavior: 'smooth' });
                 setOpen(false);
+                requestAnimationFrame(() => scrollToSection("cadastro"));
               }}
             >
               Quero apoiar {CANDIDATE.name}
