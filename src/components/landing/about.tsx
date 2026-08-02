@@ -2,6 +2,7 @@ import { Quote, Calendar, Award, BookOpen, GraduationCap, Heart, Users, Megaphon
 import { motion } from "motion/react";
 
 import { CANDIDATE } from "@/lib/campaign-data";
+import heroPortrait from "@/assets/hero-portrait.png";
 
 // Dados resumidos em cards
 const HIGHLIGHTS_SOBRE = [
@@ -57,11 +58,11 @@ const HIGHLIGHTS_SOBRE = [
 
 export function About() {
   return (
-    <section id="historia" className="relative py-24 pt-32" style={{ background: 'linear-gradient(to bottom, #ffffff, #f9fafb)' }}>
+    <section id="historia" className="relative py-16" style={{ background: 'linear-gradient(to bottom, #ffffff, #f9fafb)' }}>
       <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
           {/* Título da Seção */}
-          <div className="mb-16 text-center">
+          <div className="mb-12 text-center">
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -81,15 +82,41 @@ export function About() {
             >
               Uma Vida de Fé e Serviço
             </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+          </div>
+
+          {/* Layout 2 Colunas: Foto Esquerda + Texto Direita */}
+          <div className="mb-16 grid items-center gap-12 lg:grid-cols-[400px_1fr]">
+            {/* Foto Esquerda */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="relative mx-auto w-full max-w-sm lg:mx-0"
+            >
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                <img 
+                  src={heroPortrait} 
+                  alt="Padre Kelmon"
+                  className="h-auto w-full object-cover"
+                />
+                <div className="absolute inset-0 ring-2 ring-inset ring-white/10 rounded-2xl" />
+              </div>
+            </motion.div>
+
+            {/* Texto Direita */}
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="mx-auto mt-6 max-w-4xl text-lg leading-relaxed text-gray-700"
             >
-              Nascido em Salvador em 1976, Padre Kelmon dedicou mais de 30 anos à vida religiosa, à formação da juventude e ao ativismo conservador cristão. Da Legião de Maria ao seminário, do convento à ordenação sacerdotal, de missões humanitárias à fundação do Movimento Cristão Conservador e do Foro do Brasil. Em 2022, tornou-se nacionalmente conhecido ao participar dos debates presidenciais defendendo valores cristãos. Hoje, com formação em Filosofia, Teologia e Pedagogia, apresenta programas na VV8 TV e confirma sua pré-candidatura a Deputado Federal por São Paulo pelo PL, afirmando cumprir "a missão de Deus" para representar a fé, a família e o Brasil no Congresso Nacional.
-            </motion.p>
+              <p className="text-lg leading-relaxed text-gray-700 text-justify">
+                Nascido em Salvador em 1976, Padre Kelmon dedicou mais de 30 anos à vida religiosa, à formação da juventude e ao ativismo conservador cristão. Da Legião de Maria ao seminário, do convento à ordenação sacerdotal, de missões humanitárias à fundação do Movimento Cristão Conservador e do Foro do Brasil.
+              </p>
+              <p className="mt-4 text-lg leading-relaxed text-gray-700 text-justify">
+                Em 2022, tornou-se nacionalmente conhecido ao participar dos debates presidenciais defendendo valores cristãos. Hoje, com formação em Filosofia, Teologia e Pedagogia, apresenta programas na VV8 TV e confirma sua pré-candidatura a Deputado Federal por São Paulo pelo PL, afirmando cumprir "a missão de Deus" para representar a fé, a família e o Brasil no Congresso Nacional.
+              </p>
+            </motion.div>
           </div>
 
           {/* Citação Destacada - Menor e mais discreta */}
@@ -97,7 +124,7 @@ export function About() {
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative mx-auto mb-16 max-w-3xl overflow-hidden rounded-2xl p-8 text-center shadow-lg"
+            className="relative mx-auto mb-12 max-w-3xl overflow-hidden rounded-2xl p-8 text-center shadow-lg"
             style={{ background: 'linear-gradient(135deg, var(--blue-primary), #0052a3)' }}
           >
             <div className="absolute inset-0 opacity-5" style={{
