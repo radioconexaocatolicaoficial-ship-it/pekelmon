@@ -108,7 +108,7 @@ export function Media() {
             <div className="relative h-full min-h-[300px] overflow-hidden rounded-2xl shadow-2xl">
               <iframe
                 className="h-full w-full"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                src="https://www.youtube.com/embed/EI-bTS70q0U"
                 title="Padre Kelmon - Vídeo Oficial"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
