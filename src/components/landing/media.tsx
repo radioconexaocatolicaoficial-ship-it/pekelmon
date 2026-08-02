@@ -108,7 +108,7 @@ export function Media() {
                   {/* Cabeçalho da Rede Social */}
                   <div className="mb-4 flex items-center gap-3">
                     <div 
-                      className="inline-flex size-10 items-center justify-center rounded-xl p-2"
+                      className="inline-flex size-10 items-center justify-center rounded-xl p-2 text-white"
                       style={{ backgroundColor: social.color }}
                     >
                       <IconComponent />
