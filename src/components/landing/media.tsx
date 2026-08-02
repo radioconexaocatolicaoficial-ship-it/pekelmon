@@ -1,6 +1,6 @@
 import { ExternalLink } from "lucide-react";
 
-import { Reveal, SectionHeading } from "./primitives";
+import { Reveal } from "./primitives";
 
 // Ícones SVG Oficiais das Redes Sociais
 const InstagramIcon = () => (
@@ -89,11 +89,33 @@ export function Media() {
     <section id="midia" className="bg-card/30" style={{ scrollMarginTop: '80px', paddingTop: '3rem', paddingBottom: '3rem' }}>
       <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
-          <SectionHeading
-            eyebrow="Mídia"
-            title="Padre Kelmon nas Redes Sociais"
-            subtitle="Acompanhe diariamente as publicações, vídeos, mensagens e posicionamentos do Padre Kelmon nas principais plataformas digitais. Fique por dentro da agenda, conheça as propostas e participe ativamente desta caminhada por São Paulo e pelo Brasil através das redes sociais oficiais."
-          />
+          {/* Layout 50/50: Textos Esquerda + Vídeo Direita */}
+          <div className="mb-12 grid items-stretch gap-8 lg:grid-cols-2">
+            {/* Textos Esquerda - 50% */}
+            <div className="flex flex-col justify-center">
+              <p className="mb-3 text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--yellow-primary)' }}>
+                Mídia
+              </p>
+              <h2 className="mb-4 text-3xl font-black sm:text-4xl lg:text-5xl" style={{ fontFamily: 'var(--font-display)', color: 'var(--blue-primary)' }}>
+                Padre Kelmon nas Redes Sociais
+              </h2>
+              <p className="text-base leading-relaxed text-gray-700">
+                Acompanhe diariamente as publicações, vídeos, mensagens e posicionamentos do Padre Kelmon nas principais plataformas digitais. Fique por dentro da agenda, conheça as propostas e participe ativamente desta caminhada por São Paulo e pelo Brasil através das redes sociais oficiais.
+              </p>
+            </div>
+
+            {/* Vídeo Direita - 50% */}
+            <div className="relative h-full min-h-[300px] overflow-hidden rounded-2xl shadow-2xl">
+              <iframe
+                className="h-full w-full"
+                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+                title="Padre Kelmon - Vídeo Oficial"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
 
           {/* Seção de Redes Sociais */}
           <div className="mt-10">
