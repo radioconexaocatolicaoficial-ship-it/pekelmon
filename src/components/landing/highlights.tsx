@@ -27,7 +27,7 @@ const HIGHLIGHTS = [
 
 export function Highlights() {
   return (
-    <section className="relative -mt-28 pb-16">
+    <section className="relative -mt-36 pb-16">
       <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
