@@ -34,13 +34,13 @@ export function SocialLinks() {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="surface-card flex items-center gap-4 rounded-xl p-5 transition-transform duration-300 hover:-translate-y-1"
+                className="surface-card flex items-center gap-4 rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
               >
-                <span className="inline-flex size-11 items-center justify-center rounded-lg bg-primary/12 text-primary">
-                  <Icon className="size-5" aria-hidden="true" />
+                <span className="inline-flex size-12 items-center justify-center rounded-lg bg-blue-600 text-white">
+                  <Icon className="size-6 stroke-[2]" aria-hidden="true" />
                 </span>
                 <span>
-                  <span className="block text-sm font-semibold">{label}</span>
+                  <span className="block text-sm font-bold">{label}</span>
                   <span className="block text-xs text-muted-foreground">{handle}</span>
                 </span>
               </a>
@@ -51,13 +51,13 @@ export function SocialLinks() {
               href={CANDIDATE.x}
               target="_blank"
               rel="noopener noreferrer"
-              className="surface-card flex items-center gap-4 rounded-xl p-5 transition-transform duration-300 hover:-translate-y-1"
+              className="surface-card flex items-center gap-4 rounded-xl p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
-              <span className="inline-flex size-11 items-center justify-center rounded-lg bg-primary/12 text-primary">
-                <XIcon className="size-4" />
+              <span className="inline-flex size-12 items-center justify-center rounded-lg bg-blue-600 text-white">
+                <XIcon className="size-5 stroke-[2]" />
               </span>
               <span>
-                <span className="block text-sm font-semibold">X (Twitter)</span>
+                <span className="block text-sm font-bold">X (Twitter)</span>
                 <span className="block text-xs text-muted-foreground">Perfil oficial</span>
               </span>
             </a>

@@ -1,7 +1,7 @@
 import {
-  HeartHandshake,
+  Heart,
   Church,
-  Cross,
+  Shield,
   Flag,
   TrendingUp,
   ShieldCheck,
@@ -96,13 +96,13 @@ export type Bandeira = {
  */
 export const BANDEIRAS: Bandeira[] = [
   {
-    icon: HeartHandshake,
+    icon: Heart,
     title: "Defesa da Família",
     description:
       "A família como base da sociedade brasileira, com respeito ao papel dos pais na formação e na educação dos filhos.",
   },
   {
-    icon: Cross,
+    icon: Shield,
     title: "Defesa da Vida",
     description:
       "Posicionamento público e histórico ao lado do movimento pró-vida, da concepção até o fim natural.",

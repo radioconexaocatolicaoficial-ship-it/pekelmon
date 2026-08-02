@@ -14,11 +14,11 @@ export function Bandeiras() {
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {BANDEIRAS.map((b, i) => (
             <Reveal key={b.title} delay={0.05 * i}>
-              <article className="surface-card group h-full rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-gold)]">
-                <span className="inline-flex size-12 items-center justify-center rounded-xl bg-primary/12 text-primary transition-colors group-hover:bg-primary/20">
-                  <b.icon className="size-6" aria-hidden="true" />
+              <article className="surface-card group h-full rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                <span className="inline-flex size-14 items-center justify-center rounded-xl bg-blue-600 text-white transition-transform group-hover:scale-110">
+                  <b.icon className="size-7 stroke-[2]" aria-hidden="true" />
                 </span>
-                <h3 className="mt-5 text-lg font-semibold">{b.title}</h3>
+                <h3 className="mt-5 text-lg font-bold">{b.title}</h3>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                   {b.description}
                 </p>

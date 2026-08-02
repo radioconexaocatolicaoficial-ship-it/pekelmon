@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { Menu, X, Home, BookOpen, Flag, Image, Video, BarChart3, UserPlus } from "lucide-react";
+import { Menu, X, Home, BookText, Flag, Images, Play, TrendingUp, UserPlus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { CANDIDATE } from "@/lib/campaign-data";
+import logo from "@/assets/Logo-Site-PAdre-kelmon.png";
 
 const LINKS = [
   { href: "#topo", label: "Início", icon: Home },
-  { href: "#historia", label: "História", icon: BookOpen },
+  { href: "#historia", label: "História", icon: BookText },
   { href: "#bandeiras", label: "Bandeiras", icon: Flag },
-  { href: "#galeria", label: "Galeria", icon: Image },
-  { href: "#videos", label: "Vídeos", icon: Video },
-  { href: "#numeros", label: "Números", icon: BarChart3 },
+  { href: "#galeria", label: "Galeria", icon: Images },
+  { href: "#videos", label: "Vídeos", icon: Play },
+  { href: "#numeros", label: "Números", icon: TrendingUp },
   { href: "#cadastro", label: "Cadastro", icon: UserPlus },
 ];
 
@@ -33,10 +34,14 @@ export function SiteHeader() {
     >
       <nav
         aria-label="Navegação principal"
-        className="mx-auto flex max-w-[1140px] items-center justify-between px-5 py-4"
+        className="mx-auto flex max-w-[1140px] items-center justify-between px-5 py-3"
       >
-        <a href="#topo" className="font-display text-xl font-bold tracking-wide" style={{ color: 'var(--blue-primary)' }}>
-          Padre <span style={{ color: 'var(--yellow-dark)' }}>Kelmon</span>
+        <a href="#topo" className="flex items-center">
+          <img 
+            src={logo} 
+            alt="Padre Kelmon - Por São Paulo, pelo Brasil" 
+            className="h-12 w-auto sm:h-14"
+          />
         </a>
 
         <ul className="hidden items-center gap-6 lg:flex">
@@ -46,9 +51,9 @@ export function SiteHeader() {
               <li key={l.href}>
                 <a
                   href={l.href}
-                  className="flex items-center gap-2 text-sm font-semibold text-gray-700 transition-colors hover:text-blue-600"
+                  className="flex items-center gap-2 text-sm font-bold text-gray-700 transition-colors hover:text-blue-600"
                 >
-                  <Icon className="size-4" />
+                  <Icon className="size-5 stroke-[2.5]" />
                   {l.label}
                 </a>
               </li>
@@ -82,9 +87,9 @@ export function SiteHeader() {
                   <a
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className="flex items-center gap-3 border-b border-gray-100 py-3 text-sm font-semibold text-gray-700 hover:text-blue-600"
+                    className="flex items-center gap-3 border-b border-gray-100 py-4 text-sm font-bold text-gray-700 hover:text-blue-600"
                   >
-                    <Icon className="size-5" />
+                    <Icon className="size-6 stroke-[2.5]" />
                     {l.label}
                   </a>
                 </li>

@@ -1,4 +1,5 @@
 import { CANDIDATE } from "@/lib/campaign-data";
+import logo from "@/assets/Logo-Site-PAdre-kelmon.png";
 
 const QUICK_LINKS = [
   { href: "#historia", label: "Quem é Padre Kelmon" },
@@ -14,10 +15,12 @@ export function SiteFooter() {
     <footer className="border-t border-border/60 bg-background">
       <div className="mx-auto grid max-w-[1140px] gap-10 px-5 py-16 md:grid-cols-3">
         <div>
-          <p className="font-display text-lg font-semibold">
-            Padre <span className="text-gold-gradient">Kelmon</span>
-          </p>
-          <p className="mt-3 text-sm text-muted-foreground">
+          <img 
+            src={logo} 
+            alt="Padre Kelmon" 
+            className="h-10 w-auto"
+          />
+          <p className="mt-4 text-sm text-muted-foreground">
             {CANDIDATE.role} pelo {CANDIDATE.party}. Fé, família e coragem para resgatar o Brasil.
           </p>
         </div>
