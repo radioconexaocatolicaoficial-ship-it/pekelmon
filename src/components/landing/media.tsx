@@ -56,6 +56,7 @@ function CoverImageCard({
   aspectClass?: string;
 }) {
   const imageSrc = post.thumbnail;
+  const isFacebook = label === "Facebook";
 
   return (
     <a
@@ -70,15 +71,38 @@ function CoverImageCard({
         <img
           src={imageSrc}
           alt={`Publicação do ${label}`}
-          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
+          decoding="async"
           referrerPolicy="no-referrer"
+          onError={(e) => {
+            const img = e.currentTarget;
+            if (isFacebook && !img.dataset.fallbackTried) {
+              img.dataset.fallbackTried = "1";
+              img.src = "/facebook/default.jpg";
+              return;
+            }
+            img.style.display = "none";
+            const fallback = img.nextElementSibling as HTMLElement | null;
+            if (fallback) fallback.hidden = false;
+          }}
         />
-      ) : (
-        <span className="flex h-full w-full items-center justify-center text-sm font-semibold text-gray-500">
+      ) : null}
+      <span
+        hidden={Boolean(imageSrc)}
+        className="flex h-full w-full flex-col items-center justify-center gap-2 px-4 text-center"
+        style={{ background: `linear-gradient(160deg, ${color}22, ${color}55)` }}
+      >
+        <span
+          className="inline-flex size-12 items-center justify-center rounded-full text-white"
+          style={{ backgroundColor: color }}
+        >
+          <ExternalLink className="size-5" />
+        </span>
+        <span className="text-sm font-bold" style={{ color }}>
           Ver no {label}
         </span>
-      )}
+      </span>
       <span className="absolute inset-0 z-10 bg-black/0 transition-colors group-hover:bg-black/15" />
       <span className="absolute bottom-3 right-3 z-20 inline-flex size-8 items-center justify-center rounded-full bg-black/55 text-white opacity-0 transition-opacity group-hover:opacity-100">
         <ExternalLink className="size-4" />
@@ -129,6 +153,13 @@ function PostCard({
     return <CoverImageCard post={post} color={color} label="X" aspectClass="aspect-[4/5]" />;
   }
 
+  // Facebook embeds (iframe) often fail on mobile — use image cards like IG/X
+  if (networkId === "facebook") {
+    return (
+      <CoverImageCard post={post} color={color} label="Facebook" aspectClass="aspect-[4/5]" />
+    );
+  }
+
   return (
     <div
       className="overflow-hidden rounded-xl border-2 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
@@ -172,7 +203,7 @@ function PostSkeleton({ color }: { color: string }) {
 
 export function Media() {
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: ["social-feeds", "v7-x-latest"],
+    queryKey: ["social-feeds", "v12-facebook-official"],
     queryFn: () => getSocialFeeds(),
     staleTime: 15 * 60 * 1000,
     refetchInterval: 15 * 60 * 1000,
@@ -309,7 +340,7 @@ function placeholderNetworks() {
       ["youtube", "YouTube", "@PadreKelmonBr", "https://www.youtube.com/@PadreKelmonBr", "#FF0000"],
       ["tiktok", "TikTok", "@pekelmon", "https://www.tiktok.com/@pekelmon", "#000000"],
       ["x", "X", "@PeKelmon", "https://x.com/PeKelmon", "#000000"],
-      ["facebook", "Facebook", "PadreKelmon", "https://www.facebook.com/PadreKelmon", "#1877F2"],
+      ["facebook", "Facebook", "facebook.com/PadreKelmon", "https://www.facebook.com/PadreKelmon", "#1877F2"],
     ] as const
   ).map(([id, name, handle, profileUrl, color]) => ({
     id,

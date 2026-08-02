@@ -21,7 +21,7 @@ const DESCRIPTION =
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
     await context.queryClient.ensureQueryData({
-      queryKey: ["social-feeds", "v7-x-latest"],
+      queryKey: ["social-feeds", "v12-facebook-official"],
       queryFn: () => getSocialFeeds(),
       staleTime: 15 * 60 * 1000,
     });

@@ -22,7 +22,7 @@ function TikTokIcon(props: React.SVGProps<SVGSVGElement>) {
 const NETWORKS = [
   { label: "Instagram", href: CANDIDATE.instagram, Icon: Instagram, handle: "@pekelmon" },
   { label: "TikTok", href: CANDIDATE.tiktok, Icon: TikTokIcon, handle: "@pekelmon" },
-  { label: "Facebook", href: CANDIDATE.facebook, Icon: Facebook, handle: "Padre Kelmon" },
+  { label: "Facebook", href: CANDIDATE.facebook, Icon: Facebook, handle: "facebook.com/PadreKelmon" },
   { label: "YouTube", href: CANDIDATE.youtube, Icon: Youtube, handle: "@PadreKelmonBr" },
   { label: "X", href: CANDIDATE.x, Icon: XIcon, handle: "@PeKelmon" },
 ];

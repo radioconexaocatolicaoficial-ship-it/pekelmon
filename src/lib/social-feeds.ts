@@ -1,8 +1,14 @@
 import { createServerFn } from "@tanstack/react-start";
 
+import facebookPostsSeed from "@/data/facebook-posts.json";
 import instagramPostsSeed from "@/data/instagram-posts.json";
 import tiktokPostsSeed from "@/data/tiktok-posts.json";
 import xPostsSeed from "@/data/x-posts.json";
+import { CANDIDATE } from "@/lib/campaign-data";
+
+/** Página oficial do Facebook — fonte única */
+const FACEBOOK_PAGE_URL = CANDIDATE.facebook; // https://www.facebook.com/PadreKelmon
+const FACEBOOK_PAGE_SLUG = "PadreKelmon";
 
 export type SocialNetworkId = "instagram" | "youtube" | "tiktok" | "x" | "facebook";
 
@@ -65,8 +71,8 @@ const NETWORK_META: Record<
   },
   facebook: {
     name: "Facebook",
-    handle: "PadreKelmon",
-    profileUrl: "https://www.facebook.com/PadreKelmon",
+    handle: "facebook.com/PadreKelmon",
+    profileUrl: FACEBOOK_PAGE_URL,
     color: "#1877F2",
   },
 };
@@ -109,26 +115,23 @@ const FALLBACK_POSTS: Record<SocialNetworkId, SocialPost[]> = {
     ...(post.thumbnail ? { thumbnail: post.thumbnail } : {}),
     ...(post.title ? { title: post.title } : {}),
   })),
-  facebook: [
-    "1375432754686648",
-    "1374659944763929",
-    "1369401381956452",
-    "1362921195937804",
-  ].map((id) => {
-    const url = `https://www.facebook.com/PadreKelmon/posts/${id}/`;
-    return {
-      id,
-      url,
-      embedUrl:
-        "https://www.facebook.com/plugins/post.php?href=" +
-        encodeURIComponent(url) +
-        "&show_text=true&width=500",
-    };
-  }),
+  facebook: (facebookPostsSeed as Array<{
+    id: string;
+    url: string;
+    embedUrl: string;
+    thumbnail?: string;
+    title?: string;
+  }>).map((post) => ({
+    id: post.id,
+    url: post.url,
+    embedUrl: post.embedUrl,
+    ...(post.thumbnail ? { thumbnail: post.thumbnail } : {}),
+    ...(post.title ? { title: post.title } : {}),
+  })),
 };
 
 let cache: { data: SocialFeedsResult; expiresAt: number } | null = null;
-const FEEDS_CACHE_VERSION = 7; // bump: real latest X posts (2026)
+const FEEDS_CACHE_VERSION = 12; // bump: official FB embed post images only
 let cacheVersion = FEEDS_CACHE_VERSION;
 
 const UA =
@@ -210,7 +213,9 @@ async function fetchYouTubePosts(): Promise<SocialPost[]> {
 
 function isRealPostImage(url: string | undefined): url is string {
   if (!url) return false;
-  if (url.startsWith("/instagram/")) return true;
+  if (url.startsWith("/instagram/") || url.startsWith("/facebook/") || url.startsWith("/x/") || url.startsWith("/tiktok/")) {
+    return true;
+  }
   return (
     /^https?:\/\//i.test(url) &&
     !/rsrc\.php|static\.cdninstagram\.com\/rsrc|data:image/i.test(url) &&
@@ -481,49 +486,157 @@ async function fetchXPosts(): Promise<SocialPost[]> {
   return posts.length > 0 ? posts : FALLBACK_POSTS.x;
 }
 
+function facebookPostUrl(page: string, id: string) {
+  return `${page}/posts/${id}/`;
+}
+
+function extractFacebookPostIds(text: string): string[] {
+  const numeric = [
+    ...extractMatches(text, new RegExp(`${FACEBOOK_PAGE_SLUG}\\/posts\\/(\\d{10,})`, "g")),
+    ...extractMatches(text, /fbid[=:](\d{10,})/g),
+    ...extractMatches(text, /story_fbid[=:](\d{10,})/g),
+    ...extractMatches(text, /multi_permalinks=(\d{10,})/g),
+    ...extractMatches(text, /\/posts\/(\d{10,})/g),
+  ];
+  const pfbid = extractMatches(text, /\/posts\/(pfbid[A-Za-z0-9]+)/g);
+
+  // Numeric IDs: newest first. pfbid has no sortable order — keep discovery order.
+  const sortedNumeric = [...new Set(numeric)].sort((a, b) => {
+    try {
+      return BigInt(b) > BigInt(a) ? 1 : BigInt(b) < BigInt(a) ? -1 : 0;
+    } catch {
+      return b.localeCompare(a);
+    }
+  });
+
+  return uniqueLimit([...sortedNumeric, ...pfbid], POSTS_PER_NETWORK * 3);
+}
+
+function buildFacebookPost(
+  page: string,
+  id: string,
+  seeded?: SocialPost,
+  liveThumb?: string,
+): SocialPost {
+  const url = seeded?.url?.includes(id) ? seeded.url : facebookPostUrl(page, id);
+  const localThumb =
+    seeded?.thumbnail?.startsWith("/facebook/") && isRealPostImage(seeded.thumbnail)
+      ? seeded.thumbnail
+      : undefined;
+
+  const thumbnail =
+    localThumb ||
+    (isRealPostImage(liveThumb) ? liveThumb : undefined) ||
+    (isRealPostImage(seeded?.thumbnail) ? seeded.thumbnail : undefined) ||
+    `/facebook/${id}.jpg`;
+
+  return {
+    id,
+    url,
+    embedUrl:
+      "https://www.facebook.com/plugins/post.php?href=" +
+      encodeURIComponent(url) +
+      "&show_text=false&width=500",
+    thumbnail,
+    title: seeded?.title ?? "Publicação no Facebook",
+  };
+}
+
+/** Imagem oficial do post via Facebook Embed Plugin (não usa assets do site). */
+async function fetchFacebookThumbnail(postUrl: string): Promise<string | undefined> {
+  try {
+    const embed =
+      "https://www.facebook.com/plugins/post.php?href=" +
+      encodeURIComponent(postUrl) +
+      "&show_text=false&width=500";
+    const html = await fetchText(embed, {
+      headers: {
+        Accept: "text/html,application/xhtml+xml",
+        Referer: "https://www.facebook.com/",
+      },
+    });
+
+    const urls = [...html.matchAll(/https:\/\/scontent[^"'\\\s>]+/g)].map((m) =>
+      m[0].replace(/&amp;/g, "&"),
+    );
+
+    const postImgs = urls.filter(
+      (u) =>
+        !/s50x50|s100x100|s200x200/i.test(u) &&
+        /t51\.82787|t39\.30808-6|p180x540|p394x394|p403x403|s720x720/i.test(u),
+    );
+
+    const preferred = postImgs.find((u) => /t51\.82787|t39\.30808-6/i.test(u));
+    const picked = preferred || postImgs[0];
+    return isRealPostImage(picked) ? picked : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+/** Últimos 4 posts da página oficial https://www.facebook.com/PadreKelmon */
 async function fetchFacebookPosts(): Promise<SocialPost[]> {
+  const page = FACEBOOK_PAGE_URL.replace(/\/$/, "");
+  const seed = FALLBACK_POSTS.facebook;
+  const seedById = new Map(seed.map((post) => [post.id, post] as const));
+
   const sources = [
-    () =>
-      fetchText("https://r.jina.ai/https://www.facebook.com/PadreKelmon/photos", {
-        headers: { Accept: "text/plain" },
-      }),
-    () =>
-      fetchText("https://r.jina.ai/https://www.facebook.com/PadreKelmon", {
-        headers: { Accept: "text/plain" },
-      }),
+    () => fetchText(`https://r.jina.ai/${page}`, { headers: { Accept: "text/plain" } }),
+    () => fetchText(`https://r.jina.ai/${page}/photos_by`, { headers: { Accept: "text/plain" } }),
+    () => fetchText(`https://r.jina.ai/https://mbasic.facebook.com/${FACEBOOK_PAGE_SLUG}`, {
+      headers: { Accept: "text/plain" },
+    }),
     () =>
       fetchText(
         "https://html.duckduckgo.com/html/?q=" +
-          encodeURIComponent("site:facebook.com/PadreKelmon/posts OR site:facebook.com/photo"),
+          encodeURIComponent(`site:facebook.com/${FACEBOOK_PAGE_SLUG}/posts`),
       ),
   ];
 
+  let liveIds: string[] = [];
   for (const source of sources) {
     try {
-      const markdown = await source();
-      const ids = uniqueLimit([
-        ...extractMatches(markdown, /fbid=(\d+)/g),
-        ...extractMatches(markdown, /PadreKelmon\/posts\/(\d+)/g),
-      ]);
-      if (ids.length > 0) {
-        return ids.map((id) => {
-          const url = `https://www.facebook.com/PadreKelmon/posts/${id}/`;
-          return {
-            id,
-            url,
-            embedUrl:
-              "https://www.facebook.com/plugins/post.php?href=" +
-              encodeURIComponent(url) +
-              "&show_text=true&width=500",
-          };
-        });
-      }
+      const text = await source();
+      liveIds = extractFacebookPostIds(text);
+      if (liveIds.length >= POSTS_PER_NETWORK) break;
     } catch {
       // try next source
     }
   }
 
-  throw new Error("No Facebook posts found");
+  // Prioriza posts ao vivo; completa com seed para sempre ter 4
+  const mergedIds = uniqueLimit(
+    [...liveIds, ...seed.map((post) => post.id)],
+    POSTS_PER_NETWORK,
+  );
+
+  if (mergedIds.length === 0) {
+    return seed.slice(0, POSTS_PER_NETWORK);
+  }
+
+  const posts = await Promise.all(
+    mergedIds.map(async (id) => {
+      const seeded = seedById.get(id);
+      const hasLocal =
+        seeded?.thumbnail?.startsWith("/facebook/") && isRealPostImage(seeded.thumbnail);
+      const liveThumb = hasLocal
+        ? undefined
+        : await fetchFacebookThumbnail(facebookPostUrl(page, id));
+      return buildFacebookPost(page, id, seeded, liveThumb);
+    }),
+  );
+
+  // Garante exatamente 4 cards no grid
+  while (posts.length < POSTS_PER_NETWORK && seed[posts.length]) {
+    const seeded = seed[posts.length];
+    if (seeded && !posts.some((p) => p.id === seeded.id)) {
+      posts.push(buildFacebookPost(page, seeded.id, seeded));
+    } else {
+      break;
+    }
+  }
+
+  return posts.slice(0, POSTS_PER_NETWORK);
 }
 
 async function safeFetch(

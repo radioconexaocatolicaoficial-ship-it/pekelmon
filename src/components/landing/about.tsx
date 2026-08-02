@@ -71,13 +71,13 @@ export function About() {
               viewport={{ once: true }}
               className="relative"
             >
-              <div className="relative aspect-[4/5] max-h-[420px] overflow-hidden rounded-2xl shadow-2xl sm:max-h-[520px] lg:aspect-auto lg:h-full lg:max-h-none">
+              <div className="relative overflow-hidden rounded-2xl bg-gray-100 shadow-2xl lg:h-full">
                 <img
                   src={sobreImg}
                   alt="Padre Kelmon"
-                  className="h-full w-full object-cover"
+                  className="mx-auto h-auto w-full object-contain object-center lg:h-full lg:object-cover lg:object-top"
                 />
-                <div className="absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/10" />
+                <div className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/10" />
               </div>
             </motion.div>
 
