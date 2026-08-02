@@ -131,49 +131,49 @@ export const BANDEIRAS: Bandeira[] = [
     icon: Heart,
     title: "Defesa da Família",
     description:
-      "A família como base da sociedade brasileira, com respeito ao papel dos pais na formação e na educação dos filhos.",
+      "Fortalecer a família tradicional brasileira como núcleo fundamental da sociedade. Defender o direito dos pais na educação dos filhos, proteção da infância e juventude contra ideologias nocivas, e promoção de políticas públicas que valorizem o casamento e a maternidade.",
   },
   {
     icon: Shield,
     title: "Defesa da Vida",
     description:
-      "Posicionamento público e histórico ao lado do movimento pró-vida, da concepção até o fim natural.",
+      "Proteção incondicional da vida humana desde a concepção até a morte natural. Combate ao aborto em todas as suas formas, apoio a mães em situação de vulnerabilidade, e defesa de uma cultura que valorize e proteja a vida em todas as suas fases.",
   },
   {
     icon: Church,
     title: "Liberdade Religiosa",
     description:
-      "Garantia de que templos, ministros e fiéis possam viver e anunciar sua fé livremente, sem perseguição.",
+      "Garantia plena da liberdade de culto, expressão da fé e manifestação religiosa. Proteção dos templos, ministros religiosos e fiéis contra perseguições, censura ou restrições injustas. Defesa do direito de viver e anunciar os valores cristãos no espaço público.",
   },
   {
     icon: Flag,
     title: "Patriotismo",
     description:
-      "Amor ao Brasil, valorização dos símbolos nacionais e defesa da soberania do país e do seu povo.",
+      "Valorização dos símbolos nacionais, resgate da história do Brasil e promoção do amor à pátria. Defesa da soberania nacional, fortalecimento das Forças Armadas, e combate a ideologias que desvalorizam a identidade e os valores do povo brasileiro.",
   },
   {
     icon: TrendingUp,
     title: "Liberdade Econômica",
     description:
-      "Menos burocracia e menos peso do Estado sobre quem empreende, gera emprego e sustenta sua família.",
+      "Redução da burocracia e do peso do Estado sobre empreendedores e trabalhadores. Defesa da livre iniciativa, simplificação tributária, incentivo à geração de empregos e apoio aos pequenos e médios empresários que sustentam suas famílias e movem a economia do país.",
   },
   {
     icon: ShieldCheck,
     title: "Combate à Corrupção",
     description:
-      "Transparência no uso do dinheiro público e rigor com quem trai a confiança do cidadão brasileiro.",
+      "Rigor absoluto contra desvios de recursos públicos e transparência total no uso do dinheiro do cidadão. Punição severa para políticos corruptos, fortalecimento dos órgãos de controle e fiscalização, e compromisso com a ética e honestidade na gestão pública.",
   },
   {
     icon: Scale,
     title: "Defesa da Constituição",
     description:
-      "Respeito ao Estado Democrático de Direito, às liberdades individuais e aos limites entre os Poderes.",
+      "Respeito irrestrito ao Estado Democrático de Direito e à separação dos Poderes. Defesa das liberdades individuais, direitos fundamentais e garantias constitucionais. Combate a abusos de autoridade e preservação do equilíbrio institucional da República.",
   },
   {
     icon: Users,
     title: "Valorização da Juventude",
     description:
-      "Apoio aos jovens brasileiros com oportunidades de educação, emprego e participação na construção do país.",
+      "Investimento na formação integral dos jovens brasileiros com educação de qualidade, oportunidades de primeiro emprego e incentivos ao empreendedorismo juvenil. Proteção contra drogas, violência e ideologias destrutivas, promovendo valores sólidos e esperança no futuro.",
   },
 ];
 
