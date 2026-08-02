@@ -6,6 +6,7 @@ import {
   TrendingUp,
   ShieldCheck,
   Scale,
+  Users,
   type LucideIcon,
 } from "lucide-react";
 
@@ -167,6 +168,12 @@ export const BANDEIRAS: Bandeira[] = [
     title: "Defesa da Constituição",
     description:
       "Respeito ao Estado Democrático de Direito, às liberdades individuais e aos limites entre os Poderes.",
+  },
+  {
+    icon: Users,
+    title: "Valorização da Juventude",
+    description:
+      "Apoio aos jovens brasileiros com oportunidades de educação, emprego e participação na construção do país.",
   },
 ];
 

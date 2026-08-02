@@ -7,12 +7,12 @@ export function Bandeiras() {
       <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
         <SectionHeading
-          eyebrow="Bandeiras"
+          eyebrow="Pautas"
           title="As pautas que defendo"
           subtitle="Compromissos públicos que orientam a pré-candidatura por São Paulo."
         />
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {BANDEIRAS.map((b, i) => (
             <Reveal key={b.title} delay={0.05 * i}>
               <article className="surface-card group h-full rounded-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">

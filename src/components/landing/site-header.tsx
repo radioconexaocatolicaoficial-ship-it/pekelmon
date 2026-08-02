@@ -7,8 +7,8 @@ import logo from "@/assets/Logo-Site-PAdre-kelmon.png";
 
 const LINKS = [
   { href: "inicio", label: "Início", icon: Home },
-  { href: "historia", label: "História", icon: BookText },
-  { href: "bandeiras", label: "Bandeiras", icon: Flag },
+  { href: "historia", label: "Sobre", icon: BookText },
+  { href: "bandeiras", label: "Pautas", icon: Flag },
   { href: "galeria", label: "Galeria", icon: Images },
   { href: "videos", label: "Vídeos", icon: Play },
   { href: "numeros", label: "Números", icon: TrendingUp },
