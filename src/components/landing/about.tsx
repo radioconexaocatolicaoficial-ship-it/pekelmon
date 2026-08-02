@@ -58,7 +58,7 @@ const HIGHLIGHTS_SOBRE = [
 
 export function About() {
   return (
-    <section id="historia" className="relative py-16" style={{ background: 'linear-gradient(to bottom, #ffffff, #f9fafb)' }}>
+    <section id="historia" className="relative py-16" style={{ background: 'linear-gradient(to bottom, #ffffff, #f9fafb)', scrollMarginTop: '80px' }}>
       <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
           {/* Layout 2 Colunas: 50% Foto + 50% Conteúdo - Mesma Altura */}
@@ -154,7 +154,7 @@ export function About() {
                   className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white p-6 shadow-lg transition-all hover:border-blue-500 hover:shadow-2xl hover:-translate-y-1"
                 >
                   {/* Ícone */}
-                  <div className="mb-6 inline-flex size-14 items-center justify-center rounded-xl transition-transform group-hover:scale-110" style={{ backgroundColor: 'var(--blue-primary)' }}>
+                  <div className="mb-4 inline-flex size-14 items-center justify-center rounded-xl transition-transform group-hover:scale-110" style={{ backgroundColor: 'var(--blue-primary)' }}>
                     <Icon className="size-7 stroke-[2] text-white" />
                   </div>
 
