@@ -33,54 +33,85 @@ export type TimelineItem = {
   description: string;
 };
 
-/** Fontes públicas: Wikipédia (pt), O Globo (19/03/2026), Congresso em Foco (20/03/2026). */
+/** Fontes: Foro Brasil (biografia oficial), Wikipédia, veículos de imprensa. Informações condensadas para divulgação política. */
 export const TIMELINE: TimelineItem[] = [
   {
     year: "1976",
-    title: "Nascimento em Acajutiba (BA)",
+    title: "Nascimento em Salvador, Bahia",
     description:
-      "Nasce em 21 de outubro de 1976, em Acajutiba, na Bahia, filho de Risoldete e José Gomes, em uma família católica.",
+      "Nasce em 21 de outubro de 1976, às 14h45, em Salvador, Bahia. Primogênito de Risoldete da Silva Souza e José Gomes de Souza, cresce com mais três irmãos em uma família católica tradicional.",
   },
   {
-    year: "Anos 1990",
-    title: "Juventude e vida comunitária",
+    year: "1977-1995",
+    title: "Formação católica e liderança juvenil",
     description:
-      "Ainda adolescente, lidera grupos de jovens como a Legião de Maria, atua na comunidade ecumênica de Taizé e participa da criação do grupo JUSPE — Jovens Unidos Semeando Paz e Esperança.",
+      "Batizado em 25 de dezembro de 1977, recebe a Primeira Eucaristia aos 10 anos (1986) e a Crisma aos 19 anos (1995). Aos 20, passa a servir ativamente na Legião de Maria, Pastoral da Criança e Escola da Fé da Comunidade de Taizé. É cofundador do grupo JUSPE (Jovens Unidos Semeando Paz e Esperança).",
   },
   {
-    year: "A partir dos 20 anos",
-    title: "Formação no seminário",
+    year: "1996",
+    title: "Convento dos Capuchinhos",
     description:
-      "Ingressa no seminário Mater Ecclesiae, dos Legionários de Cristo, em São Paulo, seguindo a formação nos seminários Santana (romano) e Santa Catarina de Alexandria (ortodoxo).",
+      "Vive no convento dos Frades Capuchinhos em Maceió, onde estabelece vínculo com o frei Severino Batista França (hoje bispo emérito no Recife) e aprofunda seu chamado ao sacerdócio.",
   },
   {
-    year: "2003",
-    title: "Caminho ortodoxo",
+    year: "2000-2003",
+    title: "Seminário e formação acadêmica",
     description:
-      "Decide seguir o cristianismo ortodoxo, tradição na qual passa a exercer seu ministério, celebrando missas e batismos na Bahia.",
+      "Em 23 de fevereiro de 2000, inicia formação seminarista em São Paulo com os Legionários de Cristo. Torna-se membro fundador do Seminário Maria Mater Ecclesiae do Brasil, cursando Filosofia, Teologia e Pedagogia. Conhece a tradição católica oriental melquita.",
   },
   {
     year: "2010",
-    title: "Vida em Brasília",
+    title: "Ativismo pró-vida",
     description:
-      "Passa a manter em Brasília a loja de artigos religiosos Jabuti, conciliando trabalho e atividade religiosa.",
+      "Coordena ação nacional de conscientização contra a então candidata Dilma Rousseff, baseada em documento da CNBB Regional Sul 1, com apoio de Dom Luiz Gonzaga Bergonzini. Consolida-se como voz conservadora cristã.",
+  },
+  {
+    year: "2014-2015",
+    title: "Ordenação sacerdotal",
+    description:
+      "Funda a associação missionária Theotokos. Em 2014, é ordenado diácono pela Igreja Ortodoxa Sirian de Antioquia. Em 2 de agosto de 2015, é ordenado sacerdote na Igreja Ortodoxa da América por Dom Ioannes de Santa Catarina.",
+  },
+  {
+    year: "2017",
+    title: "Missão humanitária em Roraima",
+    description:
+      "Viaja a Roraima para testemunhar e auxiliar refugiados venezuelanos na crise humanitária, fortalecendo sua oposição aos regimes socialistas na América Latina.",
+  },
+  {
+    year: "2019-2021",
+    title: "Fundação do Movimento Cristão Conservador",
+    description:
+      "Conhece Roberto Jefferson, que o convida para colaborar com o PTB. A pedido de Jefferson, funda o Movimento Cristão Conservador (MCC), tornando-se seu primeiro presidente nacional.",
   },
   {
     year: "2022",
-    title: "Candidatura à Presidência da República",
+    title: "Candidatura presidencial pelo PTB",
     description:
-      "Concorre à Presidência pelo PTB e recebe 81.129 votos (cerca de 0,07%). Torna-se nacionalmente conhecido pelo discurso conservador e pela defesa de pautas cristãs nos debates televisivos.",
+      "Com impedimento de Jefferson, é indicado candidato à Presidência tendo pastor Gamonal como vice. Em 19 dias de campanha, percorre quase todo o país e participa de debates nacionais (SBT e Globo). Obtém 81.129 votos.",
+  },
+  {
+    year: "2023",
+    title: "Fundação do Foro do Brasil",
+    description:
+      "Funda o Foro do Brasil em cerimônia no Congresso Nacional (29/06/2023). O movimento articula o pensamento conservador nacional, com diretórios em diversos estados.",
   },
   {
     year: "2024",
-    title: "Filiação ao Partido Liberal",
-    description: "Filia-se ao PL, partido do ex-presidente Jair Bolsonaro, em agosto de 2024.",
+    title: "Livro e filiação ao PL",
+    description:
+      "Lança 'Fé e Política de Mãos Dadas' na Livraria Drummond. Em agosto, filia-se ao Partido Liberal (PL 22), partido do ex-presidente Jair Bolsonaro.",
+  },
+  {
+    year: "2025",
+    title: "Programas na VV8 TV",
+    description:
+      "Estreia em 2 de junho o talk show 'Confessionário com Padre Kelmon' e 'Oração pelo Brasil' na VV8 TV (Valinhos/SP), abordando fé, política e cultura sob perspectiva conservadora.",
   },
   {
     year: "2026",
-    title: "Pré-candidatura a Deputado Federal por SP",
+    title: "Deputado Federal por São Paulo",
     description:
-      "Confirma a pré-candidatura à Câmara dos Deputados por São Paulo pelo PL, afirmando cumprir “a missão de Deus” e um chamado do seu líder político. “Juntos vamos resgatar o Brasil.”",
+      "Confirma pré-candidatura à Câmara dos Deputados por São Paulo pelo PL. Com formação em Filosofia, Teologia e Pedagogia, afirma cumprir 'a missão de Deus'. Mensagem: 'Juntos vamos resgatar o Brasil.'",
   },
 ];
 
