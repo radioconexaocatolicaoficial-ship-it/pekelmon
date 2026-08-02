@@ -5,7 +5,7 @@ import { CANDIDATE, TIMELINE } from "@/lib/campaign-data";
 
 export function About() {
   return (
-    <section id="historia" className="section-y border-t border-border/50">
+    <section id="historia" className="section-y border-t border-border/50 pt-32">
       <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
         <SectionHeading

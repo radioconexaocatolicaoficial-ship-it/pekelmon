@@ -7,7 +7,7 @@ import heroPortrait from "@/assets/hero-portrait.png";
 
 export function Hero() {
   return (
-    <section id="inicio" className="relative isolate overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40" style={{ background: 'var(--gradient-hero)' }}>
+    <section id="inicio" className="relative isolate overflow-hidden pb-32 pt-32 sm:pb-36 sm:pt-40" style={{ background: 'var(--gradient-hero)' }}>
       {/* Padrão decorativo */}
       <div
         aria-hidden="true"
