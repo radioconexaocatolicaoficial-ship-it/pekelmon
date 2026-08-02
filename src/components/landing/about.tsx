@@ -61,8 +61,8 @@ export function About() {
     <section id="historia" className="relative py-16" style={{ background: 'linear-gradient(to bottom, #ffffff, #f9fafb)' }}>
       <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
-          {/* Layout 2 Colunas: Foto Esquerda + Conteúdo Direita */}
-          <div className="mb-16 grid items-stretch gap-12 lg:grid-cols-2">
+          {/* Layout 2 Colunas: Foto Esquerda (47%) + Conteúdo Direita (53%) */}
+          <div className="mb-16 grid items-stretch gap-12 lg:grid-cols-[47fr_53fr]">
             {/* Foto Esquerda */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -81,13 +81,13 @@ export function About() {
             </motion.div>
 
             {/* Conteúdo Direita: Título + Texto + Citação */}
-            <div className="flex flex-col justify-between">
+            <div className="flex flex-col">
               {/* Título */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="mb-8"
+                className="mb-6"
               >
                 <p className="mb-3 text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--yellow-primary)' }}>
                   Sobre Padre Kelmon
@@ -97,18 +97,28 @@ export function About() {
                 </h2>
               </motion.div>
 
-              {/* Texto Descritivo */}
+              {/* Texto Descritivo - Ampliado */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 }}
+                className="flex-1"
               >
-                <p className="text-lg leading-relaxed text-gray-700 text-justify">
-                  Nascido em Salvador em 1976, Padre Kelmon dedicou mais de 30 anos à vida religiosa, à formação da juventude e ao ativismo conservador cristão. Da Legião de Maria ao seminário, do convento à ordenação sacerdotal, de missões humanitárias à fundação do Movimento Cristão Conservador e do Foro do Brasil.
+                <p className="text-lg leading-relaxed text-gray-700 text-justify mb-4">
+                  Nascido em Salvador em 21 de outubro de 1976, Padre Kelmon Luís da Silva Souza é primogênito de uma família católica tradicional. Desde jovem demonstrou vocação religiosa, sendo batizado em 1977, recebendo a Primeira Eucaristia aos 10 anos e a Crisma aos 19 anos.
                 </p>
-                <p className="mt-4 text-lg leading-relaxed text-gray-700 text-justify">
-                  Em 2022, tornou-se nacionalmente conhecido ao participar dos debates presidenciais defendendo valores cristãos. Hoje, com formação em Filosofia, Teologia e Pedagogia, apresenta programas na VV8 TV e confirma sua pré-candidatura a Deputado Federal por São Paulo pelo PL, afirmando cumprir "a missão de Deus" para representar a fé, a família e o Brasil no Congresso Nacional.
+                <p className="text-lg leading-relaxed text-gray-700 text-justify mb-4">
+                  Sua formação passou pela Legião de Maria, Pastoral da Criança e pela comunidade ecumênica de Taizé, onde ajudou a fundar o grupo JUSPE (Jovens Unidos Semeando Paz e Esperança). Em 1996, viveu no convento dos Frades Capuchinhos em Maceió, aprofundando seu chamado sacerdotal.
+                </p>
+                <p className="text-lg leading-relaxed text-gray-700 text-justify mb-4">
+                  A partir de 2000, ingressou no seminário dos Legionários de Cristo em São Paulo, tornando-se membro fundador do Seminário Maria Mater Ecclesiae do Brasil. Cursou Filosofia, Teologia e Pedagogia, sendo ordenado diácono em 2014 e sacerdote em 2015 na Igreja Ortodoxa da América.
+                </p>
+                <p className="text-lg leading-relaxed text-gray-700 text-justify mb-4">
+                  Em 2010, liderou campanha nacional pró-vida. Em 2017, realizou missão humanitária em Roraima auxiliando refugiados venezuelanos. A partir de 2019, fundou o Movimento Cristão Conservador (MCC) a convite de Roberto Jefferson, tornando-se seu primeiro presidente nacional.
+                </p>
+                <p className="text-lg leading-relaxed text-gray-700 text-justify">
+                  Em 2022, tornou-se nacionalmente conhecido ao participar dos debates presidenciais pelo PTB, defendendo valores cristãos e obtendo 81.129 votos. Em 2023, fundou o Foro do Brasil no Congresso Nacional. Lançou o livro "Fé e Política de Mãos Dadas" em 2024 e filiou-se ao Partido Liberal. Hoje apresenta programas na VV8 TV e é pré-candidato a Deputado Federal por São Paulo pelo PL, afirmando cumprir "a missão de Deus" para representar a fé, a família e o Brasil no Congresso Nacional.
                 </p>
               </motion.div>
 
@@ -118,7 +128,7 @@ export function About() {
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.3 }}
-                className="relative mt-8 overflow-hidden rounded-2xl p-6 shadow-lg"
+                className="relative mt-6 overflow-hidden rounded-2xl p-6 shadow-lg"
                 style={{ background: 'linear-gradient(135deg, var(--blue-primary), #0052a3)' }}
               >
                 <div className="absolute inset-0 opacity-5" style={{
