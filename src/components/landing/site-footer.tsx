@@ -13,7 +13,7 @@ const QUICK_LINKS = [
 export function SiteFooter() {
   return (
     <footer className="border-t border-border/60 bg-background">
-      <div className="mx-auto grid max-w-[1140px] gap-10 px-5 py-16 md:grid-cols-3">
+      <div className="mx-auto grid w-full max-w-[1140px] gap-10 px-5 py-16 md:grid-cols-3">
         <div>
           <img 
             src={logo} 
@@ -61,7 +61,7 @@ export function SiteFooter() {
       </div>
 
       <div className="border-t border-border/60 px-5 py-6">
-        <p className="mx-auto max-w-[1140px] text-center text-xs text-muted-foreground">
+        <p className="mx-auto w-full max-w-[1140px] text-center text-xs text-muted-foreground">
           © {new Date().getFullYear()} Campanha {CANDIDATE.name}. Conteúdo informativo de
           pré-campanha, elaborado a partir de fontes públicas. Material sujeito a revisão pela
           assessoria antes da publicação oficial.

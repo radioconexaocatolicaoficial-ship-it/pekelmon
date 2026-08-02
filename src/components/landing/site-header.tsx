@@ -34,7 +34,7 @@ export function SiteHeader() {
     >
       <nav
         aria-label="Navegação principal"
-        className="mx-auto flex max-w-[1140px] items-center justify-between px-5 py-3"
+        className="mx-auto flex w-full max-w-[1140px] items-center justify-between px-5 py-3"
       >
         <a href="#topo" className="flex items-center">
           <img 

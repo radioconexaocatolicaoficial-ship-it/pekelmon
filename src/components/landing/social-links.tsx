@@ -20,7 +20,7 @@ function XIcon(props: React.SVGProps<SVGSVGElement>) {
 export function SocialLinks() {
   return (
     <section id="redes" className="section-y">
-      <div className="mx-auto max-w-[1140px] px-5">
+      <div className="mx-auto w-full max-w-[1140px] px-5">
         <SectionHeading
           eyebrow="Redes sociais"
           title="Acompanhe de perto"
