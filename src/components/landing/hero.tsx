@@ -3,26 +3,17 @@ import { ArrowRight, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { CANDIDATE } from "@/lib/campaign-data";
-import heroBg from "@/assets/hero-bg.jpg";
 import heroPortrait from "@/assets/hero-portrait.jpg";
 
 export function Hero() {
   return (
-    <section id="topo" className="relative isolate overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40">
-      <img
-        src={heroBg}
-        alt=""
-        aria-hidden="true"
-        width={1920}
-        height={1280}
-        className="absolute inset-0 -z-20 size-full object-cover opacity-70"
-      />
+    <section id="topo" className="relative isolate overflow-hidden bg-gradient-to-br from-white via-purple-50/30 to-white pb-20 pt-32 sm:pb-28 sm:pt-40">
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10"
+        className="absolute inset-0 -z-10 opacity-30"
         style={{
-          background:
-            "radial-gradient(80% 60% at 20% 20%, color-mix(in oklab, var(--navy) 55%, transparent), transparent), linear-gradient(to bottom, color-mix(in oklab, var(--navy-deep) 82%, transparent), var(--navy-deep))",
+          backgroundImage: `radial-gradient(circle at 20% 30%, oklch(0.5 0.15 295 / 8%), transparent 50%),
+                           radial-gradient(circle at 80% 70%, oklch(0.52 0.14 152 / 6%), transparent 50%)`,
         }}
       />
 
@@ -32,7 +23,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/40 bg-primary/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-primary"
+            className="inline-flex items-center gap-2 rounded-full border border-purple-200 bg-purple-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-purple-700"
           >
             <Sparkles className="size-3.5" aria-hidden="true" />
             {CANDIDATE.party} • São Paulo • 2026
@@ -42,17 +33,19 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="mt-6 text-4xl font-semibold leading-[1.08] sm:text-6xl"
+            className="mt-6 text-4xl font-semibold leading-[1.08] text-gray-900 sm:text-6xl"
           >
             Fé, família e coragem
-            <span className="block text-gold-gradient">para resgatar o Brasil</span>
+            <span className="block bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
+              para resgatar o Brasil
+            </span>
           </motion.h1>
 
           <motion.p
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+            className="mt-6 max-w-xl text-base leading-relaxed text-gray-600 sm:text-lg"
           >
             {CANDIDATE.fullName} — o {CANDIDATE.name} — é {CANDIDATE.role.toLowerCase()} pelo{" "}
             {CANDIDATE.party}. Uma trajetória de vida religiosa e de defesa pública dos valores
@@ -85,20 +78,17 @@ export function Hero() {
         >
           <div
             aria-hidden="true"
-            className="absolute -inset-3 rounded-[1.75rem] bg-[image:var(--gradient-gold)] opacity-25 blur-2xl"
+            className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-purple-200/50 via-purple-300/40 to-green-200/30 opacity-60 blur-2xl"
           />
-          <figure className="surface-card relative overflow-hidden rounded-2xl">
+          <figure className="surface-card relative overflow-hidden">
             <img
               src={heroPortrait}
-              alt="Foto institucional do Padre Kelmon (imagem ilustrativa a ser substituída pelo material oficial da campanha)"
+              alt="Padre Kelmon - Candidato a Deputado Federal por São Paulo"
               width={1024}
               height={1280}
               fetchPriority="high"
-              className="aspect-[4/5] w-full object-cover"
+              className="aspect-[4/5] w-full object-cover object-center"
             />
-            <figcaption className="border-t border-border/60 px-4 py-3 text-xs text-muted-foreground">
-              Imagem ilustrativa — substituir pela foto oficial da campanha.
-            </figcaption>
           </figure>
         </motion.div>
       </div>

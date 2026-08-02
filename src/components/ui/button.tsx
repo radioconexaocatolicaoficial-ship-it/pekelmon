@@ -17,9 +17,9 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         campaign:
-          "bg-[image:var(--gradient-gold)] text-primary-foreground font-semibold shadow-[var(--shadow-gold)] transition-transform hover:-translate-y-0.5",
+          "bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold shadow-lg shadow-purple-500/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-purple-500/40",
         outlineGold:
-          "border border-primary/60 bg-transparent text-primary font-semibold hover:bg-primary/10",
+          "border-2 border-purple-600 bg-transparent text-purple-700 font-semibold hover:bg-purple-50",
         flag: "bg-accent text-accent-foreground font-semibold shadow-sm hover:bg-accent/90",
       },
       size: {
