@@ -2,7 +2,7 @@ import { Quote, Calendar, Award, BookOpen, GraduationCap, Heart, Users, Megaphon
 import { motion } from "motion/react";
 
 import { CANDIDATE } from "@/lib/campaign-data";
-import heroPortrait from "@/assets/hero-portrait.png";
+import sobreImg from "@/assets/Sobre-Padre-Kelmon.jpg";
 
 // Dados resumidos em cards
 const HIGHLIGHTS_SOBRE = [
@@ -61,31 +61,8 @@ export function About() {
     <section id="historia" className="relative py-16" style={{ background: 'linear-gradient(to bottom, #ffffff, #f9fafb)' }}>
       <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
-          {/* Título da Seção */}
-          <div className="mb-12 text-center">
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-4 text-sm font-bold uppercase tracking-widest"
-              style={{ color: 'var(--yellow-primary)' }}
-            >
-              Sobre Padre Kelmon
-            </motion.p>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-4xl font-black sm:text-5xl lg:text-6xl"
-              style={{ fontFamily: 'var(--font-display)', color: 'var(--blue-primary)' }}
-            >
-              Uma Vida de Fé e Serviço
-            </motion.h2>
-          </div>
-
-          {/* Layout 2 Colunas: Foto Esquerda + Texto Direita */}
-          <div className="mb-16 grid items-center gap-12 lg:grid-cols-[400px_1fr]">
+          {/* Layout 2 Colunas: Foto Esquerda + Conteúdo Direita */}
+          <div className="mb-16 grid items-start gap-12 lg:grid-cols-[400px_1fr]">
             {/* Foto Esquerda */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -95,7 +72,7 @@ export function About() {
             >
               <div className="relative overflow-hidden rounded-2xl shadow-2xl">
                 <img 
-                  src={heroPortrait} 
+                  src={sobreImg} 
                   alt="Padre Kelmon"
                   className="h-auto w-full object-cover"
                 />
@@ -103,42 +80,61 @@ export function About() {
               </div>
             </motion.div>
 
-            {/* Texto Direita */}
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <p className="text-lg leading-relaxed text-gray-700 text-justify">
-                Nascido em Salvador em 1976, Padre Kelmon dedicou mais de 30 anos à vida religiosa, à formação da juventude e ao ativismo conservador cristão. Da Legião de Maria ao seminário, do convento à ordenação sacerdotal, de missões humanitárias à fundação do Movimento Cristão Conservador e do Foro do Brasil.
-              </p>
-              <p className="mt-4 text-lg leading-relaxed text-gray-700 text-justify">
-                Em 2022, tornou-se nacionalmente conhecido ao participar dos debates presidenciais defendendo valores cristãos. Hoje, com formação em Filosofia, Teologia e Pedagogia, apresenta programas na VV8 TV e confirma sua pré-candidatura a Deputado Federal por São Paulo pelo PL, afirmando cumprir "a missão de Deus" para representar a fé, a família e o Brasil no Congresso Nacional.
-              </p>
-            </motion.div>
-          </div>
+            {/* Conteúdo Direita: Título + Texto + Citação */}
+            <div>
+              {/* Título */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="mb-8"
+              >
+                <p className="mb-3 text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--yellow-primary)' }}>
+                  Sobre Padre Kelmon
+                </p>
+                <h2 className="text-3xl font-black sm:text-4xl lg:text-5xl" style={{ fontFamily: 'var(--font-display)', color: 'var(--blue-primary)' }}>
+                  Uma Vida de Fé e Serviço
+                </h2>
+              </motion.div>
 
-          {/* Citação Destacada - Menor e mais discreta */}
-          <motion.blockquote 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative mx-auto mb-12 max-w-3xl overflow-hidden rounded-2xl p-8 text-center shadow-lg"
-            style={{ background: 'linear-gradient(135deg, var(--blue-primary), #0052a3)' }}
-          >
-            <div className="absolute inset-0 opacity-5" style={{
-              backgroundImage: 'radial-gradient(circle at 20% 30%, white 2px, transparent 2px), radial-gradient(circle at 80% 70%, white 2px, transparent 2px)',
-              backgroundSize: '60px 60px'
-            }} />
-            <Quote className="relative mx-auto mb-4 size-8 text-yellow-400" aria-hidden="true" />
-            <p className="relative text-xl font-black leading-relaxed text-white sm:text-2xl lg:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
-              "Juntos vamos resgatar o Brasil."
-            </p>
-            <footer className="relative mt-4 text-xs font-semibold uppercase tracking-wider text-yellow-300">
-              Padre Kelmon — São Paulo, 2026
-            </footer>
-          </motion.blockquote>
+              {/* Texto Descritivo */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                <p className="text-lg leading-relaxed text-gray-700 text-justify">
+                  Nascido em Salvador em 1976, Padre Kelmon dedicou mais de 30 anos à vida religiosa, à formação da juventude e ao ativismo conservador cristão. Da Legião de Maria ao seminário, do convento à ordenação sacerdotal, de missões humanitárias à fundação do Movimento Cristão Conservador e do Foro do Brasil.
+                </p>
+                <p className="mt-4 text-lg leading-relaxed text-gray-700 text-justify">
+                  Em 2022, tornou-se nacionalmente conhecido ao participar dos debates presidenciais defendendo valores cristãos. Hoje, com formação em Filosofia, Teologia e Pedagogia, apresenta programas na VV8 TV e confirma sua pré-candidatura a Deputado Federal por São Paulo pelo PL, afirmando cumprir "a missão de Deus" para representar a fé, a família e o Brasil no Congresso Nacional.
+                </p>
+              </motion.div>
+
+              {/* Citação Azul - Abaixo do Texto */}
+              <motion.blockquote 
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+                className="relative mt-8 overflow-hidden rounded-2xl p-6 shadow-lg"
+                style={{ background: 'linear-gradient(135deg, var(--blue-primary), #0052a3)' }}
+              >
+                <div className="absolute inset-0 opacity-5" style={{
+                  backgroundImage: 'radial-gradient(circle at 20% 30%, white 2px, transparent 2px), radial-gradient(circle at 80% 70%, white 2px, transparent 2px)',
+                  backgroundSize: '60px 60px'
+                }} />
+                <Quote className="relative mx-auto mb-3 size-6 text-yellow-400" aria-hidden="true" />
+                <p className="relative text-lg font-black leading-relaxed text-white sm:text-xl lg:text-2xl text-center" style={{ fontFamily: 'var(--font-display)' }}>
+                  "Juntos vamos resgatar o Brasil."
+                </p>
+                <footer className="relative mt-3 text-center text-xs font-semibold uppercase tracking-wider text-yellow-300">
+                  Padre Kelmon — São Paulo, 2026
+                </footer>
+              </motion.blockquote>
+            </div>
+          </div>
 
           {/* Grid de Cards - 2 linhas x 4 colunas */}
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
