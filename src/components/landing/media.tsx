@@ -9,7 +9,7 @@ export function Media() {
   const [active, setActive] = useState<GalleryItem | null>(null);
 
   return (
-    <section id="midia" className="section-y border-t border-border/50" style={{ scrollMarginTop: '80px' }}>
+    <section id="midia" className="bg-card/30" style={{ scrollMarginTop: '80px', paddingTop: '3rem', paddingBottom: '3rem' }}>
       <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
           <SectionHeading
@@ -19,7 +19,7 @@ export function Media() {
           />
 
           {/* Seção de Vídeos */}
-          <div className="mt-12">
+          <div className="mt-10">
             <h3 className="mb-6 text-xl font-black" style={{ fontFamily: 'var(--font-display)', color: 'var(--blue-primary)' }}>
               Vídeos
             </h3>
@@ -57,7 +57,7 @@ export function Media() {
           </div>
 
           {/* Seção de Galeria */}
-          <div className="mt-16">
+          <div className="mt-10">
             <h3 className="mb-6 text-xl font-black" style={{ fontFamily: 'var(--font-display)', color: 'var(--blue-primary)' }}>
               Galeria de Fotos
             </h3>
