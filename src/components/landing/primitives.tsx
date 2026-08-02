@@ -1,6 +1,28 @@
 import { motion, useInView } from "motion/react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
+import { cn } from "@/lib/utils";
+
+/** Container padrão do site — mesma largura/padding em todos os breakpoints */
+export function PageShell({
+  children,
+  className,
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "mx-auto w-full max-w-[1120px] px-4 sm:px-5 lg:px-6",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
 export function Reveal({
   children,
   delay = 0,
@@ -39,9 +61,15 @@ export function SectionHeading({
       {eyebrow ? (
         <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">{eyebrow}</p>
       ) : null}
-      <h2 className="mt-3 text-3xl font-semibold leading-tight sm:text-4xl">{title}</h2>
-      <div className={`gold-rule mt-5 ${align === "center" ? "mx-auto" : ""}`} />
-      {subtitle ? <p className="mt-5 text-base text-muted-foreground">{subtitle}</p> : null}
+      <h2 className="mt-3 text-[1.75rem] font-semibold leading-tight sm:text-3xl lg:text-4xl">
+        {title}
+      </h2>
+      <div className={`gold-rule mt-4 sm:mt-5 ${align === "center" ? "mx-auto" : ""}`} />
+      {subtitle ? (
+        <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:mt-5 sm:text-base">
+          {subtitle}
+        </p>
+      ) : null}
     </Reveal>
   );
 }

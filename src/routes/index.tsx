@@ -12,6 +12,7 @@ import { SignupForm } from "@/components/landing/signup-form";
 import { SocialLinks } from "@/components/landing/social-links";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { getSocialFeeds } from "@/lib/social-feeds";
+import { scrollToSection } from "@/lib/scroll-to-section";
 
 const TITLE = "Padre Kelmon — Deputado Federal por São Paulo";
 const DESCRIPTION =
@@ -64,20 +65,20 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-dvh bg-white md:min-h-screen">
       <a
         href="#historia"
         onClick={(e) => {
           e.preventDefault();
-          document.getElementById('historia')?.scrollIntoView({ behavior: 'smooth' });
+          scrollToSection("historia");
         }}
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:px-4 focus:py-2"
-        style={{ backgroundColor: 'var(--blue-primary)', color: 'white' }}
+        style={{ backgroundColor: "var(--blue-primary)", color: "white" }}
       >
         Pular para o conteúdo
       </a>
       <SiteHeader />
-      <main>
+      <main className="overflow-x-clip">
         <Hero />
         <Highlights />
         <About />

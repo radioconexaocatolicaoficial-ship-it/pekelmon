@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 import { getSocialFeeds, type SocialNetworkId, type SocialPost } from "@/lib/social-feeds";
 
-import { Reveal } from "./primitives";
+import { PageShell, Reveal } from "./primitives";
 
 const InstagramIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" className="size-full">
@@ -104,7 +104,7 @@ function PostCard({
         href={profileUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex min-h-[280px] flex-col items-center justify-center gap-3 rounded-xl border-2 bg-white p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+        className="flex min-h-[220px] flex-col items-center justify-center gap-3 rounded-xl border-2 bg-white p-6 text-center shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg sm:min-h-[280px]"
         style={{ borderColor: color + "40" }}
       >
         <span className="text-sm font-semibold" style={{ color }}>
@@ -161,7 +161,7 @@ function PostCard({
 function PostSkeleton({ color }: { color: string }) {
   return (
     <div
-      className="min-h-[280px] animate-pulse rounded-xl border-2 bg-white"
+      className="min-h-[220px] animate-pulse rounded-xl border-2 bg-white sm:min-h-[280px]"
       style={{ borderColor: color + "30" }}
     >
       <div className="aspect-video bg-gray-100" />
@@ -183,14 +183,9 @@ export function Media() {
   const featuredVideoId = "EI-bTS70q0U";
 
   return (
-    <section
-      id="midia"
-      className="bg-card/30"
-      style={{ scrollMarginTop: "80px", paddingTop: "3rem", paddingBottom: "3rem" }}
-    >
-      <div className="mx-auto w-full" style={{ maxWidth: "1120px", paddingLeft: "0", paddingRight: "0" }}>
-        <div className="px-5 lg:px-0">
-          <div className="mb-12 grid items-stretch gap-8 lg:grid-cols-2">
+    <section id="midia" className="section-pad bg-card/30">
+      <PageShell>
+          <div className="mb-8 grid items-stretch gap-6 sm:mb-12 sm:gap-8 lg:grid-cols-2">
             <div className="flex flex-col justify-center">
               <p
                 className="mb-3 text-sm font-bold uppercase tracking-widest"
@@ -199,12 +194,12 @@ export function Media() {
                 Mídia
               </p>
               <h2
-                className="mb-4 text-3xl font-black sm:text-4xl lg:text-5xl"
+                className="mb-4 text-[1.75rem] font-black sm:text-4xl lg:text-5xl"
                 style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
               >
                 Padre Kelmon nas Redes Sociais
               </h2>
-              <p className="text-base leading-relaxed text-gray-700">
+              <p className="text-sm leading-relaxed text-gray-700 sm:text-base">
                 Acompanhe diariamente as publicações, vídeos, mensagens e posicionamentos do Padre
                 Kelmon nas principais plataformas digitais. Os cards abaixo exibem automaticamente
                 as 4 publicações mais recentes de cada rede.
@@ -217,9 +212,9 @@ export function Media() {
               ) : null}
             </div>
 
-            <div className="relative h-full min-h-[300px] overflow-hidden rounded-2xl shadow-2xl">
+            <div className="relative aspect-video w-full overflow-hidden rounded-2xl shadow-2xl">
               <iframe
-                className="h-full w-full"
+                className="absolute inset-0 h-full w-full"
                 src={`https://www.youtube.com/embed/${featuredVideoId}`}
                 title="Padre Kelmon - Vídeo em destaque"
                 frameBorder="0"
@@ -229,7 +224,7 @@ export function Media() {
             </div>
           </div>
 
-          <div className="mt-10 space-y-12">
+          <div className="mt-8 space-y-10 sm:mt-10 sm:space-y-12">
             {(isLoading ? placeholderNetworks() : networks).map((social) => {
               const IconComponent = ICONS[social.id as SocialNetworkId] ?? InstagramIcon;
               const posts = "posts" in social ? social.posts : [];
@@ -237,15 +232,15 @@ export function Media() {
 
               return (
                 <div key={social.name} className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex min-w-0 items-center gap-3">
                       <div
-                        className="inline-flex size-10 items-center justify-center rounded-xl p-2 text-white"
+                        className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl p-2 text-white"
                         style={{ backgroundColor: social.color }}
                       >
                         <IconComponent />
                       </div>
-                      <div>
+                      <div className="min-w-0">
                         <h4 className="text-base font-bold" style={{ color: "var(--blue-primary)" }}>
                           {social.name}
                         </h4>
@@ -253,7 +248,7 @@ export function Media() {
                           href={social.profileUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-sm text-gray-600 transition-colors hover:text-blue-600"
+                          className="truncate text-sm text-gray-600 transition-colors hover:text-blue-600"
                         >
                           {social.handle}
                         </a>
@@ -264,7 +259,7 @@ export function Media() {
                       href={social.profileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105"
+                      className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105 sm:h-auto sm:w-auto"
                       style={{ backgroundColor: social.color }}
                     >
                       <span>Ver todos</span>
@@ -272,10 +267,14 @@ export function Media() {
                     </a>
                   </div>
 
-                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  <div className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-2 snap-x snap-mandatory sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
                     {isLoading
                       ? slots.map((_, index) => (
-                          <Reveal key={`${social.name}-sk-${index}`} delay={0.05 * index}>
+                          <Reveal
+                            key={`${social.name}-sk-${index}`}
+                            delay={0.05 * index}
+                            className="w-[78%] shrink-0 snap-start sm:w-auto sm:shrink"
+                          >
                             <PostSkeleton color={social.color} />
                           </Reveal>
                         ))
@@ -283,6 +282,7 @@ export function Media() {
                           <Reveal
                             key={`${social.name}-${post?.id ?? index}`}
                             delay={0.05 * index}
+                            className="w-[78%] shrink-0 snap-start sm:w-auto sm:shrink"
                           >
                             <PostCard
                               post={post}
@@ -297,8 +297,7 @@ export function Media() {
               );
             })}
           </div>
-        </div>
-      </div>
+      </PageShell>
     </section>
   );
 }

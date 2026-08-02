@@ -1,8 +1,8 @@
-import { Quote, Calendar, Award, BookOpen, GraduationCap, Heart, Users, Megaphone, Scale, Tv, Vote } from "lucide-react";
+import { Quote, Calendar, Award, BookOpen, GraduationCap, Heart, Users, Megaphone, Scale, Tv } from "lucide-react";
 import { motion } from "motion/react";
 
-import { CANDIDATE } from "@/lib/campaign-data";
 import sobreImg from "@/assets/Sobre-Padre-Kelmon.jpg";
+import { PageShell } from "./primitives";
 
 // Dados resumidos em cards
 const HIGHLIGHTS_SOBRE = [
@@ -58,46 +58,44 @@ const HIGHLIGHTS_SOBRE = [
 
 export function About() {
   return (
-    <section id="historia" className="relative py-16" style={{ background: 'linear-gradient(to bottom, #ffffff, #f9fafb)', scrollMarginTop: '80px' }}>
-      <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
-        <div className="px-5 lg:px-0">
-          {/* Layout 2 Colunas: 50% Foto + 50% Conteúdo - Mesma Altura */}
-          <div className="mb-16 grid items-stretch gap-12 lg:grid-cols-2">
-            {/* Foto Esquerda - 50% */}
+    <section
+      id="historia"
+      className="section-pad relative"
+      style={{ background: "linear-gradient(to bottom, #ffffff, #f9fafb)" }}
+    >
+      <PageShell>
+          <div className="mb-10 grid items-stretch gap-8 sm:mb-14 lg:mb-16 lg:grid-cols-2 lg:gap-12">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative h-full"
+              className="relative"
             >
-              <div className="relative h-full overflow-hidden rounded-2xl shadow-2xl">
-                <img 
-                  src={sobreImg} 
+              <div className="relative aspect-[4/5] max-h-[420px] overflow-hidden rounded-2xl shadow-2xl sm:max-h-[520px] lg:aspect-auto lg:h-full lg:max-h-none">
+                <img
+                  src={sobreImg}
                   alt="Padre Kelmon"
                   className="h-full w-full object-cover"
                 />
-                <div className="absolute inset-0 ring-2 ring-inset ring-white/10 rounded-2xl" />
+                <div className="absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/10" />
               </div>
             </motion.div>
 
-            {/* Conteúdo Direita: Título + Texto + Citação - 50% */}
-            <div className="flex flex-col justify-between h-full">
-              {/* Título */}
+            <div className="flex h-full flex-col justify-between">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="mb-6"
+                className="mb-5 sm:mb-6"
               >
                 <p className="mb-3 text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--yellow-primary)' }}>
                   Sobre Padre Kelmon
                 </p>
-                <h2 className="text-3xl font-black sm:text-4xl lg:text-5xl" style={{ fontFamily: 'var(--font-display)', color: 'var(--blue-primary)' }}>
+                <h2 className="text-[1.75rem] font-black sm:text-4xl lg:text-5xl" style={{ fontFamily: 'var(--font-display)', color: 'var(--blue-primary)' }}>
                   Uma Vida de Fé e Serviço
                 </h2>
               </motion.div>
 
-              {/* Texto Descritivo - Reduzido */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -105,13 +103,13 @@ export function About() {
                 transition={{ delay: 0.2 }}
                 className="flex-1"
               >
-                <p className="text-lg leading-relaxed text-gray-700 text-justify mb-4">
+                <p className="mb-4 text-base leading-relaxed text-gray-700 sm:text-lg sm:text-justify">
                   Nascido em Salvador em 1976, Padre Kelmon dedicou mais de 30 anos à vida religiosa, à formação da juventude e ao ativismo conservador cristão. Da Legião de Maria ao seminário, do convento à ordenação sacerdotal, de missões humanitárias à fundação do Movimento Cristão Conservador e do Foro do Brasil.
                 </p>
-                <p className="text-lg leading-relaxed text-gray-700 text-justify mb-4">
+                <p className="mb-4 text-base leading-relaxed text-gray-700 sm:text-lg sm:text-justify">
                   Com formação acadêmica em Filosofia, Teologia e Pedagogia, tornou-se nacionalmente conhecido em 2022 ao participar dos debates presidenciais defendendo valores cristãos. Fundou o Foro do Brasil no Congresso Nacional em 2023 e lançou o livro "Fé e Política de Mãos Dadas" em 2024.
                 </p>
-                <p className="text-lg leading-relaxed text-gray-700 text-justify">
+                <p className="text-base leading-relaxed text-gray-700 sm:text-lg sm:text-justify">
                   Hoje apresenta programas na VV8 TV e confirma sua pré-candidatura a Deputado Federal por São Paulo pelo Partido Liberal, afirmando cumprir "a missão de Deus" para representar a fé, a família e o Brasil no Congresso Nacional.
                 </p>
               </motion.div>
@@ -140,8 +138,7 @@ export function About() {
             </div>
           </div>
 
-          {/* Grid de Cards - 2 linhas x 4 colunas */}
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {HIGHLIGHTS_SOBRE.map((item, i) => {
               const Icon = item.icon;
               return (
@@ -151,7 +148,7 @@ export function About() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.5, delay: i * 0.1 }}
-                  className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white p-6 shadow-lg transition-all hover:border-blue-500 hover:shadow-2xl hover:-translate-y-1"
+                  className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white p-5 shadow-lg transition-all hover:-translate-y-1 hover:border-blue-500 hover:shadow-2xl sm:p-6"
                 >
                   {/* Ícone */}
                   <div className="mb-4 inline-flex size-14 items-center justify-center rounded-xl transition-transform group-hover:scale-110" style={{ backgroundColor: 'var(--blue-primary)' }}>
@@ -194,8 +191,7 @@ export function About() {
               <span className="font-semibold" style={{ color: 'var(--blue-primary)' }}>Fontes:</span> Foro Brasil (biografia oficial), Wikipédia e veículos de imprensa
             </p>
           </motion.div>
-        </div>
-      </div>
+      </PageShell>
     </section>
   );
 }

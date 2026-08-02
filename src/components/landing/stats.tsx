@@ -1,20 +1,16 @@
 import { ArrowUpRight, Quote } from "lucide-react";
 
 import heroPortrait from "@/assets/hero-portrait.png";
-import { Counter, Reveal } from "./primitives";
 import { FORO_BRASIL, STATS, TRUST_PILLARS } from "@/lib/campaign-data";
+import { Counter, PageShell, Reveal } from "./primitives";
 
 export function Stats() {
   return (
     <section
       id="numeros"
-      className="relative overflow-hidden border-t border-border/50"
+      className="section-pad relative overflow-hidden border-t border-border/50"
       style={{
-        scrollMarginTop: "80px",
-        paddingTop: "3rem",
-        paddingBottom: "3rem",
-        background:
-          "linear-gradient(180deg, #ffffff 0%, #f4f7fc 42%, #ffffff 100%)",
+        background: "linear-gradient(180deg, #ffffff 0%, #f4f7fc 42%, #ffffff 100%)",
       }}
     >
       <div
@@ -28,12 +24,10 @@ export function Stats() {
         style={{ background: "var(--blue-primary)" }}
       />
 
-      <div className="relative mx-auto w-full" style={{ maxWidth: "1120px", paddingLeft: "0", paddingRight: "0" }}>
-        <div className="px-5 lg:px-0">
-          {/* 50% texto | 50% foto */}
+      <PageShell className="relative">
           <div className="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-12">
             <Reveal className="h-full">
-              <div className="flex h-full max-h-[480px] flex-col justify-center">
+              <div className="flex h-full max-h-none flex-col justify-center lg:max-h-[480px]">
                 <div>
                   <p
                     className="mb-3 text-sm font-bold uppercase tracking-widest"
@@ -42,7 +36,7 @@ export function Stats() {
                     Indicadores
                   </p>
                   <h2
-                    className="text-3xl font-black leading-tight sm:text-4xl lg:text-5xl"
+                    className="text-[1.75rem] font-black leading-tight sm:text-4xl lg:text-5xl"
                     style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
                   >
                     Trajetória que gera confiança
@@ -128,7 +122,7 @@ export function Stats() {
                     style={{ background: "var(--gradient-yellow)" }}
                   />
                   <p
-                    className="text-4xl font-black tabular-nums sm:text-5xl"
+                    className="text-3xl font-black tabular-nums sm:text-4xl lg:text-5xl"
                     style={{
                       fontFamily: "var(--font-display)",
                       color: "var(--blue-primary)",
@@ -245,8 +239,7 @@ export function Stats() {
               ; cobertura jornalística sobre a pré-candidatura a Deputado Federal por São Paulo (PL).
             </p>
           </Reveal>
-        </div>
-      </div>
+      </PageShell>
     </section>
   );
 }

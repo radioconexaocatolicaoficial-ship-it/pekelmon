@@ -1,7 +1,7 @@
 import { Facebook, Instagram, Youtube } from "lucide-react";
 
-import { Reveal } from "./primitives";
 import { CANDIDATE } from "@/lib/campaign-data";
+import { PageShell, Reveal } from "./primitives";
 
 function XIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -31,64 +31,59 @@ export function SocialLinks() {
   return (
     <section
       id="redes"
-      className="relative overflow-hidden border-t border-border/50"
+      className="section-pad relative overflow-hidden border-t border-border/50"
       style={{
-        scrollMarginTop: "80px",
-        paddingTop: "3rem",
-        paddingBottom: "3rem",
         background: "linear-gradient(180deg, #ffffff 0%, #f4f7fc 50%, #ffffff 100%)",
       }}
     >
-      <div className="mx-auto w-full" style={{ maxWidth: "1120px", paddingLeft: "0", paddingRight: "0" }}>
-        <div className="px-5 lg:px-0">
-          <Reveal>
-            <div className="mx-auto max-w-3xl text-center">
-              <p
-                className="mb-3 text-sm font-bold uppercase tracking-widest"
-                style={{ color: "var(--yellow-primary)" }}
-              >
-                Redes sociais
-              </p>
-              <h2
-                className="text-3xl font-black leading-tight sm:text-4xl lg:text-5xl"
-                style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
-              >
-                Acompanhe de perto
-              </h2>
-              <div className="gold-rule mx-auto mt-5" />
-              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-gray-700">
-                Siga o Padre Kelmon nas redes oficiais e acompanhe a campanha, os posicionamentos e
-                os encontros pelo Brasil.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {NETWORKS.map(({ label, href, Icon, handle }, i) => (
-              <Reveal key={label} delay={0.05 * i}>
-                <a
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-full items-center gap-3 rounded-xl border-2 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-                  style={{ borderColor: "rgba(0, 102, 204, 0.12)" }}
-                >
-                  <span
-                    className="inline-flex size-11 shrink-0 items-center justify-center rounded-lg text-white"
-                    style={{ backgroundColor: "var(--blue-primary)" }}
-                  >
-                    <Icon className="size-5" aria-hidden="true" />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block truncate text-sm font-bold text-gray-900">{label}</span>
-                    <span className="block truncate text-xs text-gray-500">{handle}</span>
-                  </span>
-                </a>
-              </Reveal>
-            ))}
+      <PageShell>
+        <Reveal>
+          <div className="mx-auto max-w-3xl text-center">
+            <p
+              className="mb-3 text-sm font-bold uppercase tracking-widest"
+              style={{ color: "var(--yellow-primary)" }}
+            >
+              Redes sociais
+            </p>
+            <h2
+              className="text-[1.75rem] font-black leading-tight sm:text-4xl lg:text-5xl"
+              style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
+            >
+              Acompanhe de perto
+            </h2>
+            <div className="gold-rule mx-auto mt-4 sm:mt-5" />
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-gray-700 sm:mt-5 sm:text-base">
+              Siga o Padre Kelmon nas redes oficiais e acompanhe a campanha, os posicionamentos e os
+              encontros pelo Brasil.
+            </p>
           </div>
+        </Reveal>
+
+        <div className="mt-8 grid grid-cols-1 gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-5">
+          {NETWORKS.map(({ label, href, Icon, handle }, i) => (
+            <Reveal key={label} delay={0.05 * i}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex h-full min-h-14 items-center gap-3 rounded-xl border-2 bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg active:bg-blue-50"
+                style={{ borderColor: "rgba(0, 102, 204, 0.12)" }}
+              >
+                <span
+                  className="inline-flex size-11 shrink-0 items-center justify-center rounded-lg text-white"
+                  style={{ backgroundColor: "var(--blue-primary)" }}
+                >
+                  <Icon className="size-5" aria-hidden="true" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block truncate text-sm font-bold text-gray-900">{label}</span>
+                  <span className="block truncate text-xs text-gray-500">{handle}</span>
+                </span>
+              </a>
+            </Reveal>
+          ))}
         </div>
-      </div>
+      </PageShell>
     </section>
   );
 }

@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import sobreImg from "@/assets/Sobre-Padre-Kelmon.jpg";
-import { Reveal } from "./primitives";
+import { PageShell, Reveal } from "./primitives";
 
 const UFS = [
   "AC",
@@ -110,11 +110,8 @@ export function SignupForm() {
   return (
     <section
       id="cadastro"
-      className="relative overflow-hidden border-t border-border/50"
+      className="section-pad relative overflow-hidden border-t border-border/50"
       style={{
-        scrollMarginTop: "76px",
-        paddingTop: "3rem",
-        paddingBottom: "3rem",
         background: "linear-gradient(180deg, #ffffff 0%, #f4f7fc 45%, #ffffff 100%)",
       }}
     >
@@ -129,10 +126,8 @@ export function SignupForm() {
         style={{ background: "var(--blue-primary)" }}
       />
 
-      <div className="relative mx-auto w-full" style={{ maxWidth: "1120px", paddingLeft: "0", paddingRight: "0" }}>
-        <div className="px-5 lg:px-0">
-          {/* Duas colunas 50% — mesma altura: textos+form | foto */}
-          <div className="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-10">
+      <PageShell className="relative">
+          <div className="grid items-stretch gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-10">
             <Reveal className="h-full min-h-0">
               <div className="flex h-full flex-col">
                 <div className="shrink-0">
@@ -143,7 +138,7 @@ export function SignupForm() {
                     Faça parte
                   </p>
                   <h2
-                    className="text-3xl font-black leading-tight sm:text-4xl"
+                    className="text-[1.75rem] font-black leading-tight sm:text-4xl"
                     style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
                   >
                     Junte-se a essa missão
@@ -299,7 +294,7 @@ export function SignupForm() {
                     type="submit"
                     variant="yellow"
                     size="xl"
-                    className="mt-4 w-full text-base font-bold"
+                    className="mt-4 h-12 w-full text-base font-bold"
                     disabled={loading}
                   >
                     {loading ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : null}
@@ -318,7 +313,7 @@ export function SignupForm() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.08} className="h-full min-h-0">
+            <Reveal delay={0.08} className="hidden h-full min-h-0 lg:block">
               <div className="relative h-full min-h-[480px] w-full overflow-hidden rounded-2xl shadow-2xl lg:min-h-full">
                 <img
                   src={sobreImg}
@@ -346,8 +341,7 @@ export function SignupForm() {
               </div>
             </Reveal>
           </div>
-        </div>
-      </div>
+      </PageShell>
     </section>
   );
 }

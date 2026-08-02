@@ -3,7 +3,9 @@ import { Menu, X, Home, BookText, Flag, Film, TrendingUp, UserPlus } from "lucid
 
 import { Button } from "@/components/ui/button";
 import { CANDIDATE } from "@/lib/campaign-data";
+import { scrollToSection } from "@/lib/scroll-to-section";
 import logo from "@/assets/Logo-Site-PAdre-kelmon.png";
+import { PageShell } from "./primitives";
 
 const LINKS = [
   { href: "inicio", label: "Início", icon: Home },
@@ -13,20 +15,6 @@ const LINKS = [
   { href: "numeros", label: "Indicadores", icon: TrendingUp },
   { href: "cadastro", label: "Faça parte", icon: UserPlus },
 ];
-
-function getHeaderOffset() {
-  const header = document.querySelector("header");
-  return Math.ceil(header?.getBoundingClientRect().height ?? 80);
-}
-
-function scrollToSection(id: string) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  // Scroll a bit further so the previous section never peeks under the header
-  const offset = Math.max(0, getHeaderOffset() - 4);
-  const top = el.getBoundingClientRect().top + window.scrollY - offset;
-  window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
-}
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -39,35 +27,50 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    document.body.classList.toggle("menu-open", open);
+    return () => document.body.classList.remove("menu-open");
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  function goTo(id: string) {
+    setOpen(false);
+    window.setTimeout(() => scrollToSection(id), 60);
+  }
+
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "border-b border-blue-200 bg-white shadow-md" : "bg-white/90 backdrop-blur-md"
+      className={`fixed inset-x-0 top-0 z-50 pt-[env(safe-area-inset-top,0px)] transition-all duration-300 ${
+        scrolled ? "border-b border-blue-200 bg-white shadow-md" : "bg-white/95 backdrop-blur-md"
       }`}
     >
-      <nav
-        aria-label="Navegação principal"
-        className="mx-auto w-full flex items-center justify-between py-3"
-        style={{ maxWidth: '1140px', paddingLeft: '0', paddingRight: '0' }}
-      >
-        <div className="flex w-full items-center justify-between px-5 lg:px-0">
+      <nav aria-label="Navegação principal" className="w-full">
+        <PageShell className="flex items-center justify-between py-2.5 sm:py-3">
           <a
             href="#inicio"
             className="flex shrink-0 items-center"
             onClick={(e) => {
               e.preventDefault();
-              scrollToSection("inicio");
+              goTo("inicio");
             }}
           >
             <img
               src={logo}
               alt="Padre Kelmon - Por São Paulo, pelo Brasil"
-              className="h-12 w-auto sm:h-14"
+              className="h-11 w-auto sm:h-12 md:h-14"
             />
           </a>
 
-          <div className="flex items-center gap-5 lg:gap-6">
-            <ul className="hidden items-center gap-5 lg:flex">
+          <div className="flex items-center gap-2 sm:gap-4 lg:gap-6">
+            <ul className="hidden items-center gap-4 xl:gap-5 lg:flex">
               {LINKS.map((l) => {
                 const Icon = l.icon;
                 return (
@@ -102,54 +105,66 @@ export function SiteHeader() {
 
             <button
               type="button"
-              className="rounded-md p-2 text-blue-700 hover:bg-blue-50 lg:hidden"
+              className="inline-flex size-11 items-center justify-center rounded-xl text-blue-700 hover:bg-blue-50 lg:hidden"
               aria-label={open ? "Fechar menu" : "Abrir menu"}
               aria-expanded={open}
+              aria-controls="mobile-nav-panel"
               onClick={() => setOpen((v) => !v)}
             >
-              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+              {open ? <X className="size-6" /> : <Menu className="size-6" />}
             </button>
           </div>
-        </div>
+        </PageShell>
       </nav>
 
+      {/* Menu mobile estilo app */}
       {open ? (
-        <div className="border-t border-blue-100 bg-white px-5 pb-6 pt-2 shadow-lg lg:hidden">
-          <ul className="flex flex-col">
-            {LINKS.map((l) => {
-              const Icon = l.icon;
-              return (
-                <li key={l.href}>
-                  <a
-                    href={`#${l.href}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setOpen(false);
-                      // Wait for mobile menu to collapse so header height is correct
-                      window.setTimeout(() => scrollToSection(l.href), 50);
-                    }}
-                    className="flex items-center gap-3 border-b border-gray-100 py-4 text-sm font-bold text-gray-700 hover:text-blue-600"
-                  >
-                    <Icon className="size-6 stroke-[2.5]" />
-                    {l.label}
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-          <Button asChild variant="campaign" className="mt-5 w-full">
-            <a
-              href="#cadastro"
-              onClick={(e) => {
-                e.preventDefault();
-                setOpen(false);
-                window.setTimeout(() => scrollToSection("cadastro"), 50);
-              }}
-            >
-              Quero apoiar {CANDIDATE.name}
-            </a>
-          </Button>
-        </div>
+        <>
+          <button
+            type="button"
+            aria-label="Fechar menu"
+            className="fixed inset-0 top-[calc(3.5rem+env(safe-area-inset-top,0px))] z-40 bg-black/35 lg:hidden"
+            onClick={() => setOpen(false)}
+          />
+          <div
+            id="mobile-nav-panel"
+            className="relative z-50 max-h-[min(78dvh,560px)] overflow-y-auto border-t border-blue-100 bg-white px-4 pb-[calc(1.25rem+env(safe-area-inset-bottom,0px))] pt-2 shadow-xl sm:px-5 lg:hidden"
+          >
+            <ul className="flex flex-col">
+              {LINKS.map((l) => {
+                const Icon = l.icon;
+                return (
+                  <li key={l.href}>
+                    <a
+                      href={`#${l.href}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        goTo(l.href);
+                      }}
+                      className="flex min-h-12 items-center gap-3 border-b border-gray-100 py-3.5 text-base font-bold text-gray-700 active:bg-blue-50 hover:text-blue-600"
+                    >
+                      <span className="inline-flex size-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                        <Icon className="size-5 stroke-[2.5]" />
+                      </span>
+                      {l.label}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+            <Button asChild variant="campaign" className="mt-4 h-12 w-full text-base">
+              <a
+                href="#cadastro"
+                onClick={(e) => {
+                  e.preventDefault();
+                  goTo("cadastro");
+                }}
+              >
+                Quero apoiar {CANDIDATE.name}
+              </a>
+            </Button>
+          </div>
+        </>
       ) : null}
     </header>
   );

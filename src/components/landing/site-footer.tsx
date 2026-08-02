@@ -2,6 +2,7 @@ import { Facebook, Instagram, Youtube, ArrowUpRight } from "lucide-react";
 
 import { CANDIDATE, FORO_BRASIL } from "@/lib/campaign-data";
 import logo from "@/assets/Logo-Site-PAdre-kelmon.png";
+import { PageShell } from "./primitives";
 
 const QUICK_LINKS = [
   { href: "#inicio", label: "Início" },
@@ -45,11 +46,14 @@ const SOCIALS = [
   { label: "X", href: CANDIDATE.x, Icon: XIcon },
 ];
 
+const titleClass =
+  "mb-1.5 text-[11px] font-bold uppercase leading-none tracking-[0.2em]";
+
 export function SiteFooter() {
   return (
     <footer
-      className="relative overflow-hidden text-white"
-      style={{ background: "var(--gradient-hero)", minHeight: "300px" }}
+      className="relative overflow-hidden pb-[env(safe-area-inset-bottom,0px)] text-white"
+      style={{ background: "var(--gradient-hero)" }}
     >
       <div
         aria-hidden="true"
@@ -61,17 +65,9 @@ export function SiteFooter() {
         }}
       />
 
-      <div
-        className="relative mx-auto flex min-h-[300px] w-full flex-col justify-between"
-        style={{ maxWidth: "1120px" }}
-      >
-        {/*
-          items-start = topo da logo, "Navegação" e "Privacidade" na mesma linha horizontal.
-          Conteúdo logo abaixo do título (mb-1.5), sem faixa alta empurrando para baixo.
-        */}
-        <div className="grid flex-1 items-start gap-8 px-5 py-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.85fr)_minmax(0,0.85fr)_minmax(0,1.3fr)] lg:gap-x-12 lg:px-0 lg:py-7">
-          {/* Coluna 1 — logo (não alterar tamanho) */}
-          <div>
+      <PageShell className="relative py-6 sm:py-7 lg:py-8">
+        <div className="grid items-start gap-8 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.85fr)_minmax(0,0.85fr)_minmax(0,1.3fr)] lg:gap-x-12">
+          <div className="sm:col-span-2 lg:col-span-1">
             <a
               href="#inicio"
               className="inline-flex items-center rounded-lg bg-white px-3 py-1.5 shadow-md"
@@ -93,7 +89,7 @@ export function SiteFooter() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="inline-flex size-8 items-center justify-center rounded-md border border-white/25 bg-white/10 text-white transition-all hover:bg-white/20"
+                  className="inline-flex size-10 items-center justify-center rounded-md border border-white/25 bg-white/10 text-white transition-all hover:bg-white/20 sm:size-8"
                 >
                   <Icon className="size-3.5" />
                 </a>
@@ -101,12 +97,8 @@ export function SiteFooter() {
             </div>
           </div>
 
-          {/* Coluna 2 — Navegação */}
           <nav aria-label="Links rápidos">
-            <p
-              className="mb-1.5 text-[11px] font-bold uppercase leading-none tracking-[0.2em]"
-              style={{ color: "var(--yellow-primary)" }}
-            >
+            <p className={titleClass} style={{ color: "var(--yellow-primary)" }}>
               Navegação
             </p>
             <ul className="space-y-1.5">
@@ -114,7 +106,7 @@ export function SiteFooter() {
                 <li key={l.href}>
                   <a
                     href={l.href}
-                    className="text-sm font-semibold text-white/85 transition-colors hover:text-white"
+                    className="inline-flex min-h-9 items-center text-sm font-semibold text-white/85 transition-colors hover:text-white"
                   >
                     {l.label}
                   </a>
@@ -123,12 +115,8 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          {/* Coluna 3 — Links úteis */}
           <nav aria-label="Links úteis">
-            <p
-              className="mb-1.5 text-[11px] font-bold uppercase leading-none tracking-[0.2em]"
-              style={{ color: "var(--yellow-primary)" }}
-            >
+            <p className={titleClass} style={{ color: "var(--yellow-primary)" }}>
               Links úteis
             </p>
             <ul className="space-y-1.5">
@@ -139,7 +127,7 @@ export function SiteFooter() {
                     {...(l.external
                       ? { target: "_blank", rel: "noopener noreferrer" }
                       : {})}
-                    className="text-sm font-semibold text-white/85 transition-colors hover:text-white"
+                    className="inline-flex min-h-9 items-center text-sm font-semibold text-white/85 transition-colors hover:text-white"
                   >
                     {l.label}
                   </a>
@@ -148,12 +136,8 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          {/* Coluna 4 — Privacidade e LGPD */}
-          <div id="privacidade">
-            <p
-              className="mb-1.5 text-[11px] font-bold uppercase leading-none tracking-[0.2em]"
-              style={{ color: "var(--yellow-primary)" }}
-            >
+          <div id="privacidade" className="sm:col-span-2 lg:col-span-1">
+            <p className={titleClass} style={{ color: "var(--yellow-primary)" }}>
               Privacidade e LGPD
             </p>
             <p className="text-sm leading-relaxed text-white/85">
@@ -162,7 +146,7 @@ export function SiteFooter() {
             </p>
             <a
               href="#cadastro"
-              className="mt-3 inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-sm font-bold transition-transform hover:scale-105"
+              className="mt-3 inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-lg px-4 py-2 text-sm font-bold transition-transform hover:scale-105 sm:h-auto sm:w-auto"
               style={{
                 backgroundColor: "var(--yellow-primary)",
                 color: "var(--blue-primary)",
@@ -173,16 +157,15 @@ export function SiteFooter() {
             </a>
           </div>
         </div>
+      </PageShell>
 
-        <div className="border-t border-white/15">
-          <div className="flex flex-col items-center justify-between gap-1 px-5 py-2.5 text-center text-[11px] text-white/65 lg:flex-row lg:px-0 lg:text-left">
-            <p>
-              © {new Date().getFullYear()} Campanha {CANDIDATE.name}. Todos os direitos
-              reservados.
-            </p>
-            <p>Conteúdo informativo de pré-campanha, a partir de fontes públicas.</p>
-          </div>
-        </div>
+      <div className="border-t border-white/15">
+        <PageShell className="flex flex-col items-center justify-between gap-1 py-3 text-center text-[11px] text-white/65 sm:py-2.5 lg:flex-row lg:text-left">
+          <p>
+            © {new Date().getFullYear()} Campanha {CANDIDATE.name}. Todos os direitos reservados.
+          </p>
+          <p>Conteúdo informativo de pré-campanha, a partir de fontes públicas.</p>
+        </PageShell>
       </div>
     </footer>
   );
