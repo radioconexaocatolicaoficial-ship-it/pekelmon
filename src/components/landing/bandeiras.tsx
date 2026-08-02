@@ -4,13 +4,13 @@ import { BANDEIRAS } from "@/lib/campaign-data";
 
 export function Bandeiras() {
   return (
-    <section id="bandeiras" className="section-y bg-card/30" style={{ scrollMarginTop: '80px' }}>
+    <section id="bandeiras" className="bg-card/30" style={{ scrollMarginTop: '80px', paddingTop: '3rem', paddingBottom: '3rem' }}>
       <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
         <SectionHeading
           eyebrow="Pautas"
           title="As Pautas que Defendo"
-          subtitle="Compromissos firmes com o povo de São Paulo e com o Brasil. Uma agenda conservadora cristã para transformar nossa realidade."
+          subtitle="Compromissos firmes e inquebráveis com o povo de São Paulo e com o Brasil. Uma agenda conservadora cristã fundamentada em valores tradicionais, liberdades fundamentais e na dignidade da pessoa humana, para transformar nossa realidade e resgatar a esperança do nosso país."
         />
 
         <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
