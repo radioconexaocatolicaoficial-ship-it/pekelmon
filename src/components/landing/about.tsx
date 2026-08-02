@@ -61,20 +61,20 @@ export function About() {
     <section id="historia" className="relative py-16" style={{ background: 'linear-gradient(to bottom, #ffffff, #f9fafb)' }}>
       <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
-          {/* Layout 2 Colunas: Foto Esquerda (47%) + Conteúdo Direita (53%) */}
-          <div className="mb-16 grid items-stretch gap-12 lg:grid-cols-[47fr_53fr]">
-            {/* Foto Esquerda */}
+          {/* Layout 2 Colunas: 50% Foto + 50% Conteúdo */}
+          <div className="mb-16 grid items-start gap-12 lg:grid-cols-2">
+            {/* Foto Esquerda - 50% */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative h-full"
+              className="relative"
             >
-              <div className="relative h-full overflow-hidden rounded-2xl shadow-2xl">
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl">
                 <img 
                   src={sobreImg} 
                   alt="Padre Kelmon"
-                  className="h-full w-full object-cover"
+                  className="w-full h-auto object-cover"
                 />
                 <div className="absolute inset-0 ring-2 ring-inset ring-white/10 rounded-2xl" />
               </div>
@@ -97,7 +97,7 @@ export function About() {
                 </h2>
               </motion.div>
 
-              {/* Texto Descritivo - Ampliado */}
+              {/* Texto Descritivo - Reduzido */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -106,19 +106,13 @@ export function About() {
                 className="flex-1"
               >
                 <p className="text-lg leading-relaxed text-gray-700 text-justify mb-4">
-                  Nascido em Salvador em 21 de outubro de 1976, Padre Kelmon Luís da Silva Souza é primogênito de uma família católica tradicional. Desde jovem demonstrou vocação religiosa, sendo batizado em 1977, recebendo a Primeira Eucaristia aos 10 anos e a Crisma aos 19 anos.
+                  Nascido em Salvador em 1976, Padre Kelmon dedicou mais de 30 anos à vida religiosa, à formação da juventude e ao ativismo conservador cristão. Da Legião de Maria ao seminário, do convento à ordenação sacerdotal, de missões humanitárias à fundação do Movimento Cristão Conservador e do Foro do Brasil.
                 </p>
                 <p className="text-lg leading-relaxed text-gray-700 text-justify mb-4">
-                  Sua formação passou pela Legião de Maria, Pastoral da Criança e pela comunidade ecumênica de Taizé, onde ajudou a fundar o grupo JUSPE (Jovens Unidos Semeando Paz e Esperança). Em 1996, viveu no convento dos Frades Capuchinhos em Maceió, aprofundando seu chamado sacerdotal.
-                </p>
-                <p className="text-lg leading-relaxed text-gray-700 text-justify mb-4">
-                  A partir de 2000, ingressou no seminário dos Legionários de Cristo em São Paulo, tornando-se membro fundador do Seminário Maria Mater Ecclesiae do Brasil. Cursou Filosofia, Teologia e Pedagogia, sendo ordenado diácono em 2014 e sacerdote em 2015 na Igreja Ortodoxa da América.
-                </p>
-                <p className="text-lg leading-relaxed text-gray-700 text-justify mb-4">
-                  Em 2010, liderou campanha nacional pró-vida. Em 2017, realizou missão humanitária em Roraima auxiliando refugiados venezuelanos. A partir de 2019, fundou o Movimento Cristão Conservador (MCC) a convite de Roberto Jefferson, tornando-se seu primeiro presidente nacional.
+                  Com formação acadêmica em Filosofia, Teologia e Pedagogia, tornou-se nacionalmente conhecido em 2022 ao participar dos debates presidenciais defendendo valores cristãos. Fundou o Foro do Brasil no Congresso Nacional em 2023 e lançou o livro "Fé e Política de Mãos Dadas" em 2024.
                 </p>
                 <p className="text-lg leading-relaxed text-gray-700 text-justify">
-                  Em 2022, tornou-se nacionalmente conhecido ao participar dos debates presidenciais pelo PTB, defendendo valores cristãos e obtendo 81.129 votos. Em 2023, fundou o Foro do Brasil no Congresso Nacional. Lançou o livro "Fé e Política de Mãos Dadas" em 2024 e filiou-se ao Partido Liberal. Hoje apresenta programas na VV8 TV e é pré-candidato a Deputado Federal por São Paulo pelo PL, afirmando cumprir "a missão de Deus" para representar a fé, a família e o Brasil no Congresso Nacional.
+                  Hoje apresenta programas na VV8 TV e confirma sua pré-candidatura a Deputado Federal por São Paulo pelo Partido Liberal, afirmando cumprir "a missão de Deus" para representar a fé, a família e o Brasil no Congresso Nacional.
                 </p>
               </motion.div>
 
