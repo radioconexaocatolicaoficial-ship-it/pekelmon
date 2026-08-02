@@ -1,7 +1,59 @@
-import { Quote, Calendar, Award } from "lucide-react";
+import { Quote, Calendar, Award, BookOpen, GraduationCap, Heart, Users, Megaphone, Scale, Tv, Vote } from "lucide-react";
 import { motion } from "motion/react";
 
-import { CANDIDATE, TIMELINE } from "@/lib/campaign-data";
+import { CANDIDATE } from "@/lib/campaign-data";
+
+// Dados resumidos em cards
+const HIGHLIGHTS_SOBRE = [
+  {
+    icon: Calendar,
+    year: "1976-1995",
+    title: "Raízes e Formação Católica",
+    description: "Nascimento em Salvador (21/10/1976). Batismo, Eucaristia, Crisma. Liderança na Legião de Maria e cofundador do grupo JUSPE.",
+  },
+  {
+    icon: BookOpen,
+    year: "1996-2003",
+    title: "Convento e Seminário",
+    description: "Convento dos Capuchinhos em Maceió. Seminário Maria Mater Ecclesiae em SP. Formação em Filosofia, Teologia e Pedagogia.",
+  },
+  {
+    icon: GraduationCap,
+    year: "2014-2015",
+    title: "Ordenação Sacerdotal",
+    description: "Funda a associação Theotokos. Ordenado diácono (2014) e sacerdote (2015) na Igreja Ortodoxa da América.",
+  },
+  {
+    icon: Heart,
+    year: "2010-2017",
+    title: "Ativismo e Missões",
+    description: "Campanha pró-vida em 2010. Missão humanitária em Roraima (2017) auxiliando refugiados venezuelanos.",
+  },
+  {
+    icon: Users,
+    year: "2019-2021",
+    title: "Movimento Cristão Conservador",
+    description: "Conhece Roberto Jefferson. Funda o MCC a pedido do PTB, tornando-se seu primeiro presidente nacional.",
+  },
+  {
+    icon: Megaphone,
+    year: "2022",
+    title: "Candidatura Presidencial",
+    description: "Candidato à Presidência pelo PTB. Debates nacionais no SBT e Globo. Obtém 81.129 votos em 19 dias de campanha.",
+  },
+  {
+    icon: Scale,
+    year: "2023-2024",
+    title: "Foro do Brasil e Livro",
+    description: "Funda o Foro do Brasil (29/06/2023). Lança o livro 'Fé e Política de Mãos Dadas'. Filia-se ao PL em agosto/2024.",
+  },
+  {
+    icon: Tv,
+    year: "2025-2026",
+    title: "TV e Deputado Federal",
+    description: "Programas na VV8 TV: 'Confessionário' e 'Oração pelo Brasil'. Pré-candidato a Deputado Federal por São Paulo (PL).",
+  },
+];
 
 export function About() {
   return (
@@ -17,7 +69,7 @@ export function About() {
               className="mb-4 text-sm font-bold uppercase tracking-widest"
               style={{ color: 'var(--yellow-primary)' }}
             >
-              Quem é Padre Kelmon
+              Sobre Padre Kelmon
             </motion.p>
             <motion.h2 
               initial={{ opacity: 0, y: 20 }}
@@ -61,54 +113,47 @@ export function About() {
             </footer>
           </motion.blockquote>
 
-          {/* Timeline Moderna */}
-          <div className="relative">
-            {/* Linha vertical (desktop) */}
-            <div className="absolute left-0 top-0 bottom-0 w-1 rounded-full md:left-1/2 md:-translate-x-1/2" style={{ background: 'linear-gradient(to bottom, var(--blue-primary), var(--yellow-primary))' }} />
-            
-            <div className="space-y-12">
-              {TIMELINE.map((item, i) => (
+          {/* Grid de Cards - 2 linhas x 4 colunas */}
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {HIGHLIGHTS_SOBRE.map((item, i) => {
+              const Icon = item.icon;
+              return (
                 <motion.div
-                  key={item.year + item.title}
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-100px" }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
-                  className="relative md:grid md:grid-cols-2 md:gap-16"
+                  key={item.year}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white p-6 shadow-lg transition-all hover:border-blue-500 hover:shadow-2xl hover:-translate-y-1"
                 >
-                  {/* Bolinha na timeline */}
-                  <div className="absolute left-0 top-6 z-10 flex size-12 items-center justify-center rounded-full border-4 border-white shadow-lg md:left-1/2 md:-translate-x-1/2" style={{ backgroundColor: 'var(--blue-primary)' }}>
-                    <Calendar className="size-5 text-white" />
+                  {/* Ícone */}
+                  <div className="mb-4 inline-flex size-14 items-center justify-center rounded-xl transition-transform group-hover:scale-110" style={{ backgroundColor: 'var(--blue-primary)' }}>
+                    <Icon className="size-7 stroke-[2] text-white" />
                   </div>
 
-                  {/* Conteúdo */}
-                  <div className={`pl-20 md:pl-0 ${i % 2 === 0 ? 'md:col-start-1 md:text-right md:pr-24' : 'md:col-start-2 md:pl-24'}`}>
-                    <div className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white p-6 shadow-lg transition-all hover:border-blue-500 hover:shadow-2xl">
-                      {/* Badge do ano */}
-                      <div className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-bold shadow-sm" style={{ backgroundColor: 'var(--yellow-primary)', color: 'var(--blue-primary)' }}>
-                        <Award className="size-4" />
-                        {item.year}
-                      </div>
-                      
-                      {/* Título */}
-                      <h3 className="mb-3 text-2xl font-black" style={{ fontFamily: 'var(--font-display)', color: 'var(--blue-primary)' }}>
-                        {item.title}
-                      </h3>
-                      
-                      {/* Descrição */}
-                      <p className="leading-relaxed text-gray-700">
-                        {item.description}
-                      </p>
-
-                      {/* Efeito de hover */}
-                      <div className="absolute inset-0 -z-10 opacity-0 transition-opacity group-hover:opacity-100" style={{
-                        background: 'radial-gradient(circle at center, rgba(0, 102, 204, 0.05), transparent)'
-                      }} />
-                    </div>
+                  {/* Badge do ano */}
+                  <div className="mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: 'var(--yellow-primary)', color: 'var(--blue-primary)' }}>
+                    <Award className="size-3" />
+                    {item.year}
                   </div>
+                  
+                  {/* Título */}
+                  <h3 className="mb-3 text-lg font-black leading-tight" style={{ fontFamily: 'var(--font-display)', color: 'var(--blue-primary)' }}>
+                    {item.title}
+                  </h3>
+                  
+                  {/* Descrição */}
+                  <p className="text-sm leading-relaxed text-gray-700">
+                    {item.description}
+                  </p>
+
+                  {/* Efeito de hover */}
+                  <div className="absolute inset-0 -z-10 opacity-0 transition-opacity group-hover:opacity-100" style={{
+                    background: 'radial-gradient(circle at center, rgba(0, 102, 204, 0.05), transparent)'
+                  }} />
                 </motion.div>
-              ))}
-            </div>
+              );
+            })}
           </div>
 
           {/* Rodapé */}
