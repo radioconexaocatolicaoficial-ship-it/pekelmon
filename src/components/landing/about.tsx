@@ -86,29 +86,29 @@ export function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="mx-auto mt-6 max-w-3xl text-lg leading-relaxed text-gray-600"
+              className="mx-auto mt-6 max-w-4xl text-lg leading-relaxed text-gray-700"
             >
-              De Salvador a Brasília, do seminário aos debates nacionais: conheça a trajetória de mais de 30 anos dedicados à fé, à família e ao Brasil.
+              Nascido em Salvador em 1976, Padre Kelmon dedicou mais de 30 anos à vida religiosa, à formação da juventude e ao ativismo conservador cristão. Da Legião de Maria ao seminário, do convento à ordenação sacerdotal, de missões humanitárias à fundação do Movimento Cristão Conservador e do Foro do Brasil. Em 2022, tornou-se nacionalmente conhecido ao participar dos debates presidenciais defendendo valores cristãos. Hoje, com formação em Filosofia, Teologia e Pedagogia, apresenta programas na VV8 TV e confirma sua pré-candidatura a Deputado Federal por São Paulo pelo PL, afirmando cumprir "a missão de Deus" para representar a fé, a família e o Brasil no Congresso Nacional.
             </motion.p>
           </div>
 
-          {/* Citação Destacada */}
+          {/* Citação Destacada - Menor e mais discreta */}
           <motion.blockquote 
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
-            className="relative mx-auto mb-20 max-w-4xl overflow-hidden rounded-3xl p-10 text-center shadow-2xl"
+            className="relative mx-auto mb-16 max-w-3xl overflow-hidden rounded-2xl p-8 text-center shadow-lg"
             style={{ background: 'linear-gradient(135deg, var(--blue-primary), #0052a3)' }}
           >
-            <div className="absolute inset-0 opacity-10" style={{
+            <div className="absolute inset-0 opacity-5" style={{
               backgroundImage: 'radial-gradient(circle at 20% 30%, white 2px, transparent 2px), radial-gradient(circle at 80% 70%, white 2px, transparent 2px)',
               backgroundSize: '60px 60px'
             }} />
-            <Quote className="relative mx-auto mb-6 size-12 text-yellow-400" aria-hidden="true" />
-            <p className="relative text-2xl font-black leading-relaxed text-white sm:text-3xl lg:text-4xl" style={{ fontFamily: 'var(--font-display)' }}>
+            <Quote className="relative mx-auto mb-4 size-8 text-yellow-400" aria-hidden="true" />
+            <p className="relative text-xl font-black leading-relaxed text-white sm:text-2xl lg:text-3xl" style={{ fontFamily: 'var(--font-display)' }}>
               "Juntos vamos resgatar o Brasil."
             </p>
-            <footer className="relative mt-6 text-sm font-semibold uppercase tracking-wider text-yellow-400">
+            <footer className="relative mt-4 text-xs font-semibold uppercase tracking-wider text-yellow-300">
               Padre Kelmon — São Paulo, 2026
             </footer>
           </motion.blockquote>
@@ -127,12 +127,12 @@ export function About() {
                   className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white p-6 shadow-lg transition-all hover:border-blue-500 hover:shadow-2xl hover:-translate-y-1"
                 >
                   {/* Ícone */}
-                  <div className="mb-4 inline-flex size-14 items-center justify-center rounded-xl transition-transform group-hover:scale-110" style={{ backgroundColor: 'var(--blue-primary)' }}>
+                  <div className="mb-6 inline-flex size-14 items-center justify-center rounded-xl transition-transform group-hover:scale-110" style={{ backgroundColor: 'var(--blue-primary)' }}>
                     <Icon className="size-7 stroke-[2] text-white" />
                   </div>
 
                   {/* Badge do ano */}
-                  <div className="mb-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: 'var(--yellow-primary)', color: 'var(--blue-primary)' }}>
+                  <div className="mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: 'var(--yellow-primary)', color: 'var(--blue-primary)' }}>
                     <Award className="size-3" />
                     {item.year}
                   </div>
