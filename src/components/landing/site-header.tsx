@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Home, BookOpen, Flag, Image, Video, BarChart3, UserPlus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { CANDIDATE } from "@/lib/campaign-data";
 
 const LINKS = [
-  { href: "#historia", label: "História" },
-  { href: "#bandeiras", label: "Bandeiras" },
-  { href: "#galeria", label: "Galeria" },
-  { href: "#videos", label: "Vídeos" },
-  { href: "#numeros", label: "Números" },
-  { href: "#cadastro", label: "Cadastro" },
+  { href: "#topo", label: "Início", icon: Home },
+  { href: "#historia", label: "História", icon: BookOpen },
+  { href: "#bandeiras", label: "Bandeiras", icon: Flag },
+  { href: "#galeria", label: "Galeria", icon: Image },
+  { href: "#videos", label: "Vídeos", icon: Video },
+  { href: "#numeros", label: "Números", icon: BarChart3 },
+  { href: "#cadastro", label: "Cadastro", icon: UserPlus },
 ];
 
 export function SiteHeader() {
@@ -32,23 +33,27 @@ export function SiteHeader() {
     >
       <nav
         aria-label="Navegação principal"
-        className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4"
+        className="mx-auto flex max-w-[1140px] items-center justify-between px-5 py-4"
       >
         <a href="#topo" className="font-display text-xl font-bold tracking-wide" style={{ color: 'var(--blue-primary)' }}>
           Padre <span style={{ color: 'var(--yellow-dark)' }}>Kelmon</span>
         </a>
 
-        <ul className="hidden items-center gap-7 lg:flex">
-          {LINKS.map((l) => (
-            <li key={l.href}>
-              <a
-                href={l.href}
-                className="text-sm font-medium text-gray-700 transition-colors hover:text-blue-600"
-              >
-                {l.label}
-              </a>
-            </li>
-          ))}
+        <ul className="hidden items-center gap-6 lg:flex">
+          {LINKS.map((l) => {
+            const Icon = l.icon;
+            return (
+              <li key={l.href}>
+                <a
+                  href={l.href}
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-700 transition-colors hover:text-blue-600"
+                >
+                  <Icon className="size-4" />
+                  {l.label}
+                </a>
+              </li>
+            );
+          })}
         </ul>
 
         <div className="flex items-center gap-2">
@@ -70,17 +75,21 @@ export function SiteHeader() {
       {open ? (
         <div className="border-t border-blue-100 bg-white px-5 pb-6 pt-2 shadow-lg lg:hidden">
           <ul className="flex flex-col">
-            {LINKS.map((l) => (
-              <li key={l.href}>
-                <a
-                  href={l.href}
-                  onClick={() => setOpen(false)}
-                  className="block border-b border-gray-100 py-3 text-sm font-medium text-gray-700 hover:text-blue-600"
-                >
-                  {l.label}
-                </a>
-              </li>
-            ))}
+            {LINKS.map((l) => {
+              const Icon = l.icon;
+              return (
+                <li key={l.href}>
+                  <a
+                    href={l.href}
+                    onClick={() => setOpen(false)}
+                    className="flex items-center gap-3 border-b border-gray-100 py-3 text-sm font-semibold text-gray-700 hover:text-blue-600"
+                  >
+                    <Icon className="size-5" />
+                    {l.label}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
           <Button asChild variant="campaign" className="mt-5 w-full">
             <a href="#cadastro" onClick={() => setOpen(false)}>

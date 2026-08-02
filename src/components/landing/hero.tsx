@@ -19,7 +19,7 @@ export function Hero() {
         }}
       />
 
-      <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16">
+      <div className="mx-auto grid max-w-[1140px] items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16">
         <div className="text-white">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
