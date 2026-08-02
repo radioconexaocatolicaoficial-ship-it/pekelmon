@@ -10,7 +10,7 @@ export function Gallery() {
 
   return (
     <section id="galeria" className="section-y border-t border-border/50">
-      <div className="mx-auto max-w-6xl px-5">
+      <div className="mx-auto max-w-[1140px] px-5">
         <SectionHeading
           eyebrow="Galeria"
           title="Registros da caminhada"
