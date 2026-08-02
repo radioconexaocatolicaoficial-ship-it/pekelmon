@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { CANDIDATE } from "@/lib/campaign-data";
@@ -7,64 +7,95 @@ import heroPortrait from "@/assets/hero-portrait.jpg";
 
 export function Hero() {
   return (
-    <section id="topo" className="relative isolate overflow-hidden bg-gradient-to-br from-white via-purple-50/30 to-white pb-20 pt-32 sm:pb-28 sm:pt-40">
+    <section id="topo" className="relative isolate overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40" style={{ background: 'var(--gradient-hero)' }}>
+      {/* Padrão decorativo */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 opacity-30"
+        className="absolute inset-0 -z-10 opacity-10"
         style={{
-          backgroundImage: `radial-gradient(circle at 20% 30%, oklch(0.5 0.15 295 / 8%), transparent 50%),
-                           radial-gradient(circle at 80% 70%, oklch(0.52 0.14 152 / 6%), transparent 50%)`,
+          backgroundImage: `radial-gradient(circle at 25% 25%, white 2px, transparent 2px),
+                           radial-gradient(circle at 75% 75%, white 2px, transparent 2px)`,
+          backgroundSize: '60px 60px',
         }}
       />
 
-      <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 lg:grid-cols-[1.15fr_0.85fr]">
-        <div>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
+      <div className="mx-auto grid max-w-7xl items-center gap-12 px-5 lg:grid-cols-2 lg:gap-16">
+        <div className="text-white">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 rounded-full border border-purple-200 bg-purple-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-[0.22em] text-purple-700"
+            className="inline-flex items-center gap-2 rounded-lg border-2 border-white/40 bg-white/15 backdrop-blur-sm px-4 py-2 mb-6"
           >
-            <Sparkles className="size-3.5" aria-hidden="true" />
-            {CANDIDATE.party} • São Paulo • 2026
-          </motion.p>
+            <CheckCircle2 className="size-5 text-green-400" aria-hidden="true" />
+            <span className="text-sm font-bold uppercase tracking-wider">
+              Candidatura Homologada na Convenção do PL
+            </span>
+          </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="mt-6 text-4xl font-semibold leading-[1.08] text-gray-900 sm:text-6xl"
+            className="text-5xl font-black leading-[1.05] sm:text-6xl lg:text-7xl"
           >
-            Fé, família e coragem
-            <span className="block bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
-              para resgatar o Brasil
+            Agora é
+            <span className="block mt-2" style={{ color: 'var(--yellow-primary)', textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
+              OFICIAL
             </span>
           </motion.h1>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-bold uppercase"
+          >
+            PADRE KELMON
+          </motion.h2>
 
           <motion.p
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-6 max-w-xl text-base leading-relaxed text-gray-600 sm:text-lg"
+            transition={{ duration: 0.7, delay: 0.25 }}
+            className="mt-4 text-xl sm:text-2xl font-semibold"
           >
-            {CANDIDATE.fullName} — o {CANDIDATE.name} — é {CANDIDATE.role.toLowerCase()} pelo{" "}
-            {CANDIDATE.party}. Uma trajetória de vida religiosa e de defesa pública dos valores
-            cristãos, agora a serviço das famílias paulistas em Brasília.
+            Candidato a
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.3 }}
+            className="text-3xl sm:text-4xl font-black uppercase"
+            style={{ color: 'var(--yellow-primary)' }}
+          >
+            DEPUTADO
+            <span className="block">FEDERAL</span>
+          </motion.p>
+
+          <motion.p
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.35 }}
+            className="mt-2 text-sm sm:text-base uppercase tracking-wider"
+          >
+            Por São Paulo, pelo Brasil
           </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="mt-9 flex flex-col gap-3 sm:flex-row"
+            transition={{ duration: 0.7, delay: 0.4 }}
+            className="mt-10 flex flex-col gap-4 sm:flex-row"
           >
-            <Button asChild variant="campaign" size="xl">
+            <Button asChild variant="yellow" size="xl" className="text-lg font-bold">
               <a href="#cadastro">
                 Quero apoiar
-                <ArrowRight className="size-4" aria-hidden="true" />
+                <ArrowRight className="size-5" aria-hidden="true" />
               </a>
             </Button>
-            <Button asChild variant="outlineGold" size="xl">
+            <Button asChild variant="outlineWhite" size="xl" className="text-lg font-semibold">
               <a href="#historia">Conheça minha história</a>
             </Button>
           </motion.div>
@@ -74,20 +105,21 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.94 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-          className="relative mx-auto w-full max-w-sm"
+          className="relative mx-auto w-full max-w-md"
         >
           <div
             aria-hidden="true"
-            className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-purple-200/50 via-purple-300/40 to-green-200/30 opacity-60 blur-2xl"
+            className="absolute -inset-6 rounded-3xl opacity-40 blur-3xl"
+            style={{ background: 'var(--gradient-yellow)' }}
           />
-          <figure className="surface-card relative overflow-hidden">
+          <figure className="relative overflow-hidden rounded-2xl border-4 border-white shadow-2xl">
             <img
               src={heroPortrait}
               alt="Padre Kelmon - Candidato a Deputado Federal por São Paulo"
               width={1024}
               height={1280}
               fetchPriority="high"
-              className="aspect-[4/5] w-full object-cover object-center"
+              className="aspect-[3/4] w-full object-cover object-center"
             />
           </figure>
         </motion.div>

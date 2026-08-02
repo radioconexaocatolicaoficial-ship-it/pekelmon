@@ -27,15 +27,15 @@ export function SiteHeader() {
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled ? "border-b border-border bg-white/95 shadow-sm backdrop-blur-xl" : "bg-white/80 backdrop-blur-md"
+        scrolled ? "border-b border-blue-200 bg-white shadow-md" : "bg-white/90 backdrop-blur-md"
       }`}
     >
       <nav
         aria-label="Navegação principal"
-        className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4"
+        className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4"
       >
-        <a href="#topo" className="font-display text-lg font-semibold tracking-wide text-gray-900">
-          Padre <span className="bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">Kelmon</span>
+        <a href="#topo" className="font-display text-xl font-bold tracking-wide" style={{ color: 'var(--blue-primary)' }}>
+          Padre <span style={{ color: 'var(--yellow-dark)' }}>Kelmon</span>
         </a>
 
         <ul className="hidden items-center gap-7 lg:flex">
@@ -43,7 +43,7 @@ export function SiteHeader() {
             <li key={l.href}>
               <a
                 href={l.href}
-                className="text-sm text-gray-600 transition-colors hover:text-purple-700"
+                className="text-sm font-medium text-gray-700 transition-colors hover:text-blue-600"
               >
                 {l.label}
               </a>
@@ -57,7 +57,7 @@ export function SiteHeader() {
           </Button>
           <button
             type="button"
-            className="rounded-md p-2 text-gray-900 lg:hidden"
+            className="rounded-md p-2 text-blue-700 lg:hidden hover:bg-blue-50"
             aria-label={open ? "Fechar menu" : "Abrir menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -68,14 +68,14 @@ export function SiteHeader() {
       </nav>
 
       {open ? (
-        <div className="border-t border-border bg-white px-5 pb-6 pt-2 shadow-lg lg:hidden">
+        <div className="border-t border-blue-100 bg-white px-5 pb-6 pt-2 shadow-lg lg:hidden">
           <ul className="flex flex-col">
             {LINKS.map((l) => (
               <li key={l.href}>
                 <a
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="block border-b border-border/60 py-3 text-sm text-gray-600"
+                  className="block border-b border-gray-100 py-3 text-sm font-medium text-gray-700 hover:text-blue-600"
                 >
                   {l.label}
                 </a>

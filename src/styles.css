@@ -61,64 +61,47 @@
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.5rem;
 
-  --navy-deep: oklch(0.17 0.055 264);
-  --navy: oklch(0.24 0.07 264);
-  --gold: oklch(0.79 0.13 85);
-  --gold-soft: oklch(0.88 0.09 88);
-  --flag-green: oklch(0.52 0.14 152);
-  --purple-church: oklch(0.45 0.15 295);
+  /* Cores baseadas no design oficial */
+  --blue-primary: oklch(0.52 0.18 245);
+  --blue-dark: oklch(0.35 0.15 245);
+  --blue-light: oklch(0.65 0.15 245);
+  --yellow-primary: oklch(0.85 0.18 95);
+  --yellow-dark: oklch(0.75 0.16 90);
 
-  /* Tema claro moderno tipo app */
+  /* Tema principal - fundo branco para desktop */
   --background: oklch(1 0 0);
-  --foreground: oklch(0.19 0.03 264);
-  --card: oklch(0.99 0.002 250);
-  --card-foreground: oklch(0.19 0.03 264);
+  --foreground: oklch(0.15 0.02 245);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.02 245);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.19 0.03 264);
-  --primary: oklch(0.45 0.15 295);
+  --popover-foreground: oklch(0.15 0.02 245);
+  --primary: oklch(0.52 0.18 245);
   --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.96 0.01 250);
-  --secondary-foreground: oklch(0.19 0.03 264);
-  --muted: oklch(0.97 0.005 250);
-  --muted-foreground: oklch(0.5 0.02 260);
-  --accent: oklch(0.52 0.14 152);
-  --accent-foreground: oklch(1 0 0);
+  --secondary: oklch(0.85 0.18 95);
+  --secondary-foreground: oklch(0.15 0.02 245);
+  --muted: oklch(0.96 0.005 245);
+  --muted-foreground: oklch(0.45 0.02 245);
+  --accent: oklch(0.85 0.18 95);
+  --accent-foreground: oklch(0.15 0.02 245);
   --destructive: oklch(0.6 0.22 27);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.92 0.008 258);
-  --input: oklch(0.94 0.008 258);
-  --ring: oklch(0.45 0.15 295);
-  --chart-1: oklch(0.45 0.15 295);
-  --chart-2: oklch(0.52 0.14 152);
-  --chart-3: oklch(0.79 0.13 85);
-  --chart-4: oklch(0.88 0.09 88);
-  --chart-5: oklch(0.6 0.11 250);
-  --sidebar: oklch(0.98 0.002 250);
-  --sidebar-foreground: oklch(0.19 0.03 264);
-  --sidebar-primary: oklch(0.45 0.15 295);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.96 0.01 250);
-  --sidebar-accent-foreground: oklch(0.19 0.03 264);
-  --sidebar-border: oklch(0.92 0.008 258);
-  --sidebar-ring: oklch(0.45 0.15 295);
+  --border: oklch(0.9 0.01 245);
+  --input: oklch(0.95 0.008 245);
+  --ring: oklch(0.52 0.18 245);
 
-  --gradient-hero: linear-gradient(
-    135deg,
-    oklch(0.99 0.002 250) 0%,
-    oklch(0.97 0.005 270) 100%
-  );
-  --gradient-gold: linear-gradient(100deg, var(--gold-soft), var(--gold) 55%, oklch(0.68 0.12 70));
-  --gradient-purple: linear-gradient(135deg, oklch(0.5 0.18 295), oklch(0.4 0.12 295));
-  --gradient-fade: linear-gradient(
-    to bottom,
-    transparent,
-    color-mix(in oklab, white 95%, transparent)
-  );
-  --shadow-elegant: 0 4px 24px -4px oklch(0.5 0.05 264 / 8%);
-  --shadow-gold: 0 8px 32px -8px color-mix(in oklab, var(--gold) 30%, transparent);
-  --shadow-app: 0 2px 16px -2px oklch(0.5 0.05 264 / 6%);
+  /* Gradientes */
+  --gradient-hero: linear-gradient(135deg, 
+    oklch(0.52 0.18 245) 0%, 
+    oklch(0.45 0.16 245) 50%,
+    oklch(0.38 0.14 245) 100%);
+  --gradient-blue: linear-gradient(135deg, var(--blue-primary), var(--blue-dark));
+  --gradient-yellow: linear-gradient(100deg, var(--yellow-primary), var(--yellow-dark));
+  
+  /* Sombras */
+  --shadow-elegant: 0 10px 40px -10px oklch(0.35 0.15 245 / 25%);
+  --shadow-card: 0 4px 20px -4px oklch(0.35 0.15 245 / 12%);
 }
 
 /* Removido tema .light duplicado - agora usando apenas o tema padrão claro */
@@ -130,7 +113,7 @@
 
   html {
     scroll-behavior: smooth;
-    background-color: oklch(0.96 0.005 250);
+    background-color: oklch(0.98 0.005 245);
   }
 
   body {
@@ -142,11 +125,15 @@
     margin: 0 auto;
   }
 
-  @media (min-width: 768px) {
+  /* Visual de app apenas no mobile */
+  @media (max-width: 767px) {
+    html {
+      background-color: oklch(0.94 0.008 245);
+    }
+    
     body {
-      max-width: 480px;
-      margin: 0 auto;
-      box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+      max-width: 100%;
+      box-shadow: none;
     }
   }
 
@@ -159,7 +146,7 @@
   }
 
   :focus-visible {
-    outline: 2px solid oklch(0.45 0.15 295);
+    outline: 2px solid var(--blue-primary);
     outline-offset: 3px;
   }
 }
@@ -174,8 +161,8 @@
 @utility surface-card {
   background: white;
   border: 1px solid var(--border);
-  box-shadow: var(--shadow-app);
-  border-radius: 1rem;
+  box-shadow: var(--shadow-card);
+  border-radius: 0.75rem;
 }
 
 @utility gold-rule {

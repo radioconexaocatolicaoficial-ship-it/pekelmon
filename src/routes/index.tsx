@@ -59,7 +59,8 @@ function Index() {
     <div className="min-h-screen bg-white">
       <a
         href="#historia"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md bg-purple-600 focus:px-4 focus:py-2 text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:px-4 focus:py-2"
+        style={{ backgroundColor: 'var(--blue-primary)', color: 'white' }}
       >
         Pular para o conteúdo
       </a>

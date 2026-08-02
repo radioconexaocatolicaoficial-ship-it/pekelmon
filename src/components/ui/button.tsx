@@ -17,9 +17,13 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         campaign:
-          "bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold shadow-lg shadow-purple-500/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-purple-500/40",
+          "bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/40",
+        yellow:
+          "bg-gradient-to-r from-yellow-400 to-yellow-500 text-gray-900 font-bold shadow-lg shadow-yellow-500/30 transition-all hover:-translate-y-0.5 hover:shadow-xl hover:shadow-yellow-500/40",
         outlineGold:
-          "border-2 border-purple-600 bg-transparent text-purple-700 font-semibold hover:bg-purple-50",
+          "border-2 border-yellow-400 bg-transparent text-yellow-400 font-semibold hover:bg-yellow-400/10",
+        outlineWhite:
+          "border-2 border-white bg-transparent text-white font-semibold hover:bg-white/10 backdrop-blur-sm",
         flag: "bg-accent text-accent-foreground font-semibold shadow-sm hover:bg-accent/90",
       },
       size: {
