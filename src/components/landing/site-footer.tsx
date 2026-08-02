@@ -2,12 +2,11 @@ import { CANDIDATE } from "@/lib/campaign-data";
 import logo from "@/assets/Logo-Site-PAdre-kelmon.png";
 
 const QUICK_LINKS = [
-  { href: "#historia", label: "Quem é Padre Kelmon" },
-  { href: "#bandeiras", label: "Bandeiras" },
-  { href: "#galeria", label: "Galeria" },
-  { href: "#videos", label: "Vídeos" },
-  { href: "#numeros", label: "Números" },
-  { href: "#cadastro", label: "Cadastro de apoio" },
+  { href: "#historia", label: "Sobre" },
+  { href: "#bandeiras", label: "Pautas" },
+  { href: "#midia", label: "Mídia" },
+  { href: "#numeros", label: "Indicadores" },
+  { href: "#cadastro", label: "Cadastro" },
 ];
 
 export function SiteFooter() {
