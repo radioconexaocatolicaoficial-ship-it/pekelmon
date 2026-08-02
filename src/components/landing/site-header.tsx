@@ -70,7 +70,7 @@ export function SiteHeader() {
           </a>
 
           <div className="flex items-center gap-2 sm:gap-4 lg:gap-6">
-            <ul className="hidden items-center gap-4 xl:gap-5 lg:flex">
+            <ul className="hidden items-center gap-[calc(0.25rem*1.02)] lg:flex">
               {LINKS.map((l) => {
                 const Icon = l.icon;
                 return (
@@ -81,7 +81,7 @@ export function SiteHeader() {
                         e.preventDefault();
                         scrollToSection(l.href);
                       }}
-                      className="flex items-center gap-1.5 text-sm font-bold text-gray-700 transition-colors hover:text-blue-600"
+                      className="flex items-center gap-1 rounded-md px-[calc(0.5rem*1.02)] py-[calc(0.25rem*1.02)] text-sm font-bold text-gray-700 transition-colors hover:bg-blue-600 hover:text-white active:bg-blue-600 active:text-white"
                     >
                       <Icon className="size-4 stroke-[2.5]" />
                       {l.label}
@@ -130,7 +130,7 @@ export function SiteHeader() {
             id="mobile-nav-panel"
             className="relative z-50 max-h-[min(78dvh,560px)] overflow-y-auto border-t border-blue-100 bg-white px-4 pb-[calc(1.25rem+env(safe-area-inset-bottom,0px))] pt-2 shadow-xl sm:px-5 lg:hidden"
           >
-            <ul className="flex flex-col">
+            <ul className="flex flex-col gap-1">
               {LINKS.map((l) => {
                 const Icon = l.icon;
                 return (
@@ -141,9 +141,9 @@ export function SiteHeader() {
                         e.preventDefault();
                         goTo(l.href);
                       }}
-                      className="flex min-h-12 items-center gap-3 border-b border-gray-100 py-3.5 text-base font-bold text-gray-700 active:bg-blue-50 hover:text-blue-600"
+                      className="group flex min-h-12 items-center gap-3 rounded-xl px-3 py-3 text-base font-bold text-gray-700 transition-colors hover:bg-blue-600 hover:text-white active:bg-blue-600 active:text-white"
                     >
-                      <span className="inline-flex size-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700">
+                      <span className="inline-flex size-10 items-center justify-center rounded-xl bg-blue-50 text-blue-700 transition-colors group-hover:bg-white/20 group-hover:text-white group-active:bg-white/20 group-active:text-white">
                         <Icon className="size-5 stroke-[2.5]" />
                       </span>
                       {l.label}
