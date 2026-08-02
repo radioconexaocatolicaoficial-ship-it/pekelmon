@@ -11,7 +11,7 @@ export function CallToAction() {
         className="absolute inset-0 -z-10"
         style={{ background: "var(--gradient-hero)" }}
       />
-      <div className="mx-auto w-full" style={{ maxWidth: '1140px', paddingLeft: '0', paddingRight: '0' }}>
+      <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0 text-center">
         <Reveal>
           <h2 className="text-3xl font-semibold leading-tight sm:text-5xl">

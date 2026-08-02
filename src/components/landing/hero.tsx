@@ -19,8 +19,8 @@ export function Hero() {
         }}
       />
 
-      {/* Container exato de 1140px */}
-      <div className="mx-auto w-full" style={{ maxWidth: '1140px', paddingLeft: '0', paddingRight: '0' }}>
+      {/* Container de 1120px para conteúdo */}
+      <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="grid items-center gap-16 lg:grid-cols-[1fr_450px]">
           {/* Coluna de texto - alinhada à esquerda */}
           <div className="text-white flex flex-col justify-center px-5 lg:px-0">

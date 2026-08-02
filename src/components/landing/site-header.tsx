@@ -77,6 +77,7 @@ export function SiteHeader() {
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
         </div>
+        </div>
       </nav>
 
       {open ? (

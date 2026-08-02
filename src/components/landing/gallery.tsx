@@ -10,7 +10,7 @@ export function Gallery() {
 
   return (
     <section id="galeria" className="section-y border-t border-border/50">
-      <div className="mx-auto w-full" style={{ maxWidth: '1140px', paddingLeft: '0', paddingRight: '0' }}>
+      <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
         <div className="px-5 lg:px-0">
         <SectionHeading
           eyebrow="Galeria"
