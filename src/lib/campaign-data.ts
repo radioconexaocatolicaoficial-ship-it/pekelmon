@@ -271,22 +271,74 @@ export type StatItem = {
   note: string;
 };
 
-/** Apenas indicadores públicos e verificáveis. */
+export type TrustPillar = {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+};
+
+/** Indicadores públicos e verificáveis — foco em credibilidade e trajetória. */
 export const STATS: StatItem[] = [
   {
     value: 81129,
     label: "Votos na eleição presidencial de 2022",
-    note: "Fonte: resultado oficial do pleito de 2022",
+    note: "Alcance nacional em 19 dias de campanha — resultado oficial do TSE",
+  },
+  {
+    value: 2,
+    suffix: "+",
+    label: "Anos liderando o Foro do Brasil",
+    note: "Movimento fundado em 29/06/2023; Instituto constituído em 2025",
+  },
+  {
+    value: 6,
+    suffix: "+",
+    label: "Estados com presença organizada",
+    note: "Diretórios e caravanas em SP, RJ, SC, MG, PR e outros",
   },
   {
     value: 30,
     suffix: "+",
-    label: "Anos de vida comunitária e religiosa",
-    note: "Desde a atuação em grupos de jovens nos anos 1990",
-  },
-  {
-    value: 645,
-    label: "Municípios de São Paulo a representar",
-    note: "Território alcançado por um mandato federal paulista",
+    label: "Anos de fé e serviço comunitário",
+    note: "Da formação juvenil e missionária à defesa pública dos valores cristãos",
   },
 ];
+
+/** Pilares de confiança para o eleitor — sem controvérsias, só qualificações públicas. */
+export const TRUST_PILLARS: TrustPillar[] = [
+  {
+    icon: Flag,
+    title: "Experiência nacional",
+    description:
+      "Ex-candidato à Presidência da República, com participação em debates nacionais e mensagem clara em defesa da família, da liberdade e do Brasil.",
+  },
+  {
+    icon: Users,
+    title: "Liderança do Foro do Brasil",
+    description:
+      "Fundador e Presidente Nacional do Foro do Brasil — articulação conservadora com juventude, mulheres, indígenas e presença internacional.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Candidatura pelo PL em São Paulo",
+    description:
+      "Pré-candidato a Deputado Federal por São Paulo pelo Partido Liberal, alinhado ao projeto de resgate do Brasil e à representação do povo paulista.",
+  },
+  {
+    icon: Church,
+    title: "Voz cristã na vida pública",
+    description:
+      "Trajetória marcada pela fé ortodoxa, programas de comunicação e defesa da liberdade religiosa, da vida e da dignidade da pessoa humana.",
+  },
+];
+
+export const FORO_BRASIL = {
+  name: "Foro do Brasil",
+  url: "https://forobrasil.org/",
+  aboutUrl: "https://forobrasil.org/sobre/",
+  founded: "29 de junho de 2023",
+  role: "Presidente Nacional",
+  tagline: "Pelo Brasil que acreditamos, pelos direitos que defendemos",
+  description:
+    "Espaço de representação e defesa da liberdade, da propriedade, da livre expressão e da dignidade humana. Com caravanas, diretórios estaduais e frentes de juventude, mulheres e indígenas, o Foro fortalece a cultura, a educação e a soberania nacional sob a liderança do Padre Kelmon.",
+};

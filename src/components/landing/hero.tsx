@@ -93,11 +93,19 @@ export function Hero() {
               className="mt-10 flex flex-col gap-4 sm:flex-row"
             >
               <Button asChild variant="yellow" size="xl" className="text-lg font-bold">
-                <a 
+                <a
                   href="#cadastro"
                   onClick={(e) => {
                     e.preventDefault();
-                    document.getElementById('cadastro')?.scrollIntoView({ behavior: 'smooth' });
+                    const el = document.getElementById("cadastro");
+                    if (!el) return;
+                    const header = document.querySelector("header");
+                    const offset = Math.max(
+                      0,
+                      Math.ceil(header?.getBoundingClientRect().height ?? 80) - 4,
+                    );
+                    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+                    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
                   }}
                 >
                   Quero apoiar

@@ -14,7 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Reveal, SectionHeading } from "./primitives";
+import sobreImg from "@/assets/Sobre-Padre-Kelmon.jpg";
+import { Reveal } from "./primitives";
 
 const UFS = [
   "AC",
@@ -92,7 +93,6 @@ export function SignupForm() {
 
     setErrors({});
     setLoading(true);
-    // PLACEHOLDER: conectar ao backend/CRM da campanha para persistir o cadastro.
     setTimeout(() => {
       setLoading(false);
       toast.success("Cadastro recebido! Em breve entraremos em contato.");
@@ -108,149 +108,245 @@ export function SignupForm() {
     ) : null;
 
   return (
-    <section id="cadastro" className="section-y border-t border-border/50 bg-card/30">
-      <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
+    <section
+      id="cadastro"
+      className="relative overflow-hidden border-t border-border/50"
+      style={{
+        scrollMarginTop: "76px",
+        paddingTop: "3rem",
+        paddingBottom: "3rem",
+        background: "linear-gradient(180deg, #ffffff 0%, #f4f7fc 45%, #ffffff 100%)",
+      }}
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-24 top-10 size-72 rounded-full opacity-30 blur-3xl"
+        style={{ background: "var(--yellow-primary)" }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-20 bottom-0 size-80 rounded-full opacity-20 blur-3xl"
+        style={{ background: "var(--blue-primary)" }}
+      />
+
+      <div className="relative mx-auto w-full" style={{ maxWidth: "1120px", paddingLeft: "0", paddingRight: "0" }}>
         <div className="px-5 lg:px-0">
-        <SectionHeading
-          eyebrow="Cadastro"
-          title="Junte-se a essa missão"
-          subtitle="Deixe seus dados para receber a agenda da campanha ou se tornar voluntário."
-        />
+          {/* Duas colunas 50% — mesma altura: textos+form | foto */}
+          <div className="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-10">
+            <Reveal className="h-full min-h-0">
+              <div className="flex h-full flex-col">
+                <div className="shrink-0">
+                  <p
+                    className="mb-3 text-sm font-bold uppercase tracking-widest"
+                    style={{ color: "var(--yellow-primary)" }}
+                  >
+                    Faça parte
+                  </p>
+                  <h2
+                    className="text-3xl font-black leading-tight sm:text-4xl"
+                    style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
+                  >
+                    Junte-se a essa missão
+                  </h2>
+                  <div className="gold-rule mt-4" />
+                  <p className="mt-4 text-sm leading-relaxed text-gray-700 sm:text-base">
+                    Deixe seus dados para receber a agenda da campanha ou se tornar voluntário ao
+                    lado do Padre Kelmon por São Paulo e pelo Brasil.
+                  </p>
+                </div>
 
-        <Reveal delay={0.1}>
-          <form onSubmit={onSubmit} noValidate className="surface-card mt-12 rounded-2xl p-7 sm:p-9">
-            <div className="grid gap-5 sm:grid-cols-2">
-              <div className="sm:col-span-2">
-                <Label htmlFor="nome">Nome completo</Label>
-                <Input
-                  id="nome"
-                  name="nome"
-                  autoComplete="name"
-                  maxLength={100}
-                  aria-invalid={!!errors["nome"]}
-                  aria-describedby={errors["nome"] ? "nome-error" : undefined}
-                  className="mt-2"
-                  placeholder="Seu nome"
-                />
-                {err("nome")}
+                <form
+                  onSubmit={onSubmit}
+                  noValidate
+                  className="mt-5 flex min-h-0 flex-1 flex-col rounded-2xl border-2 bg-white p-5 shadow-lg sm:p-6"
+                  style={{ borderColor: "rgba(0, 102, 204, 0.15)" }}
+                >
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <div className="sm:col-span-2">
+                      <Label htmlFor="nome" className="font-semibold text-gray-800">
+                        Nome completo
+                      </Label>
+                      <Input
+                        id="nome"
+                        name="nome"
+                        autoComplete="name"
+                        maxLength={100}
+                        aria-invalid={!!errors["nome"]}
+                        aria-describedby={errors["nome"] ? "nome-error" : undefined}
+                        className="mt-1.5"
+                        placeholder="Seu nome"
+                      />
+                      {err("nome")}
+                    </div>
+
+                    <div>
+                      <Label htmlFor="telefone" className="font-semibold text-gray-800">
+                        Telefone (WhatsApp)
+                      </Label>
+                      <Input
+                        id="telefone"
+                        name="telefone"
+                        type="tel"
+                        inputMode="tel"
+                        autoComplete="tel"
+                        maxLength={20}
+                        aria-invalid={!!errors["telefone"]}
+                        aria-describedby={errors["telefone"] ? "telefone-error" : undefined}
+                        className="mt-1.5"
+                        placeholder="(11) 90000-0000"
+                      />
+                      {err("telefone")}
+                    </div>
+
+                    <div>
+                      <Label htmlFor="email" className="font-semibold text-gray-800">
+                        E-mail
+                      </Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        autoComplete="email"
+                        maxLength={255}
+                        aria-invalid={!!errors["email"]}
+                        aria-describedby={errors["email"] ? "email-error" : undefined}
+                        className="mt-1.5"
+                        placeholder="voce@email.com"
+                      />
+                      {err("email")}
+                    </div>
+
+                    <div>
+                      <Label htmlFor="cidade" className="font-semibold text-gray-800">
+                        Cidade
+                      </Label>
+                      <Input
+                        id="cidade"
+                        name="cidade"
+                        autoComplete="address-level2"
+                        maxLength={80}
+                        aria-invalid={!!errors["cidade"]}
+                        aria-describedby={errors["cidade"] ? "cidade-error" : undefined}
+                        className="mt-1.5"
+                        placeholder="São Paulo"
+                      />
+                      {err("cidade")}
+                    </div>
+
+                    <div>
+                      <Label htmlFor="estado" className="font-semibold text-gray-800">
+                        Estado
+                      </Label>
+                      <Select value={estado} onValueChange={setEstado}>
+                        <SelectTrigger id="estado" className="mt-1.5" aria-label="Estado">
+                          <SelectValue placeholder="UF" />
+                        </SelectTrigger>
+                        <SelectContent className="max-h-64">
+                          {UFS.map((uf) => (
+                            <SelectItem key={uf} value={uf}>
+                              {uf}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      {err("estado")}
+                    </div>
+                  </div>
+
+                  <div className="mt-4 space-y-2.5 rounded-xl bg-[#f4f7fc] p-3.5">
+                    <label className="flex items-start gap-3 text-sm text-gray-800">
+                      <Checkbox
+                        checked={voluntario}
+                        onCheckedChange={(v) => setVoluntario(v === true)}
+                        aria-label="Quero ser voluntário"
+                        className="mt-0.5"
+                      />
+                      <span>Quero ser voluntário da campanha</span>
+                    </label>
+                    <label className="flex items-start gap-3 text-sm text-gray-800">
+                      <Checkbox
+                        checked={novidades}
+                        onCheckedChange={(v) => setNovidades(v === true)}
+                        aria-label="Quero receber novidades"
+                        className="mt-0.5"
+                      />
+                      <span>Quero receber novidades e a agenda de eventos</span>
+                    </label>
+                    <label className="flex items-start gap-3 text-sm">
+                      <Checkbox
+                        checked={lgpd}
+                        onCheckedChange={(v) => setLgpd(v === true)}
+                        aria-label="Aceito a política de privacidade"
+                        aria-invalid={!!errors["lgpd"]}
+                        className="mt-0.5"
+                      />
+                      <span className="text-gray-600">
+                        Autorizo o uso dos meus dados conforme a{" "}
+                        <a
+                          href="#privacidade"
+                          className="font-semibold underline underline-offset-4"
+                          style={{ color: "var(--blue-primary)" }}
+                        >
+                          Política de Privacidade
+                        </a>{" "}
+                        e a LGPD.
+                      </span>
+                    </label>
+                    {err("lgpd")}
+                  </div>
+
+                  <Button
+                    type="submit"
+                    variant="yellow"
+                    size="xl"
+                    className="mt-4 w-full text-base font-bold"
+                    disabled={loading}
+                  >
+                    {loading ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : null}
+                    Quero fazer parte dessa missão
+                  </Button>
+
+                  <p className="mt-3 flex items-center justify-center gap-2 text-xs text-gray-500">
+                    <ShieldCheck
+                      className="size-3.5"
+                      style={{ color: "var(--blue-primary)" }}
+                      aria-hidden="true"
+                    />
+                    Seus dados não são compartilhados com terceiros.
+                  </p>
+                </form>
               </div>
+            </Reveal>
 
-              <div>
-                <Label htmlFor="telefone">Telefone (WhatsApp)</Label>
-                <Input
-                  id="telefone"
-                  name="telefone"
-                  type="tel"
-                  inputMode="tel"
-                  autoComplete="tel"
-                  maxLength={20}
-                  aria-invalid={!!errors["telefone"]}
-                  aria-describedby={errors["telefone"] ? "telefone-error" : undefined}
-                  className="mt-2"
-                  placeholder="(11) 90000-0000"
+            <Reveal delay={0.08} className="h-full min-h-0">
+              <div className="relative h-full min-h-[480px] w-full overflow-hidden rounded-2xl shadow-2xl lg:min-h-full">
+                <img
+                  src={sobreImg}
+                  alt="Padre Kelmon"
+                  className="absolute inset-0 h-full w-full object-cover object-top"
                 />
-                {err("telefone")}
+                <div className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/10" />
+                <div
+                  className="absolute inset-x-0 bottom-0 h-2/5"
+                  style={{
+                    background: "linear-gradient(to top, rgba(0, 60, 140, 0.72), transparent)",
+                  }}
+                />
+                <div className="absolute bottom-5 left-5 right-5">
+                  <p
+                    className="text-xs font-bold uppercase tracking-widest"
+                    style={{ color: "var(--yellow-primary)" }}
+                  >
+                    Sobre Padre Kelmon
+                  </p>
+                  <p className="mt-1 text-sm font-semibold text-white sm:text-base">
+                    Pré-candidato a Deputado Federal por São Paulo · PL
+                  </p>
+                </div>
               </div>
-
-              <div>
-                <Label htmlFor="email">E-mail</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  maxLength={255}
-                  aria-invalid={!!errors["email"]}
-                  aria-describedby={errors["email"] ? "email-error" : undefined}
-                  className="mt-2"
-                  placeholder="voce@email.com"
-                />
-                {err("email")}
-              </div>
-
-              <div>
-                <Label htmlFor="cidade">Cidade</Label>
-                <Input
-                  id="cidade"
-                  name="cidade"
-                  autoComplete="address-level2"
-                  maxLength={80}
-                  aria-invalid={!!errors["cidade"]}
-                  aria-describedby={errors["cidade"] ? "cidade-error" : undefined}
-                  className="mt-2"
-                  placeholder="São Paulo"
-                />
-                {err("cidade")}
-              </div>
-
-              <div>
-                <Label htmlFor="estado">Estado</Label>
-                <Select value={estado} onValueChange={setEstado}>
-                  <SelectTrigger id="estado" className="mt-2" aria-label="Estado">
-                    <SelectValue placeholder="UF" />
-                  </SelectTrigger>
-                  <SelectContent className="max-h-64">
-                    {UFS.map((uf) => (
-                      <SelectItem key={uf} value={uf}>
-                        {uf}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {err("estado")}
-              </div>
-            </div>
-
-            <div className="mt-7 space-y-3">
-              <label className="flex items-start gap-3 text-sm">
-                <Checkbox
-                  checked={voluntario}
-                  onCheckedChange={(v) => setVoluntario(v === true)}
-                  aria-label="Quero ser voluntário"
-                  className="mt-0.5"
-                />
-                <span>Quero ser voluntário da campanha</span>
-              </label>
-              <label className="flex items-start gap-3 text-sm">
-                <Checkbox
-                  checked={novidades}
-                  onCheckedChange={(v) => setNovidades(v === true)}
-                  aria-label="Quero receber novidades"
-                  className="mt-0.5"
-                />
-                <span>Quero receber novidades e a agenda de eventos</span>
-              </label>
-              <label className="flex items-start gap-3 text-sm">
-                <Checkbox
-                  checked={lgpd}
-                  onCheckedChange={(v) => setLgpd(v === true)}
-                  aria-label="Aceito a política de privacidade"
-                  aria-invalid={!!errors["lgpd"]}
-                  className="mt-0.5"
-                />
-                <span className="text-muted-foreground">
-                  Autorizo o uso dos meus dados para contato da campanha, conforme a{" "}
-                  <a href="#privacidade" className="text-primary underline underline-offset-4">
-                    Política de Privacidade
-                  </a>{" "}
-                  e a LGPD (Lei nº 13.709/2018).
-                </span>
-              </label>
-              {err("lgpd")}
-            </div>
-
-            <Button type="submit" variant="campaign" size="xl" className="mt-8 w-full" disabled={loading}>
-              {loading ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : null}
-              Quero fazer parte dessa missão
-            </Button>
-
-            <p className="mt-4 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-              <ShieldCheck className="size-3.5 text-primary" aria-hidden="true" />
-              Seus dados não são compartilhados com terceiros.
-            </p>
-          </form>
-        </Reveal>
-      </div>
+            </Reveal>
+          </div>
+        </div>
       </div>
     </section>
   );

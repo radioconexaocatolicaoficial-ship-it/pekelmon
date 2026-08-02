@@ -11,15 +11,20 @@ const LINKS = [
   { href: "bandeiras", label: "Pautas", icon: Flag },
   { href: "midia", label: "Mídia", icon: Film },
   { href: "numeros", label: "Indicadores", icon: TrendingUp },
-  { href: "cadastro", label: "Cadastro", icon: UserPlus },
+  { href: "cadastro", label: "Faça parte", icon: UserPlus },
 ];
 
-const HEADER_SCROLL_OFFSET = 112;
+function getHeaderOffset() {
+  const header = document.querySelector("header");
+  return Math.ceil(header?.getBoundingClientRect().height ?? 80);
+}
 
 function scrollToSection(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - HEADER_SCROLL_OFFSET;
+  // Scroll a bit further so the previous section never peeks under the header
+  const offset = Math.max(0, getHeaderOffset() - 4);
+  const top = el.getBoundingClientRect().top + window.scrollY - offset;
   window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
 }
 
@@ -45,65 +50,66 @@ export function SiteHeader() {
         className="mx-auto w-full flex items-center justify-between py-3"
         style={{ maxWidth: '1140px', paddingLeft: '0', paddingRight: '0' }}
       >
-        <div className="px-5 lg:px-0 flex items-center justify-between w-full">
-        <a
-          href="#inicio"
-          className="flex items-center"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToSection("inicio");
-          }}
-        >
-          <img 
-            src={logo} 
-            alt="Padre Kelmon - Por São Paulo, pelo Brasil" 
-            className="h-12 w-auto sm:h-14"
-          />
-        </a>
-
-        <ul className="hidden items-center gap-6 lg:flex">
-          {LINKS.map((l) => {
-            const Icon = l.icon;
-            return (
-              <li key={l.href}>
-                <a
-                  href={`#${l.href}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection(l.href);
-                  }}
-                  className="flex items-center gap-2 text-sm font-bold text-gray-700 transition-colors hover:text-blue-600"
-                >
-                  <Icon className="size-5 stroke-[2.5]" />
-                  {l.label}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-
-        <div className="flex items-center gap-2">
-          <Button asChild variant="campaign" size="sm" className="hidden sm:inline-flex">
-            <a
-              href="#cadastro"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("cadastro");
-              }}
-            >
-              Quero apoiar
-            </a>
-          </Button>
-          <button
-            type="button"
-            className="rounded-md p-2 text-blue-700 lg:hidden hover:bg-blue-50"
-            aria-label={open ? "Fechar menu" : "Abrir menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
+        <div className="flex w-full items-center justify-between px-5 lg:px-0">
+          <a
+            href="#inicio"
+            className="flex shrink-0 items-center"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("inicio");
+            }}
           >
-            {open ? <X className="size-5" /> : <Menu className="size-5" />}
-          </button>
-        </div>
+            <img
+              src={logo}
+              alt="Padre Kelmon - Por São Paulo, pelo Brasil"
+              className="h-12 w-auto sm:h-14"
+            />
+          </a>
+
+          <div className="flex items-center gap-5 lg:gap-6">
+            <ul className="hidden items-center gap-5 lg:flex">
+              {LINKS.map((l) => {
+                const Icon = l.icon;
+                return (
+                  <li key={l.href}>
+                    <a
+                      href={`#${l.href}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection(l.href);
+                      }}
+                      className="flex items-center gap-1.5 text-sm font-bold text-gray-700 transition-colors hover:text-blue-600"
+                    >
+                      <Icon className="size-4 stroke-[2.5]" />
+                      {l.label}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+
+            <Button asChild variant="campaign" size="sm" className="hidden sm:inline-flex">
+              <a
+                href="#cadastro"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection("cadastro");
+                }}
+              >
+                Quero apoiar
+              </a>
+            </Button>
+
+            <button
+              type="button"
+              className="rounded-md p-2 text-blue-700 hover:bg-blue-50 lg:hidden"
+              aria-label={open ? "Fechar menu" : "Abrir menu"}
+              aria-expanded={open}
+              onClick={() => setOpen((v) => !v)}
+            >
+              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+            </button>
+          </div>
         </div>
       </nav>
 
@@ -119,8 +125,8 @@ export function SiteHeader() {
                     onClick={(e) => {
                       e.preventDefault();
                       setOpen(false);
-                      // Wait for mobile menu to close so offset is correct
-                      requestAnimationFrame(() => scrollToSection(l.href));
+                      // Wait for mobile menu to collapse so header height is correct
+                      window.setTimeout(() => scrollToSection(l.href), 50);
                     }}
                     className="flex items-center gap-3 border-b border-gray-100 py-4 text-sm font-bold text-gray-700 hover:text-blue-600"
                   >
@@ -137,7 +143,7 @@ export function SiteHeader() {
               onClick={(e) => {
                 e.preventDefault();
                 setOpen(false);
-                requestAnimationFrame(() => scrollToSection("cadastro"));
+                window.setTimeout(() => scrollToSection("cadastro"), 50);
               }}
             >
               Quero apoiar {CANDIDATE.name}
