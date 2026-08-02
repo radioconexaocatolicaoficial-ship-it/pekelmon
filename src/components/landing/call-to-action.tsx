@@ -11,7 +11,8 @@ export function CallToAction() {
         className="absolute inset-0 -z-10"
         style={{ background: "var(--gradient-hero)" }}
       />
-      <div className="mx-auto w-[1140px] max-w-full px-5 lg:px-0 text-center">
+      <div className="mx-auto w-full" style={{ maxWidth: '1140px', paddingLeft: '0', paddingRight: '0' }}>
+        <div className="px-5 lg:px-0 text-center">
         <Reveal>
           <h2 className="text-3xl font-semibold leading-tight sm:text-5xl">
             O Brasil precisa de gente <span className="text-gold-gradient">de fé e de coragem</span>
@@ -27,6 +28,7 @@ export function CallToAction() {
             </a>
           </Button>
         </Reveal>
+      </div>
       </div>
     </section>
   );

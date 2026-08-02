@@ -6,7 +6,8 @@ import { VIDEOS } from "@/lib/campaign-data";
 export function Videos() {
   return (
     <section id="videos" className="section-y border-t border-border/50 bg-card/30">
-      <div className="mx-auto w-[1140px] max-w-full px-5 lg:px-0">
+      <div className="mx-auto w-full" style={{ maxWidth: '1140px', paddingLeft: '0', paddingRight: '0' }}>
+        <div className="px-5 lg:px-0">
         <SectionHeading
           eyebrow="Vídeos"
           title="Palavra e presença"
@@ -44,6 +45,7 @@ export function Videos() {
             </Reveal>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );

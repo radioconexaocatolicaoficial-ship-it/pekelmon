@@ -4,7 +4,8 @@ import { BANDEIRAS } from "@/lib/campaign-data";
 export function Bandeiras() {
   return (
     <section id="bandeiras" className="section-y border-t border-border/50 bg-card/30">
-      <div className="mx-auto w-[1140px] max-w-full px-5 lg:px-0">
+      <div className="mx-auto w-full" style={{ maxWidth: '1140px', paddingLeft: '0', paddingRight: '0' }}>
+        <div className="px-5 lg:px-0">
         <SectionHeading
           eyebrow="Bandeiras"
           title="As pautas que defendo"
@@ -33,6 +34,7 @@ export function Bandeiras() {
             quando disponível.
           </p>
         </Reveal>
+      </div>
       </div>
     </section>
   );

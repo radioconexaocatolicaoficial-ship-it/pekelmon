@@ -34,8 +34,10 @@ export function SiteHeader() {
     >
       <nav
         aria-label="Navegação principal"
-        className="mx-auto flex w-[1140px] max-w-full items-center justify-between px-5 lg:px-0 py-3"
+        className="mx-auto w-full flex items-center justify-between py-3"
+        style={{ maxWidth: '1140px', paddingLeft: '0', paddingRight: '0' }}
       >
+        <div className="px-5 lg:px-0 flex items-center justify-between w-full">
         <a href="#topo" className="flex items-center">
           <img 
             src={logo} 

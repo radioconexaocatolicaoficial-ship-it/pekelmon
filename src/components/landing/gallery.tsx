@@ -10,7 +10,8 @@ export function Gallery() {
 
   return (
     <section id="galeria" className="section-y border-t border-border/50">
-      <div className="mx-auto w-[1140px] max-w-full px-5 lg:px-0">
+      <div className="mx-auto w-full" style={{ maxWidth: '1140px', paddingLeft: '0', paddingRight: '0' }}>
+        <div className="px-5 lg:px-0">
         <SectionHeading
           eyebrow="Galeria"
           title="Registros da caminhada"
@@ -45,6 +46,7 @@ export function Gallery() {
             </Reveal>
           ))}
         </div>
+      </div>
       </div>
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
