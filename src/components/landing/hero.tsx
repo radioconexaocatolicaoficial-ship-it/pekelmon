@@ -19,7 +19,7 @@ export function Hero() {
         }}
       />
 
-      <div className="mx-auto w-full max-w-[1140px] px-5">
+      <div className="mx-auto w-[1140px] max-w-full px-5 lg:px-0">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
         <div className="text-white">
           <motion.div
@@ -29,7 +29,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 rounded-lg border-2 border-white/40 bg-white/15 backdrop-blur-sm px-4 py-2 mb-6"
           >
             <CheckCircle2 className="size-5 text-green-400" aria-hidden="true" />
-            <span className="text-sm font-bold uppercase tracking-wider">
+            <span className="text-[0.92rem] font-bold uppercase tracking-wider">
               Candidatura Homologada na Convenção do PL
             </span>
           </motion.div>
@@ -38,7 +38,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-5xl font-black leading-[1.05] sm:text-6xl lg:text-7xl"
+            className="text-[3.3rem] font-black leading-[1.05] sm:text-[3.96rem] lg:text-[4.4rem]"
           >
             Agora é
             <span className="block mt-2" style={{ color: 'var(--yellow-primary)', textShadow: '0 2px 20px rgba(0,0,0,0.3)' }}>
@@ -50,7 +50,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="mt-6 text-3xl sm:text-4xl lg:text-5xl font-bold uppercase"
+            className="mt-6 text-[2.2rem] sm:text-[2.64rem] lg:text-[3.3rem] font-bold uppercase"
           >
             PADRE KELMON
           </motion.h2>
@@ -59,7 +59,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.25 }}
-            className="mt-4 text-xl sm:text-2xl font-semibold"
+            className="mt-4 text-[1.38rem] sm:text-[1.65rem] font-semibold"
           >
             Candidato a
           </motion.p>
@@ -68,7 +68,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="text-3xl sm:text-4xl font-black uppercase"
+            className="text-[2.2rem] sm:text-[2.64rem] font-black uppercase"
             style={{ color: 'var(--yellow-primary)' }}
           >
             DEPUTADO
@@ -79,7 +79,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="mt-2 text-sm sm:text-base uppercase tracking-wider"
+            className="mt-2 text-[0.92rem] sm:text-[1.1rem] uppercase tracking-wider"
           >
             Por São Paulo, pelo Brasil
           </motion.p>

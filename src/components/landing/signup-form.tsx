@@ -109,7 +109,7 @@ export function SignupForm() {
 
   return (
     <section id="cadastro" className="section-y border-t border-border/50 bg-card/30">
-      <div className="mx-auto w-full max-w-[1140px] px-5">
+      <div className="mx-auto w-[1140px] max-w-full px-5 lg:px-0">
         <SectionHeading
           eyebrow="Cadastro"
           title="Junte-se a essa missão"

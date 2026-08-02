@@ -6,7 +6,7 @@ import { CANDIDATE, TIMELINE } from "@/lib/campaign-data";
 export function About() {
   return (
     <section id="historia" className="section-y border-t border-border/50">
-      <div className="mx-auto w-full max-w-[1140px] px-5">
+      <div className="mx-auto w-[1140px] max-w-full px-5 lg:px-0">
         <SectionHeading
           eyebrow="Quem é"
           title={`A trajetória de ${CANDIDATE.name}`}

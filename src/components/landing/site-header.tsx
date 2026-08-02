@@ -6,13 +6,13 @@ import { CANDIDATE } from "@/lib/campaign-data";
 import logo from "@/assets/Logo-Site-PAdre-kelmon.png";
 
 const LINKS = [
-  { href: "#topo", label: "Início", icon: Home },
-  { href: "#historia", label: "História", icon: BookText },
-  { href: "#bandeiras", label: "Bandeiras", icon: Flag },
-  { href: "#galeria", label: "Galeria", icon: Images },
-  { href: "#videos", label: "Vídeos", icon: Play },
-  { href: "#numeros", label: "Números", icon: TrendingUp },
-  { href: "#cadastro", label: "Cadastro", icon: UserPlus },
+  { href: "topo", label: "Início", icon: Home },
+  { href: "historia", label: "História", icon: BookText },
+  { href: "bandeiras", label: "Bandeiras", icon: Flag },
+  { href: "galeria", label: "Galeria", icon: Images },
+  { href: "videos", label: "Vídeos", icon: Play },
+  { href: "numeros", label: "Números", icon: TrendingUp },
+  { href: "cadastro", label: "Cadastro", icon: UserPlus },
 ];
 
 export function SiteHeader() {
@@ -34,7 +34,7 @@ export function SiteHeader() {
     >
       <nav
         aria-label="Navegação principal"
-        className="mx-auto flex w-full max-w-[1140px] items-center justify-between px-5 py-3"
+        className="mx-auto flex w-[1140px] max-w-full items-center justify-between px-5 lg:px-0 py-3"
       >
         <a href="#topo" className="flex items-center">
           <img 
@@ -50,7 +50,7 @@ export function SiteHeader() {
             return (
               <li key={l.href}>
                 <a
-                  href={l.href}
+                  href={`#${l.href}`}
                   className="flex items-center gap-2 text-sm font-bold text-gray-700 transition-colors hover:text-blue-600"
                 >
                   <Icon className="size-5 stroke-[2.5]" />
@@ -85,7 +85,7 @@ export function SiteHeader() {
               return (
                 <li key={l.href}>
                   <a
-                    href={l.href}
+                    href={`#${l.href}`}
                     onClick={() => setOpen(false)}
                     className="flex items-center gap-3 border-b border-gray-100 py-4 text-sm font-bold text-gray-700 hover:text-blue-600"
                   >
