@@ -6,7 +6,7 @@ import { CANDIDATE } from "@/lib/campaign-data";
 import logo from "@/assets/Logo-Site-PAdre-kelmon.png";
 
 const LINKS = [
-  { href: "topo", label: "Início", icon: Home },
+  { href: "inicio", label: "Início", icon: Home },
   { href: "historia", label: "História", icon: BookText },
   { href: "bandeiras", label: "Bandeiras", icon: Flag },
   { href: "galeria", label: "Galeria", icon: Images },
@@ -38,7 +38,14 @@ export function SiteHeader() {
         style={{ maxWidth: '1140px', paddingLeft: '0', paddingRight: '0' }}
       >
         <div className="px-5 lg:px-0 flex items-center justify-between w-full">
-        <a href="#topo" className="flex items-center">
+        <a 
+          href="#inicio" 
+          className="flex items-center"
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById('inicio')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+        >
           <img 
             src={logo} 
             alt="Padre Kelmon - Por São Paulo, pelo Brasil" 
@@ -53,6 +60,10 @@ export function SiteHeader() {
               <li key={l.href}>
                 <a
                   href={`#${l.href}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById(l.href)?.scrollIntoView({ behavior: 'smooth' });
+                  }}
                   className="flex items-center gap-2 text-sm font-bold text-gray-700 transition-colors hover:text-blue-600"
                 >
                   <Icon className="size-5 stroke-[2.5]" />
@@ -65,7 +76,15 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <Button asChild variant="campaign" size="sm" className="hidden sm:inline-flex">
-            <a href="#cadastro">Quero apoiar</a>
+            <a 
+              href="#cadastro"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('cadastro')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Quero apoiar
+            </a>
           </Button>
           <button
             type="button"
@@ -89,7 +108,11 @@ export function SiteHeader() {
                 <li key={l.href}>
                   <a
                     href={`#${l.href}`}
-                    onClick={() => setOpen(false)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById(l.href)?.scrollIntoView({ behavior: 'smooth' });
+                      setOpen(false);
+                    }}
                     className="flex items-center gap-3 border-b border-gray-100 py-4 text-sm font-bold text-gray-700 hover:text-blue-600"
                   >
                     <Icon className="size-6 stroke-[2.5]" />
@@ -100,7 +123,14 @@ export function SiteHeader() {
             })}
           </ul>
           <Button asChild variant="campaign" className="mt-5 w-full">
-            <a href="#cadastro" onClick={() => setOpen(false)}>
+            <a 
+              href="#cadastro" 
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('cadastro')?.scrollIntoView({ behavior: 'smooth' });
+                setOpen(false);
+              }}
+            >
               Quero apoiar {CANDIDATE.name}
             </a>
           </Button>

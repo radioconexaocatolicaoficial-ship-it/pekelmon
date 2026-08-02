@@ -7,7 +7,7 @@ import heroPortrait from "@/assets/hero-portrait.png";
 
 export function Hero() {
   return (
-    <section id="topo" className="relative isolate overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40" style={{ background: 'var(--gradient-hero)' }}>
+    <section id="inicio" className="relative isolate overflow-hidden pb-20 pt-32 sm:pb-28 sm:pt-40" style={{ background: 'var(--gradient-hero)' }}>
       {/* Padrão decorativo */}
       <div
         aria-hidden="true"
@@ -93,13 +93,27 @@ export function Hero() {
               className="mt-10 flex flex-col gap-4 sm:flex-row"
             >
               <Button asChild variant="yellow" size="xl" className="text-lg font-bold">
-                <a href="#cadastro">
+                <a 
+                  href="#cadastro"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('cadastro')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
                   Quero apoiar
                   <ArrowRight className="size-5" aria-hidden="true" />
                 </a>
               </Button>
               <Button asChild variant="outlineWhite" size="xl" className="text-lg font-semibold">
-                <a href="#historia">Conheça minha história</a>
+                <a 
+                  href="#historia"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('historia')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  Conheça minha história
+                </a>
               </Button>
             </motion.div>
           </div>

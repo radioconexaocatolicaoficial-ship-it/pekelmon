@@ -59,6 +59,10 @@ function Index() {
     <div className="min-h-screen bg-white">
       <a
         href="#historia"
+        onClick={(e) => {
+          e.preventDefault();
+          document.getElementById('historia')?.scrollIntoView({ behavior: 'smooth' });
+        }}
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:px-4 focus:py-2"
         style={{ backgroundColor: 'var(--blue-primary)', color: 'white' }}
       >
