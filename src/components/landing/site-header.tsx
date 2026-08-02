@@ -10,7 +10,7 @@ const LINKS = [
   { href: "historia", label: "Sobre", icon: BookText },
   { href: "bandeiras", label: "Pautas", icon: Flag },
   { href: "midia", label: "Mídia", icon: Film },
-  { href: "numeros", label: "Números", icon: TrendingUp },
+  { href: "numeros", label: "Indicadores", icon: TrendingUp },
   { href: "cadastro", label: "Cadastro", icon: UserPlus },
 ];
 
