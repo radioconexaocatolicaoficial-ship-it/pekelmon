@@ -140,26 +140,26 @@ export function About() {
       style={{ background: "linear-gradient(to bottom, #ffffff, #f9fafb)" }}
     >
       <PageShell>
-        <div className="mb-10 grid items-stretch gap-8 sm:mb-14 lg:mb-16 lg:grid-cols-2 lg:gap-12">
+        <div className="mb-10 grid items-stretch gap-6 sm:mb-14 md:mb-16 md:grid-cols-2 md:gap-8 lg:gap-12">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative order-2 sm:order-1"
+            className="relative order-2 min-w-0 md:order-1"
           >
-            <div className="relative overflow-hidden rounded-2xl bg-white shadow-2xl lg:h-full">
+            <div className="relative h-full overflow-hidden rounded-2xl bg-white shadow-2xl">
               <img
                 src={sobreImg}
-                alt="Padre Kelmon — biografia e trajetória"
+                alt="Padre Kelmon ? biografia e trajet�ria"
                 loading="lazy"
                 decoding="async"
-                className="mx-auto h-auto w-full object-contain object-center lg:h-full lg:object-cover lg:object-top"
+                className="mx-auto h-auto w-full object-contain object-center md:h-full md:object-cover md:object-top"
               />
               <div className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/10" />
             </div>
           </motion.div>
 
-          <div className="order-1 flex h-full flex-col justify-between sm:order-2">
+          <div className="order-1 flex h-full min-w-0 flex-col justify-between md:order-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
