@@ -1,168 +1,66 @@
 import { motion } from "motion/react";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
-import heroPortrait from "@/assets/hero-portrait.webp";
-import { PageShell } from "./primitives";
+import heroKv from "@/assets/hero-kv.webp";
 
 export function Hero() {
   return (
-    <section
-      id="inicio"
-      className="relative isolate overflow-hidden pb-8 pt-[4.5rem] sm:pb-28 sm:pt-36 lg:pb-32 lg:pt-40"
-      style={{ background: "var(--gradient-hero)" }}
-    >
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 -z-10 opacity-10"
-        style={{
-          backgroundImage: `radial-gradient(circle at 25% 25%, white 2px, transparent 2px),
-                           radial-gradient(circle at 75% 75%, white 2px, transparent 2px)`,
-          backgroundSize: "60px 60px",
-        }}
-      />
+    <section id="inicio" className="relative isolate overflow-hidden bg-white pt-[4.25rem] sm:pt-[4.75rem]">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.55 }}
+        className="relative w-full"
+      >
+        <img
+          src={heroKv}
+          alt="Padre Kelmon 2202 — Deputado Federal. Uma vida de missões. A nova missão é por São Paulo."
+          width={1024}
+          height={576}
+          sizes="100vw"
+          fetchPriority="high"
+          decoding="async"
+          className="block h-auto w-full object-cover object-center"
+        />
+      </motion.div>
 
-      <PageShell>
-        <div className="grid items-center gap-3 sm:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,min(100%,450px))] lg:gap-16">
-          <div className="@container flex w-full min-w-0 flex-col justify-center text-white">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="mb-2 inline-flex max-w-full items-center gap-1.5 self-start whitespace-nowrap rounded-lg border-2 border-white/40 bg-white/15 px-2 py-1 backdrop-blur-sm sm:mb-6 sm:gap-2 sm:px-4 sm:py-2"
-            >
-              <CheckCircle2 className="size-3.5 shrink-0 text-green-400 sm:size-5" aria-hidden="true" />
-              <span className="whitespace-nowrap text-[clamp(0.52rem,2.55vw,0.92rem)] font-bold uppercase leading-none tracking-wide sm:tracking-wider">
-                Candidatura Homologada na Convenção do PL
-              </span>
-            </motion.div>
-
-            {/* Celular: bloco compacto perto do menu. sm+: espaçamento original */}
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.1 }}
-              className="w-full whitespace-nowrap font-black leading-none tracking-tight text-[clamp(1.35rem,7.2vw,2.75rem)] sm:whitespace-normal sm:text-[3.3rem] sm:leading-[1.05] sm:tracking-normal md:text-[3.96rem] lg:text-[4.4rem]"
-            >
-              Agora é{" "}
-              <span
-                className="sm:mt-2 sm:block"
-                style={{
-                  color: "var(--yellow-primary)",
-                  textShadow: "0 2px 20px rgba(0,0,0,0.3)",
-                }}
-              >
-                OFICIAL
-              </span>
-            </motion.p>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="mt-1.5 w-full whitespace-nowrap font-black uppercase leading-none tracking-tight text-[clamp(2.1rem,11.5vw,3.6rem)] sm:mt-6 sm:whitespace-normal sm:text-[2.2rem] sm:font-bold sm:tracking-normal md:text-[2.64rem] lg:text-[3.3rem]"
-            >
-              PADRE KELMON
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.25 }}
-              className="mt-1.5 w-full whitespace-nowrap font-semibold leading-none text-[clamp(1.05rem,5vw,1.45rem)] sm:mt-4 sm:whitespace-normal sm:text-[1.38rem] md:text-[1.65rem]"
-            >
-              Candidato a
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="mt-0.5 w-full whitespace-nowrap font-black uppercase leading-none tracking-tight text-[clamp(1.35rem,7.4vw,2.4rem)] sm:mt-0 sm:whitespace-normal sm:text-[2.2rem] sm:leading-tight sm:tracking-normal md:text-[2.64rem]"
-              style={{ color: "var(--yellow-primary)" }}
-            >
-              DEPUTADO{" "}
-              <span className="sm:block">FEDERAL</span>
-            </motion.p>
-
-            <motion.p
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.35 }}
-              className="mt-1 w-full whitespace-nowrap uppercase leading-none tracking-wide text-[clamp(0.85rem,4.2vw,1.05rem)] sm:mt-2 sm:whitespace-normal sm:text-[0.92rem] sm:tracking-wider md:text-[1.1rem]"
-            >
-              Por São Paulo, pelo Brasil
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="mt-3 flex w-full flex-col gap-2 sm:mt-10 sm:flex-row sm:gap-4"
-            >
-              <Button
-                asChild
-                variant="yellow"
-                size="xl"
-                className="h-11 w-full text-base font-bold sm:h-auto sm:w-auto sm:text-lg"
-              >
-                <a
-                  href="#cadastro"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection("cadastro");
-                  }}
-                >
-                  Quero apoiar
-                  <ArrowRight className="size-5" aria-hidden="true" />
-                </a>
-              </Button>
-              <Button
-                asChild
-                variant="outlineWhite"
-                size="xl"
-                className="h-11 w-full text-base font-semibold sm:h-auto sm:w-auto sm:text-lg"
-              >
-                <a
-                  href="#historia"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    scrollToSection("historia");
-                  }}
-                >
-                  Conheça minha história
-                </a>
-              </Button>
-            </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mx-auto flex w-full max-w-[min(100%,420px)] items-center justify-center sm:max-w-[400px] lg:max-w-[450px]"
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-4 py-5 sm:flex-row sm:justify-center sm:gap-4 sm:px-6 sm:py-7">
+        <Button
+          asChild
+          variant="yellow"
+          size="xl"
+          className="h-11 w-full text-base font-bold sm:h-auto sm:w-auto sm:min-w-[12rem] sm:text-lg"
+        >
+          <a
+            href="#cadastro"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("cadastro");
+            }}
           >
-            <div
-              aria-hidden="true"
-              className="absolute -inset-3 rounded-3xl opacity-40 blur-3xl sm:-inset-6"
-              style={{ background: "var(--gradient-yellow)" }}
-            />
-            <figure className="relative aspect-[3/4] w-full overflow-hidden rounded-xl border-[3px] border-white bg-transparent shadow-2xl sm:rounded-2xl sm:border-4">
-              <img
-                src={heroPortrait}
-                alt="Padre Kelmon, pré-candidato a Deputado Federal por São Paulo pelo PL"
-                width={450}
-                height={675}
-                sizes="(max-width: 1024px) min(100vw, 420px), 450px"
-                fetchPriority="high"
-                decoding="async"
-                className="absolute inset-0 h-full w-full object-contain object-top sm:object-center"
-              />
-            </figure>
-          </motion.div>
-        </div>
-      </PageShell>
+            Quero apoiar
+            <ArrowRight className="size-5" aria-hidden="true" />
+          </a>
+        </Button>
+        <Button
+          asChild
+          variant="outline"
+          size="xl"
+          className="h-11 w-full text-base font-semibold sm:h-auto sm:w-auto sm:min-w-[12rem] sm:text-lg"
+        >
+          <a
+            href="#historia"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToSection("historia");
+            }}
+          >
+            Conheça minha história
+          </a>
+        </Button>
+      </div>
     </section>
   );
 }

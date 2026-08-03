@@ -12,7 +12,7 @@ import { SignupForm } from "@/components/landing/signup-form";
 import { SocialLinks } from "@/components/landing/social-links";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { scrollToSection } from "@/lib/scroll-to-section";
-import heroPortraitUrl from "@/assets/hero-portrait.webp?url";
+import heroKvUrl from "@/assets/hero-kv.webp?url";
 import {
   SITE_DESCRIPTION,
   SITE_TITLE,
@@ -80,7 +80,7 @@ export const Route = createFileRoute("/")({
         {
           rel: "preload",
           as: "image",
-          href: heroPortraitUrl,
+          href: heroKvUrl,
           type: "image/webp",
         },
       ],
