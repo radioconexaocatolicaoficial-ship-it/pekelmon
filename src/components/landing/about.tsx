@@ -60,11 +60,11 @@ export function About() {
   return (
     <section
       id="historia"
-      className="section-pad relative"
+      className="relative scroll-mt-[calc(4.75rem+env(safe-area-inset-top,0px))] pt-2 pb-10 sm:pt-12 sm:pb-12 lg:pt-14 lg:pb-14"
       style={{ background: "linear-gradient(to bottom, #ffffff, #f9fafb)" }}
     >
       <PageShell>
-          <div className="mb-10 grid items-stretch gap-8 sm:mb-14 lg:mb-16 lg:grid-cols-2 lg:gap-12">
+          <div className="mb-10 grid items-stretch gap-6 sm:mb-14 sm:gap-8 lg:mb-16 lg:grid-cols-2 lg:gap-12">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -88,9 +88,9 @@ export function About() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                className="mb-5 sm:mb-6"
+                className="mb-4 sm:mb-6"
               >
-                <p className="mb-3 text-sm font-bold uppercase tracking-widest" style={{ color: 'var(--yellow-primary)' }}>
+                <p className="mb-2 text-sm font-bold uppercase tracking-widest sm:mb-3" style={{ color: 'var(--yellow-primary)' }}>
                   Sobre Padre Kelmon
                 </p>
                 <h2 className="text-[1.75rem] font-black sm:text-4xl lg:text-5xl" style={{ fontFamily: 'var(--font-display)', color: 'var(--blue-primary)' }}>
