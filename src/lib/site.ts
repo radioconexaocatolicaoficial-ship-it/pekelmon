@@ -9,7 +9,7 @@ export const SITE_URL = (
 
 export const SITE_NAME = "Padre Kelmon";
 
-export const SITE_TITLE = `${CANDIDATE.name} — Deputado Federal por São Paulo`;
+export const SITE_TITLE = `${CANDIDATE.name} — Pré-candidato a Deputado Federal`;
 
 export const SITE_DESCRIPTION =
   "Padre Kelmon, pré-candidato a Deputado Federal por São Paulo pelo PL. Conheça sua história, suas bandeiras e cadastre-se para apoiar a campanha.";
