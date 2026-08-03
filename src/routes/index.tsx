@@ -1,9 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { lazy, Suspense } from "react";
 
 import { SiteHeader } from "@/components/landing/site-header";
 import { Hero } from "@/components/landing/hero";
 import { Highlights } from "@/components/landing/highlights";
+import { About } from "@/components/landing/about";
+import { Bandeiras } from "@/components/landing/bandeiras";
+import { Media } from "@/components/landing/media";
+import { Stats } from "@/components/landing/stats";
+import { CallToAction } from "@/components/landing/call-to-action";
+import { SignupForm } from "@/components/landing/signup-form";
+import { SocialLinks } from "@/components/landing/social-links";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { scrollToSection } from "@/lib/scroll-to-section";
 import heroPortraitUrl from "@/assets/hero-portrait.webp?url";
@@ -17,30 +23,8 @@ import {
   buildWebSiteJsonLd,
 } from "@/lib/site";
 
-const About = lazy(() =>
-  import("@/components/landing/about").then((m) => ({ default: m.About })),
-);
-const Bandeiras = lazy(() =>
-  import("@/components/landing/bandeiras").then((m) => ({ default: m.Bandeiras })),
-);
-const Media = lazy(() =>
-  import("@/components/landing/media").then((m) => ({ default: m.Media })),
-);
-const Stats = lazy(() =>
-  import("@/components/landing/stats").then((m) => ({ default: m.Stats })),
-);
-const CallToAction = lazy(() =>
-  import("@/components/landing/call-to-action").then((m) => ({ default: m.CallToAction })),
-);
-const SignupForm = lazy(() =>
-  import("@/components/landing/signup-form").then((m) => ({ default: m.SignupForm })),
-);
-const SocialLinks = lazy(() =>
-  import("@/components/landing/social-links").then((m) => ({ default: m.SocialLinks })),
-);
-
 export const Route = createFileRoute("/")({
-  // Feeds sociais carregam depois (seção Mídia) — não bloqueiam a abertura da página.
+  // Feeds sociais carregam na seção Mídia — não bloqueiam a abertura da página.
   component: Index,
   head: () => {
     const pageUrl = absoluteUrl("/");
@@ -87,6 +71,11 @@ export const Route = createFileRoute("/")({
       ],
       links: [
         { rel: "canonical", href: pageUrl },
+        { rel: "icon", href: "/favicon.ico", sizes: "any" },
+        { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
+        { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
+        { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+        { rel: "shortcut icon", href: "/favicon.ico" },
         {
           rel: "preload",
           as: "image",
@@ -130,15 +119,13 @@ function Index() {
       <main id="conteudo" className="overflow-x-clip">
         <Hero />
         <Highlights />
-        <Suspense fallback={null}>
-          <About />
-          <Bandeiras />
-          <Media />
-          <Stats />
-          <CallToAction />
-          <SignupForm />
-          <SocialLinks />
-        </Suspense>
+        <About />
+        <Bandeiras />
+        <Media />
+        <Stats />
+        <CallToAction />
+        <SignupForm />
+        <SocialLinks />
       </main>
       <SiteFooter />
     </div>
