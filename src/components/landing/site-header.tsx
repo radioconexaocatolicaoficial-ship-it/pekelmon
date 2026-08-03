@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "motion/react";
 import { Home, BookText, Flag, Film, TrendingUp, UserPlus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -78,7 +77,7 @@ export function SiteHeader() {
         }`}
       >
         <nav aria-label="Navegação principal" className="w-full">
-          <PageShell className="flex min-w-0 items-center gap-3 py-2.5 sm:py-3 md:gap-4">
+          <PageShell className="flex min-w-0 items-center gap-3 py-2 sm:py-2.5 md:gap-4 md:py-[0.6rem]">
             <a
               href="#inicio"
               className="flex shrink-0 items-center"
@@ -90,12 +89,12 @@ export function SiteHeader() {
               <img
                 src={logo}
                 alt="Padre Kelmon 2202 — Deputado Federal"
-                className="h-10 w-auto max-w-[42vw] object-contain object-left sm:h-12 md:h-12 md:max-w-[11rem] lg:h-[3.25rem] lg:max-w-none"
+                className="h-10 w-auto max-w-[42vw] object-contain object-left sm:h-11 md:h-11 md:max-w-[11rem] lg:h-12 lg:max-w-none"
               />
             </a>
 
             <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-3 md:gap-4 lg:gap-5">
-              {/* Mesmo design do tablet — notebook e desktop */}
+              {/* Tablet / notebook / desktop — 2% mais fino */}
               <ul className="hidden min-w-0 items-center justify-end gap-3 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:gap-4 [&::-webkit-scrollbar]:hidden">
                 {TOP_LINKS.map((l) => {
                   const Icon = l.icon;
@@ -108,15 +107,16 @@ export function SiteHeader() {
                           e.preventDefault();
                           goTo(l.href);
                         }}
-                        className={`flex min-w-[3.75rem] flex-col items-center justify-center gap-1 rounded-xl px-3 py-1.5 transition-colors lg:min-w-[4.25rem] lg:px-3.5 lg:py-2 ${
+                        className={`flex min-w-[3.6rem] flex-col items-center justify-center gap-0.5 rounded-xl px-2.5 py-1 transition-colors lg:min-w-[4rem] lg:px-3 lg:py-[0.3rem] ${
                           isActive
                             ? "bg-blue-50 text-[var(--blue-primary)]"
                             : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                         }`}
+                        style={{ zoom: 0.98 }}
                         aria-current={isActive ? "true" : undefined}
                       >
-                        <Icon className="size-5 stroke-[2.25] lg:size-[1.35rem]" aria-hidden="true" />
-                        <span className="whitespace-nowrap text-xs font-bold leading-none tracking-wide lg:text-[0.8125rem]">
+                        <Icon className="size-[1.15rem] stroke-[2.25] lg:size-5" aria-hidden="true" />
+                        <span className="whitespace-nowrap text-[0.7rem] font-bold leading-none tracking-wide lg:text-xs">
                           {l.label}
                         </span>
                       </a>
@@ -129,7 +129,7 @@ export function SiteHeader() {
                 asChild
                 variant="campaign"
                 size="sm"
-                className="relative z-10 inline-flex h-9 shrink-0 px-3 text-xs font-bold md:h-10 md:px-4 md:text-sm"
+                className="relative z-10 inline-flex h-9 shrink-0 px-3 text-xs font-bold md:h-9 md:px-4 md:text-sm"
               >
                 <a
                   href="#cadastro"
@@ -146,7 +146,7 @@ export function SiteHeader() {
         </nav>
       </header>
 
-      {/* Menu inferior — só celular; tablet usa menu no topo */}
+      {/* Menu inferior — celular: mesmo design do topo, medidas compactas */}
       <nav
         aria-label="Menu de seções"
         data-mobile-bottom-nav
@@ -155,8 +155,7 @@ export function SiteHeader() {
       >
         <div
           ref={bottomNavRef}
-          className="mx-auto flex w-full max-w-md origin-bottom items-stretch justify-center px-1 py-1"
-          style={{ zoom: 1.02 }}
+          className="mx-auto flex w-full max-w-md items-stretch justify-center gap-0.5 px-1.5 py-1"
         >
           {LINKS.map((l) => {
             const Icon = l.icon;
@@ -174,43 +173,19 @@ export function SiteHeader() {
                   e.preventDefault();
                   goTo(l.href);
                 }}
-                className="relative flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 px-0.5 py-1 outline-none"
+                className={`relative flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-0.5 py-1 outline-none transition-colors ${
+                  isActive
+                    ? isAccent
+                      ? "bg-amber-50 text-[var(--yellow-dark)]"
+                      : "bg-blue-50 text-[var(--blue-primary)]"
+                    : isAccent
+                      ? "text-amber-600/70"
+                      : "text-gray-500"
+                }`}
                 aria-current={isActive ? "true" : undefined}
               >
-                {isActive ? (
-                  <motion.span
-                    layoutId="mobile-nav-dot"
-                    className="absolute top-0 h-[2px] w-4 rounded-full"
-                    style={{
-                      background: isAccent ? "var(--yellow-dark)" : "var(--blue-primary)",
-                    }}
-                    transition={{ type: "spring", stiffness: 420, damping: 34 }}
-                  />
-                ) : null}
-
-                <Icon
-                  className={`size-4 stroke-[2] transition-colors ${
-                    isActive
-                      ? isAccent
-                        ? "text-[var(--yellow-dark)]"
-                        : "text-[var(--blue-primary)]"
-                      : isAccent
-                        ? "text-amber-600/70"
-                        : "text-gray-400"
-                  }`}
-                  aria-hidden="true"
-                />
-                <span
-                  className={`text-[9px] font-semibold leading-none tracking-tight ${
-                    isActive
-                      ? isAccent
-                        ? "text-[var(--yellow-dark)]"
-                        : "text-[var(--blue-primary)]"
-                      : "text-gray-400"
-                  }`}
-                >
-                  {l.label}
-                </span>
+                <Icon className="size-4 stroke-[2.25]" aria-hidden="true" />
+                <span className="text-[9px] font-bold leading-none tracking-tight">{l.label}</span>
               </a>
             );
           })}
