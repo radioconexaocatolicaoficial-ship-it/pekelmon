@@ -1,6 +1,6 @@
 import { ArrowUpRight, Quote } from "lucide-react";
 
-import heroPortrait from "@/assets/hero-portrait.webp";
+import confiancaImg from "@/assets/confianca-kelmon.webp";
 import { FORO_BRASIL, STATS, TRUST_PILLARS } from "@/lib/campaign-data";
 import { Counter, PageShell, Reveal } from "./primitives";
 
@@ -81,8 +81,8 @@ export function Stats() {
             <Reveal delay={0.1}>
               <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-2xl shadow-2xl lg:ml-auto lg:max-w-none lg:aspect-[4/5] lg:max-h-[480px]">
                 <img
-                  src={heroPortrait}
-                  alt="Padre Kelmon — indicadores e atuação pública"
+                  src={confiancaImg}
+                  alt="Padre Kelmon — trajetória pública e alianças"
                   loading="lazy"
                   decoding="async"
                   className="h-full w-full object-cover object-top"
