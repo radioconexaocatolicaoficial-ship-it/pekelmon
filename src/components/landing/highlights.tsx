@@ -44,14 +44,14 @@ export function Highlights() {
         <h2 id="destaques-heading" className="sr-only">
           Destaques da campanha
         </h2>
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-3 lg:gap-6">
           {HIGHLIGHTS.map((item, index) => {
             return (
               <Card
                 key={index}
                 className="group overflow-hidden border-2 bg-white shadow-lg transition-all hover:border-blue-500 hover:shadow-2xl"
               >
-                <div className="relative h-40 w-full overflow-hidden sm:h-44">
+                <div className="relative h-40 w-full overflow-hidden sm:h-44 md:h-28 lg:h-44">
                   <img
                     src={item.image}
                     alt={item.title}
@@ -60,21 +60,23 @@ export function Highlights() {
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>
-                <CardContent className="p-4 sm:p-5">
+                <CardContent className="p-4 sm:p-5 md:p-3 lg:p-5">
                   <h3
-                    className="mb-2.5 text-lg font-black"
+                    className="mb-2.5 text-lg font-black md:mb-1.5 md:text-sm lg:mb-2.5 lg:text-lg"
                     style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
                   >
                     {item.title}
                   </h3>
 
-                  <p className="mb-5 text-sm leading-relaxed text-gray-600 text-justify">{item.description}</p>
+                  <p className="mb-5 text-sm leading-relaxed text-gray-600 text-justify md:mb-3 md:text-xs md:leading-snug lg:mb-5 lg:text-sm lg:leading-relaxed">
+                    {item.description}
+                  </p>
 
                   <Button
                     asChild
                     variant="outline"
                     size="sm"
-                    className="h-11 w-full border-2 font-bold transition-colors hover:bg-blue-600 hover:text-white"
+                    className="h-11 w-full border-2 font-bold transition-colors hover:bg-blue-600 hover:text-white md:h-9 md:text-xs lg:h-11 lg:text-sm"
                     style={{ borderColor: "var(--blue-primary)", color: "var(--blue-primary)" }}
                   >
                     <a href={item.link} target="_blank" rel="noopener noreferrer">
