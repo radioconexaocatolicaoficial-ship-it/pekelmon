@@ -41,6 +41,13 @@ export default defineConfig(async ({ command, mode }) => {
           },
         },
         routeRules: {
+          // HTML nunca pode ficar em cache longo — senão o navegador
+          // guarda página sem CSS/JS atual após um deploy.
+          "/**": {
+            headers: {
+              "cache-control": "no-cache, no-store, must-revalidate",
+            },
+          },
           "/assets/**": {
             headers: {
               "cache-control": "public, max-age=31536000, immutable",
