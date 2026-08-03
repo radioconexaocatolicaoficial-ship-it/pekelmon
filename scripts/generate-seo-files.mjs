@@ -25,6 +25,7 @@ function readEnvFile(filePath) {
 const env = {
   ...readEnvFile(resolve(process.cwd(), ".env")),
   ...readEnvFile(resolve(process.cwd(), ".env.local")),
+  ...readEnvFile(resolve(process.cwd(), ".env.production")),
   ...process.env,
 };
 
@@ -34,11 +35,13 @@ const siteUrl = String(env.VITE_SITE_URL || "")
 
 const loc = siteUrl ? `${siteUrl}/` : "/";
 const sitemapUrl = siteUrl ? `${siteUrl}/sitemap.xml` : "/sitemap.xml";
+const lastmod = new Date().toISOString().slice(0, 10);
 
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>${loc}</loc>
+    <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -68,7 +71,7 @@ writeFileSync(resolve(process.cwd(), "public/robots.txt"), robots, "utf8");
 
 if (!siteUrl) {
   console.warn(
-    "[seo] VITE_SITE_URL não definido. Defina no .env para canonical, Open Graph e sitemap absolutos.",
+    "[seo] VITE_SITE_URL não definido. Defina no .env / Hostinger (ex.: https://www.seudominio.com.br) para canonical, Open Graph e sitemap absolutos.",
   );
 } else {
   console.log(`[seo] sitemap e robots gerados para ${siteUrl}`);

@@ -225,7 +225,9 @@ function PressCard({ article }: { article: PressArticle }) {
       <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
         <img
           src={article.image}
-          alt=""
+          alt={`${article.title} — ${article.source}`}
+          width={640}
+          height={400}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
           decoding="async"

@@ -89,6 +89,9 @@ export function SiteHeader() {
               <img
                 src={logo}
                 alt="Padre Kelmon 2202 — Deputado Federal"
+                width={220}
+                height={50}
+                decoding="async"
                 className="h-10 w-auto max-w-[42vw] object-contain object-left sm:h-11 md:h-11 md:max-w-[11rem] lg:h-12 lg:max-w-none"
               />
             </a>

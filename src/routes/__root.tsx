@@ -11,8 +11,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Toaster } from "../components/ui/sonner";
 import { PwaRegister } from "../components/pwa-register";
-import { SITE_DESCRIPTION, SITE_TITLE } from "../lib/site";
-
+import { scrollToSection } from "../lib/scroll-to-section";
 
 function NotFoundComponent() {
   return (
@@ -88,12 +87,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
       { name: "apple-mobile-web-app-title", content: "Padre Kelmon" },
       { name: "application-name", content: "Padre Kelmon" },
-      { title: SITE_TITLE },
-      { name: "description", content: SITE_DESCRIPTION },
-      { property: "og:site_name", content: "Padre Kelmon" },
-      { property: "og:type", content: "website" },
-      { property: "og:locale", content: "pt_BR" },
-      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
@@ -128,23 +121,17 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
-  // Remove hash da URL sempre que mudar
+  // Deep link: #secao → scroll com offset do header; limpa hash sem quebrar o destino
   useEffect(() => {
-    const removeHash = () => {
-      if (window.location.hash) {
-        window.history.replaceState(null, '', window.location.pathname + window.location.search);
-      }
-    };
+    const hash = window.location.hash.replace(/^#/, "");
+    if (!hash) return;
 
-    // Remove ao montar
-    removeHash();
+    const timer = window.setTimeout(() => {
+      scrollToSection(hash);
+      window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    }, 80);
 
-    // Remove ao navegar
-    window.addEventListener('hashchange', removeHash);
-    
-    return () => {
-      window.removeEventListener('hashchange', removeHash);
-    };
+    return () => window.clearTimeout(timer);
   }, []);
 
   return (

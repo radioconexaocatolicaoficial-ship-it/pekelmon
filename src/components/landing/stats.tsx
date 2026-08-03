@@ -83,6 +83,8 @@ export function Stats() {
                 <img
                   src={confiancaImg}
                   alt="Padre Kelmon — trajetória pública e alianças"
+                  width={800}
+                  height={1000}
                   loading="lazy"
                   decoding="async"
                   className="h-full w-full object-cover object-top"

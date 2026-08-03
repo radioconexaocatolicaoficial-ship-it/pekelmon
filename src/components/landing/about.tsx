@@ -85,7 +85,7 @@ const HIGHLIGHTS_SOBRE = [
   },
 ];
 
-/** Preview curto ? mesma altura aproximada do bloco atual (3 parágrafos). */
+/** Preview curto — mesma altura aproximada do bloco atual (3 parágrafos). */
 const BIO_PREVIEW = [
   "Nascido em Salvador, Bahia, em 1976, Padre Kelmon construiu sua trajetória a partir da vida religiosa, dedicando mais de três décadas à formação espiritual, ao trabalho pastoral e à participação em iniciativas voltadas ao debate entre fé, sociedade e política.",
   "Sua caminhada começou ainda na juventude, com participação em movimentos ligados à Igreja Católica, entre eles a Legião de Maria. Posteriormente aprofundou estudos em Filosofia, Teologia e Pedagogia e participou de ações missionárias e humanitárias.",
@@ -151,6 +151,8 @@ export function About() {
               <img
                 src={sobreImg}
                 alt="Padre Kelmon — biografia e trajetória"
+                width={800}
+                height={1000}
                 loading="lazy"
                 decoding="async"
                 className="mx-auto h-auto w-full object-contain object-center md:h-full md:object-cover md:object-top"
@@ -223,6 +225,8 @@ export function About() {
                       <img
                         src={heroPortrait}
                         alt="Padre Kelmon"
+                        width={800}
+                        height={1000}
                         className="h-full w-full object-cover object-top"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[var(--blue-primary)]/80 via-transparent to-black/20" />
@@ -323,7 +327,7 @@ export function About() {
                 "Juntos vamos resgatar o Brasil."
               </p>
               <footer className="relative mt-3 text-center text-xs font-semibold uppercase tracking-wider text-yellow-300">
-                Padre Kelmon ? São Paulo, 2026
+                Padre Kelmon — São Paulo, 2026
               </footer>
             </motion.blockquote>
           </div>

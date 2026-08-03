@@ -1,5 +1,6 @@
 import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
+import { FORO_BRASIL } from "@/lib/campaign-data";
 import { PageShell } from "./primitives";
 
 import livroImg from "@/assets/livro-padre-kelmon.webp";
@@ -9,19 +10,23 @@ import plImg from "@/assets/pl-filie-se.webp";
 const HIGHLIGHTS = [
   {
     image: livroImg,
-    title: "Livro: Minha História",
+    title: "Livro: Fé e Política de Mãos Dadas",
     description:
       "Conheça a trajetória de fé, dedicação e compromisso com o povo brasileiro. Uma história de vida dedicada a servir.",
-    link: "https://www.instagram.com/stories/highlights/18045041203609288/",
+    link: "https://7minutos.com.br/variedades/leitura/padre-kelmon-lanca-seu-livro-fe-e-politica-de-maos-dadas/",
     linkText: "Saiba mais",
+    width: 800,
+    height: 500,
   },
   {
     image: foroImg,
     title: "Foro do Brasil",
     description:
       "Participação ativa nos debates mais importantes do país. Compromisso com o diálogo e as transformações necessárias.",
-    link: "https://www.instagram.com/stories/highlights/17920916735842429/",
-    linkText: "Ver histórias",
+    link: FORO_BRASIL.url,
+    linkText: "Conhecer o Foro",
+    width: 800,
+    height: 500,
   },
   {
     image: plImg,
@@ -30,6 +35,8 @@ const HIGHLIGHTS = [
       "Filiado ao PL 22, partido comprometido com a liberdade, família e valores conservadores do povo brasileiro.",
     link: "https://partidoliberal.org.br/",
     linkText: "Conheça o PL",
+    width: 800,
+    height: 500,
   },
 ];
 
@@ -45,16 +52,18 @@ export function Highlights() {
           Destaques da campanha
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-3 lg:gap-6">
-          {HIGHLIGHTS.map((item, index) => {
+          {HIGHLIGHTS.map((item) => {
             return (
               <Card
-                key={index}
+                key={item.title}
                 className="group overflow-hidden border-2 bg-white shadow-lg transition-all hover:border-blue-500 hover:shadow-2xl"
               >
                 <div className="relative h-40 w-full overflow-hidden sm:h-44 md:h-28 lg:h-44">
                   <img
                     src={item.image}
                     alt={item.title}
+                    width={item.width}
+                    height={item.height}
                     loading="lazy"
                     decoding="async"
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"

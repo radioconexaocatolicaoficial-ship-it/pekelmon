@@ -1,8 +1,16 @@
+import type { MouseEvent } from "react";
 import { Facebook, Instagram, Youtube, ArrowUpRight } from "lucide-react";
 
 import { CANDIDATE, FORO_BRASIL } from "@/lib/campaign-data";
+import { scrollToSection } from "@/lib/scroll-to-section";
 import logo from "@/assets/Logo-Site-PAdre-kelmon.webp";
 import { PageShell } from "./primitives";
+
+function onInternalNav(e: MouseEvent<HTMLAnchorElement>, href: string) {
+  if (!href.startsWith("#")) return;
+  e.preventDefault();
+  scrollToSection(href.slice(1));
+}
 
 const QUICK_LINKS = [
   { href: "#inicio", label: "Início" },
@@ -70,6 +78,7 @@ export function SiteFooter() {
           <div className="sm:col-span-2 lg:col-span-1">
             <a
               href="#inicio"
+              onClick={(e) => onInternalNav(e, "#inicio")}
               className="inline-flex items-center rounded-lg bg-white px-3 py-1.5 shadow-md"
             >
               <img
@@ -114,6 +123,7 @@ export function SiteFooter() {
                 <li key={l.href}>
                   <a
                     href={l.href}
+                    onClick={(e) => onInternalNav(e, l.href)}
                     className="inline-flex min-h-9 items-center text-sm font-semibold text-white/85 transition-colors hover:text-white"
                   >
                     {l.label}
@@ -134,7 +144,7 @@ export function SiteFooter() {
                     href={l.href}
                     {...(l.external
                       ? { target: "_blank", rel: "noopener noreferrer" }
-                      : {})}
+                      : { onClick: (e) => onInternalNav(e, l.href) })}
                     className="inline-flex min-h-9 items-center text-sm font-semibold text-white/85 transition-colors hover:text-white"
                   >
                     {l.label}
@@ -154,6 +164,7 @@ export function SiteFooter() {
             </p>
             <a
               href="#cadastro"
+              onClick={(e) => onInternalNav(e, "#cadastro")}
               className="mt-3 inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-lg px-4 py-2 text-sm font-bold transition-transform hover:scale-105 sm:h-auto sm:w-auto"
               style={{
                 backgroundColor: "var(--yellow-primary)",
@@ -172,7 +183,7 @@ export function SiteFooter() {
           <p>
             © {new Date().getFullYear()} Campanha {CANDIDATE.name}. Todos os direitos reservados.
           </p>
-          <p>Conteúdo informativo de pré-campanha, a partir de fontes públicas.</p>
+          <p>Conteúdo informativo de campanha, a partir de fontes públicas.</p>
         </PageShell>
       </div>
     </footer>

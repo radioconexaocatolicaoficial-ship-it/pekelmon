@@ -46,6 +46,10 @@ export default defineConfig(async ({ command, mode }) => {
           "/**": {
             headers: {
               "cache-control": "no-cache, no-store, must-revalidate",
+              "x-content-type-options": "nosniff",
+              "x-frame-options": "SAMEORIGIN",
+              "referrer-policy": "strict-origin-when-cross-origin",
+              "permissions-policy": "camera=(), microphone=(), geolocation=()",
             },
           },
           "/assets/**": {

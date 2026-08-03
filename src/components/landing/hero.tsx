@@ -3,7 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
-import heroKv from "@/assets/Banner-topo.jpg";
+import heroKv from "@/assets/Banner-topo.webp";
 import { PageShell } from "./primitives";
 
 export function Hero() {
@@ -13,6 +13,10 @@ export function Hero() {
       className="relative isolate bg-white pt-[4.25rem] pb-2 sm:pt-[4.75rem] sm:pb-3 lg:pb-0"
     >
       <PageShell>
+        <h1 className="sr-only">
+          Padre Kelmon — Candidato a Deputado Federal por São Paulo pelo PL, aprovado em
+          convenção
+        </h1>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}

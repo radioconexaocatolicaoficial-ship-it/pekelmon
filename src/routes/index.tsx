@@ -12,14 +12,18 @@ import { SignupForm } from "@/components/landing/signup-form";
 import { SocialLinks } from "@/components/landing/social-links";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { scrollToSection } from "@/lib/scroll-to-section";
-import heroKvUrl from "@/assets/Banner-topo.jpg?url";
+import heroKvUrl from "@/assets/Banner-topo.webp?url";
 import {
   SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_NAME,
   SITE_TITLE,
   OG_IMAGE_PATH,
   OG_IMAGE_WIDTH,
   OG_IMAGE_HEIGHT,
+  TWITTER_HANDLE,
   absoluteUrl,
+  buildOrganizationJsonLd,
   buildPersonJsonLd,
   buildWebPageJsonLd,
   buildWebSiteJsonLd,
@@ -36,23 +40,24 @@ export const Route = createFileRoute("/")({
       meta: [
         { title: SITE_TITLE },
         { name: "description", content: SITE_DESCRIPTION },
-        {
-          name: "keywords",
-          content:
-            "Padre Kelmon, Deputado Federal, São Paulo, PL, candidato, campanha, fé, família",
-        },
-        { name: "author", content: "Padre Kelmon" },
+        { name: "keywords", content: SITE_KEYWORDS },
+        { name: "author", content: SITE_NAME },
         {
           name: "robots",
-          content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+          content:
+            "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
         },
         { name: "googlebot", content: "index, follow" },
+        { name: "bingbot", content: "index, follow" },
+        { name: "geo.region", content: "BR-SP" },
+        { name: "geo.placename", content: "São Paulo" },
+        { name: "language", content: "pt-BR" },
         { property: "og:title", content: SITE_TITLE },
         { property: "og:description", content: SITE_DESCRIPTION },
         { property: "og:type", content: "website" },
         { property: "og:url", content: pageUrl },
         { property: "og:locale", content: "pt_BR" },
-        { property: "og:site_name", content: "Padre Kelmon" },
+        { property: "og:site_name", content: SITE_NAME },
         { property: "og:image", content: ogImage },
         { property: "og:image:secure_url", content: ogImage },
         { property: "og:image:type", content: "image/jpeg" },
@@ -63,6 +68,8 @@ export const Route = createFileRoute("/")({
           content: SITE_TITLE,
         },
         { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:site", content: TWITTER_HANDLE },
+        { name: "twitter:creator", content: TWITTER_HANDLE },
         { name: "twitter:title", content: SITE_TITLE },
         { name: "twitter:description", content: SITE_DESCRIPTION },
         { name: "twitter:image", content: ogImage },
@@ -73,6 +80,8 @@ export const Route = createFileRoute("/")({
       ],
       links: [
         { rel: "canonical", href: pageUrl },
+        { rel: "alternate", hrefLang: "pt-BR", href: pageUrl },
+        { rel: "alternate", hrefLang: "x-default", href: pageUrl },
         { rel: "icon", href: "/favicon.ico?v=5", type: "image/x-icon", sizes: "any" },
         { rel: "icon", href: "/favicon.png?v=5", type: "image/png", sizes: "512x512" },
         { rel: "shortcut icon", href: "/favicon.ico?v=5", type: "image/x-icon" },
@@ -91,6 +100,10 @@ export const Route = createFileRoute("/")({
         },
         {
           type: "application/ld+json",
+          children: JSON.stringify(buildOrganizationJsonLd()),
+        },
+        {
+          type: "application/ld+json",
           children: JSON.stringify(buildWebSiteJsonLd()),
         },
         {
@@ -106,10 +119,14 @@ function Index() {
   return (
     <div className="min-h-dvh bg-white md:min-h-screen">
       <a
-        href="#historia"
+        href="#conteudo"
         onClick={(e) => {
           e.preventDefault();
-          scrollToSection("historia");
+          const el = document.getElementById("conteudo");
+          if (el) {
+            el.focus({ preventScroll: true });
+            scrollToSection("inicio");
+          }
         }}
         className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:px-4 focus:py-2"
         style={{ backgroundColor: "var(--blue-primary)", color: "white" }}
@@ -117,7 +134,7 @@ function Index() {
         Pular para o conteúdo
       </a>
       <SiteHeader />
-      <main id="conteudo" className="overflow-x-clip">
+      <main id="conteudo" tabIndex={-1} className="overflow-x-clip outline-none">
         <Hero />
         <Highlights />
         <About />
