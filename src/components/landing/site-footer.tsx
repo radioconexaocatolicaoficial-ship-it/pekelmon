@@ -82,7 +82,7 @@ export function SiteFooter() {
                 className="h-8 w-auto"
               />
             </a>
-            <p className="mt-3 text-sm font-bold leading-snug text-white">
+            <p className="mt-3 whitespace-nowrap text-[clamp(0.7rem,2.8vw,0.875rem)] font-bold leading-none text-white">
               Pré-candidato a Deputado Federal · SP · PL
             </p>
             <p className="mt-2 text-sm leading-relaxed text-white/90">
