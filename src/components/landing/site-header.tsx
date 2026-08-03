@@ -95,7 +95,7 @@ export function SiteHeader() {
 
             <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-3 md:gap-4 lg:gap-5">
               {/* Tablet / notebook / desktop — tamanho anterior */}
-              <ul className="hidden min-w-0 items-center justify-end gap-[0.98rem] overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:gap-6 xl:gap-7 [&::-webkit-scrollbar]:hidden">
+              <ul className="hidden min-w-0 items-center justify-end gap-[0.95rem] overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:gap-6 xl:gap-7 [&::-webkit-scrollbar]:hidden">
                 {TOP_LINKS.map((l) => {
                   const Icon = l.icon;
                   const isActive = active === l.href;
