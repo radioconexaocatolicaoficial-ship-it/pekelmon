@@ -12,7 +12,7 @@ import { SignupForm } from "@/components/landing/signup-form";
 import { SocialLinks } from "@/components/landing/social-links";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { scrollToSection } from "@/lib/scroll-to-section";
-import heroKvUrl from "@/assets/hero-kv.webp?url";
+import heroKvUrl from "@/assets/Banner-topo.jpg?url";
 import {
   SITE_DESCRIPTION,
   SITE_TITLE,
@@ -60,7 +60,7 @@ export const Route = createFileRoute("/")({
         { property: "og:image:height", content: OG_IMAGE_HEIGHT },
         {
           property: "og:image:alt",
-          content: "Padre Kelmon — pré-candidato a Deputado Federal por São Paulo",
+          content: "Agora é oficial — Padre Kelmon, candidato a Deputado Federal por São Paulo",
         },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: SITE_TITLE },
@@ -68,7 +68,7 @@ export const Route = createFileRoute("/")({
         { name: "twitter:image", content: ogImage },
         {
           name: "twitter:image:alt",
-          content: "Padre Kelmon — pré-candidato a Deputado Federal por São Paulo",
+          content: "Agora é oficial — Padre Kelmon, candidato a Deputado Federal por São Paulo",
         },
       ],
       links: [

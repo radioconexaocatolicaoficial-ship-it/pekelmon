@@ -3,65 +3,71 @@ import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
-import heroKv from "@/assets/hero-kv.webp";
+import heroKv from "@/assets/Banner-topo.jpg";
+import { PageShell } from "./primitives";
 
 export function Hero() {
   return (
-    <section id="inicio" className="relative isolate bg-white pt-[4.25rem] sm:pt-[4.75rem]">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.55 }}
-        className="relative mx-auto w-full max-w-[1140px] px-3 sm:px-4 lg:px-0"
-      >
-        <img
-          src={heroKv}
-          alt="Padre Kelmon 2202 — Deputado Federal. Uma vida de missões. A nova missão é por São Paulo."
-          width={1024}
-          height={576}
-          sizes="(min-width: 1140px) 1140px, 100vw"
-          fetchPriority="high"
-          decoding="async"
-          className="block h-auto w-full rounded-2xl object-cover object-center shadow-lg"
-        />
-      </motion.div>
+    <section
+      id="inicio"
+      className="relative isolate bg-white pt-[4.25rem] pb-2 sm:pt-[4.75rem] sm:pb-3 lg:pb-0"
+    >
+      <PageShell>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.55 }}
+          className="relative w-full"
+        >
+          <img
+            src={heroKv}
+            alt="Agora é oficial — Padre Kelmon, candidato a Deputado Federal por São Paulo, pelo Brasil"
+            width={1140}
+            height={500}
+            sizes="(min-width: 1120px) 1120px, 100vw"
+            fetchPriority="high"
+            decoding="async"
+            className="block h-auto w-full rounded-2xl object-cover object-center shadow-lg"
+          />
+        </motion.div>
 
-      {/* Botões só no celular e tablet */}
-      <div className="mx-auto flex w-full max-w-5xl flex-col gap-3 px-4 py-4 sm:flex-row sm:justify-center sm:gap-4 sm:px-6 sm:py-5 lg:hidden">
-        <Button
-          asChild
-          variant="yellow"
-          size="xl"
-          className="h-11 w-full text-base font-bold sm:h-auto sm:w-auto sm:min-w-[12rem] sm:text-lg"
-        >
-          <a
-            href="#cadastro"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("cadastro");
-            }}
+        {/* Botões só no celular e tablet */}
+        <div className="flex w-full flex-col gap-3 py-4 sm:flex-row sm:justify-center sm:gap-4 sm:py-5 lg:hidden">
+          <Button
+            asChild
+            variant="yellow"
+            size="xl"
+            className="h-11 w-full text-base font-bold sm:h-auto sm:w-auto sm:min-w-[12rem] sm:text-lg"
           >
-            Quero apoiar
-            <ArrowRight className="size-5" aria-hidden="true" />
-          </a>
-        </Button>
-        <Button
-          asChild
-          variant="outline"
-          size="xl"
-          className="h-11 w-full text-base font-semibold sm:h-auto sm:w-auto sm:min-w-[12rem] sm:text-lg"
-        >
-          <a
-            href="#historia"
-            onClick={(e) => {
-              e.preventDefault();
-              scrollToSection("historia");
-            }}
+            <a
+              href="#cadastro"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("cadastro");
+              }}
+            >
+              Quero apoiar
+              <ArrowRight className="size-5" aria-hidden="true" />
+            </a>
+          </Button>
+          <Button
+            asChild
+            variant="outline"
+            size="xl"
+            className="h-11 w-full text-base font-semibold sm:h-auto sm:w-auto sm:min-w-[12rem] sm:text-lg"
           >
-            Conheça minha história
-          </a>
-        </Button>
-      </div>
+            <a
+              href="#historia"
+              onClick={(e) => {
+                e.preventDefault();
+                scrollToSection("historia");
+              }}
+            >
+              Conheça minha história
+            </a>
+          </Button>
+        </div>
+      </PageShell>
     </section>
   );
 }

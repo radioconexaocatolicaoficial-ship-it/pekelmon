@@ -15,9 +15,9 @@ export const SITE_DESCRIPTION =
   "Padre Kelmon, pré-candidato a Deputado Federal por São Paulo pelo PL. Conheça sua história, suas bandeiras e cadastre-se para apoiar a campanha.";
 
 /** Query v= força WhatsApp/Facebook a buscar a imagem nova (cache agressivo). */
-export const OG_IMAGE_PATH = "/og-image.jpg?v=6";
+export const OG_IMAGE_PATH = "/og-image.jpg?v=7";
 export const OG_IMAGE_WIDTH = "1200";
-export const OG_IMAGE_HEIGHT = "675";
+export const OG_IMAGE_HEIGHT = "526";
 
 export function absoluteUrl(path = "/"): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
