@@ -25,9 +25,9 @@ export function Stats() {
       />
 
       <PageShell className="relative">
-          <div className="grid items-stretch gap-8 lg:grid-cols-2 lg:gap-12">
-            <Reveal className="h-full">
-              <div className="flex h-full max-h-none flex-col justify-center lg:max-h-[480px]">
+          <div className="grid items-stretch gap-6 md:grid-cols-2 md:gap-8 lg:gap-12">
+            <Reveal className="h-full min-w-0">
+              <div className="flex h-full max-h-none flex-col justify-center md:max-h-[480px]">
                 <div>
                   <p
                     className="mb-3 text-sm font-bold uppercase tracking-widest"
@@ -78,8 +78,8 @@ export function Stats() {
               </div>
             </Reveal>
 
-            <Reveal delay={0.1}>
-              <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-2xl shadow-2xl lg:ml-auto lg:max-w-none lg:aspect-[4/5] lg:max-h-[480px]">
+            <Reveal delay={0.1} className="min-w-0">
+              <div className="relative mx-auto h-full w-full overflow-hidden rounded-2xl shadow-2xl md:ml-auto md:max-w-none md:aspect-[4/5] md:max-h-[480px]">
                 <img
                   src={confiancaImg}
                   alt="Padre Kelmon — trajetória pública e alianças"
