@@ -38,115 +38,63 @@ export function Hero() {
               </span>
             </motion.div>
 
-            {/* Celular — hierarquia exclusiva mobile */}
-            <div className="sm:hidden">
-              <motion.p
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                className="w-full whitespace-nowrap font-black leading-none tracking-tight text-white text-[clamp(1.2rem,6.4vw,1.85rem)]"
+            {/*
+              Estrutura única (evita duplicar HTML mobile/desktop).
+              Mobile (<sm): Agora é Oficial (branco) → PADRE KELMON (amarelo, maior)
+              → Candidato a → Deputado Federal (1 linha) → Por São Paulo, Pelo Brasil
+              sm+: layout original com OFICIAL / DEPUTADO / FEDERAL em destaque amarelo
+            */}
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              className="w-full whitespace-nowrap font-black leading-none tracking-tight text-white text-[clamp(1.2rem,6.4vw,1.85rem)] sm:whitespace-normal sm:text-[3.3rem] sm:leading-[1.05] sm:tracking-normal md:text-[3.96rem] lg:text-[4.4rem]"
+            >
+              Agora é{" "}
+              <span
+                className="capitalize text-white sm:mt-2 sm:block sm:uppercase sm:text-[var(--yellow-primary)]"
+                style={{ textShadow: "0 2px 20px rgba(0,0,0,0.3)" }}
               >
-                Agora é Oficial
-              </motion.p>
+                oficial
+              </span>
+            </motion.p>
 
-              <motion.h1
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="mt-3 w-full whitespace-nowrap font-black uppercase leading-none tracking-tight text-[clamp(2.35rem,12.5vw,3.85rem)]"
-                style={{
-                  color: "var(--yellow-primary)",
-                  textShadow: "0 2px 20px rgba(0,0,0,0.3)",
-                }}
-              >
-                PADRE KELMON
-              </motion.h1>
+            <motion.h1
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+              className="mt-3 w-full whitespace-nowrap font-black uppercase leading-none tracking-tight text-[clamp(2.35rem,12.5vw,3.85rem)] text-[var(--yellow-primary)] sm:mt-6 sm:whitespace-normal sm:text-[2.2rem] sm:font-bold sm:tracking-normal sm:text-white md:text-[2.64rem] lg:text-[3.3rem]"
+              style={{ textShadow: "0 2px 20px rgba(0,0,0,0.3)" }}
+            >
+              PADRE KELMON
+            </motion.h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.25 }}
-                className="mt-3 w-full whitespace-nowrap font-semibold leading-none text-white text-[clamp(0.95rem,4.6vw,1.25rem)]"
-              >
-                Candidato a
-              </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.25 }}
+              className="mt-3 w-full whitespace-nowrap font-semibold leading-none text-white text-[clamp(0.95rem,4.6vw,1.25rem)] sm:mt-4 sm:whitespace-normal sm:text-[1.38rem] md:text-[1.65rem]"
+            >
+              Candidato a
+            </motion.p>
 
-              <motion.p
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
-                className="mt-1.5 w-full whitespace-nowrap font-black leading-none tracking-tight text-white text-[clamp(1.25rem,6.8vw,2rem)]"
-              >
-                Deputado Federal
-              </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              className="mt-1.5 w-full whitespace-nowrap font-black leading-none tracking-tight text-white text-[clamp(1.25rem,6.8vw,2rem)] sm:mt-0 sm:whitespace-normal sm:text-[2.2rem] sm:uppercase sm:leading-tight sm:tracking-normal sm:text-[var(--yellow-primary)] md:text-[2.64rem]"
+            >
+              Deputado <span className="sm:block">Federal</span>
+            </motion.p>
 
-              <motion.p
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.35 }}
-                className="mt-2 w-full whitespace-nowrap leading-none tracking-wide text-white text-[clamp(0.78rem,3.8vw,0.95rem)]"
-              >
-                Por São Paulo, Pelo Brasil
-              </motion.p>
-            </div>
-
-            {/* Desktop / tablet — layout original */}
-            <div className="hidden sm:block">
-              <motion.p
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                className="w-full font-black leading-[1.05] tracking-normal text-[3.3rem] md:text-[3.96rem] lg:text-[4.4rem]"
-              >
-                Agora é{" "}
-                <span
-                  className="mt-2 block"
-                  style={{
-                    color: "var(--yellow-primary)",
-                    textShadow: "0 2px 20px rgba(0,0,0,0.3)",
-                  }}
-                >
-                  OFICIAL
-                </span>
-              </motion.p>
-
-              <motion.h1
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.2 }}
-                className="mt-6 w-full font-bold uppercase leading-none tracking-normal text-[2.2rem] md:text-[2.64rem] lg:text-[3.3rem]"
-              >
-                PADRE KELMON
-              </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.25 }}
-                className="mt-4 w-full font-semibold leading-none text-[1.38rem] md:text-[1.65rem]"
-              >
-                Candidato a
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.3 }}
-                className="w-full font-black uppercase leading-tight tracking-normal text-[2.2rem] md:text-[2.64rem]"
-                style={{ color: "var(--yellow-primary)" }}
-              >
-                DEPUTADO <span className="block">FEDERAL</span>
-              </motion.p>
-
-              <motion.p
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.35 }}
-                className="mt-2 w-full uppercase leading-none tracking-wider text-[0.92rem] md:text-[1.1rem]"
-              >
-                Por São Paulo, pelo Brasil
-              </motion.p>
-            </div>
+            <motion.p
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.35 }}
+              className="mt-2 w-full whitespace-nowrap leading-none tracking-wide text-white text-[clamp(0.78rem,3.8vw,0.95rem)] sm:whitespace-normal sm:uppercase sm:text-[0.92rem] sm:tracking-wider md:text-[1.1rem]"
+            >
+              Por São Paulo, Pelo Brasil
+            </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 24 }}
