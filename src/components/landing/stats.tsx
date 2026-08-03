@@ -61,7 +61,7 @@ export function Stats() {
                     humana em vários estados do país.
                   </p>
                   <p className="text-justify">
-                    Pré-candidato a Deputado Federal por São Paulo pelo PL, com mais de{" "}
+                    Candidato a Deputado Federal por São Paulo pelo PL, com mais de{" "}
                     <strong style={{ color: "var(--blue-primary)" }}>30 anos</strong> de fé e
                     serviço. Os indicadores abaixo são públicos e verificáveis, para você votar com
                     confiança.
@@ -104,7 +104,7 @@ export function Stats() {
                     Padre Kelmon
                   </p>
                   <p className="mt-1 text-sm font-semibold text-white sm:text-base">
-                    Pré-candidato a Deputado Federal por São Paulo · PL
+                    Candidato a Deputado Federal por São Paulo · PL
                   </p>
                 </div>
               </div>
@@ -238,7 +238,7 @@ export function Stats() {
               >
                 Foro do Brasil
               </a>
-              ; cobertura jornalística sobre a pré-candidatura a Deputado Federal por São Paulo (PL).
+              ; cobertura jornalística sobre a candidatura a Deputado Federal por São Paulo (PL).
             </p>
           </Reveal>
       </PageShell>

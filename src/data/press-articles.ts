@@ -21,9 +21,9 @@ export const PRESS_ARTICLES: PressArticle[] = [
   {
     id: "premio-notavel",
     title:
-      "Padre Kelmon confirma pré-candidatura à Câmara Federal e recebe o Prêmio Notável",
+      "Padre Kelmon confirma candidatura à Câmara Federal e recebe o Prêmio Notável",
     eyebrow: "Reconhecimento nacional",
-    url: "https://7minutos.com.br/noticias/padre-kelmon-confirma-pre-candidatura-a-camara-federal-e-agora-recebe-reconhecimento-nacional-com-o-premio-notavel/",
+    url: "https://7minutos.com.br/noticias/padre-kelmon-confirma-candidatura-a-camara-federal-e-agora-recebe-reconhecimento-nacional-com-o-premio-notavel/",
     image: "https://7minutos.com.br/wp-content/uploads/2026/07/premi-Kelmon.webp",
     source: "7Minutos",
   },

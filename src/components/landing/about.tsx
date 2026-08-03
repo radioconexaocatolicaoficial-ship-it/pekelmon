@@ -81,7 +81,7 @@ const HIGHLIGHTS_SOBRE = [
     year: "2025-2026",
     title: "TV e Deputado Federal",
     description:
-      "Programas na VV8 TV: 'Confessionário' e 'Oração pelo Brasil'. Pré-candidato a Deputado Federal por São Paulo (PL).",
+      "Programas na VV8 TV: 'Confessionário' e 'Oração pelo Brasil'. Candidato a Deputado Federal por São Paulo (PL).",
   },
 ];
 
@@ -89,7 +89,7 @@ const HIGHLIGHTS_SOBRE = [
 const BIO_PREVIEW = [
   "Nascido em Salvador, Bahia, em 1976, Padre Kelmon construiu sua trajetória a partir da vida religiosa, dedicando mais de três décadas à formação espiritual, ao trabalho pastoral e à participação em iniciativas voltadas ao debate entre fé, sociedade e política.",
   "Sua caminhada começou ainda na juventude, com participação em movimentos ligados à Igreja Católica, entre eles a Legião de Maria. Posteriormente aprofundou estudos em Filosofia, Teologia e Pedagogia e participou de ações missionárias e humanitárias.",
-  "Para as eleições de 2026, confirmou sua pré-candidatura a Deputado Federal por São Paulo pelo Partido Liberal (PL), ampliando sua presença no debate público nacional.",
+  "Para as eleições de 2026, confirmou sua candidatura a Deputado Federal por São Paulo pelo Partido Liberal (PL), ampliando sua presença no debate público nacional.",
 ];
 
 const BIO_FULL_SECTIONS: { heading?: string; paragraphs: string[] }[] = [
@@ -117,11 +117,11 @@ const BIO_FULL_SECTIONS: { heading?: string; paragraphs: string[] }[] = [
     ],
   },
   {
-    heading: "Pré-candidatura em 2026",
+    heading: "Candidatura em 2026",
     paragraphs: [
-      "Para as eleições de 2026, Padre Kelmon confirmou sua pré-candidatura ao cargo de Deputado Federal pelo estado de São Paulo, pelo Partido Liberal (PL).",
+      "Para as eleições de 2026, Padre Kelmon confirmou sua candidatura ao cargo de Deputado Federal pelo estado de São Paulo, pelo Partido Liberal (PL).",
       "Segundo declarações públicas, sua candidatura pretende representar eleitores que defendem maior participação dos princípios cristãos no debate político, além de temas relacionados à liberdade religiosa, à família, ao fortalecimento das instituições democráticas e ao desenvolvimento do país.",
-      "Como ocorre com todos os pré-candidatos, suas propostas e compromissos deverão ser apresentados e debatidos ao longo do período eleitoral, permitindo que os eleitores conheçam suas posições sobre os principais desafios nacionais.",
+      "Como ocorre com todos os candidatos, suas propostas e compromissos deverão ser apresentados e debatidos ao longo do período eleitoral, permitindo que os eleitores conheçam suas posições sobre os principais desafios nacionais.",
     ],
   },
   {
@@ -251,7 +251,7 @@ export function About() {
                             color: "var(--blue-primary)",
                           }}
                         >
-                          Padre Kelmon: trajetória religiosa, atuação pública e pré-candidatura à
+                          Padre Kelmon: trajetória religiosa, atuação pública e candidatura à
                           Câmara dos Deputados
                         </DialogTitle>
                         <div

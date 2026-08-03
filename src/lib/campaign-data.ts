@@ -20,7 +20,7 @@ import heroPortrait from "@/assets/hero-portrait.webp";
 export const CANDIDATE = {
   name: "Padre Kelmon",
   fullName: "Kelmon Luís da Silva Souza",
-  role: "Pré-candidato a Deputado Federal por São Paulo",
+  role: "Candidato a Deputado Federal por São Paulo",
   party: "PL",
   instagram: "https://www.instagram.com/pekelmon/",
   facebook: "https://www.facebook.com/PadreKelmon",
@@ -113,7 +113,7 @@ export const TIMELINE: TimelineItem[] = [
     year: "2026",
     title: "Deputado Federal por São Paulo",
     description:
-      "Confirma pré-candidatura à Câmara dos Deputados por São Paulo pelo PL. Com formação em Filosofia, Teologia e Pedagogia, afirma cumprir 'a missão de Deus'. Mensagem: 'Juntos vamos resgatar o Brasil.'",
+      "Confirma candidatura à Câmara dos Deputados por São Paulo pelo PL. Com formação em Filosofia, Teologia e Pedagogia, afirma cumprir 'a missão de Deus'. Mensagem: 'Juntos vamos resgatar o Brasil.'",
   },
 ];
 
@@ -256,7 +256,7 @@ export type VideoItem = {
  */
 export const VIDEOS: VideoItem[] = [
   {
-    title: "Anúncio da pré-candidatura",
+    title: "Anúncio da candidatura",
     description: "Pronunciamento publicado nas redes sociais confirmando a disputa por São Paulo.",
     url: CANDIDATE.instagram,
   },
@@ -331,7 +331,7 @@ export const TRUST_PILLARS: TrustPillar[] = [
     icon: ShieldCheck,
     title: "Candidatura pelo PL em São Paulo",
     description:
-      "Pré-candidato a Deputado Federal por São Paulo pelo Partido Liberal, alinhado ao projeto de resgate do Brasil e à representação do povo paulista.",
+      "Candidato a Deputado Federal por São Paulo pelo Partido Liberal, alinhado ao projeto de resgate do Brasil e à representação do povo paulista.",
   },
   {
     icon: Church,

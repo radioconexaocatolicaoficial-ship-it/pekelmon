@@ -337,7 +337,7 @@ export function SignupForm() {
                     Sobre Padre Kelmon
                   </p>
                   <p className="mt-1 text-sm font-semibold text-white sm:text-base">
-                    Pré-candidato a Deputado Federal por São Paulo · PL
+                    Candidato a Deputado Federal por São Paulo · PL
                   </p>
                 </div>
               </div>

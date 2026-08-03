@@ -39,7 +39,7 @@ export const Route = createFileRoute("/")({
         {
           name: "keywords",
           content:
-            "Padre Kelmon, Deputado Federal, São Paulo, PL, pré-candidato, campanha, fé, família",
+            "Padre Kelmon, Deputado Federal, São Paulo, PL, candidato, campanha, fé, família",
         },
         { name: "author", content: "Padre Kelmon" },
         {

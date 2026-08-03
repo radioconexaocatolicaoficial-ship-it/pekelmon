@@ -1,6 +1,6 @@
 # Kelmon: Sua Voz em SP
 
-Crie uma Landing Page moderna, responsiva e de alto impacto para o Padre Kelmon, pré-candidato a Deputado Federal por São Paulo.
+Crie uma Landing Page moderna, responsiva e de alto impacto para o Padre Kelmon, candidato a Deputado Federal por São Paulo.
 
 Antes de iniciar o desenvolvimento:
 
