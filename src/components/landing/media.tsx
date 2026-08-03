@@ -444,7 +444,10 @@ export function Media() {
   const featuredVideoId = "EI-bTS70q0U";
 
   return (
-    <section id="midia" className="section-pad bg-card/30">
+    <section
+      id="midia"
+      className="section-pad border-t border-border/50 bg-white"
+    >
       <PageShell>
           <div className="mb-8 grid items-stretch gap-6 sm:mb-12 sm:gap-8 lg:grid-cols-2">
             <div className="flex flex-col justify-center">
