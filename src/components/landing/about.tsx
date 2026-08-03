@@ -30,35 +30,35 @@ const HIGHLIGHTS_SOBRE = [
   {
     icon: Calendar,
     year: "1976-1995",
-    title: "Raízes e Formação Católica",
+    title: "RaÃ­zes e FormaÃ§Ã£o CatÃ³lica",
     description:
-      "Nascimento em Salvador (21/10/1976). Batismo, Eucaristia, Crisma. Liderança na Legião de Maria e cofundador do grupo JUSPE.",
+      "Nascimento em Salvador (21/10/1976). Batismo, Eucaristia, Crisma. LideranÃ§a na LegiÃ£o de Maria e cofundador do grupo JUSPE.",
   },
   {
     icon: BookOpen,
     year: "1996-2003",
-    title: "Convento e Seminário",
+    title: "Convento e SeminÃ¡rio",
     description:
-      "Convento dos Capuchinhos em Maceió. Seminário Maria Mater Ecclesiae em SP. Formação em Filosofia, Teologia e Pedagogia.",
+      "Convento dos Capuchinhos em MaceiÃ³. SeminÃ¡rio Maria Mater Ecclesiae em SP. FormaÃ§Ã£o em Filosofia, Teologia e Pedagogia.",
   },
   {
     icon: GraduationCap,
     year: "2014-2015",
-    title: "Ordenação Sacerdotal",
+    title: "OrdenaÃ§Ã£o Sacerdotal",
     description:
-      "Funda a associação Theotokos. Ordenado diácono (2014) e sacerdote (2015) na Igreja Ortodoxa da América.",
+      "Funda a associaÃ§Ã£o Theotokos. Ordenado diÃ¡cono (2014) e sacerdote (2015) na Igreja Ortodoxa da AmÃ©rica.",
   },
   {
     icon: Heart,
     year: "2010-2017",
-    title: "Ativismo e Missões",
+    title: "Ativismo e MissÃµes",
     description:
-      "Campanha pró-vida em 2010. Missão humanitária em Roraima (2017) auxiliando refugiados venezuelanos.",
+      "Campanha prÃ³-vida em 2010. MissÃ£o humanitÃ¡ria em Roraima (2017) auxiliando refugiados venezuelanos.",
   },
   {
     icon: Users,
     year: "2019-2021",
-    title: "Movimento Cristão Conservador",
+    title: "Movimento CristÃ£o Conservador",
     description:
       "Conhece Roberto Jefferson. Funda o MCC a pedido do PTB, tornando-se seu primeiro presidente nacional.",
   },
@@ -67,67 +67,67 @@ const HIGHLIGHTS_SOBRE = [
     year: "2022",
     title: "Candidatura Presidencial",
     description:
-      "Candidato à Presidência pelo PTB. Debates nacionais no SBT e Globo. Obtém 81.129 votos em 19 dias de campanha.",
+      "Candidato Ã  PresidÃªncia pelo PTB. Debates nacionais no SBT e Globo. ObtÃ©m 81.129 votos em 19 dias de campanha.",
   },
   {
     icon: Scale,
     year: "2023-2024",
     title: "Foro do Brasil e Livro",
     description:
-      "Funda o Foro do Brasil (29/06/2023). Lança o livro 'Fé e Política de Mãos Dadas'. Filia-se ao PL em agosto/2024.",
+      "Funda o Foro do Brasil (29/06/2023). LanÃ§a o livro 'FÃ© e PolÃ­tica de MÃ£os Dadas'. Filia-se ao PL em agosto/2024.",
   },
   {
     icon: Tv,
     year: "2025-2026",
     title: "TV e Deputado Federal",
     description:
-      "Programas na VV8 TV: 'Confessionário' e 'Oração pelo Brasil'. Candidato a Deputado Federal por São Paulo (PL).",
+      "Programas na VV8 TV: 'ConfessionÃ¡rio' e 'OraÃ§Ã£o pelo Brasil'. Candidato a Deputado Federal por SÃ£o Paulo (PL).",
   },
 ];
 
-/** Preview curto ? mesma altura aproximada do bloco atual (3 parágrafos). */
+/** Preview curto ? mesma altura aproximada do bloco atual (3 parÃ¡grafos). */
 const BIO_PREVIEW = [
-  "Nascido em Salvador, Bahia, em 1976, Padre Kelmon construiu sua trajetória a partir da vida religiosa, dedicando mais de três décadas à formação espiritual, ao trabalho pastoral e à participação em iniciativas voltadas ao debate entre fé, sociedade e política.",
-  "Sua caminhada começou ainda na juventude, com participação em movimentos ligados à Igreja Católica, entre eles a Legião de Maria. Posteriormente aprofundou estudos em Filosofia, Teologia e Pedagogia e participou de ações missionárias e humanitárias.",
-  "Para as eleições de 2026, confirmou sua candidatura a Deputado Federal por São Paulo pelo Partido Liberal (PL), ampliando sua presença no debate público nacional.",
+  "Nascido em Salvador, Bahia, em 1976, Padre Kelmon construiu sua trajetÃ³ria a partir da vida religiosa, dedicando mais de trÃªs dÃ©cadas Ã  formaÃ§Ã£o espiritual, ao trabalho pastoral e Ã  participaÃ§Ã£o em iniciativas voltadas ao debate entre fÃ©, sociedade e polÃ­tica.",
+  "Sua caminhada comeÃ§ou ainda na juventude, com participaÃ§Ã£o em movimentos ligados Ã  Igreja CatÃ³lica, entre eles a LegiÃ£o de Maria. Posteriormente aprofundou estudos em Filosofia, Teologia e Pedagogia e participou de aÃ§Ãµes missionÃ¡rias e humanitÃ¡rias.",
+  "Para as eleiÃ§Ãµes de 2026, confirmou sua candidatura a Deputado Federal por SÃ£o Paulo pelo Partido Liberal (PL), ampliando sua presenÃ§a no debate pÃºblico nacional.",
 ];
 
 const BIO_FULL_SECTIONS: { heading?: string; paragraphs: string[] }[] = [
   {
-    heading: "Uma trajetória marcada pela vida religiosa e pela participação no debate público",
+    heading: "Uma trajetÃ³ria marcada pela vida religiosa e pela participaÃ§Ã£o no debate pÃºblico",
     paragraphs: [
-      "Nascido em Salvador, Bahia, em 1976, Padre Kelmon construiu sua trajetória a partir da vida religiosa, dedicando mais de três décadas à formação espiritual, ao trabalho pastoral e à participação em iniciativas voltadas ao debate entre fé, sociedade e política.",
-      "Sua caminhada começou ainda na juventude, com participação em movimentos ligados à Igreja Católica, entre eles a Legião de Maria. Posteriormente ingressou na formação religiosa, aprofundando seus estudos em Filosofia, Teologia e Pedagogia, áreas que influenciaram sua atuação junto à comunidade e em projetos educacionais e sociais.",
-      "Ao longo dos anos, também participou de ações missionárias e atividades humanitárias, desenvolvendo trabalhos voltados ao atendimento de comunidades e à formação de lideranças.",
+      "Nascido em Salvador, Bahia, em 1976, Padre Kelmon construiu sua trajetÃ³ria a partir da vida religiosa, dedicando mais de trÃªs dÃ©cadas Ã  formaÃ§Ã£o espiritual, ao trabalho pastoral e Ã  participaÃ§Ã£o em iniciativas voltadas ao debate entre fÃ©, sociedade e polÃ­tica.",
+      "Sua caminhada comeÃ§ou ainda na juventude, com participaÃ§Ã£o em movimentos ligados Ã  Igreja CatÃ³lica, entre eles a LegiÃ£o de Maria. Posteriormente ingressou na formaÃ§Ã£o religiosa, aprofundando seus estudos em Filosofia, Teologia e Pedagogia, Ã¡reas que influenciaram sua atuaÃ§Ã£o junto Ã  comunidade e em projetos educacionais e sociais.",
+      "Ao longo dos anos, tambÃ©m participou de aÃ§Ãµes missionÃ¡rias e atividades humanitÃ¡rias, desenvolvendo trabalhos voltados ao atendimento de comunidades e Ã  formaÃ§Ã£o de lideranÃ§as.",
     ],
   },
   {
-    heading: "Atuação pública",
+    heading: "AtuaÃ§Ã£o pÃºblica",
     paragraphs: [
-      "Padre Kelmon tornou-se conhecido nacionalmente durante o processo eleitoral de 2022, quando participou de debates presidenciais. Sua presença ampliou sua visibilidade no cenário político nacional e o colocou entre as figuras públicas associadas à defesa de pautas inspiradas em princípios cristãos e conservadores.",
-      "Nos anos seguintes, participou da criação do Foro do Brasil, iniciativa voltada ao debate sobre temas políticos e institucionais sob a perspectiva do conservadorismo, além de ampliar sua atuação em veículos de comunicação.",
-      "Também é autor do livro Fé e Política de Mãos Dadas, obra na qual apresenta reflexões sobre a relação entre valores religiosos, participação cidadã e representação política.",
+      "Padre Kelmon tornou-se conhecido nacionalmente durante o processo eleitoral de 2022, quando participou de debates presidenciais. Sua presenÃ§a ampliou sua visibilidade no cenÃ¡rio polÃ­tico nacional e o colocou entre as figuras pÃºblicas associadas Ã  defesa de pautas inspiradas em princÃ­pios cristÃ£os e conservadores.",
+      "Nos anos seguintes, participou da criaÃ§Ã£o do Foro do Brasil, iniciativa voltada ao debate sobre temas polÃ­ticos e institucionais sob a perspectiva do conservadorismo, alÃ©m de ampliar sua atuaÃ§Ã£o em veÃ­culos de comunicaÃ§Ã£o.",
+      "TambÃ©m Ã© autor do livro FÃ© e PolÃ­tica de MÃ£os Dadas, obra na qual apresenta reflexÃµes sobre a relaÃ§Ã£o entre valores religiosos, participaÃ§Ã£o cidadÃ£ e representaÃ§Ã£o polÃ­tica.",
     ],
   },
   {
-    heading: "Comunicação e presença nacional",
+    heading: "ComunicaÃ§Ã£o e presenÃ§a nacional",
     paragraphs: [
-      "Além da atuação religiosa, Padre Kelmon mantém presença constante em programas de televisão e plataformas digitais, onde comenta temas relacionados à política, liberdade religiosa, cidadania e questões sociais.",
-      "Sua participação em entrevistas, debates e programas ampliou seu alcance junto a diferentes públicos interessados no debate político nacional.",
+      "AlÃ©m da atuaÃ§Ã£o religiosa, Padre Kelmon mantÃ©m presenÃ§a constante em programas de televisÃ£o e plataformas digitais, onde comenta temas relacionados Ã  polÃ­tica, liberdade religiosa, cidadania e questÃµes sociais.",
+      "Sua participaÃ§Ã£o em entrevistas, debates e programas ampliou seu alcance junto a diferentes pÃºblicos interessados no debate polÃ­tico nacional.",
     ],
   },
   {
     heading: "Candidatura em 2026",
     paragraphs: [
-      "Para as eleições de 2026, Padre Kelmon confirmou sua candidatura ao cargo de Deputado Federal pelo estado de São Paulo, pelo Partido Liberal (PL).",
-      "Segundo declarações públicas, sua candidatura pretende representar eleitores que defendem maior participação dos princípios cristãos no debate político, além de temas relacionados à liberdade religiosa, à família, ao fortalecimento das instituições democráticas e ao desenvolvimento do país.",
-      "Como ocorre com todos os candidatos, suas propostas e compromissos deverão ser apresentados e debatidos ao longo do período eleitoral, permitindo que os eleitores conheçam suas posições sobre os principais desafios nacionais.",
+      "Para as eleiÃ§Ãµes de 2026, Padre Kelmon confirmou sua candidatura ao cargo de Deputado Federal pelo estado de SÃ£o Paulo, pelo Partido Liberal (PL).",
+      "Segundo declaraÃ§Ãµes pÃºblicas, sua candidatura pretende representar eleitores que defendem maior participaÃ§Ã£o dos princÃ­pios cristÃ£os no debate polÃ­tico, alÃ©m de temas relacionados Ã  liberdade religiosa, Ã  famÃ­lia, ao fortalecimento das instituiÃ§Ãµes democrÃ¡ticas e ao desenvolvimento do paÃ­s.",
+      "Como ocorre com todos os candidatos, suas propostas e compromissos deverÃ£o ser apresentados e debatidos ao longo do perÃ­odo eleitoral, permitindo que os eleitores conheÃ§am suas posiÃ§Ãµes sobre os principais desafios nacionais.",
     ],
   },
   {
-    heading: "Um nome em evidência no cenário político",
+    heading: "Um nome em evidÃªncia no cenÃ¡rio polÃ­tico",
     paragraphs: [
-      "Independentemente das diferentes posições existentes no debate público brasileiro, Padre Kelmon tornou-se uma figura conhecida da política nacional nos últimos anos. Sua trajetória reúne experiência na vida religiosa, participação em discussões públicas e atuação em meios de comunicação, elementos que contribuíram para consolidar sua presença no cenário político brasileiro e motivaram sua entrada na disputa por uma cadeira na Câmara dos Deputados nas eleições de 2026.",
+      "Independentemente das diferentes posiÃ§Ãµes existentes no debate pÃºblico brasileiro, Padre Kelmon tornou-se uma figura conhecida da polÃ­tica nacional nos Ãºltimos anos. Sua trajetÃ³ria reÃºne experiÃªncia na vida religiosa, participaÃ§Ã£o em discussÃµes pÃºblicas e atuaÃ§Ã£o em meios de comunicaÃ§Ã£o, elementos que contribuÃ­ram para consolidar sua presenÃ§a no cenÃ¡rio polÃ­tico brasileiro e motivaram sua entrada na disputa por uma cadeira na CÃ¢mara dos Deputados nas eleiÃ§Ãµes de 2026.",
     ],
   },
 ];
@@ -150,7 +150,7 @@ export function About() {
             <div className="relative h-full overflow-hidden rounded-2xl bg-white shadow-2xl">
               <img
                 src={sobreImg}
-                alt="Padre Kelmon ? biografia e trajetória"
+                alt="Padre Kelmon â€” biografia e trajetÃ³ria"
                 loading="lazy"
                 decoding="async"
                 className="mx-auto h-auto w-full object-contain object-center md:h-full md:object-cover md:object-top"
@@ -176,7 +176,7 @@ export function About() {
                 className="text-[1.75rem] font-black sm:text-4xl lg:text-5xl"
                 style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
               >
-                Uma Vida de Fé e Serviço
+                Uma Vida de FÃ© e ServiÃ§o
               </h2>
             </motion.div>
 
@@ -237,7 +237,7 @@ export function About() {
                           className="text-lg font-black text-white sm:text-xl"
                           style={{ fontFamily: "var(--font-display)" }}
                         >
-                          Uma Vida de Fé e Serviço
+                          Uma Vida de FÃ© e ServiÃ§o
                         </p>
                       </div>
                     </div>
@@ -251,8 +251,8 @@ export function About() {
                             color: "var(--blue-primary)",
                           }}
                         >
-                          Padre Kelmon: trajetória religiosa, atuação pública e candidatura à
-                          Câmara dos Deputados
+                          Padre Kelmon: trajetÃ³ria religiosa, atuaÃ§Ã£o pÃºblica e candidatura Ã 
+                          CÃ¢mara dos Deputados
                         </DialogTitle>
                         <div
                           className="h-1 w-16 rounded-full"
@@ -323,7 +323,7 @@ export function About() {
                 "Juntos vamos resgatar o Brasil."
               </p>
               <footer className="relative mt-3 text-center text-xs font-semibold uppercase tracking-wider text-yellow-300">
-                Padre Kelmon ? São Paulo, 2026
+                Padre Kelmon ? SÃ£o Paulo, 2026
               </footer>
             </motion.blockquote>
           </div>
@@ -391,7 +391,7 @@ export function About() {
             <span className="font-semibold" style={{ color: "var(--blue-primary)" }}>
               Fontes:
             </span>{" "}
-            Foro Brasil (biografia oficial), Wikipédia e veículos de imprensa
+            Foro Brasil (biografia oficial), WikipÃ©dia e veÃ­culos de imprensa
           </p>
         </motion.div>
       </PageShell>
