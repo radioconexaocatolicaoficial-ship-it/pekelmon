@@ -257,16 +257,25 @@ function PressCard({ article }: { article: PressArticle }) {
   );
 }
 
-function PressNewsCarousel() {
-  const [api, setApi] = useState<CarouselApi>();
-
+function useCarouselAutoplay(api: CarouselApi | undefined, intervalMs = 12000, startDelayMs = 0) {
   useEffect(() => {
     if (!api) return;
-    const id = window.setInterval(() => {
-      api.scrollNext();
-    }, 12000);
-    return () => window.clearInterval(id);
-  }, [api]);
+    let tickId = 0;
+    const startId = window.setTimeout(() => {
+      tickId = window.setInterval(() => {
+        api.scrollNext();
+      }, intervalMs);
+    }, startDelayMs);
+    return () => {
+      window.clearTimeout(startId);
+      window.clearInterval(tickId);
+    };
+  }, [api, intervalMs, startDelayMs]);
+}
+
+function PressNewsCarousel() {
+  const [api, setApi] = useState<CarouselApi>();
+  useCarouselAutoplay(api, 12000);
 
   return (
     <div className="space-y-4">
@@ -320,6 +329,100 @@ function PressNewsCarousel() {
   );
 }
 
+function SocialNetworkCarousel({
+  social,
+  showPlaceholders,
+  autoplayDelayMs = 0,
+}: {
+  social: {
+    id: string;
+    name: string;
+    handle: string;
+    profileUrl: string;
+    color: string;
+    posts: SocialPost[];
+  };
+  showPlaceholders: boolean;
+  autoplayDelayMs?: number;
+}) {
+  const [api, setApi] = useState<CarouselApi>();
+  useCarouselAutoplay(api, 12000, autoplayDelayMs);
+
+  const IconComponent = ICONS[social.id as SocialNetworkId] ?? InstagramIcon;
+  const posts = social.posts;
+  const slots =
+    showPlaceholders || posts.length === 0
+      ? Array.from({ length: 4 }, () => null)
+      : posts;
+
+  return (
+    <div className="space-y-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex min-w-0 items-center gap-3">
+          <div
+            className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl p-2 text-white"
+            style={{ backgroundColor: social.color }}
+          >
+            <IconComponent />
+          </div>
+          <div className="min-w-0">
+            <h3 className="text-base font-bold" style={{ color: "var(--blue-primary)" }}>
+              {social.name}
+            </h3>
+            <a
+              href={social.profileUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="truncate text-sm text-gray-600 transition-colors hover:text-blue-600"
+            >
+              {social.handle}
+            </a>
+          </div>
+        </div>
+
+        <a
+          href={social.profileUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105 sm:h-auto sm:w-auto"
+          style={{ backgroundColor: social.color }}
+        >
+          <span>Ver todos</span>
+          <ExternalLink className="size-4" />
+        </a>
+      </div>
+
+      <Carousel
+        opts={{ align: "start", loop: true, dragFree: false }}
+        setApi={setApi}
+        className="relative w-full px-0 sm:px-10"
+      >
+        <CarouselContent className="-ml-3">
+          {slots.map((post, index) => (
+            <CarouselItem
+              key={`${social.name}-${post?.id ?? `sk-${index}`}`}
+              className="basis-[82%] pl-3 sm:basis-1/2 lg:basis-1/4"
+            >
+              {showPlaceholders || !post ? (
+                <PostSkeleton color={social.color} />
+              ) : (
+                <PostCard
+                  post={post}
+                  networkId={social.id as SocialNetworkId}
+                  color={social.color}
+                  profileUrl={social.profileUrl}
+                />
+              )}
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="hidden sm:inline-flex left-0 border-blue-200 bg-white text-blue-700 hover:bg-blue-50" />
+        <CarouselNext className="hidden sm:inline-flex right-0 border-blue-200 bg-white text-blue-700 hover:bg-blue-50" />
+      </Carousel>
+    </div>
+  );
+}
+
 export function Media() {
   // Importante: SSR e 1º render no cliente devem ser iguais (evita React #418).
   const [ready, setReady] = useState(false);
@@ -328,11 +431,11 @@ export function Media() {
   }, []);
 
   const { data, isLoading, isFetching } = useQuery({
-    queryKey: ["social-feeds", "v12-facebook-official"],
+    queryKey: ["social-feeds", "v13-carousel-auto"],
     queryFn: () => getSocialFeeds(),
-    staleTime: 15 * 60 * 1000,
-    refetchInterval: 15 * 60 * 1000,
-    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000,
+    refetchInterval: 5 * 60 * 1000,
+    refetchOnWindowFocus: true,
     enabled: ready,
   });
 
@@ -358,9 +461,8 @@ export function Media() {
                 Padre Kelmon nas Redes Sociais
               </h2>
               <p className="text-sm leading-relaxed text-gray-700 text-justify sm:text-base">
-                Acompanhe a cobertura na imprensa e as publicações, vídeos e posicionamentos do
-                Padre Kelmon nas redes. O carrossel de matérias e os cards sociais exibem os
-                conteúdos mais recentes.
+                Acompanhe a cobertura na imprensa e as redes sociais. Os carrosséis atualizam
+                automaticamente quando há novas publicações.
               </p>
               {data?.updatedAt ? (
                 <p className="mt-3 text-xs text-gray-500">
@@ -387,77 +489,22 @@ export function Media() {
               <PressNewsCarousel />
             </Reveal>
 
-            {(showPlaceholders ? placeholderNetworks() : networks).map((social) => {
-              const IconComponent = ICONS[social.id as SocialNetworkId] ?? InstagramIcon;
-              const posts = "posts" in social ? social.posts : [];
-              const slots = Array.from({ length: 4 }, (_, i) => posts[i] ?? null);
-
-              return (
-                <div key={social.name} className="space-y-4">
-                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex min-w-0 items-center gap-3">
-                      <div
-                        className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl p-2 text-white"
-                        style={{ backgroundColor: social.color }}
-                      >
-                        <IconComponent />
-                      </div>
-                      <div className="min-w-0">
-                        <h3 className="text-base font-bold" style={{ color: "var(--blue-primary)" }}>
-                          {social.name}
-                        </h3>
-                        <a
-                          href={social.profileUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="truncate text-sm text-gray-600 transition-colors hover:text-blue-600"
-                        >
-                          {social.handle}
-                        </a>
-                      </div>
-                    </div>
-
-                    <a
-                      href={social.profileUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105 sm:h-auto sm:w-auto"
-                      style={{ backgroundColor: social.color }}
-                    >
-                      <span>Ver todos</span>
-                      <ExternalLink className="size-4" />
-                    </a>
-                  </div>
-
-                  <div className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-2 snap-x snap-mandatory sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
-                    {showPlaceholders
-                      ? slots.map((_, index) => (
-                          <Reveal
-                            key={`${social.name}-sk-${index}`}
-                            delay={0.05 * index}
-                            className="w-[78%] shrink-0 snap-start sm:w-auto sm:shrink"
-                          >
-                            <PostSkeleton color={social.color} />
-                          </Reveal>
-                        ))
-                      : slots.map((post, index) => (
-                          <Reveal
-                            key={`${social.name}-${post?.id ?? index}`}
-                            delay={0.05 * index}
-                            className="w-[78%] shrink-0 snap-start sm:w-auto sm:shrink"
-                          >
-                            <PostCard
-                              post={post}
-                              networkId={social.id as SocialNetworkId}
-                              color={social.color}
-                              profileUrl={social.profileUrl}
-                            />
-                          </Reveal>
-                        ))}
-                  </div>
-                </div>
-              );
-            })}
+            {(showPlaceholders ? placeholderNetworks() : networks).map((social, index) => (
+              <Reveal key={social.name}>
+                <SocialNetworkCarousel
+                  social={{
+                    id: social.id,
+                    name: social.name,
+                    handle: social.handle,
+                    profileUrl: social.profileUrl,
+                    color: social.color,
+                    posts: "posts" in social ? social.posts : [],
+                  }}
+                  showPlaceholders={showPlaceholders}
+                  autoplayDelayMs={index * 1500}
+                />
+              </Reveal>
+            ))}
           </div>
       </PageShell>
     </section>

@@ -38,8 +38,8 @@ export type SocialFeedsResult = {
 const YOUTUBE_CHANNEL_ID = "UCA0aqdkBHj5G4eS0raaeZhg";
 /** YouTube "long-form videos" playlist (excludes Shorts): UULF + channelId without UC */
 const YOUTUBE_LONG_FORM_PLAYLIST_ID = `UULF${YOUTUBE_CHANNEL_ID.slice(2)}`;
-const CACHE_TTL_MS = 15 * 60 * 1000;
-const POSTS_PER_NETWORK = 4;
+const CACHE_TTL_MS = 5 * 60 * 1000;
+const POSTS_PER_NETWORK = 8;
 
 const NETWORK_META: Record<
   SocialNetworkId,
@@ -131,7 +131,7 @@ const FALLBACK_POSTS: Record<SocialNetworkId, SocialPost[]> = {
 };
 
 let cache: { data: SocialFeedsResult; expiresAt: number } | null = null;
-const FEEDS_CACHE_VERSION = 12; // bump: official FB embed post images only
+const FEEDS_CACHE_VERSION = 13; // bump: 8 posts per network for carousels
 let cacheVersion = FEEDS_CACHE_VERSION;
 
 const UA =
