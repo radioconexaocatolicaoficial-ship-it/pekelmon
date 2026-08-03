@@ -10,6 +10,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { Toaster } from "../components/ui/sonner";
+import { PwaRegister } from "../components/pwa-register";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../lib/site";
 
 
@@ -82,9 +83,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "theme-color", content: "#1e5bb8" },
       { name: "color-scheme", content: "light" },
       { name: "format-detection", content: "telephone=no" },
+      { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
       { name: "apple-mobile-web-app-title", content: "Padre Kelmon" },
+      { name: "application-name", content: "Padre Kelmon" },
       { title: SITE_TITLE },
       { name: "description", content: SITE_DESCRIPTION },
       { property: "og:site_name", content: "Padre Kelmon" },
@@ -94,6 +97,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "icon", href: "/favicon.ico?v=5", type: "image/x-icon", sizes: "any" },
       { rel: "icon", href: "/favicon.png?v=5", type: "image/png", sizes: "512x512" },
       { rel: "shortcut icon", href: "/favicon.ico?v=5", type: "image/x-icon" },
@@ -147,6 +151,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <PwaRegister />
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
   );

@@ -145,11 +145,6 @@
     text-align: center;
   }
 
-  body.menu-open {
-    overflow: hidden;
-    touch-action: none;
-  }
-
   /* Shell de app no celular — mesmo visual da marca, mais confortável ao toque */
   @media (max-width: 767px) {
     html {
@@ -166,6 +161,28 @@
     a,
     [role="button"] {
       touch-action: manipulation;
+    }
+  }
+
+  /* Espaço para a barra inferior fina em celular/tablet */
+  @media (max-width: 1023px) {
+    main {
+      padding-bottom: 0.5rem;
+    }
+
+    footer {
+      padding-bottom: calc(3.25rem + env(safe-area-inset-bottom, 0px));
+    }
+
+    .section-pad,
+    #inicio,
+    #historia,
+    #bandeiras,
+    #midia,
+    #numeros,
+    #cadastro,
+    #destaques {
+      scroll-margin-bottom: calc(3.25rem + env(safe-area-inset-bottom, 0px));
     }
   }
 

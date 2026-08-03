@@ -58,6 +58,19 @@ export default defineConfig(async ({ command, mode }) => {
               "cache-control": "public, max-age=604800",
             },
           },
+          "/sw.js": {
+            headers: {
+              "cache-control": "no-cache, no-store, must-revalidate",
+              "content-type": "application/javascript; charset=utf-8",
+              "service-worker-allowed": "/",
+            },
+          },
+          "/manifest.webmanifest": {
+            headers: {
+              "cache-control": "no-cache, no-store, must-revalidate",
+              "content-type": "application/manifest+json; charset=utf-8",
+            },
+          },
         },
       }),
     );
