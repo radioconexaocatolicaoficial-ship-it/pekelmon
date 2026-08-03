@@ -14,7 +14,8 @@ export const SITE_TITLE = `${CANDIDATE.name} — Deputado Federal por São Paulo
 export const SITE_DESCRIPTION =
   "Padre Kelmon, pré-candidato a Deputado Federal por São Paulo pelo PL. Conheça sua história, suas bandeiras e cadastre-se para apoiar a campanha.";
 
-export const OG_IMAGE_PATH = "/og-image.jpg";
+/** Query v= força WhatsApp/Facebook a buscar a imagem nova (cache agressivo). */
+export const OG_IMAGE_PATH = "/og-image.jpg?v=4";
 
 export function absoluteUrl(path = "/"): string {
   const normalized = path.startsWith("/") ? path : `/${path}`;
