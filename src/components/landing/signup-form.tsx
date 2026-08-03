@@ -14,7 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import sobreImg from "@/assets/Sobre-Padre-Kelmon.jpg";
+import sobreImg from "@/assets/Sobre-Padre-Kelmon.webp";
 import { PageShell, Reveal } from "./primitives";
 
 const UFS = [

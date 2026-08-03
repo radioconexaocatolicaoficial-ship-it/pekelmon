@@ -129,6 +129,22 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  /* Textos corridos justificados em todo o site */
+  main p,
+  footer p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+  }
+
+  /* Mantém blocos pensados como centralizados */
+  main .text-center,
+  main .text-center p,
+  footer .text-center,
+  footer .text-center p {
+    text-align: center;
+  }
+
   body.menu-open {
     overflow: hidden;
     touch-action: none;

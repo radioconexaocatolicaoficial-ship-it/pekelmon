@@ -1,18 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 
 import { SiteHeader } from "@/components/landing/site-header";
 import { Hero } from "@/components/landing/hero";
 import { Highlights } from "@/components/landing/highlights";
-import { About } from "@/components/landing/about";
-import { Bandeiras } from "@/components/landing/bandeiras";
-import { Media } from "@/components/landing/media";
-import { Stats } from "@/components/landing/stats";
-import { CallToAction } from "@/components/landing/call-to-action";
-import { SignupForm } from "@/components/landing/signup-form";
-import { SocialLinks } from "@/components/landing/social-links";
 import { SiteFooter } from "@/components/landing/site-footer";
-import { getSocialFeeds } from "@/lib/social-feeds";
 import { scrollToSection } from "@/lib/scroll-to-section";
+import heroPortraitUrl from "@/assets/hero-portrait.webp?url";
 import {
   SITE_DESCRIPTION,
   SITE_TITLE,
@@ -23,14 +17,30 @@ import {
   buildWebSiteJsonLd,
 } from "@/lib/site";
 
+const About = lazy(() =>
+  import("@/components/landing/about").then((m) => ({ default: m.About })),
+);
+const Bandeiras = lazy(() =>
+  import("@/components/landing/bandeiras").then((m) => ({ default: m.Bandeiras })),
+);
+const Media = lazy(() =>
+  import("@/components/landing/media").then((m) => ({ default: m.Media })),
+);
+const Stats = lazy(() =>
+  import("@/components/landing/stats").then((m) => ({ default: m.Stats })),
+);
+const CallToAction = lazy(() =>
+  import("@/components/landing/call-to-action").then((m) => ({ default: m.CallToAction })),
+);
+const SignupForm = lazy(() =>
+  import("@/components/landing/signup-form").then((m) => ({ default: m.SignupForm })),
+);
+const SocialLinks = lazy(() =>
+  import("@/components/landing/social-links").then((m) => ({ default: m.SocialLinks })),
+);
+
 export const Route = createFileRoute("/")({
-  loader: async ({ context }) => {
-    await context.queryClient.ensureQueryData({
-      queryKey: ["social-feeds", "v12-facebook-official"],
-      queryFn: () => getSocialFeeds(),
-      staleTime: 15 * 60 * 1000,
-    });
-  },
+  // Feeds sociais carregam depois (seção Mídia) — não bloqueiam a abertura da página.
   component: Index,
   head: () => {
     const pageUrl = absoluteUrl("/");
@@ -46,7 +56,10 @@ export const Route = createFileRoute("/")({
             "Padre Kelmon, Deputado Federal, São Paulo, PL, pré-candidato, campanha, fé, família",
         },
         { name: "author", content: "Padre Kelmon" },
-        { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+        {
+          name: "robots",
+          content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+        },
         { name: "googlebot", content: "index, follow" },
         { property: "og:title", content: SITE_TITLE },
         { property: "og:description", content: SITE_DESCRIPTION },
@@ -72,7 +85,15 @@ export const Route = createFileRoute("/")({
           content: "Padre Kelmon — pré-candidato a Deputado Federal por São Paulo",
         },
       ],
-      links: [{ rel: "canonical", href: pageUrl }],
+      links: [
+        { rel: "canonical", href: pageUrl },
+        {
+          rel: "preload",
+          as: "image",
+          href: heroPortraitUrl,
+          type: "image/webp",
+        },
+      ],
       scripts: [
         {
           type: "application/ld+json",
@@ -109,13 +130,15 @@ function Index() {
       <main id="conteudo" className="overflow-x-clip">
         <Hero />
         <Highlights />
-        <About />
-        <Bandeiras />
-        <Media />
-        <Stats />
-        <CallToAction />
-        <SignupForm />
-        <SocialLinks />
+        <Suspense fallback={null}>
+          <About />
+          <Bandeiras />
+          <Media />
+          <Stats />
+          <CallToAction />
+          <SignupForm />
+          <SocialLinks />
+        </Suspense>
       </main>
       <SiteFooter />
     </div>

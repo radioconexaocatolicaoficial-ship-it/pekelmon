@@ -1,7 +1,7 @@
 import { Facebook, Instagram, Youtube, ArrowUpRight } from "lucide-react";
 
 import { CANDIDATE, FORO_BRASIL } from "@/lib/campaign-data";
-import logo from "@/assets/Logo-Site-PAdre-kelmon.png";
+import logo from "@/assets/Logo-Site-PAdre-kelmon.webp";
 import { PageShell } from "./primitives";
 
 const QUICK_LINKS = [

@@ -66,7 +66,7 @@ export function SectionHeading({
       </h2>
       <div className={`gold-rule mt-4 sm:mt-5 ${align === "center" ? "mx-auto" : ""}`} />
       {subtitle ? (
-        <p className="mt-4 text-sm leading-relaxed text-muted-foreground sm:mt-5 sm:text-base">
+        <p className="mt-4 text-sm leading-relaxed text-muted-foreground text-justify sm:mt-5 sm:text-base">
           {subtitle}
         </p>
       ) : null}

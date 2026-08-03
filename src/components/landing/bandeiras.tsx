@@ -42,7 +42,7 @@ export function Bandeiras() {
                   {b.title}
                 </h3>
 
-                <p className="text-sm leading-relaxed text-gray-700">{b.description}</p>
+                <p className="text-sm leading-relaxed text-gray-700 text-justify">{b.description}</p>
 
                 <div
                   className="absolute inset-0 -z-10 rounded-2xl opacity-0 transition-opacity group-hover:opacity-100"

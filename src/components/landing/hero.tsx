@@ -3,7 +3,7 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
-import heroPortrait from "@/assets/hero-portrait.png";
+import heroPortrait from "@/assets/hero-portrait.webp";
 import { PageShell } from "./primitives";
 
 export function Hero() {
@@ -30,10 +30,10 @@ export function Hero() {
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              className="mb-5 inline-flex max-w-full items-start gap-2 self-start rounded-lg border-2 border-white/40 bg-white/15 px-3 py-2 backdrop-blur-sm sm:mb-6 sm:items-center sm:px-4"
+              className="mb-5 inline-flex max-w-full items-center gap-1.5 self-start whitespace-nowrap rounded-lg border-2 border-white/40 bg-white/15 px-2 py-1.5 backdrop-blur-sm sm:mb-6 sm:gap-2 sm:px-4 sm:py-2"
             >
-              <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-green-400 sm:mt-0" aria-hidden="true" />
-              <span className="text-[0.7rem] font-bold uppercase leading-snug tracking-wider sm:text-[0.92rem]">
+              <CheckCircle2 className="size-3.5 shrink-0 text-green-400 sm:size-5" aria-hidden="true" />
+              <span className="whitespace-nowrap text-[clamp(0.52rem,2.55vw,0.92rem)] font-bold uppercase leading-none tracking-wide sm:tracking-wider">
                 Candidatura Homologada na Convenção do PL
               </span>
             </motion.div>
@@ -152,7 +152,8 @@ export function Hero() {
                 src={heroPortrait}
                 alt="Padre Kelmon, pré-candidato a Deputado Federal por São Paulo pelo PL"
                 width={450}
-                height={600}
+                height={675}
+                sizes="(max-width: 1024px) min(100vw, 400px), 450px"
                 fetchPriority="high"
                 decoding="async"
                 className="absolute inset-0 h-full w-full object-contain object-center"

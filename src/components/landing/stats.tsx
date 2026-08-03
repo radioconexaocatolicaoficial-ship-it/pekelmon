@@ -1,6 +1,6 @@
 import { ArrowUpRight, Quote } from "lucide-react";
 
-import heroPortrait from "@/assets/hero-portrait.png";
+import heroPortrait from "@/assets/hero-portrait.webp";
 import { FORO_BRASIL, STATS, TRUST_PILLARS } from "@/lib/campaign-data";
 import { Counter, PageShell, Reveal } from "./primitives";
 

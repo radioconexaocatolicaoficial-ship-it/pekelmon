@@ -2,9 +2,9 @@ import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { PageShell } from "./primitives";
 
-import livroImg from "@/assets/livro-padre-kelmon.jpg";
-import foroImg from "@/assets/foro-do-brasil.jpg";
-import plImg from "@/assets/pl-filie-se.jpg";
+import livroImg from "@/assets/livro-padre-kelmon.webp";
+import foroImg from "@/assets/foro-do-brasil.webp";
+import plImg from "@/assets/pl-filie-se.webp";
 
 const HIGHLIGHTS = [
   {
@@ -68,7 +68,7 @@ export function Highlights() {
                     {item.title}
                   </h3>
 
-                  <p className="mb-5 text-sm leading-relaxed text-gray-600">{item.description}</p>
+                  <p className="mb-5 text-sm leading-relaxed text-gray-600 text-justify">{item.description}</p>
 
                   <Button
                     asChild

@@ -40,6 +40,18 @@ export default defineConfig(async ({ command, mode }) => {
             codeSplitting: false,
           },
         },
+        routeRules: {
+          "/assets/**": {
+            headers: {
+              "cache-control": "public, max-age=31536000, immutable",
+            },
+          },
+          "/**/*.{webp,jpg,jpeg,png,ico,css,js,mjs}": {
+            headers: {
+              "cache-control": "public, max-age=604800",
+            },
+          },
+        },
       }),
     );
   }

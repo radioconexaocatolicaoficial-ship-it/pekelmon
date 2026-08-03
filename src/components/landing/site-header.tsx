@@ -4,7 +4,7 @@ import { Menu, X, Home, BookText, Flag, Film, TrendingUp, UserPlus } from "lucid
 import { Button } from "@/components/ui/button";
 import { CANDIDATE } from "@/lib/campaign-data";
 import { scrollToSection } from "@/lib/scroll-to-section";
-import logo from "@/assets/Logo-Site-PAdre-kelmon.png";
+import logo from "@/assets/Logo-Site-PAdre-kelmon.webp";
 import { PageShell } from "./primitives";
 
 const LINKS = [

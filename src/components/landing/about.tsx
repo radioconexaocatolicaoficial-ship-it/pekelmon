@@ -1,7 +1,7 @@
 import { Quote, Calendar, Award, BookOpen, GraduationCap, Heart, Users, Megaphone, Scale, Tv } from "lucide-react";
 import { motion } from "motion/react";
 
-import sobreImg from "@/assets/Sobre-Padre-Kelmon.jpg";
+import sobreImg from "@/assets/Sobre-Padre-Kelmon.webp";
 import { PageShell } from "./primitives";
 
 // Dados resumidos em cards
@@ -105,13 +105,13 @@ export function About() {
                 transition={{ delay: 0.2 }}
                 className="flex-1"
               >
-                <p className="mb-4 text-base leading-relaxed text-gray-700 sm:text-lg sm:text-justify">
+                <p className="mb-4 text-base leading-relaxed text-gray-700 text-justify sm:text-lg">
                   Nascido em Salvador em 1976, Padre Kelmon dedicou mais de 30 anos à vida religiosa, à formação da juventude e ao ativismo conservador cristão. Da Legião de Maria ao seminário, do convento à ordenação sacerdotal, de missões humanitárias à fundação do Movimento Cristão Conservador e do Foro do Brasil.
                 </p>
-                <p className="mb-4 text-base leading-relaxed text-gray-700 sm:text-lg sm:text-justify">
+                <p className="mb-4 text-base leading-relaxed text-gray-700 text-justify sm:text-lg">
                   Com formação acadêmica em Filosofia, Teologia e Pedagogia, tornou-se nacionalmente conhecido em 2022 ao participar dos debates presidenciais defendendo valores cristãos. Fundou o Foro do Brasil no Congresso Nacional em 2023 e lançou o livro "Fé e Política de Mãos Dadas" em 2024.
                 </p>
-                <p className="text-base leading-relaxed text-gray-700 sm:text-lg sm:text-justify">
+                <p className="text-base leading-relaxed text-gray-700 text-justify sm:text-lg">
                   Hoje apresenta programas na VV8 TV e confirma sua pré-candidatura a Deputado Federal por São Paulo pelo Partido Liberal, afirmando cumprir "a missão de Deus" para representar a fé, a família e o Brasil no Congresso Nacional.
                 </p>
               </motion.div>

@@ -208,6 +208,8 @@ export function Media() {
     staleTime: 15 * 60 * 1000,
     refetchInterval: 15 * 60 * 1000,
     refetchOnWindowFocus: false,
+    // Só busca feeds quando a seção estiver no fluxo (após a 1ª pintura).
+    enabled: typeof window !== "undefined",
   });
 
   const networks = data?.networks ?? [];
@@ -230,7 +232,7 @@ export function Media() {
               >
                 Padre Kelmon nas Redes Sociais
               </h2>
-              <p className="text-sm leading-relaxed text-gray-700 sm:text-base">
+              <p className="text-sm leading-relaxed text-gray-700 text-justify sm:text-base">
                 Acompanhe diariamente as publicações, vídeos, mensagens e posicionamentos do Padre
                 Kelmon nas principais plataformas digitais. Os cards abaixo exibem automaticamente
                 as 4 publicações mais recentes de cada rede.
