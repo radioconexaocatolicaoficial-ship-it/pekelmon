@@ -60,7 +60,7 @@ export function About() {
   return (
     <section
       id="historia"
-      className="section-pad relative"
+      className="section-pad relative max-sm:!pt-3"
       style={{ background: "linear-gradient(to bottom, #ffffff, #f9fafb)" }}
     >
       <PageShell>
