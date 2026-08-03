@@ -32,7 +32,7 @@ export function Hero() {
         </motion.div>
 
         {/* Botões só no celular e tablet */}
-        <div className="flex w-full flex-col gap-3 py-4 sm:flex-row sm:justify-center sm:gap-4 sm:py-5 lg:hidden">
+        <div className="flex w-full flex-col gap-3 py-4 sm:flex-row sm:justify-center sm:gap-4 sm:py-5 md:pb-2 md:pt-4 lg:hidden">
           <Button
             asChild
             variant="yellow"
