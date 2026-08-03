@@ -94,29 +94,28 @@ export function SiteHeader() {
             </a>
 
             <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-3 md:gap-4 lg:gap-5">
-              {/* Tablet / notebook / desktop — 2% mais fino */}
-              <ul className="hidden min-w-0 items-center justify-end gap-3 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:gap-4 [&::-webkit-scrollbar]:hidden">
+              {/* Mesma altura do botão Quero apoiar (h-9) no tablet/notebook/desktop */}
+              <ul className="hidden h-9 min-w-0 items-center justify-end gap-3 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:gap-4 [&::-webkit-scrollbar]:hidden">
                 {TOP_LINKS.map((l) => {
                   const Icon = l.icon;
                   const isActive = active === l.href;
                   return (
-                    <li key={l.href} className="flex shrink-0">
+                    <li key={l.href} className="flex h-full shrink-0 items-center">
                       <a
                         href={`#${l.href}`}
                         onClick={(e) => {
                           e.preventDefault();
                           goTo(l.href);
                         }}
-                        className={`flex min-w-[3.6rem] flex-col items-center justify-center gap-0.5 rounded-xl px-2.5 py-1 transition-colors lg:min-w-[4rem] lg:px-3 lg:py-[0.3rem] ${
+                        className={`flex h-9 min-w-[3.75rem] flex-col items-center justify-center gap-0.5 rounded-xl px-3 transition-colors lg:min-w-[4.25rem] lg:px-3.5 ${
                           isActive
                             ? "bg-blue-50 text-[var(--blue-primary)]"
                             : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                         }`}
-                        style={{ zoom: 0.98 }}
                         aria-current={isActive ? "true" : undefined}
                       >
-                        <Icon className="size-[1.15rem] stroke-[2.25] lg:size-5" aria-hidden="true" />
-                        <span className="whitespace-nowrap text-[0.7rem] font-bold leading-none tracking-wide lg:text-xs">
+                        <Icon className="size-4 stroke-[2.25]" aria-hidden="true" />
+                        <span className="whitespace-nowrap text-[0.65rem] font-bold leading-none tracking-wide">
                           {l.label}
                         </span>
                       </a>
@@ -129,7 +128,7 @@ export function SiteHeader() {
                 asChild
                 variant="campaign"
                 size="sm"
-                className="relative z-10 inline-flex h-9 shrink-0 px-3 text-xs font-bold md:h-9 md:px-4 md:text-sm"
+                className="relative z-10 inline-flex h-9 shrink-0 items-center px-3 text-xs font-bold md:px-4 md:text-sm"
               >
                 <a
                   href="#cadastro"
