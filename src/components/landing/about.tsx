@@ -150,7 +150,7 @@ export function About() {
             <div className="relative h-full overflow-hidden rounded-2xl bg-white shadow-2xl">
               <img
                 src={sobreImg}
-                alt="Padre Kelmon ? biografia e trajet�ria"
+                alt="Padre Kelmon — biografia e trajetória"
                 loading="lazy"
                 decoding="async"
                 className="mx-auto h-auto w-full object-contain object-center md:h-full md:object-cover md:object-top"
