@@ -231,3 +231,34 @@
     padding-block: 3.5rem;
   }
 }
+
+/* Hero — tipografia mobile (apenas < 640px). Desktop mantém destaque amarelo em Oficial/cargo. */
+.hero-mobile-kicker {
+  color: #fff;
+}
+.hero-mobile-kicker-accent {
+  color: #fff;
+  text-shadow: none;
+}
+.hero-mobile-name {
+  color: var(--yellow-primary);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+.hero-mobile-office {
+  color: #fff;
+}
+
+@media (min-width: 640px) {
+  .hero-mobile-kicker-accent {
+    color: var(--yellow-primary);
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+  }
+  .hero-mobile-name {
+    color: #fff;
+    text-shadow: none;
+  }
+  .hero-mobile-office {
+    color: var(--yellow-primary);
+  }
+}
