@@ -12,17 +12,17 @@ export function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.55 }}
-        className="relative w-full"
+        className="relative mx-auto w-full max-w-[1140px] px-3 sm:px-4 lg:px-0"
       >
         <img
           src={heroKv}
           alt="Padre Kelmon 2202 — Deputado Federal. Uma vida de missões. A nova missão é por São Paulo."
           width={1024}
           height={576}
-          sizes="(min-width: 1440px) 1140px, 100vw"
+          sizes="(min-width: 1140px) 1140px, 100vw"
           fetchPriority="high"
           decoding="async"
-          className="block h-auto w-full object-cover object-center min-[1440px]:mx-auto min-[1440px]:max-w-[1140px]"
+          className="block h-auto w-full rounded-2xl object-cover object-center shadow-lg"
         />
       </motion.div>
 
