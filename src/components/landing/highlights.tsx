@@ -38,7 +38,7 @@ export function Highlights() {
     <section
       id="destaques"
       aria-labelledby="destaques-heading"
-      className="relative mt-0 pb-12 sm:-mt-12 sm:pb-16"
+      className="relative mt-[3vh] pb-12 sm:-mt-12 sm:pb-16"
     >
       <PageShell>
         <h2 id="destaques-heading" className="sr-only">

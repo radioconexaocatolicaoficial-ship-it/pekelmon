@@ -69,7 +69,7 @@ export function About() {
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative"
+              className="relative order-2 sm:order-1"
             >
               <div className="relative overflow-hidden rounded-2xl bg-gray-100 shadow-2xl lg:h-full">
                 <img
@@ -83,7 +83,7 @@ export function About() {
               </div>
             </motion.div>
 
-            <div className="flex h-full flex-col justify-between">
+            <div className="order-1 flex h-full flex-col justify-between sm:order-2">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
