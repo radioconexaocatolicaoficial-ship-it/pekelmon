@@ -30,7 +30,16 @@ export default defineConfig(async ({ command, mode }) => {
     const { nitro } = await import("nitro/vite");
     plugins.push(
       nitro({
-        defaultPreset: "cloudflare-module",
+        // Hospedagem Node (painel Nitro / entry server/index.mjs).
+        // Não usar cloudflare-module aqui — gera Worker e causa 503 no Node.
+        defaultPreset: "node-server",
+        // Evita chunks circulares (__commonJSMin) que quebram o SSR em runtime.
+        rolldownConfig: {
+          platform: "node",
+          output: {
+            codeSplitting: false,
+          },
+        },
       }),
     );
   }

@@ -70,7 +70,7 @@ function CoverImageCard({
       {imageSrc ? (
         <img
           src={imageSrc}
-          alt={`Publicação do ${label}`}
+          alt={`Publicação recente de ${label} — Padre Kelmon`}
           className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
           decoding="async"
@@ -272,9 +272,9 @@ export function Media() {
                         <IconComponent />
                       </div>
                       <div className="min-w-0">
-                        <h4 className="text-base font-bold" style={{ color: "var(--blue-primary)" }}>
+                        <h3 className="text-base font-bold" style={{ color: "var(--blue-primary)" }}>
                           {social.name}
-                        </h4>
+                        </h3>
                         <a
                           href={social.profileUrl}
                           target="_blank"

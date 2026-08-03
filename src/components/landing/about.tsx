@@ -74,7 +74,9 @@ export function About() {
               <div className="relative overflow-hidden rounded-2xl bg-gray-100 shadow-2xl lg:h-full">
                 <img
                   src={sobreImg}
-                  alt="Padre Kelmon"
+                  alt="Padre Kelmon — biografia e trajetória"
+                  loading="lazy"
+                  decoding="async"
                   className="mx-auto h-auto w-full object-contain object-center lg:h-full lg:object-cover lg:object-top"
                 />
                 <div className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/10" />

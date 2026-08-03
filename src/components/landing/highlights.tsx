@@ -35,8 +35,15 @@ const HIGHLIGHTS = [
 
 export function Highlights() {
   return (
-    <section className="relative -mt-10 pb-12 sm:-mt-12 sm:pb-16">
+    <section
+      id="destaques"
+      aria-labelledby="destaques-heading"
+      className="relative -mt-10 pb-12 sm:-mt-12 sm:pb-16"
+    >
       <PageShell>
+        <h2 id="destaques-heading" className="sr-only">
+          Destaques da campanha
+        </h2>
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {HIGHLIGHTS.map((item, index) => {
             return (
@@ -48,6 +55,8 @@ export function Highlights() {
                   <img
                     src={item.image}
                     alt={item.title}
+                    loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
                   />
                 </div>

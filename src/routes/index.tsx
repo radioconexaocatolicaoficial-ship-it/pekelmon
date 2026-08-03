@@ -13,10 +13,15 @@ import { SocialLinks } from "@/components/landing/social-links";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { getSocialFeeds } from "@/lib/social-feeds";
 import { scrollToSection } from "@/lib/scroll-to-section";
-
-const TITLE = "Padre Kelmon — Deputado Federal por São Paulo";
-const DESCRIPTION =
-  "Padre Kelmon, pré-candidato a Deputado Federal por São Paulo pelo PL. Conheça sua história, suas bandeiras e cadastre-se para apoiar a campanha.";
+import {
+  SITE_DESCRIPTION,
+  SITE_TITLE,
+  OG_IMAGE_PATH,
+  absoluteUrl,
+  buildPersonJsonLd,
+  buildWebPageJsonLd,
+  buildWebSiteJsonLd,
+} from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   loader: async ({ context }) => {
@@ -27,40 +32,63 @@ export const Route = createFileRoute("/")({
     });
   },
   component: Index,
-  head: () => ({
-    meta: [
-      { title: TITLE },
-      { name: "description", content: DESCRIPTION },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESCRIPTION },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
-      { property: "og:locale", content: "pt_BR" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: TITLE },
-      { name: "twitter:description", content: DESCRIPTION },
-    ],
-    links: [{ rel: "canonical", href: "/" }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "Person",
-          name: "Padre Kelmon",
-          alternateName: "Kelmon Luís da Silva Souza",
-          jobTitle: "Pré-candidato a Deputado Federal por São Paulo",
-          birthDate: "1976-10-21",
-          birthPlace: { "@type": "Place", name: "Acajutiba, Bahia, Brasil" },
-          memberOf: { "@type": "Organization", name: "Partido Liberal (PL)" },
-          sameAs: [
-            "https://www.instagram.com/pekelmon/",
-            "https://pt.wikipedia.org/wiki/Padre_Kelmon",
-          ],
-        }),
-      },
-    ],
-  }),
+  head: () => {
+    const pageUrl = absoluteUrl("/");
+    const ogImage = absoluteUrl(OG_IMAGE_PATH);
+
+    return {
+      meta: [
+        { title: SITE_TITLE },
+        { name: "description", content: SITE_DESCRIPTION },
+        {
+          name: "keywords",
+          content:
+            "Padre Kelmon, Deputado Federal, São Paulo, PL, pré-candidato, campanha, fé, família",
+        },
+        { name: "author", content: "Padre Kelmon" },
+        { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+        { name: "googlebot", content: "index, follow" },
+        { property: "og:title", content: SITE_TITLE },
+        { property: "og:description", content: SITE_DESCRIPTION },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: pageUrl },
+        { property: "og:locale", content: "pt_BR" },
+        { property: "og:site_name", content: "Padre Kelmon" },
+        { property: "og:image", content: ogImage },
+        { property: "og:image:secure_url", content: ogImage },
+        { property: "og:image:type", content: "image/jpeg" },
+        { property: "og:image:width", content: "1200" },
+        { property: "og:image:height", content: "630" },
+        {
+          property: "og:image:alt",
+          content: "Padre Kelmon — pré-candidato a Deputado Federal por São Paulo",
+        },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: SITE_TITLE },
+        { name: "twitter:description", content: SITE_DESCRIPTION },
+        { name: "twitter:image", content: ogImage },
+        {
+          name: "twitter:image:alt",
+          content: "Padre Kelmon — pré-candidato a Deputado Federal por São Paulo",
+        },
+      ],
+      links: [{ rel: "canonical", href: pageUrl }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(buildPersonJsonLd()),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(buildWebSiteJsonLd()),
+        },
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(buildWebPageJsonLd()),
+        },
+      ],
+    };
+  },
 });
 
 function Index() {
@@ -78,7 +106,7 @@ function Index() {
         Pular para o conteúdo
       </a>
       <SiteHeader />
-      <main className="overflow-x-clip">
+      <main id="conteudo" className="overflow-x-clip">
         <Hero />
         <Highlights />
         <About />

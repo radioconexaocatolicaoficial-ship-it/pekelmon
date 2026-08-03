@@ -72,7 +72,15 @@ export function SiteFooter() {
               href="#inicio"
               className="inline-flex items-center rounded-lg bg-white px-3 py-1.5 shadow-md"
             >
-              <img src={logo} alt="Padre Kelmon" className="h-8 w-auto" />
+              <img
+                src={logo}
+                alt="Padre Kelmon — Por São Paulo, pelo Brasil"
+                width={160}
+                height={32}
+                loading="lazy"
+                decoding="async"
+                className="h-8 w-auto"
+              />
             </a>
             <p className="mt-3 text-sm font-bold leading-snug text-white">
               Pré-candidato a Deputado Federal · SP · PL

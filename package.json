@@ -4,9 +4,13 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
+    "seo:generate": "node scripts/generate-seo-files.mjs",
+    "predev": "node scripts/generate-seo-files.mjs",
+    "prebuild": "node scripts/generate-seo-files.mjs",
     "dev": "vite dev",
-    "build": "vite build",
-    "build:dev": "vite build --mode development",
+    "build": "vite build && node scripts/patch-nitro-runtime.mjs",
+    "build:dev": "vite build --mode development && node scripts/patch-nitro-runtime.mjs",
+    "start": "node .output/server/index.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write ."

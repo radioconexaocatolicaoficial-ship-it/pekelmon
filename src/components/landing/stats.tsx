@@ -82,7 +82,9 @@ export function Stats() {
               <div className="relative mx-auto w-full max-w-md overflow-hidden rounded-2xl shadow-2xl lg:ml-auto lg:max-w-none lg:aspect-[4/5] lg:max-h-[480px]">
                 <img
                   src={heroPortrait}
-                  alt="Padre Kelmon"
+                  alt="Padre Kelmon — indicadores e atuação pública"
+                  loading="lazy"
+                  decoding="async"
                   className="h-full w-full object-cover object-top"
                   style={{ maxHeight: "480px" }}
                 />

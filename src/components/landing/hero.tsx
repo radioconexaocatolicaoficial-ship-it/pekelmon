@@ -38,7 +38,7 @@ export function Hero() {
               </span>
             </motion.div>
 
-            <motion.h1
+            <motion.p
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
@@ -54,16 +54,16 @@ export function Hero() {
               >
                 OFICIAL
               </span>
-            </motion.h1>
+            </motion.p>
 
-            <motion.h2
+            <motion.h1
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
               className="mt-4 text-[1.65rem] font-bold uppercase sm:mt-6 sm:text-[2.2rem] md:text-[2.64rem] lg:text-[3.3rem]"
             >
               PADRE KELMON
-            </motion.h2>
+            </motion.h1>
 
             <motion.p
               initial={{ opacity: 0, y: 24 }}
@@ -150,10 +150,11 @@ export function Hero() {
             <figure className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl border-4 border-white bg-transparent shadow-2xl">
               <img
                 src={heroPortrait}
-                alt="Padre Kelmon - Candidato a Deputado Federal por São Paulo"
+                alt="Padre Kelmon, pré-candidato a Deputado Federal por São Paulo pelo PL"
                 width={450}
                 height={600}
                 fetchPriority="high"
+                decoding="async"
                 className="absolute inset-0 h-full w-full object-contain object-center"
               />
             </figure>
