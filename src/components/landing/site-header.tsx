@@ -107,7 +107,7 @@ export function SiteHeader() {
                           e.preventDefault();
                           goTo(l.href);
                         }}
-                        className={`flex min-w-[3.6rem] flex-col items-center justify-center gap-0.5 rounded-xl px-2.5 py-1 transition-colors lg:min-w-[4rem] lg:px-3 lg:py-[0.3rem] ${
+                        className={`inline-flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 transition-colors lg:gap-2 lg:px-3 lg:py-2 ${
                           isActive
                             ? "bg-blue-50 text-[var(--blue-primary)]"
                             : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
@@ -115,8 +115,8 @@ export function SiteHeader() {
                         style={{ zoom: 0.98 }}
                         aria-current={isActive ? "true" : undefined}
                       >
-                        <Icon className="size-[1.15rem] stroke-[2.25] lg:size-5" aria-hidden="true" />
-                        <span className="whitespace-nowrap text-[0.7rem] font-bold leading-none tracking-wide lg:text-xs">
+                        <Icon className="size-4 shrink-0 stroke-[2.25] lg:size-[1.15rem]" aria-hidden="true" />
+                        <span className="whitespace-nowrap text-xs font-bold leading-none tracking-wide lg:text-sm">
                           {l.label}
                         </span>
                       </a>
