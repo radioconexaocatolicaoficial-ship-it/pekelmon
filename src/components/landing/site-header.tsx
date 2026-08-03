@@ -95,7 +95,7 @@ export function SiteHeader() {
 
             <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-3 md:gap-4 lg:gap-5">
               {/* Tablet / notebook / desktop — tamanho anterior */}
-              <ul className="hidden min-w-0 items-center justify-end gap-4 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:gap-6 xl:gap-7 [&::-webkit-scrollbar]:hidden">
+              <ul className="hidden min-w-0 items-center justify-end gap-[0.98rem] overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:gap-6 xl:gap-7 [&::-webkit-scrollbar]:hidden">
                 {TOP_LINKS.map((l) => {
                   const Icon = l.icon;
                   const isActive = active === l.href;
@@ -110,7 +110,7 @@ export function SiteHeader() {
                         className={`inline-flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 transition-colors lg:gap-2 lg:px-3 lg:py-2 ${
                           isActive
                             ? "bg-blue-50 text-[var(--blue-primary)]"
-                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                            : "text-gray-600 hover:bg-blue-50 hover:text-[var(--blue-primary)]"
                         }`}
                         style={{ zoom: 0.98 }}
                         aria-current={isActive ? "true" : undefined}
