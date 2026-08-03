@@ -152,15 +152,23 @@ export function About() {
                   transition={{ duration: 0.5, delay: i * 0.1 }}
                   className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white p-5 shadow-lg transition-all hover:-translate-y-1 hover:border-blue-500 hover:shadow-2xl sm:p-6"
                 >
-                  {/* Ícone */}
-                  <div className="mb-4 inline-flex size-14 items-center justify-center rounded-xl transition-transform group-hover:scale-110" style={{ backgroundColor: 'var(--blue-primary)' }}>
-                    <Icon className="size-7 stroke-[2] text-white" />
-                  </div>
-
-                  {/* Badge do ano */}
-                  <div className="mb-4 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-bold" style={{ backgroundColor: 'var(--yellow-primary)', color: 'var(--blue-primary)' }}>
-                    <Award className="size-3" />
-                    {item.year}
+                  <div className="mb-4 flex flex-wrap items-center gap-3">
+                    <span
+                      className="inline-flex size-12 items-center justify-center rounded-xl transition-transform group-hover:scale-110"
+                      style={{ backgroundColor: "var(--blue-primary)" }}
+                    >
+                      <Icon className="size-6 stroke-[2.5] text-white" aria-hidden="true" />
+                    </span>
+                    <div
+                      className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide"
+                      style={{
+                        backgroundColor: "var(--yellow-primary)",
+                        color: "var(--blue-primary)",
+                      }}
+                    >
+                      <Award className="size-3" />
+                      {item.year}
+                    </div>
                   </div>
                   
                   {/* Título */}

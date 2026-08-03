@@ -31,7 +31,7 @@ export function Bandeiras() {
                     }}
                   >
                     <Shield className="size-3" />
-                    Pauta
+                    {b.badge}
                   </div>
                 </div>
 

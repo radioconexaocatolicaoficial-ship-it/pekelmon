@@ -42,7 +42,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="text-[2.35rem] font-black leading-[1.05] sm:text-[3.3rem] md:text-[3.96rem] lg:text-[4.4rem]"
+              className="w-full text-[clamp(2.85rem,14vw,4.4rem)] font-black leading-[1.02] sm:text-[3.3rem] md:text-[3.96rem] lg:text-[4.4rem]"
             >
               Agora é
               <span
@@ -60,7 +60,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="mt-4 text-[1.65rem] font-bold uppercase sm:mt-6 sm:text-[2.2rem] md:text-[2.64rem] lg:text-[3.3rem]"
+              className="mt-3 w-full text-[clamp(2.15rem,10.2vw,3.3rem)] font-bold uppercase tracking-tight sm:mt-6 sm:text-[2.2rem] sm:tracking-normal md:text-[2.64rem] lg:text-[3.3rem]"
             >
               PADRE KELMON
             </motion.h1>
@@ -69,7 +69,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.25 }}
-              className="mt-3 text-[1.1rem] font-semibold sm:mt-4 sm:text-[1.38rem] md:text-[1.65rem]"
+              className="mt-3 w-full text-[clamp(1.35rem,6.2vw,1.65rem)] font-semibold sm:mt-4 sm:text-[1.38rem] md:text-[1.65rem]"
             >
               Candidato a
             </motion.p>
@@ -78,7 +78,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="text-[1.65rem] font-black uppercase leading-tight sm:text-[2.2rem] md:text-[2.64rem]"
+              className="w-full text-[clamp(2.15rem,10.2vw,2.64rem)] font-black uppercase leading-[1.05] tracking-tight sm:text-[2.2rem] sm:tracking-normal md:text-[2.64rem]"
               style={{ color: "var(--yellow-primary)" }}
             >
               DEPUTADO
@@ -89,7 +89,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.35 }}
-              className="mt-2 text-[0.8rem] uppercase tracking-wider sm:text-[0.92rem] md:text-[1.1rem]"
+              className="mt-2 w-full text-[clamp(1rem,4.6vw,1.1rem)] uppercase tracking-wide sm:text-[0.92rem] sm:tracking-wider md:text-[1.1rem]"
             >
               Por São Paulo, pelo Brasil
             </motion.p>
