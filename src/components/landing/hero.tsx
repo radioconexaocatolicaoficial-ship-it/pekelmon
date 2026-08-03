@@ -10,7 +10,7 @@ export function Hero() {
   return (
     <section
       id="inicio"
-      className="relative isolate overflow-hidden pb-20 pt-28 sm:pb-28 sm:pt-36 lg:pb-32 lg:pt-40"
+      className="relative isolate overflow-hidden pb-8 pt-[4.5rem] sm:pb-28 sm:pt-36 lg:pb-32 lg:pt-40"
       style={{ background: "var(--gradient-hero)" }}
     >
       <div
@@ -24,13 +24,13 @@ export function Hero() {
       />
 
       <PageShell>
-        <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,min(100%,450px))] lg:gap-16">
+        <div className="grid items-center gap-3 sm:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,min(100%,450px))] lg:gap-16">
           <div className="@container flex w-full min-w-0 flex-col justify-center text-white">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
-              className="mb-5 inline-flex max-w-full items-center gap-1.5 self-start whitespace-nowrap rounded-lg border-2 border-white/40 bg-white/15 px-2 py-1.5 backdrop-blur-sm sm:mb-6 sm:gap-2 sm:px-4 sm:py-2"
+              className="mb-2 inline-flex max-w-full items-center gap-1.5 self-start whitespace-nowrap rounded-lg border-2 border-white/40 bg-white/15 px-2 py-1 backdrop-blur-sm sm:mb-6 sm:gap-2 sm:px-4 sm:py-2"
             >
               <CheckCircle2 className="size-3.5 shrink-0 text-green-400 sm:size-5" aria-hidden="true" />
               <span className="whitespace-nowrap text-[clamp(0.52rem,2.55vw,0.92rem)] font-bold uppercase leading-none tracking-wide sm:tracking-wider">
@@ -38,7 +38,7 @@ export function Hero() {
               </span>
             </motion.div>
 
-            {/* Celular: 1 linha + nome maior. sm+: layout original (OFICIAL / DEPUTADO / FEDERAL em linhas) */}
+            {/* Celular: bloco compacto perto do menu. sm+: espaçamento original */}
             <motion.p
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
@@ -61,7 +61,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="mt-4 w-full whitespace-nowrap font-black uppercase leading-none tracking-tight text-[clamp(2.1rem,11.5vw,3.6rem)] sm:mt-6 sm:whitespace-normal sm:text-[2.2rem] sm:font-bold sm:tracking-normal md:text-[2.64rem] lg:text-[3.3rem]"
+              className="mt-1.5 w-full whitespace-nowrap font-black uppercase leading-none tracking-tight text-[clamp(2.1rem,11.5vw,3.6rem)] sm:mt-6 sm:whitespace-normal sm:text-[2.2rem] sm:font-bold sm:tracking-normal md:text-[2.64rem] lg:text-[3.3rem]"
             >
               PADRE KELMON
             </motion.h1>
@@ -70,7 +70,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.25 }}
-              className="mt-3 w-full whitespace-nowrap font-semibold leading-none text-[clamp(1.05rem,5vw,1.45rem)] sm:mt-4 sm:whitespace-normal sm:text-[1.38rem] md:text-[1.65rem]"
+              className="mt-1.5 w-full whitespace-nowrap font-semibold leading-none text-[clamp(1.05rem,5vw,1.45rem)] sm:mt-4 sm:whitespace-normal sm:text-[1.38rem] md:text-[1.65rem]"
             >
               Candidato a
             </motion.p>
@@ -79,7 +79,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="mt-1 w-full whitespace-nowrap font-black uppercase leading-none tracking-tight text-[clamp(1.35rem,7.4vw,2.4rem)] sm:mt-0 sm:whitespace-normal sm:text-[2.2rem] sm:leading-tight sm:tracking-normal md:text-[2.64rem]"
+              className="mt-0.5 w-full whitespace-nowrap font-black uppercase leading-none tracking-tight text-[clamp(1.35rem,7.4vw,2.4rem)] sm:mt-0 sm:whitespace-normal sm:text-[2.2rem] sm:leading-tight sm:tracking-normal md:text-[2.64rem]"
               style={{ color: "var(--yellow-primary)" }}
             >
               DEPUTADO{" "}
@@ -90,7 +90,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.35 }}
-              className="mt-2 w-full whitespace-nowrap uppercase leading-none tracking-wide text-[clamp(0.85rem,4.2vw,1.05rem)] sm:whitespace-normal sm:text-[0.92rem] sm:tracking-wider md:text-[1.1rem]"
+              className="mt-1 w-full whitespace-nowrap uppercase leading-none tracking-wide text-[clamp(0.85rem,4.2vw,1.05rem)] sm:mt-2 sm:whitespace-normal sm:text-[0.92rem] sm:tracking-wider md:text-[1.1rem]"
             >
               Por São Paulo, pelo Brasil
             </motion.p>
@@ -99,13 +99,13 @@ export function Hero() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.4 }}
-              className="mt-8 flex w-full flex-col gap-3 sm:mt-10 sm:flex-row sm:gap-4"
+              className="mt-3 flex w-full flex-col gap-2 sm:mt-10 sm:flex-row sm:gap-4"
             >
               <Button
                 asChild
                 variant="yellow"
                 size="xl"
-                className="h-12 w-full text-base font-bold sm:h-auto sm:w-auto sm:text-lg"
+                className="h-11 w-full text-base font-bold sm:h-auto sm:w-auto sm:text-lg"
               >
                 <a
                   href="#cadastro"
@@ -122,7 +122,7 @@ export function Hero() {
                 asChild
                 variant="outlineWhite"
                 size="xl"
-                className="h-12 w-full text-base font-semibold sm:h-auto sm:w-auto sm:text-lg"
+                className="h-11 w-full text-base font-semibold sm:h-auto sm:w-auto sm:text-lg"
               >
                 <a
                   href="#historia"
@@ -141,23 +141,23 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mx-auto flex w-full max-w-[360px] items-center justify-center sm:max-w-[400px] lg:max-w-[450px]"
+            className="relative mx-auto flex w-full max-w-[min(100%,420px)] items-center justify-center sm:max-w-[400px] lg:max-w-[450px]"
           >
             <div
               aria-hidden="true"
-              className="absolute -inset-4 rounded-3xl opacity-40 blur-3xl sm:-inset-6"
+              className="absolute -inset-3 rounded-3xl opacity-40 blur-3xl sm:-inset-6"
               style={{ background: "var(--gradient-yellow)" }}
             />
-            <figure className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl border-4 border-white bg-transparent shadow-2xl">
+            <figure className="relative aspect-[3/4] w-full overflow-hidden rounded-xl border-[3px] border-white bg-transparent shadow-2xl sm:rounded-2xl sm:border-4">
               <img
                 src={heroPortrait}
                 alt="Padre Kelmon, pré-candidato a Deputado Federal por São Paulo pelo PL"
                 width={450}
                 height={675}
-                sizes="(max-width: 1024px) min(100vw, 400px), 450px"
+                sizes="(max-width: 1024px) min(100vw, 420px), 450px"
                 fetchPriority="high"
                 decoding="async"
-                className="absolute inset-0 h-full w-full object-contain object-center"
+                className="absolute inset-0 h-full w-full object-contain object-top sm:object-center"
               />
             </figure>
           </motion.div>
