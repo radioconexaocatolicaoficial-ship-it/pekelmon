@@ -164,8 +164,8 @@
     }
   }
 
-  /* Espaço para a barra inferior fina em celular/tablet */
-  @media (max-width: 1023px) {
+  /* Espaço para a barra inferior fina — só celular */
+  @media (max-width: 767px) {
     main {
       padding-bottom: 0.5rem;
     }

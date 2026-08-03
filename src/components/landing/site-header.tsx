@@ -16,6 +16,9 @@ const LINKS = [
   { href: "cadastro", label: "Apoiar", icon: UserPlus, accent: true },
 ] as const;
 
+/** Menu do tablet no topo — sem Apoiar (já existe o botão Quero apoiar). */
+const TABLET_TOP_LINKS = LINKS.filter((l) => l.href !== "cadastro");
+
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("inicio");
@@ -75,7 +78,7 @@ export function SiteHeader() {
         }`}
       >
         <nav aria-label="Navegação principal" className="w-full">
-          <PageShell className="flex items-center justify-between py-2.5 sm:py-3">
+          <PageShell className="flex min-w-0 items-center gap-2 py-2.5 sm:gap-3 sm:py-3">
             <a
               href="#inicio"
               className="flex shrink-0 items-center"
@@ -87,12 +90,42 @@ export function SiteHeader() {
               <img
                 src={logo}
                 alt="Padre Kelmon 2202 — Deputado Federal"
-                className="h-10 w-auto sm:h-12 md:h-[3.25rem]"
+                className="h-10 w-auto max-w-[40vw] object-contain object-left sm:h-12 md:h-11 md:max-w-[9.5rem] lg:h-[3.25rem] lg:max-w-none"
               />
             </a>
 
-            <div className="flex items-center gap-2 sm:gap-4 lg:gap-6">
-              <ul className="hidden items-center gap-[calc(0.25rem*1.02)] lg:flex">
+            <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-2 lg:gap-6">
+              {/* Tablet: ícones antes do botão — nunca sobem por cima do CTA */}
+              <ul className="hidden min-w-0 items-center justify-end gap-[0.42rem] overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:hidden [&::-webkit-scrollbar]:hidden">
+                {TABLET_TOP_LINKS.map((l) => {
+                  const Icon = l.icon;
+                  const isActive = active === l.href;
+                  return (
+                    <li key={l.href} className="flex shrink-0">
+                      <a
+                        href={`#${l.href}`}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          goTo(l.href);
+                        }}
+                        className={`flex flex-col items-center justify-center gap-0.5 rounded-lg px-1.5 py-1 transition-colors ${
+                          isActive
+                            ? "bg-blue-50 text-[var(--blue-primary)]"
+                            : "text-gray-500 hover:bg-gray-50 hover:text-gray-800"
+                        }`}
+                        aria-current={isActive ? "true" : undefined}
+                      >
+                        <Icon className="size-[1.05rem] stroke-[2]" aria-hidden="true" />
+                        <span className="whitespace-nowrap text-[10.5px] font-semibold leading-none">
+                          {l.label}
+                        </span>
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <ul className="hidden shrink-0 items-center gap-[calc(0.25rem*1.02)] lg:flex">
                 {LINKS.map((l) => {
                   const Icon = l.icon;
                   return (
@@ -117,7 +150,7 @@ export function SiteHeader() {
                 asChild
                 variant="campaign"
                 size="sm"
-                className="inline-flex h-9 shrink-0 px-3 text-xs font-bold sm:h-9 sm:px-4 sm:text-sm"
+                className="relative z-10 inline-flex h-9 shrink-0 px-3 text-xs font-bold sm:px-4 sm:text-sm"
               >
                 <a
                   href="#cadastro"
@@ -134,11 +167,11 @@ export function SiteHeader() {
         </nav>
       </header>
 
-      {/* Menu inferior fino — minimalista */}
+      {/* Menu inferior — só celular; tablet usa menu no topo */}
       <nav
         aria-label="Menu de seções"
         data-mobile-bottom-nav
-        className="fixed inset-x-0 bottom-0 z-50 border-t border-black/5 bg-white/90 backdrop-blur-md lg:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 border-t border-black/5 bg-white/90 backdrop-blur-md md:hidden"
         style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       >
         <div
@@ -150,6 +183,7 @@ export function SiteHeader() {
             const Icon = l.icon;
             const isActive = active === l.href;
             const isAccent = "accent" in l && l.accent;
+            const isApoiar = l.href === "cadastro";
 
             return (
               <a
@@ -162,7 +196,9 @@ export function SiteHeader() {
                   e.preventDefault();
                   goTo(l.href);
                 }}
-                className="relative flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 px-0.5 py-1 outline-none"
+                className={`relative flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 px-0.5 py-1 outline-none ${
+                  isApoiar ? "md:hidden" : ""
+                }`}
                 aria-current={isActive ? "true" : undefined}
               >
                 {isActive ? (
