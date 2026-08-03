@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ExternalLink } from "lucide-react";
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import { getSocialFeeds, type SocialNetworkId, type SocialPost } from "@/lib/social-feeds";
 
@@ -202,17 +202,23 @@ function PostSkeleton({ color }: { color: string }) {
 }
 
 export function Media() {
+  // Importante: SSR e 1º render no cliente devem ser iguais (evita React #418).
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
   const { data, isLoading, isFetching } = useQuery({
     queryKey: ["social-feeds", "v12-facebook-official"],
     queryFn: () => getSocialFeeds(),
     staleTime: 15 * 60 * 1000,
     refetchInterval: 15 * 60 * 1000,
     refetchOnWindowFocus: false,
-    // Só busca feeds quando a seção estiver no fluxo (após a 1ª pintura).
-    enabled: typeof window !== "undefined",
+    enabled: ready,
   });
 
   const networks = data?.networks ?? [];
+  const showPlaceholders = ready && isLoading;
   const featuredVideoId = "EI-bTS70q0U";
 
   return (
@@ -258,7 +264,7 @@ export function Media() {
           </div>
 
           <div className="mt-8 space-y-10 sm:mt-10 sm:space-y-12">
-            {(isLoading ? placeholderNetworks() : networks).map((social) => {
+            {(showPlaceholders ? placeholderNetworks() : networks).map((social) => {
               const IconComponent = ICONS[social.id as SocialNetworkId] ?? InstagramIcon;
               const posts = "posts" in social ? social.posts : [];
               const slots = Array.from({ length: 4 }, (_, i) => posts[i] ?? null);
@@ -301,7 +307,7 @@ export function Media() {
                   </div>
 
                   <div className="-mx-1 flex gap-3 overflow-x-auto px-1 pb-2 snap-x snap-mandatory sm:mx-0 sm:grid sm:grid-cols-2 sm:gap-4 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
-                    {isLoading
+                    {showPlaceholders
                       ? slots.map((_, index) => (
                           <Reveal
                             key={`${social.name}-sk-${index}`}
