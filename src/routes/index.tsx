@@ -60,7 +60,7 @@ export const Route = createFileRoute("/")({
         { property: "og:image:height", content: OG_IMAGE_HEIGHT },
         {
           property: "og:image:alt",
-          content: "Agora é oficial — Padre Kelmon, candidato a Deputado Federal por São Paulo",
+          content: SITE_TITLE,
         },
         { name: "twitter:card", content: "summary_large_image" },
         { name: "twitter:title", content: SITE_TITLE },
@@ -68,7 +68,7 @@ export const Route = createFileRoute("/")({
         { name: "twitter:image", content: ogImage },
         {
           name: "twitter:image:alt",
-          content: "Agora é oficial — Padre Kelmon, candidato a Deputado Federal por São Paulo",
+          content: SITE_TITLE,
         },
       ],
       links: [
