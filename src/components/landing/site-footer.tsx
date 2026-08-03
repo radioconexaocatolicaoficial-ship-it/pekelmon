@@ -74,12 +74,12 @@ export function SiteFooter() {
             >
               <img
                 src={logo}
-                alt="Padre Kelmon — Por São Paulo, pelo Brasil"
-                width={160}
-                height={32}
+                alt="Padre Kelmon 2202 — Deputado Federal"
+                width={200}
+                height={45}
                 loading="lazy"
                 decoding="async"
-                className="h-8 w-auto"
+                className="h-9 w-auto sm:h-10"
               />
             </a>
             <p className="mt-3 whitespace-nowrap text-[clamp(0.7rem,2.8vw,0.875rem)] font-bold leading-none text-white">

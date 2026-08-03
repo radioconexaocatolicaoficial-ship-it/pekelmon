@@ -64,8 +64,8 @@ export function SiteHeader() {
           >
             <img
               src={logo}
-              alt="Padre Kelmon - Por São Paulo, pelo Brasil"
-              className="h-11 w-auto sm:h-12 md:h-14"
+              alt="Padre Kelmon 2202 — Deputado Federal"
+              className="h-10 w-auto sm:h-12 md:h-[3.25rem]"
             />
           </a>
 
