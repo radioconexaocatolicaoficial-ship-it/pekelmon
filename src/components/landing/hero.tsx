@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, type CSSProperties, type ElementType, type ReactNode } from "react";
 import { motion } from "motion/react";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
@@ -5,6 +6,84 @@ import { Button } from "@/components/ui/button";
 import { scrollToSection } from "@/lib/scroll-to-section";
 import heroPortrait from "@/assets/hero-portrait.webp";
 import { PageShell } from "./primitives";
+import { cn } from "@/lib/utils";
+
+/** No celular, ajusta a fonte para a linha ocupar a mesma largura dos botões. */
+function FitWidthLine({
+  as: Tag = "p",
+  children,
+  className,
+  style,
+  desktopClassName,
+}: {
+  as?: ElementType;
+  children: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+  /** classes de tamanho usadas a partir de sm (desktop) */
+  desktopClassName?: string;
+}) {
+  const ref = useRef<HTMLElement>(null);
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const fit = () => {
+      const isMobile = window.matchMedia("(max-width: 639px)").matches;
+      if (!isMobile) {
+        el.style.fontSize = "";
+        el.style.letterSpacing = "";
+        return;
+      }
+
+      const parent = el.parentElement;
+      if (!parent) return;
+
+      const target = parent.clientWidth;
+      if (target <= 0) return;
+
+      el.style.letterSpacing = "normal";
+      let lo = 14;
+      let hi = 96;
+      let best = lo;
+
+      while (lo <= hi) {
+        const mid = Math.floor((lo + hi) / 2);
+        el.style.fontSize = `${mid}px`;
+        if (el.scrollWidth <= target) {
+          best = mid;
+          lo = mid + 1;
+        } else {
+          hi = mid - 1;
+        }
+      }
+
+      el.style.fontSize = `${best}px`;
+    };
+
+    fit();
+    const ro = new ResizeObserver(fit);
+    if (el.parentElement) ro.observe(el.parentElement);
+    window.addEventListener("resize", fit);
+    document.fonts?.ready?.then(fit).catch(() => undefined);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", fit);
+    };
+  }, [children]);
+
+  return (
+    <Tag
+      ref={ref}
+      className={cn("block w-full whitespace-nowrap leading-none", className, desktopClassName)}
+      style={style}
+    >
+      {children}
+    </Tag>
+  );
+}
 
 export function Hero() {
   return (
@@ -25,7 +104,7 @@ export function Hero() {
 
       <PageShell>
         <div className="grid items-center gap-10 sm:gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,min(100%,450px))] lg:gap-16">
-          <div className="flex flex-col justify-center text-white">
+          <div className="flex w-full min-w-0 flex-col justify-center text-white">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -38,61 +117,93 @@ export function Hero() {
               </span>
             </motion.div>
 
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.1 }}
-              className="w-full text-[clamp(2.85rem,14vw,4.4rem)] font-black leading-[1.02] sm:text-[3.3rem] md:text-[3.96rem] lg:text-[4.4rem]"
+              className="w-full min-w-0 space-y-1 sm:space-y-2"
             >
-              Agora é
-              <span
-                className="mt-1 block sm:mt-2"
+              <FitWidthLine
+                className="font-black"
+                desktopClassName="sm:text-[3.3rem] md:text-[3.96rem] lg:text-[4.4rem] sm:leading-[1.05]"
+              >
+                Agora é
+              </FitWidthLine>
+              <FitWidthLine
+                className="font-black"
+                desktopClassName="sm:text-[3.3rem] md:text-[3.96rem] lg:text-[4.4rem] sm:leading-[1.05]"
                 style={{
                   color: "var(--yellow-primary)",
                   textShadow: "0 2px 20px rgba(0,0,0,0.3)",
                 }}
               >
                 OFICIAL
-              </span>
-            </motion.p>
+              </FitWidthLine>
+            </motion.div>
 
-            <motion.h1
+            <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="mt-3 w-full text-[clamp(2.15rem,10.2vw,3.3rem)] font-bold uppercase tracking-tight sm:mt-6 sm:text-[2.2rem] sm:tracking-normal md:text-[2.64rem] lg:text-[3.3rem]"
+              className="mt-3 w-full min-w-0 sm:mt-6"
             >
-              PADRE KELMON
-            </motion.h1>
+              <FitWidthLine
+                as="h1"
+                className="font-bold uppercase"
+                desktopClassName="sm:text-[2.2rem] md:text-[2.64rem] lg:text-[3.3rem]"
+              >
+                PADRE KELMON
+              </FitWidthLine>
+            </motion.div>
 
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.25 }}
-              className="mt-3 w-full text-[clamp(1.35rem,6.2vw,1.65rem)] font-semibold sm:mt-4 sm:text-[1.38rem] md:text-[1.65rem]"
+              className="mt-3 w-full min-w-0 sm:mt-4"
             >
-              Candidato a
-            </motion.p>
+              <FitWidthLine
+                className="font-semibold"
+                desktopClassName="sm:text-[1.38rem] md:text-[1.65rem]"
+              >
+                Candidato a
+              </FitWidthLine>
+            </motion.div>
 
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
-              className="w-full text-[clamp(2.15rem,10.2vw,2.64rem)] font-black uppercase leading-[1.05] tracking-tight sm:text-[2.2rem] sm:tracking-normal md:text-[2.64rem]"
+              className="mt-1 w-full min-w-0 space-y-1"
               style={{ color: "var(--yellow-primary)" }}
             >
-              DEPUTADO
-              <span className="block">FEDERAL</span>
-            </motion.p>
+              <FitWidthLine
+                className="font-black uppercase"
+                desktopClassName="sm:text-[2.2rem] md:text-[2.64rem]"
+              >
+                DEPUTADO
+              </FitWidthLine>
+              <FitWidthLine
+                className="font-black uppercase"
+                desktopClassName="sm:text-[2.2rem] md:text-[2.64rem]"
+              >
+                FEDERAL
+              </FitWidthLine>
+            </motion.div>
 
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.35 }}
-              className="mt-2 w-full text-[clamp(1rem,4.6vw,1.1rem)] uppercase tracking-wide sm:text-[0.92rem] sm:tracking-wider md:text-[1.1rem]"
+              className="mt-2 w-full min-w-0"
             >
-              Por São Paulo, pelo Brasil
-            </motion.p>
+              <FitWidthLine
+                className="uppercase"
+                desktopClassName="sm:text-[0.92rem] md:text-[1.1rem] sm:tracking-wider"
+              >
+                Por São Paulo, pelo Brasil
+              </FitWidthLine>
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 24 }}
