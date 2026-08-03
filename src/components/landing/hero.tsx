@@ -19,10 +19,10 @@ export function Hero() {
           alt="Padre Kelmon 2202 — Deputado Federal. Uma vida de missões. A nova missão é por São Paulo."
           width={1024}
           height={576}
-          sizes="(min-width: 1024px) 1024px, 100vw"
+          sizes="(min-width: 1440px) 1140px, 100vw"
           fetchPriority="high"
           decoding="async"
-          className="block h-auto w-full object-cover object-center lg:mx-auto lg:max-w-[1024px] xl:max-w-[1100px]"
+          className="block h-auto w-full object-cover object-center min-[1440px]:mx-auto min-[1440px]:max-w-[1140px]"
         />
       </motion.div>
 
