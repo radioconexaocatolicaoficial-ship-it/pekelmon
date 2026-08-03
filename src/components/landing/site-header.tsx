@@ -16,8 +16,8 @@ const LINKS = [
   { href: "cadastro", label: "Apoiar", icon: UserPlus, accent: true },
 ] as const;
 
-/** Menu do tablet no topo — sem Apoiar (já existe o botão Quero apoiar). */
-const TABLET_TOP_LINKS = LINKS.filter((l) => l.href !== "cadastro");
+/** Menu do topo (tablet/notebook/desktop) — sem Apoiar (já existe o botão Quero apoiar). */
+const TOP_LINKS = LINKS.filter((l) => l.href !== "cadastro");
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -94,10 +94,10 @@ export function SiteHeader() {
               />
             </a>
 
-            <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-3 md:gap-4 lg:gap-6">
-              {/* Tablet: menu proporcional ao site, espaçado, antes do CTA */}
-              <ul className="hidden min-w-0 items-center justify-end gap-3 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:hidden [&::-webkit-scrollbar]:hidden">
-                {TABLET_TOP_LINKS.map((l) => {
+            <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-3 md:gap-4 lg:gap-5">
+              {/* Mesmo design do tablet — notebook e desktop */}
+              <ul className="hidden min-w-0 items-center justify-end gap-3 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:gap-4 [&::-webkit-scrollbar]:hidden">
+                {TOP_LINKS.map((l) => {
                   const Icon = l.icon;
                   const isActive = active === l.href;
                   return (
@@ -108,38 +108,17 @@ export function SiteHeader() {
                           e.preventDefault();
                           goTo(l.href);
                         }}
-                        className={`flex min-w-[3.75rem] flex-col items-center justify-center gap-1 rounded-xl px-3 py-1.5 transition-colors ${
+                        className={`flex min-w-[3.75rem] flex-col items-center justify-center gap-1 rounded-xl px-3 py-1.5 transition-colors lg:min-w-[4.25rem] lg:px-3.5 lg:py-2 ${
                           isActive
                             ? "bg-blue-50 text-[var(--blue-primary)]"
                             : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                         }`}
                         aria-current={isActive ? "true" : undefined}
                       >
-                        <Icon className="size-5 stroke-[2.25]" aria-hidden="true" />
-                        <span className="whitespace-nowrap text-xs font-bold leading-none tracking-wide">
+                        <Icon className="size-5 stroke-[2.25] lg:size-[1.35rem]" aria-hidden="true" />
+                        <span className="whitespace-nowrap text-xs font-bold leading-none tracking-wide lg:text-[0.8125rem]">
                           {l.label}
                         </span>
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <ul className="hidden shrink-0 items-center gap-[calc(0.25rem*1.02)] lg:flex">
-                {LINKS.map((l) => {
-                  const Icon = l.icon;
-                  return (
-                    <li key={l.href}>
-                      <a
-                        href={`#${l.href}`}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          scrollToSection(l.href);
-                        }}
-                        className="flex items-center gap-1 rounded-md px-[calc(0.5rem*1.02)] py-[calc(0.25rem*1.02)] text-sm font-bold text-gray-700 transition-colors hover:bg-blue-600 hover:text-white active:bg-blue-600 active:text-white"
-                      >
-                        <Icon className="size-4 stroke-[2.5]" />
-                        {l.label}
                       </a>
                     </li>
                   );
@@ -183,7 +162,6 @@ export function SiteHeader() {
             const Icon = l.icon;
             const isActive = active === l.href;
             const isAccent = "accent" in l && l.accent;
-            const isApoiar = l.href === "cadastro";
 
             return (
               <a
@@ -196,9 +174,7 @@ export function SiteHeader() {
                   e.preventDefault();
                   goTo(l.href);
                 }}
-                className={`relative flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 px-0.5 py-1 outline-none ${
-                  isApoiar ? "md:hidden" : ""
-                }`}
+                className="relative flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 px-0.5 py-1 outline-none"
                 aria-current={isActive ? "true" : undefined}
               >
                 {isActive ? (
