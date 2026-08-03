@@ -264,7 +264,7 @@ function PressNewsCarousel() {
     if (!api) return;
     const id = window.setInterval(() => {
       api.scrollNext();
-    }, 4000);
+    }, 12000);
     return () => window.clearInterval(id);
   }, [api]);
 
