@@ -10,13 +10,13 @@ export const SITE_URL = (
 export const SITE_NAME = "Padre Kelmon";
 
 export const SITE_TITLE =
-  "Padre Kelmon — Pré-candidato a Deputado Federal por São Paulo, pelo Brasil, aprovado em convenção do Partido PL";
+  "Padre Kelmon — Candidato a Deputado Federal, aprovado em convenção";
 
 /** Mesmo texto da prévia do link (WhatsApp/Facebook). */
 export const SITE_DESCRIPTION = SITE_TITLE;
 
 /** Query v= força WhatsApp/Facebook a buscar a imagem nova (cache agressivo). */
-export const OG_IMAGE_PATH = "/og-image.jpg?v=8";
+export const OG_IMAGE_PATH = "/og-image.jpg?v=9";
 export const OG_IMAGE_WIDTH = "1200";
 export const OG_IMAGE_HEIGHT = "526";
 
