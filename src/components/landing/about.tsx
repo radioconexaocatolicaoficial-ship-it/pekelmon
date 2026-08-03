@@ -147,10 +147,10 @@ export function About() {
             viewport={{ once: true }}
             className="relative order-2 sm:order-1"
           >
-            <div className="relative overflow-hidden rounded-2xl bg-gray-100 shadow-2xl lg:h-full">
+            <div className="relative overflow-hidden rounded-2xl bg-white shadow-2xl lg:h-full">
               <img
                 src={sobreImg}
-                alt="Padre Kelmon ? biografia e trajetÃ³ria"
+                alt="Padre Kelmon ? biografia e trajetória"
                 loading="lazy"
                 decoding="async"
                 className="mx-auto h-auto w-full object-contain object-center lg:h-full lg:object-cover lg:object-top"
