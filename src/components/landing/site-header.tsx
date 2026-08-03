@@ -78,7 +78,7 @@ export function SiteHeader() {
         }`}
       >
         <nav aria-label="Navegação principal" className="w-full">
-          <PageShell className="flex min-w-0 items-center gap-2 py-2.5 sm:gap-3 sm:py-3">
+          <PageShell className="flex min-w-0 items-center gap-3 py-2.5 sm:py-3 md:gap-4">
             <a
               href="#inicio"
               className="flex shrink-0 items-center"
@@ -90,13 +90,13 @@ export function SiteHeader() {
               <img
                 src={logo}
                 alt="Padre Kelmon 2202 — Deputado Federal"
-                className="h-10 w-auto max-w-[40vw] object-contain object-left sm:h-12 md:h-11 md:max-w-[9.5rem] lg:h-[3.25rem] lg:max-w-none"
+                className="h-10 w-auto max-w-[42vw] object-contain object-left sm:h-12 md:h-12 md:max-w-[11rem] lg:h-[3.25rem] lg:max-w-none"
               />
             </a>
 
-            <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-2 lg:gap-6">
-              {/* Tablet: ícones antes do botão — nunca sobem por cima do CTA */}
-              <ul className="hidden min-w-0 items-center justify-end gap-[0.42rem] overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:hidden [&::-webkit-scrollbar]:hidden">
+            <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-3 md:gap-4 lg:gap-6">
+              {/* Tablet: menu proporcional ao site, espaçado, antes do CTA */}
+              <ul className="hidden min-w-0 items-center justify-end gap-3 overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:hidden [&::-webkit-scrollbar]:hidden">
                 {TABLET_TOP_LINKS.map((l) => {
                   const Icon = l.icon;
                   const isActive = active === l.href;
@@ -108,15 +108,15 @@ export function SiteHeader() {
                           e.preventDefault();
                           goTo(l.href);
                         }}
-                        className={`flex flex-col items-center justify-center gap-0.5 rounded-lg px-1.5 py-1 transition-colors ${
+                        className={`flex min-w-[3.75rem] flex-col items-center justify-center gap-1 rounded-xl px-3 py-1.5 transition-colors ${
                           isActive
                             ? "bg-blue-50 text-[var(--blue-primary)]"
-                            : "text-gray-500 hover:bg-gray-50 hover:text-gray-800"
+                            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                         }`}
                         aria-current={isActive ? "true" : undefined}
                       >
-                        <Icon className="size-[1.05rem] stroke-[2]" aria-hidden="true" />
-                        <span className="whitespace-nowrap text-[10.5px] font-semibold leading-none">
+                        <Icon className="size-5 stroke-[2.25]" aria-hidden="true" />
+                        <span className="whitespace-nowrap text-xs font-bold leading-none tracking-wide">
                           {l.label}
                         </span>
                       </a>
@@ -150,7 +150,7 @@ export function SiteHeader() {
                 asChild
                 variant="campaign"
                 size="sm"
-                className="relative z-10 inline-flex h-9 shrink-0 px-3 text-xs font-bold sm:px-4 sm:text-sm"
+                className="relative z-10 inline-flex h-9 shrink-0 px-3 text-xs font-bold md:h-10 md:px-4 md:text-sm"
               >
                 <a
                   href="#cadastro"
