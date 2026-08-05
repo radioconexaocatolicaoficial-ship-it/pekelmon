@@ -38,7 +38,7 @@ export type SocialFeedsResult = {
 const YOUTUBE_CHANNEL_ID = "UCA0aqdkBHj5G4eS0raaeZhg";
 /** YouTube "long-form videos" playlist (excludes Shorts): UULF + channelId without UC */
 const YOUTUBE_LONG_FORM_PLAYLIST_ID = `UULF${YOUTUBE_CHANNEL_ID.slice(2)}`;
-const CACHE_TTL_MS = 5 * 60 * 1000;
+const CACHE_TTL_MS = 3 * 60 * 1000;
 const POSTS_PER_NETWORK = 8;
 
 const NETWORK_META: Record<

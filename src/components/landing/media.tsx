@@ -10,12 +10,11 @@ import {
   CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import {
-  PRESS_ARTICLES,
-  PRESS_SOURCE_URL,
-  type PressArticle,
-} from "@/data/press-articles";
+import { PRESS_ARTICLES, PRESS_SOURCE_URL, type PressArticle } from "@/data/press-articles";
+import { getPressFeeds } from "@/lib/press-feeds";
 import { getSocialFeeds, type SocialNetworkId, type SocialPost } from "@/lib/social-feeds";
+
+const MEDIA_REFRESH_MS = 3 * 60 * 1000;
 
 import { PageShell, Reveal } from "./primitives";
 
@@ -275,9 +274,23 @@ function useCarouselAutoplay(api: CarouselApi | undefined, intervalMs = 12000, s
   }, [api, intervalMs, startDelayMs]);
 }
 
-function PressNewsCarousel() {
+function PressNewsCarousel({
+  articles = [],
+  sourceUrl = PRESS_SOURCE_URL,
+  showPlaceholders = false,
+}: {
+  articles?: PressArticle[];
+  sourceUrl?: string;
+  showPlaceholders?: boolean;
+}) {
   const [api, setApi] = useState<CarouselApi>();
   useCarouselAutoplay(api, 12000);
+
+  const list = articles ?? [];
+  const slots =
+    showPlaceholders || list.length === 0
+      ? Array.from({ length: 4 }, () => null)
+      : list;
 
   return (
     <div className="space-y-4">
@@ -293,12 +306,14 @@ function PressNewsCarousel() {
             <h3 className="text-base font-bold" style={{ color: "var(--blue-primary)" }}>
               Padre Kelmon na imprensa
             </h3>
-            <p className="truncate text-sm text-gray-600">Matérias no portal 7Minutos</p>
+            <p className="truncate text-sm text-gray-600">
+              Matérias no portal 7Minutos · atualização automática
+            </p>
           </div>
         </div>
 
         <a
-          href={PRESS_SOURCE_URL}
+          href={sourceUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105 sm:h-auto sm:w-auto"
@@ -315,12 +330,23 @@ function PressNewsCarousel() {
         className="relative w-full px-0 sm:px-10"
       >
         <CarouselContent className="-ml-3">
-          {PRESS_ARTICLES.map((article) => (
+          {slots.map((article, index) => (
             <CarouselItem
-              key={article.id}
+              key={article?.id ?? `press-sk-${index}`}
               className="basis-[82%] pl-3 sm:basis-1/2 lg:basis-1/4"
             >
-              <PressCard article={article} />
+              {showPlaceholders || !article ? (
+                <div className="overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-sm">
+                  <div className="aspect-[16/10] animate-pulse bg-gray-100" />
+                  <div className="space-y-2 p-3 sm:p-4">
+                    <div className="h-3 w-20 animate-pulse rounded bg-gray-100" />
+                    <div className="h-4 w-full animate-pulse rounded bg-gray-100" />
+                    <div className="h-4 w-[80%] animate-pulse rounded bg-gray-100" />
+                  </div>
+                </div>
+              ) : (
+                <PressCard article={article} />
+              )}
             </CarouselItem>
           ))}
         </CarouselContent>
@@ -432,18 +458,34 @@ export function Media() {
     setReady(true);
   }, []);
 
-  const { data, isLoading, isFetching } = useQuery({
-    queryKey: ["social-feeds", "v13-carousel-auto"],
+  const socialQuery = useQuery({
+    queryKey: ["social-feeds", "v14-auto-refresh"],
     queryFn: () => getSocialFeeds(),
-    staleTime: 5 * 60 * 1000,
-    refetchInterval: 5 * 60 * 1000,
+    staleTime: MEDIA_REFRESH_MS,
+    refetchInterval: MEDIA_REFRESH_MS,
     refetchOnWindowFocus: true,
     enabled: ready,
   });
 
-  const networks = data?.networks ?? [];
-  const showPlaceholders = ready && isLoading;
-  const featuredVideoId = "EI-bTS70q0U";
+  const pressQuery = useQuery({
+    queryKey: ["press-feeds", "v1-7minutos-auto"],
+    queryFn: () => getPressFeeds(),
+    staleTime: MEDIA_REFRESH_MS,
+    refetchInterval: MEDIA_REFRESH_MS,
+    refetchOnWindowFocus: true,
+    enabled: ready,
+  });
+
+  const networks = socialQuery.data?.networks ?? [];
+  const showSocialPlaceholders = ready && socialQuery.isLoading;
+  const showPressPlaceholders = ready && pressQuery.isLoading;
+  const pressArticles = pressQuery.data?.articles?.length
+    ? pressQuery.data.articles
+    : PRESS_ARTICLES;
+  const pressSourceUrl = pressQuery.data?.sourceUrl ?? PRESS_SOURCE_URL;
+  const featuredVideoId = socialQuery.data?.featuredVideoId || "EI-bTS70q0U";
+  const isRefreshing = socialQuery.isFetching || pressQuery.isFetching;
+  const hasUpdatedAt = Boolean(socialQuery.data?.updatedAt || pressQuery.data?.updatedAt);
 
   return (
     <section
@@ -466,13 +508,13 @@ export function Media() {
                 Padre Kelmon nas Redes Sociais
               </h2>
               <p className="text-sm leading-relaxed text-gray-700 text-justify sm:text-base">
-                Acompanhe a cobertura na imprensa e as redes sociais. Os carrosséis atualizam
-                automaticamente quando há novas publicações.
+                Acompanhe a cobertura na imprensa e as redes sociais. Imprensa (7Minutos) e
+                feeds sociais atualizam automaticamente a cada poucos minutos.
               </p>
-              {data?.updatedAt ? (
+              {hasUpdatedAt ? (
                 <p className="mt-3 text-xs text-gray-500">
                   Atualizado automaticamente
-                  {isFetching ? " · buscando novidades…" : ""}
+                  {isRefreshing ? " · buscando novidades…" : ""}
                 </p>
               ) : null}
             </div>
@@ -491,10 +533,14 @@ export function Media() {
 
           <div className="mt-8 space-y-10 sm:mt-10 sm:space-y-12">
             <Reveal>
-              <PressNewsCarousel />
+              <PressNewsCarousel
+                articles={pressArticles}
+                sourceUrl={pressSourceUrl}
+                showPlaceholders={showPressPlaceholders}
+              />
             </Reveal>
 
-            {(showPlaceholders ? placeholderNetworks() : networks).map((social, index) => (
+            {(showSocialPlaceholders ? placeholderNetworks() : networks).map((social, index) => (
               <Reveal key={social.name}>
                 <SocialNetworkCarousel
                   social={{
@@ -505,7 +551,7 @@ export function Media() {
                     color: social.color,
                     posts: "posts" in social ? social.posts : [],
                   }}
-                  showPlaceholders={showPlaceholders}
+                  showPlaceholders={showSocialPlaceholders}
                   autoplayDelayMs={index * 1500}
                 />
               </Reveal>
