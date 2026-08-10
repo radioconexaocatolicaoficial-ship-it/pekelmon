@@ -12,9 +12,12 @@ import {
   X,
 } from "lucide-react";
 import { motion } from "motion/react";
+import { useEffect, useState } from "react";
 
 import heroPortrait from "@/assets/hero-portrait.webp";
-import sobreImg from "@/assets/Sobre-Padre-Kelmon.webp";
+import sobreRotating1 from "@/assets/sobre-rotating-1.webp";
+import sobreRotating2 from "@/assets/sobre-rotating-2.webp";
+import sobreRotating3 from "@/assets/sobre-rotating-3.webp";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -25,6 +28,23 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { PageShell } from "./primitives";
+
+const SOBRE_PORTRAITS = [
+  {
+    src: sobreRotating1,
+    alt: "Padre Kelmon — retrato com fundo amarelo",
+  },
+  {
+    src: sobreRotating2,
+    alt: "Padre Kelmon — retrato com fundo azul",
+  },
+  {
+    src: sobreRotating3,
+    alt: "Padre Kelmon — retrato com fundo verde",
+  },
+] as const;
+
+const SOBRE_ROTATE_MS = 5500;
 
 const HIGHLIGHTS_SOBRE = [
   {
@@ -132,6 +152,48 @@ const BIO_FULL_SECTIONS: { heading?: string; paragraphs: string[] }[] = [
   },
 ];
 
+function SobrePortraitCarousel() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setActive((current) => (current + 1) % SOBRE_PORTRAITS.length);
+    }, SOBRE_ROTATE_MS);
+    return () => window.clearInterval(id);
+  }, []);
+
+  return (
+    <div className="relative aspect-[2/3] h-full min-h-[20rem] w-full overflow-hidden rounded-2xl bg-white shadow-2xl sm:min-h-[24rem]">
+      {SOBRE_PORTRAITS.map((portrait, index) => (
+        <img
+          key={portrait.src}
+          src={portrait.src}
+          alt={portrait.alt}
+          width={681}
+          height={1024}
+          loading={index === 0 ? "eager" : "lazy"}
+          decoding="async"
+          className={`absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-[1600ms] ease-in-out ${
+            index === active ? "opacity-100" : "opacity-0"
+          }`}
+        />
+      ))}
+      <div className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/10" />
+      <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
+        {SOBRE_PORTRAITS.map((portrait, index) => (
+          <span
+            key={portrait.src}
+            aria-hidden="true"
+            className={`h-1.5 rounded-full transition-all duration-500 ${
+              index === active ? "w-5 bg-white" : "w-1.5 bg-white/50"
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function About() {
   return (
     <section
@@ -147,18 +209,7 @@ export function About() {
             viewport={{ once: true }}
             className="relative order-2 min-w-0 md:order-1"
           >
-            <div className="relative h-full overflow-hidden rounded-2xl bg-white shadow-2xl">
-              <img
-                src={sobreImg}
-                alt="Padre Kelmon — biografia e trajetória"
-                width={800}
-                height={1000}
-                loading="lazy"
-                decoding="async"
-                className="mx-auto h-auto w-full object-contain object-center md:h-full md:object-cover md:object-top"
-              />
-              <div className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/10" />
-            </div>
+            <SobrePortraitCarousel />
           </motion.div>
 
           <div className="order-1 flex h-full min-w-0 flex-col justify-between md:order-2">

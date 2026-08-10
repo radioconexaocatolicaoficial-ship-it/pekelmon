@@ -25,9 +25,9 @@ export function Hero() {
         >
           <img
             src={heroKv}
-            alt="Agora é oficial — Padre Kelmon, candidato a Deputado Federal por São Paulo, pelo Brasil"
-            width={1140}
-            height={500}
+            alt="Agora é oficial — Padre Kelmon, candidato a Deputado Federal por São Paulo, aprovado em convenção"
+            width={1024}
+            height={449}
             sizes="(min-width: 1120px) 1120px, 100vw"
             fetchPriority="high"
             decoding="async"

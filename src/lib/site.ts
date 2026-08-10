@@ -20,7 +20,7 @@ export const SITE_KEYWORDS =
   "Padre Kelmon, Deputado Federal, São Paulo, PL, Partido Liberal, candidato 2026, fé, família, liberdade religiosa, Foro do Brasil";
 
 /** Query v= força WhatsApp/Facebook a buscar a imagem nova (cache agressivo). */
-export const OG_IMAGE_PATH = "/og-image.jpg?v=10";
+export const OG_IMAGE_PATH = "/og-image.jpg?v=11";
 export const OG_IMAGE_WIDTH = "1200";
 export const OG_IMAGE_HEIGHT = "630";
 
