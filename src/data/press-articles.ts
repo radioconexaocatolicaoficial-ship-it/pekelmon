@@ -10,6 +10,15 @@ export type PressArticle = {
 
 export const PRESS_ARTICLES: PressArticle[] = [
   {
+    id: "flavio-bolsonaro-2026",
+    title:
+      "Padre Kelmon reúne lideranças cristãs em apoio à pré-campanha de Flávio Bolsonaro e celebra 11 anos de sacerdócio",
+    eyebrow: "Política",
+    url: "https://7minutos.com.br/noticias/padre-kelmon-reune-liderancas-cristas-em-apoio-a-pre-campanha-de-flavio-bolsonaro-e-celebra-11-anos-de-sacerdocio/",
+    image: "https://7minutos.com.br/wp-content/uploads/2026/08/aliancas-Kelmon-2.webp",
+    source: "7Minutos",
+  },
+  {
     id: "lula-2026",
     title:
       "Padre Kelmon critica declarações de Lula e defende mudança de rumo nas eleições de 2026",

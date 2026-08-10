@@ -11,10 +11,13 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { PRESS_ARTICLES, PRESS_SOURCE_URL, type PressArticle } from "@/data/press-articles";
+import { VV8_ARTICLES, VV8_SOURCE_URL } from "@/data/vv8-articles";
 import { getPressFeeds } from "@/lib/press-feeds";
+import { getVv8Feeds } from "@/lib/vv8-feeds";
 import { getSocialFeeds, type SocialNetworkId, type SocialPost } from "@/lib/social-feeds";
 
 const MEDIA_REFRESH_MS = 3 * 60 * 1000;
+const VV8_ACCENT = "#0168e1";
 
 import { PageShell, Reveal } from "./primitives";
 
@@ -278,10 +281,18 @@ function PressNewsCarousel({
   articles = [],
   sourceUrl = PRESS_SOURCE_URL,
   showPlaceholders = false,
+  heading = "Padre Kelmon na imprensa",
+  subheading = "Matérias no portal 7Minutos · atualização automática",
+  accentColor = "var(--blue-primary)",
+  skeletonKey = "press",
 }: {
   articles?: PressArticle[];
   sourceUrl?: string;
   showPlaceholders?: boolean;
+  heading?: string;
+  subheading?: string;
+  accentColor?: string;
+  skeletonKey?: string;
 }) {
   const [api, setApi] = useState<CarouselApi>();
   useCarouselAutoplay(api, 12000);
@@ -298,17 +309,15 @@ function PressNewsCarousel({
         <div className="flex min-w-0 items-center gap-3">
           <div
             className="inline-flex size-10 shrink-0 items-center justify-center rounded-xl text-white"
-            style={{ backgroundColor: "var(--blue-primary)" }}
+            style={{ backgroundColor: accentColor }}
           >
             <Newspaper className="size-5" aria-hidden="true" />
           </div>
           <div className="min-w-0">
             <h3 className="text-base font-bold" style={{ color: "var(--blue-primary)" }}>
-              Padre Kelmon na imprensa
+              {heading}
             </h3>
-            <p className="truncate text-sm text-gray-600">
-              Matérias no portal 7Minutos · atualização automática
-            </p>
+            <p className="truncate text-sm text-gray-600">{subheading}</p>
           </div>
         </div>
 
@@ -317,7 +326,7 @@ function PressNewsCarousel({
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-transform hover:scale-105 sm:h-auto sm:w-auto"
-          style={{ backgroundColor: "var(--blue-primary)" }}
+          style={{ backgroundColor: accentColor }}
         >
           <span>Ver todas</span>
           <ExternalLink className="size-4" />
@@ -332,7 +341,7 @@ function PressNewsCarousel({
         <CarouselContent className="-ml-3">
           {slots.map((article, index) => (
             <CarouselItem
-              key={article?.id ?? `press-sk-${index}`}
+              key={article?.id ?? `${skeletonKey}-sk-${index}`}
               className="basis-[82%] pl-3 sm:basis-1/2 lg:basis-1/4"
             >
               {showPlaceholders || !article ? (
@@ -459,7 +468,7 @@ export function Media() {
   }, []);
 
   const socialQuery = useQuery({
-    queryKey: ["social-feeds", "v14-auto-refresh"],
+    queryKey: ["social-feeds", "v15-auto-refresh"],
     queryFn: () => getSocialFeeds(),
     staleTime: MEDIA_REFRESH_MS,
     refetchInterval: MEDIA_REFRESH_MS,
@@ -468,8 +477,17 @@ export function Media() {
   });
 
   const pressQuery = useQuery({
-    queryKey: ["press-feeds", "v1-7minutos-auto"],
+    queryKey: ["press-feeds", "v2-7minutos-auto"],
     queryFn: () => getPressFeeds(),
+    staleTime: MEDIA_REFRESH_MS,
+    refetchInterval: MEDIA_REFRESH_MS,
+    refetchOnWindowFocus: true,
+    enabled: ready,
+  });
+
+  const vv8Query = useQuery({
+    queryKey: ["vv8-feeds", "v1-portalvv8-auto"],
+    queryFn: () => getVv8Feeds(),
     staleTime: MEDIA_REFRESH_MS,
     refetchInterval: MEDIA_REFRESH_MS,
     refetchOnWindowFocus: true,
@@ -479,13 +497,21 @@ export function Media() {
   const networks = socialQuery.data?.networks ?? [];
   const showSocialPlaceholders = ready && socialQuery.isLoading;
   const showPressPlaceholders = ready && pressQuery.isLoading;
+  const showVv8Placeholders = ready && vv8Query.isLoading;
   const pressArticles = pressQuery.data?.articles?.length
     ? pressQuery.data.articles
     : PRESS_ARTICLES;
   const pressSourceUrl = pressQuery.data?.sourceUrl ?? PRESS_SOURCE_URL;
+  const vv8Articles = vv8Query.data?.articles?.length
+    ? vv8Query.data.articles
+    : VV8_ARTICLES;
+  const vv8SourceUrl = vv8Query.data?.sourceUrl ?? VV8_SOURCE_URL;
   const featuredVideoId = socialQuery.data?.featuredVideoId || "EI-bTS70q0U";
-  const isRefreshing = socialQuery.isFetching || pressQuery.isFetching;
-  const hasUpdatedAt = Boolean(socialQuery.data?.updatedAt || pressQuery.data?.updatedAt);
+  const isRefreshing =
+    socialQuery.isFetching || pressQuery.isFetching || vv8Query.isFetching;
+  const hasUpdatedAt = Boolean(
+    socialQuery.data?.updatedAt || pressQuery.data?.updatedAt || vv8Query.data?.updatedAt,
+  );
 
   return (
     <section
@@ -508,8 +534,8 @@ export function Media() {
                 Padre Kelmon nas Redes Sociais
               </h2>
               <p className="text-sm leading-relaxed text-gray-700 text-justify sm:text-base">
-                Acompanhe a cobertura na imprensa e as redes sociais. Imprensa (7Minutos) e
-                feeds sociais atualizam automaticamente a cada poucos minutos.
+                Acompanhe a cobertura na imprensa (Portal VV8 e 7Minutos) e nas redes sociais.
+                As matérias e os feeds atualizam automaticamente a cada poucos minutos.
               </p>
               {hasUpdatedAt ? (
                 <p className="mt-3 text-xs text-gray-500">
@@ -534,9 +560,24 @@ export function Media() {
           <div className="mt-8 space-y-10 sm:mt-10 sm:space-y-12">
             <Reveal>
               <PressNewsCarousel
+                articles={vv8Articles}
+                sourceUrl={vv8SourceUrl}
+                showPlaceholders={showVv8Placeholders}
+                heading="Padre Kelmon no Portal VV8"
+                subheading="Notícias em tempo real · portalvv8.com.br"
+                accentColor={VV8_ACCENT}
+                skeletonKey="vv8"
+              />
+            </Reveal>
+
+            <Reveal>
+              <PressNewsCarousel
                 articles={pressArticles}
                 sourceUrl={pressSourceUrl}
                 showPlaceholders={showPressPlaceholders}
+                heading="Padre Kelmon na imprensa"
+                subheading="Matérias no portal 7Minutos · atualização automática"
+                skeletonKey="7minutos"
               />
             </Reveal>
 
