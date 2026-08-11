@@ -16,6 +16,17 @@ import {
 
 const SIDE_PAGE_SIZE = 4;
 const SIDE_ROTATE_MS = 7000;
+/** Quantos vídeos laterais entram na rotação (mais novos + mais vistos). */
+const SIDE_ROTATION_LIMIT = 16;
+
+function sideRankScore(video: YoutubeHighlight, maxViews: number, minDate: number, maxDate: number) {
+  const viewsScore = maxViews > 0 ? video.views / maxViews : 0;
+  const published = Date.parse(video.published || "") || minDate;
+  const dateRange = Math.max(maxDate - minDate, 1);
+  const recencyScore = (published - minDate) / dateRange;
+  // Equilíbrio: visualizações + novidade
+  return viewsScore * 0.55 + recencyScore * 0.45;
+}
 
 function VideoCard({
   video,
@@ -85,11 +96,20 @@ export function VideoHighlights() {
 
   const sideVideos = useMemo(() => {
     const rest = YOUTUBE_HIGHLIGHTS.filter((v) => v.id !== featured.id);
-    return [...rest].sort((a, b) => {
-      const byDate = (b.published || "").localeCompare(a.published || "");
-      if (byDate !== 0) return byDate;
-      return b.views - a.views;
-    });
+    if (rest.length === 0) return [];
+
+    const maxViews = Math.max(...rest.map((v) => v.views), 1);
+    const dates = rest.map((v) => Date.parse(v.published || "") || 0);
+    const minDate = Math.min(...dates);
+    const maxDate = Math.max(...dates);
+
+    return [...rest]
+      .sort(
+        (a, b) =>
+          sideRankScore(b, maxViews, minDate, maxDate) -
+          sideRankScore(a, maxViews, minDate, maxDate),
+      )
+      .slice(0, SIDE_ROTATION_LIMIT);
   }, [featured.id]);
 
   const pageCount = Math.max(1, Math.ceil(sideVideos.length / SIDE_PAGE_SIZE));

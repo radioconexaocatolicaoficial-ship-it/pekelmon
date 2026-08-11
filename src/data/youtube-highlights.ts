@@ -49,7 +49,7 @@ export const YOUTUBE_HIGHLIGHTS: YoutubeHighlight[] = [
   {
     id: 'kkKqcg5jXAc',
     title: 'Padre Kelmon | Podcast Papagaio Falante',
-    description: 'ASSISTA AOS CORTES AQUI Sérgio Mallandro: @serginhomallandro Renato Rabelo: @ren.atorabelo Direção: Silas Vervloet @Silasdirector ** Cortes não são permitidos **',
+    description: 'Padre Kelmon no Podcast Papagaio Falante: conversa sobre fé, política e o momento do Brasil. Assista à entrevista completa.',
     url: 'https://www.youtube.com/watch?v=kkKqcg5jXAc',
     thumbnail: 'https://i.ytimg.com/vi/kkKqcg5jXAc/hqdefault.jpg',
     views: 6379,
@@ -552,4 +552,4 @@ export const YOUTUBE_HIGHLIGHTS: YoutubeHighlight[] = [
   },
 ];
 
-export const YOUTUBE_FEATURED_ID = 'DGrflujR5kw';
+export const YOUTUBE_FEATURED_ID = 'kkKqcg5jXAc';
