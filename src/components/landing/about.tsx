@@ -1,16 +1,4 @@
-import {
-  Quote,
-  Calendar,
-  Award,
-  BookOpen,
-  GraduationCap,
-  Heart,
-  Users,
-  Megaphone,
-  Scale,
-  Tv,
-  X,
-} from "lucide-react";
+import { Quote, X } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 
@@ -28,6 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { PageShell } from "./primitives";
+import { TimelineCards } from "./timeline-cards";
 
 const SOBRE_PORTRAITS = [
   {
@@ -45,65 +34,6 @@ const SOBRE_PORTRAITS = [
 ] as const;
 
 const SOBRE_ROTATE_MS = 5500;
-
-const HIGHLIGHTS_SOBRE = [
-  {
-    icon: Calendar,
-    year: "1976-1995",
-    title: "Raízes e Formação Católica",
-    description:
-      "Nascimento em Salvador (21/10/1976). Batismo, Eucaristia, Crisma. Liderança na Legião de Maria e cofundador do grupo JUSPE.",
-  },
-  {
-    icon: BookOpen,
-    year: "1996-2003",
-    title: "Convento e Seminário",
-    description:
-      "Convento dos Capuchinhos em Maceió. Seminário Maria Mater Ecclesiae em SP. Formação em Filosofia, Teologia e Pedagogia.",
-  },
-  {
-    icon: GraduationCap,
-    year: "2014-2015",
-    title: "Ordenação Sacerdotal",
-    description:
-      "Funda a associação Theotokos. Ordenado diácono (2014) e sacerdote (2015) na Igreja Ortodoxa da América.",
-  },
-  {
-    icon: Heart,
-    year: "2010-2017",
-    title: "Ativismo e Missões",
-    description:
-      "Campanha pró-vida em 2010. Missão humanitária em Roraima (2017) auxiliando refugiados venezuelanos.",
-  },
-  {
-    icon: Users,
-    year: "2019-2021",
-    title: "Movimento Cristão Conservador",
-    description:
-      "Conhece Roberto Jefferson. Funda o MCC a pedido do PTB, tornando-se seu primeiro presidente nacional.",
-  },
-  {
-    icon: Megaphone,
-    year: "2022",
-    title: "Candidatura Presidencial",
-    description:
-      "Candidato à Presidência pelo PTB. Debates nacionais no SBT e Globo. Obtém 81.129 votos em 19 dias de campanha.",
-  },
-  {
-    icon: Scale,
-    year: "2023-2024",
-    title: "Foro do Brasil e Livro",
-    description:
-      "Funda o Foro do Brasil (29/06/2023). Lança o livro 'Fé e Política de Mãos Dadas'. Filia-se ao PL em agosto/2024.",
-  },
-  {
-    icon: Tv,
-    year: "2025-2026",
-    title: "TV e Deputado Federal",
-    description:
-      "Programas na VV8 TV: 'Confessionário' e 'Oração pelo Brasil'. Candidato a Deputado Federal por São Paulo (PL).",
-  },
-];
 
 /** Preview curto — mesma altura aproximada do bloco atual (3 parágrafos). */
 const BIO_PREVIEW = [
@@ -384,57 +314,7 @@ export function About() {
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-          {HIGHLIGHTS_SOBRE.map((item, i) => {
-            const Icon = item.icon;
-            return (
-              <motion.div
-                key={item.year}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 bg-white p-5 shadow-lg transition-all hover:-translate-y-1 hover:border-blue-500 hover:shadow-2xl sm:p-6"
-              >
-                <div className="mb-4 flex flex-wrap items-center gap-3">
-                  <span
-                    className="inline-flex size-12 items-center justify-center rounded-xl transition-transform group-hover:scale-110"
-                    style={{ backgroundColor: "var(--blue-primary)" }}
-                  >
-                    <Icon className="size-6 stroke-[2.5] text-white" aria-hidden="true" />
-                  </span>
-                  <div
-                    className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide"
-                    style={{
-                      backgroundColor: "var(--yellow-primary)",
-                      color: "var(--blue-primary)",
-                    }}
-                  >
-                    <Award className="size-3" />
-                    {item.year}
-                  </div>
-                </div>
-
-                <h3
-                  className="mb-3 text-lg font-black leading-tight"
-                  style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
-                >
-                  {item.title}
-                </h3>
-
-                <p className="text-sm leading-relaxed text-gray-700">{item.description}</p>
-
-                <div
-                  className="absolute inset-0 -z-10 opacity-0 transition-opacity group-hover:opacity-100"
-                  style={{
-                    background:
-                      "radial-gradient(circle at center, rgba(0, 102, 204, 0.05), transparent)",
-                  }}
-                />
-              </motion.div>
-            );
-          })}
-        </div>
+        <TimelineCards />
 
         <motion.div
           initial={{ opacity: 0 }}
