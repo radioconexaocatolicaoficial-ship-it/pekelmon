@@ -2,6 +2,7 @@ import { Button } from "../ui/button";
 import { Card, CardContent } from "../ui/card";
 import { FORO_BRASIL } from "@/lib/campaign-data";
 import { PageShell } from "./primitives";
+import { VideoHighlights } from "./video-highlights";
 
 import livroImg from "@/assets/livro-padre-kelmon.webp";
 import foroImg from "@/assets/foro-do-brasil.webp";
@@ -51,6 +52,7 @@ export function Highlights() {
         <h2 id="destaques-heading" className="sr-only">
           Destaques da campanha
         </h2>
+        <VideoHighlights />
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 md:grid-cols-3 md:gap-3 lg:gap-6">
           {HIGHLIGHTS.map((item) => {
             return (

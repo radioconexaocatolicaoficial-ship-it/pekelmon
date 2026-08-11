@@ -1,9 +1,13 @@
 import { motion } from "motion/react";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import { Button } from "@/components/ui/button";
-import { scrollToSection } from "@/lib/scroll-to-section";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  type CarouselApi,
+} from "@/components/ui/carousel";
 import banner1 from "@/assets/Banner-topo-1.webp";
 import banner2 from "@/assets/Banner-topo-2.webp";
 import banner3 from "@/assets/Banner-topo-3.webp";
@@ -24,29 +28,30 @@ const HERO_BANNERS = [
   },
 ] as const;
 
-/** Tempo visível de cada banner (bem lento). */
+/** Tempo visível de cada banner no autoplay. */
 const HERO_HOLD_MS = 12000;
-/** Duração do fade entre banners. */
-const HERO_FADE_MS = 3500;
 
 export function Hero() {
+  const [api, setApi] = useState<CarouselApi>();
   const [active, setActive] = useState(0);
-  const [tick, setTick] = useState(0);
 
   useEffect(() => {
+    if (!api) return;
+    const onSelect = () => setActive(api.selectedScrollSnap());
+    onSelect();
+    api.on("select", onSelect);
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
+
+  useEffect(() => {
+    if (!api) return;
     const id = window.setInterval(() => {
-      setActive((current) => (current + 1) % HERO_BANNERS.length);
+      api.scrollNext();
     }, HERO_HOLD_MS);
     return () => window.clearInterval(id);
-  }, [tick]);
-
-  const goTo = (index: number) => {
-    setActive((index + HERO_BANNERS.length) % HERO_BANNERS.length);
-    setTick((t) => t + 1);
-  };
-
-  const goPrev = () => goTo(active - 1);
-  const goNext = () => goTo(active + 1);
+  }, [api, active]);
 
   return (
     <section
@@ -64,51 +69,58 @@ export function Hero() {
           transition={{ duration: 0.55 }}
           className="relative w-full overflow-hidden rounded-2xl shadow-lg"
         >
-          <div className="relative aspect-[1024/449] w-full bg-[var(--blue-primary)]">
-            {HERO_BANNERS.map((banner, index) => (
-              <img
-                key={banner.src}
-                src={banner.src}
-                alt={banner.alt}
-                width={1024}
-                height={449}
-                sizes="(min-width: 1120px) 1120px, 100vw"
-                fetchPriority={index === 0 ? "high" : "low"}
-                decoding="async"
-                className="absolute inset-0 h-full w-full object-cover object-center transition-opacity ease-in-out"
-                style={{
-                  opacity: index === active ? 1 : 0,
-                  transitionDuration: `${HERO_FADE_MS}ms`,
-                }}
-              />
-            ))}
+          <Carousel
+            opts={{ align: "start", loop: true, duration: 20 }}
+            setApi={setApi}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-0">
+              {HERO_BANNERS.map((banner, index) => (
+                <CarouselItem key={banner.src} className="basis-full pl-0">
+                  <div className="relative aspect-[1140/500] w-full bg-[var(--blue-primary)]">
+                    <img
+                      src={banner.src}
+                      alt={banner.alt}
+                      width={2280}
+                      height={1000}
+                      sizes="(min-width: 1120px) 1120px, 100vw"
+                      fetchPriority={index === 0 ? "high" : "low"}
+                      decoding="async"
+                      draggable={false}
+                      className="absolute inset-0 h-full w-full object-cover object-center select-none"
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
 
+            {/* Controles só no desktop — mobile/tablet usa swipe */}
             <button
               type="button"
               aria-label="Banner anterior"
-              onClick={goPrev}
-              className="absolute left-2 top-1/2 z-10 inline-flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/35 text-white backdrop-blur-sm transition hover:bg-black/55 sm:left-3 sm:size-11"
+              onClick={() => api?.scrollPrev()}
+              className="absolute left-3 top-1/2 z-10 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/35 text-white backdrop-blur-sm transition hover:bg-black/55 lg:inline-flex"
             >
-              <ChevronLeft className="size-5 sm:size-6" aria-hidden="true" />
+              <ChevronLeft className="size-6" aria-hidden="true" />
             </button>
             <button
               type="button"
               aria-label="Próximo banner"
-              onClick={goNext}
-              className="absolute right-2 top-1/2 z-10 inline-flex size-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/35 text-white backdrop-blur-sm transition hover:bg-black/55 sm:right-3 sm:size-11"
+              onClick={() => api?.scrollNext()}
+              className="absolute right-3 top-1/2 z-10 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/35 text-white backdrop-blur-sm transition hover:bg-black/55 lg:inline-flex"
             >
-              <ChevronRight className="size-5 sm:size-6" aria-hidden="true" />
+              <ChevronRight className="size-6" aria-hidden="true" />
             </button>
 
-            <div className="absolute bottom-2.5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 sm:bottom-3.5">
+            <div className="absolute bottom-3.5 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-2 lg:flex">
               {HERO_BANNERS.map((banner, index) => (
                 <button
                   key={banner.src}
                   type="button"
                   aria-label={`Ir para banner ${index + 1}`}
                   aria-current={index === active}
-                  onClick={() => goTo(index)}
-                  className={`h-2 rounded-full transition-all duration-500 ${
+                  onClick={() => api?.scrollTo(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
                     index === active
                       ? "w-6 bg-white shadow"
                       : "w-2 bg-white/50 hover:bg-white/80"
@@ -116,45 +128,8 @@ export function Hero() {
                 />
               ))}
             </div>
-          </div>
+          </Carousel>
         </motion.div>
-
-        {/* Botões só no celular e tablet */}
-        <div className="flex w-full flex-col gap-3 py-4 sm:flex-row sm:justify-center sm:gap-4 sm:py-5 md:pb-2 md:pt-4 lg:hidden">
-          <Button
-            asChild
-            variant="yellow"
-            size="xl"
-            className="h-11 w-full text-base font-bold sm:h-auto sm:w-auto sm:min-w-[12rem] sm:text-lg"
-          >
-            <a
-              href="#cadastro"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("cadastro");
-              }}
-            >
-              Quero apoiar
-              <ArrowRight className="size-5" aria-hidden="true" />
-            </a>
-          </Button>
-          <Button
-            asChild
-            variant="outline"
-            size="xl"
-            className="h-11 w-full text-base font-semibold sm:h-auto sm:w-auto sm:min-w-[12rem] sm:text-lg"
-          >
-            <a
-              href="#historia"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("historia");
-              }}
-            >
-              Conheça minha história
-            </a>
-          </Button>
-        </div>
       </PageShell>
     </section>
   );
