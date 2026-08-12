@@ -1,6 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { ChevronLeft, ChevronRight, Images, X } from "lucide-react";
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -9,50 +10,31 @@ import {
   DialogContent,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { getTimelinePhotos } from "@/lib/timeline-photos";
+
+/** Atualiza a lista de fotos a cada 2s quando você coloca imagens na pasta. */
+const TIMELINE_REFRESH_MS = 2 * 1000;
 
 export type TimelinePhoto = {
   src: string;
   alt: string;
 };
 
-export type TimelineCardItem = {
+export type TimelineCardMeta = {
   year: string;
   title: string;
   description: string;
-  /** Pasta em src/assets/timeline/{folder}/ */
+  /** Pasta em public/timeline/{folder}/ */
   folder: string;
-  photos: TimelinePhoto[];
 };
 
-/**
- * Lê automaticamente todas as imagens da pasta do card.
- * Coloque fotos em: src/assets/timeline/<nome-da-pasta>/
- * Formatos: jpg, jpeg, png, webp
- */
-function loadFolderPhotos(folder: string, altPrefix: string): TimelinePhoto[] {
-  // Vite exige glob estático — carrega todas as pastas e filtra pela pasta do card
-  const modules = import.meta.glob<string>(
-    "../../assets/timeline/*/*.{webp,jpg,jpeg,png,gif,avif,WEBP,JPG,JPEG,PNG}",
-    { eager: true, import: "default" },
-  );
-
-  return Object.entries(modules)
-    .filter(([path]) => path.replace(/\\/g, "/").includes(`/timeline/${folder}/`))
-    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
-    .map(([path, src], i) => ({
-      src,
-      alt: `${altPrefix} — foto ${i + 1}`,
-    }));
-}
-
-export const TIMELINE_CARDS: TimelineCardItem[] = [
+export const TIMELINE_CARD_META: TimelineCardMeta[] = [
   {
     year: "1976-1995",
     title: "Minhas Raízes",
     description:
       "Nascimento em Salvador (21/10/1976). Batismo, Eucaristia e Crisma. Formação católica e primeiros passos na fé.",
     folder: "minhas-raizes",
-    photos: loadFolderPhotos("minhas-raizes", "Minhas Raízes"),
   },
   {
     year: "Juventude",
@@ -60,7 +42,6 @@ export const TIMELINE_CARDS: TimelineCardItem[] = [
     description:
       "Quando jovem, fundei o movimento JUSPE — Jovens Unidos Semeando Paz e Esperança.",
     folder: "na-juventude",
-    photos: loadFolderPhotos("na-juventude", "Na juventude"),
   },
   {
     year: "1996-2003",
@@ -68,7 +49,6 @@ export const TIMELINE_CARDS: TimelineCardItem[] = [
     description:
       "Formação no Seminário Maria Mater Ecclesiae, dos Legionários de Cristo, em São Paulo — Filosofia, Teologia e vida comunitária.",
     folder: "seminario",
-    photos: loadFolderPhotos("seminario", "Seminário"),
   },
   {
     year: "2014-2015",
@@ -76,7 +56,6 @@ export const TIMELINE_CARDS: TimelineCardItem[] = [
     description:
       "Funda a associação Theotokos. Ordenado diácono (2014) e sacerdote (2015) na Igreja Ortodoxa da América.",
     folder: "ordenacao-sacerdotal",
-    photos: loadFolderPhotos("ordenacao-sacerdotal", "Ordenação Sacerdotal"),
   },
   {
     year: "2010-2017",
@@ -84,7 +63,6 @@ export const TIMELINE_CARDS: TimelineCardItem[] = [
     description:
       "Campanha pró-vida em 2010. Missão humanitária em Roraima (2017) auxiliando refugiados venezuelanos.",
     folder: "ativismo-e-missoes",
-    photos: loadFolderPhotos("ativismo-e-missoes", "Ativismo e Missões"),
   },
   {
     year: "2019-2021",
@@ -92,7 +70,6 @@ export const TIMELINE_CARDS: TimelineCardItem[] = [
     description:
       "Conhece Roberto Jefferson. Funda o MCC a pedido do PTB, tornando-se seu primeiro presidente nacional.",
     folder: "movimento-cristao-conservador",
-    photos: loadFolderPhotos("movimento-cristao-conservador", "Movimento Cristão Conservador"),
   },
   {
     year: "2022",
@@ -100,7 +77,6 @@ export const TIMELINE_CARDS: TimelineCardItem[] = [
     description:
       "Candidato à Presidência pelo PTB. Debates nacionais no SBT e Globo. Obtém 81.129 votos em 19 dias de campanha.",
     folder: "candidatura-presidencial",
-    photos: loadFolderPhotos("candidatura-presidencial", "Candidatura Presidencial"),
   },
   {
     year: "2023-2024",
@@ -108,7 +84,6 @@ export const TIMELINE_CARDS: TimelineCardItem[] = [
     description:
       "Funda o Foro do Brasil (29/06/2023). Lança o livro 'Fé e Política de Mãos Dadas'. Filia-se ao PL em agosto/2024.",
     folder: "foro-do-brasil-e-livro",
-    photos: loadFolderPhotos("foro-do-brasil-e-livro", "Foro do Brasil e Livro"),
   },
   {
     year: "2025-2026",
@@ -116,9 +91,20 @@ export const TIMELINE_CARDS: TimelineCardItem[] = [
     description:
       "Programas na VV8 TV: 'Confessionário' e 'Oração pelo Brasil'. Candidato a Deputado Federal por São Paulo (PL).",
     folder: "tv-e-deputado-federal",
-    photos: loadFolderPhotos("tv-e-deputado-federal", "TV e Deputado Federal"),
   },
 ];
+
+function photosForFolder(
+  folder: string,
+  title: string,
+  byFolder: Record<string, { src: string; name: string }[]> | undefined,
+): TimelinePhoto[] {
+  const files = byFolder?.[folder] ?? [];
+  return files.map((f, i) => ({
+    src: f.src,
+    alt: `${title} — foto ${i + 1}`,
+  }));
+}
 
 function PhotoGalleryModal({
   open,
@@ -136,110 +122,80 @@ function PhotoGalleryModal({
   photos: TimelinePhoto[];
 }) {
   const [index, setIndex] = useState(0);
-  const hasPhotos = photos.length > 0;
 
   useEffect(() => {
     if (open) setIndex(0);
   }, [open]);
 
   useEffect(() => {
-    if (!open || photos.length <= 1) return;
+    if (!open || photos.length < 2) return;
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") setIndex((i) => (i - 1 + photos.length) % photos.length);
       if (e.key === "ArrowRight") setIndex((i) => (i + 1) % photos.length);
-      if (e.key === "ArrowLeft")
-        setIndex((i) => (i - 1 + photos.length) % photos.length);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, photos.length]);
 
-  const photo = hasPhotos ? photos[index] : null;
+  const current = photos[index];
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent
-        hideCloseButton
-        className="max-h-[92dvh] w-[min(100%-1rem,52rem)] max-w-4xl gap-0 overflow-hidden border-2 border-blue-100 bg-white p-0 shadow-2xl sm:rounded-2xl"
-      >
-        <DialogTitle className="sr-only">
-          {title}
-          {hasPhotos ? ` — foto ${index + 1} de ${photos.length}` : ""}
-        </DialogTitle>
-
-        <DialogClose
-          className="absolute right-3 top-3 z-20 inline-flex size-11 cursor-pointer items-center justify-center rounded-xl border-2 border-blue-200 bg-white text-[var(--blue-primary)] shadow-lg transition-all hover:scale-105 hover:bg-blue-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--yellow-primary)]"
-          aria-label="Fechar"
-        >
-          <X className="size-5 stroke-[2.5]" aria-hidden="true" />
-        </DialogClose>
-
-        <div className="max-h-[92dvh] overflow-y-auto">
-          <div className="border-b border-blue-50 px-5 pb-4 pt-5 pr-16 sm:px-7 sm:pt-6">
-            <p
-              className="mb-2 text-xs font-bold uppercase tracking-widest"
-              style={{ color: "var(--yellow-primary)" }}
-            >
-              {year}
-            </p>
-            <h3
-              className="text-xl font-black leading-tight sm:text-2xl"
+      <DialogContent className="max-h-[92dvh] max-w-[min(96vw,920px)] gap-0 overflow-hidden border-0 bg-white p-0 sm:rounded-2xl">
+        <div className="flex items-start justify-between gap-3 border-b px-4 py-3 sm:px-5">
+          <div className="min-w-0">
+            <DialogTitle
+              className="truncate text-lg font-black sm:text-xl"
               style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
             >
               {title}
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-gray-700 text-justify sm:text-base">
-              {description}
-            </p>
+            </DialogTitle>
+            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{year}</p>
+            <p className="mt-1 line-clamp-2 text-sm text-gray-600">{description}</p>
           </div>
+          <DialogClose className="rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-800">
+            <X className="size-5" />
+            <span className="sr-only">Fechar</span>
+          </DialogClose>
+        </div>
 
-          {photo ? (
+        <div className="relative bg-neutral-100">
+          {photos.length > 0 && current ? (
             <>
-              <div className="relative flex min-h-[44dvh] max-h-[62dvh] items-center justify-center bg-neutral-50 px-10 py-5 sm:min-h-[24rem]">
+              <div className="flex min-h-[240px] items-center justify-center px-2 py-4 sm:min-h-[360px] sm:px-4">
                 <img
-                  key={photo.src}
-                  src={photo.src}
-                  alt={photo.alt}
+                  src={current.src}
+                  alt={current.alt}
                   className="max-h-[56dvh] w-auto max-w-full object-contain"
-                  width={700}
-                  height={500}
-                  decoding="async"
                 />
-
-                {photos.length > 1 ? (
-                  <>
-                    <button
-                      type="button"
-                      aria-label="Foto anterior"
-                      onClick={() =>
-                        setIndex((i) => (i - 1 + photos.length) % photos.length)
-                      }
-                      className="absolute left-2 top-1/2 z-10 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-blue-100 bg-white text-[var(--blue-primary)] shadow-md transition hover:bg-blue-50"
-                    >
-                      <ChevronLeft className="size-6" />
-                    </button>
-                    <button
-                      type="button"
-                      aria-label="Próxima foto"
-                      onClick={() => setIndex((i) => (i + 1) % photos.length)}
-                      className="absolute right-2 top-1/2 z-10 inline-flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-blue-100 bg-white text-[var(--blue-primary)] shadow-md transition hover:bg-blue-50"
-                    >
-                      <ChevronRight className="size-6" />
-                    </button>
-                  </>
-                ) : null}
               </div>
 
-              <div className="border-t border-blue-50 bg-white px-4 py-3 sm:px-5">
-                <div className="mb-3 flex items-center justify-between gap-3">
-                  <p className="truncate text-sm font-semibold text-gray-700">
-                    Galeria de fotos
-                  </p>
-                  <p className="shrink-0 text-xs text-gray-500">
-                    {index + 1} / {photos.length}
-                  </p>
-                </div>
+              {photos.length > 1 ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => setIndex((i) => (i - 1 + photos.length) % photos.length)}
+                    className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow hover:bg-white"
+                    aria-label="Foto anterior"
+                  >
+                    <ChevronLeft className="size-5" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIndex((i) => (i + 1) % photos.length)}
+                    className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow hover:bg-white"
+                    aria-label="Próxima foto"
+                  >
+                    <ChevronRight className="size-5" />
+                  </button>
+                </>
+              ) : null}
 
-                <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:thin]">
+              <div className="border-t bg-white px-3 py-3 sm:px-4">
+                <p className="mb-2 text-center text-xs text-gray-500">
+                  {index + 1} / {photos.length}
+                </p>
+                <div className="flex gap-2 overflow-x-auto pb-1">
                   {photos.map((item, i) => (
                     <button
                       key={item.src}
@@ -265,17 +221,33 @@ function PhotoGalleryModal({
                 </div>
               </div>
             </>
-          ) : null}
+          ) : (
+            <div className="flex min-h-[220px] flex-col items-center justify-center gap-2 px-6 py-10 text-center">
+              <Images className="size-10 text-gray-300" aria-hidden="true" />
+              <p className="text-sm text-gray-500">
+                Nenhuma foto nesta pasta ainda. Coloque imagens em{" "}
+                <span className="font-semibold text-gray-700">public/timeline/</span>
+              </p>
+            </div>
+          )}
         </div>
       </DialogContent>
     </Dialog>
   );
 }
 
-function TimelineCard({ item, index }: { item: TimelineCardItem; index: number }) {
+function TimelineCard({
+  item,
+  photos,
+  index,
+}: {
+  item: TimelineCardMeta;
+  photos: TimelinePhoto[];
+  index: number;
+}) {
   const [open, setOpen] = useState(false);
-  const cover = item.photos[0];
-  const hasPhotos = item.photos.length > 0;
+  const cover = photos[0];
+  const hasPhotos = photos.length > 0;
 
   return (
     <>
@@ -335,18 +307,41 @@ function TimelineCard({ item, index }: { item: TimelineCardItem; index: number }
         title={item.title}
         year={item.year}
         description={item.description}
-        photos={item.photos}
+        photos={photos}
       />
     </>
   );
 }
 
 export function TimelineCards() {
+  const photosQuery = useQuery({
+    queryKey: ["timeline-photos", "auto-refresh"],
+    queryFn: () => getTimelinePhotos(),
+    staleTime: 0,
+    refetchInterval: TIMELINE_REFRESH_MS,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
+
+  const byFolder = photosQuery.data?.byFolder;
+
+  const cards = useMemo(
+    () =>
+      TIMELINE_CARD_META.map((meta) => ({
+        meta,
+        photos: photosForFolder(meta.folder, meta.title, byFolder),
+      })),
+    [byFolder],
+  );
+
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-      {TIMELINE_CARDS.map((item, i) => (
-        <TimelineCard key={item.year} item={item} index={i} />
+      {cards.map(({ meta, photos }, i) => (
+        <TimelineCard key={meta.folder} item={meta} photos={photos} index={i} />
       ))}
     </div>
   );
 }
+
+/** @deprecated use TIMELINE_CARD_META */
+export const TIMELINE_CARDS = TIMELINE_CARD_META;
