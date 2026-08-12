@@ -274,11 +274,11 @@ function TimelineCard({
             <img
               src={cover.src}
               alt={cover.alt}
-              width={300}
+              width={600}
               height={150}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-contain object-center bg-neutral-100 transition-transform duration-500 group-hover:scale-[1.02]"
+              className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-900 to-blue-600">
