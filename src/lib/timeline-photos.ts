@@ -9,7 +9,7 @@ export const TIMELINE_FOLDERS = [
   "na-juventude",
   "seminario",
   "ordenacao-diaconal",
-  "ativismo-e-missoes",
+  "associacao",
   "movimento-cristao-conservador",
   "candidatura-presidencial",
   "foro-do-brasil-e-livro",
@@ -19,6 +19,7 @@ export const TIMELINE_FOLDERS = [
 /** Pastas antigas → pasta atual (compatibilidade). */
 const FOLDER_ALIASES: Record<string, string[]> = {
   "ordenacao-diaconal": ["ordenacao-diaconal", "ordenacao-sacerdotal"],
+  associacao: ["associacao", "ativismo-e-missoes"],
 };
 
 export type TimelineFolderId = (typeof TIMELINE_FOLDERS)[number];

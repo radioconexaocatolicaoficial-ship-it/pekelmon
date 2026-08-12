@@ -64,10 +64,11 @@ export const TIMELINE_CARD_META: TimelineCardMeta[] = [
   },
   {
     year: "2010-2017",
-    title: "Ativismo e Missões",
+    title: "Associação, Comunidade Theotokos e ações Pró vida",
+    cardTitle: "Associação",
     description:
-      "Campanha pró-vida em 2010. Missão humanitária em Roraima (2017) auxiliando refugiados venezuelanos.",
-    folder: "ativismo-e-missoes",
+      "Associação e Comunidade Theotokos. Ações pró-vida e missão humanitária.",
+    folder: "associacao",
   },
   {
     year: "2019-2021",
@@ -289,9 +290,6 @@ function TimelineCard({
         </div>
 
         <div className="flex min-h-0 flex-1 flex-col p-4 sm:p-5">
-          <p className="mb-1 text-[11px] font-bold uppercase tracking-wide text-gray-500">
-            {item.year}
-          </p>
           <h3
             className="mb-2 h-7 truncate whitespace-nowrap text-base font-black leading-7 sm:text-lg"
             title={item.title}

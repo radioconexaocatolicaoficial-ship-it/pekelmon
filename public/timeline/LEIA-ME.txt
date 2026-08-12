@@ -11,7 +11,7 @@ Pastas:
   2) na-juventude
   3) seminario
   4) ordenacao-diaconal
-  5) ativismo-e-missoes
+  5) associacao
   6) movimento-cristao-conservador
   7) candidatura-presidencial
   8) foro-do-brasil-e-livro
@@ -21,3 +21,4 @@ Formatos: .jpg  .jpeg  .png  .webp
 A 1ª foto (ordem do nome) vira a prévia do card (300 x 150 no site).
 
 NÃO use mais a pasta src\assets\timeline — use só public\timeline.
+
