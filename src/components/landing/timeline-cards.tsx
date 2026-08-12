@@ -159,9 +159,6 @@ function PhotoGalleryModal({
             >
               {title}
             </DialogTitle>
-            <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-gray-500">
-              {year}
-            </p>
             <p className="mt-1 line-clamp-2 text-sm text-gray-600">{description}</p>
           </div>
           <DialogClose className="absolute right-3 top-3 rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-800">
@@ -173,11 +170,12 @@ function PhotoGalleryModal({
         <div className="relative min-h-0 flex-1 overflow-hidden bg-neutral-100">
           {photos.length > 0 && current ? (
             <>
-              <div className="flex w-full items-center justify-center overflow-hidden px-10 py-4 sm:min-h-[360px] sm:px-14">
+              <div className="flex min-h-[280px] w-full items-center justify-center overflow-hidden px-12 py-3 sm:min-h-[420px] sm:px-14">
                 <img
+                  key={current.src}
                   src={current.src}
                   alt={current.alt}
-                  className="mx-auto block h-auto max-h-[52dvh] w-auto max-w-full object-contain"
+                  className="mx-auto block max-h-[60dvh] w-auto max-w-full object-contain"
                 />
               </div>
 
@@ -223,7 +221,7 @@ function PhotoGalleryModal({
                       <img
                         src={item.src}
                         alt=""
-                        className="h-full w-full object-cover object-center"
+                        className="h-full w-full object-contain object-center bg-neutral-100"
                         loading="lazy"
                         decoding="async"
                       />
@@ -280,7 +278,7 @@ function TimelineCard({
               height={150}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
+              className="h-full w-full object-contain object-center bg-neutral-100 transition-transform duration-500 group-hover:scale-[1.02]"
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-900 to-blue-600">
