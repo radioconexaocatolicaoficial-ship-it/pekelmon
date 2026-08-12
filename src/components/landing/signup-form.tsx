@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { submitContactForm } from "@/lib/contact-form";
 import sobreImg from "@/assets/Sobre-Padre-Kelmon.webp";
 import { PageShell, Reveal } from "./primitives";
 
@@ -70,9 +71,10 @@ export function SignupForm() {
   const [errors, setErrors] = useState<Errors>({});
   const [loading, setLoading] = useState(false);
 
-  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = new FormData(event.currentTarget);
+    const formEl = event.currentTarget;
+    const form = new FormData(formEl);
     const payload = {
       nome: String(form.get("nome") ?? ""),
       telefone: String(form.get("telefone") ?? ""),
@@ -93,11 +95,29 @@ export function SignupForm() {
 
     setErrors({});
     setLoading(true);
-    setTimeout(() => {
+    try {
+      await submitContactForm({
+        data: {
+          nome: parsed.data.nome,
+          telefone: parsed.data.telefone,
+          email: parsed.data.email,
+          cidade: parsed.data.cidade,
+          estado: parsed.data.estado,
+          voluntario,
+          novidades,
+        },
+      });
+      toast.success("Cadastro enviado! Em breve entraremos em contato.");
+      formEl.reset();
+      setEstado("SP");
+      setVoluntario(false);
+      setNovidades(true);
+      setLgpd(false);
+    } catch {
+      toast.error("Não foi possível enviar agora. Tente novamente em instantes.");
+    } finally {
       setLoading(false);
-      toast.success("Cadastro recebido! Em breve entraremos em contato.");
-      event.currentTarget?.reset?.();
-    }, 700);
+    }
   }
 
   const err = (field: string) =>

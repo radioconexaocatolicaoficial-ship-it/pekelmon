@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ChevronLeft, ChevronRight, Images, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Images, Play, X } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useMemo, useState } from "react";
 
@@ -12,12 +12,13 @@ import {
 } from "@/components/ui/dialog";
 import { getTimelinePhotos } from "@/lib/timeline-photos";
 
-/** Atualiza a lista de fotos a cada 2s quando você coloca imagens na pasta. */
-const TIMELINE_REFRESH_MS = 2 * 1000;
+/** Atualiza a lista de fotos a cada 8s quando você coloca imagens na pasta. */
+const TIMELINE_REFRESH_MS = 8 * 1000;
 
 export type TimelinePhoto = {
   src: string;
   alt: string;
+  kind: "image" | "video";
 };
 
 export type TimelineCardMeta = {
@@ -29,6 +30,10 @@ export type TimelineCardMeta = {
   description: string;
   /** Pasta em public/timeline/{folder}/ */
   folder: string;
+  /** Arquivo de capa na pasta (ex.: ilha-015.webp). */
+  coverFile?: string;
+  /** Enquadramento da prévia: top | center | contain (sem cortar). */
+  coverFocus?: "top" | "center" | "contain";
 };
 
 export const TIMELINE_CARD_META: TimelineCardMeta[] = [
@@ -103,45 +108,49 @@ export const TIMELINE_CARD_META: TimelineCardMeta[] = [
     folder: "pastoral-com-venezuelanos",
   },
   {
-    year: "2019-2021",
-    title: "Movimento Cristão Conservador",
+    year: "",
+    title: "Livro Fé e Política de Mãos Dadas",
+    cardTitle: "Livro Fé e Política",
     description:
-      "Conhece Roberto Jefferson. Funda o MCC a pedido do PTB, tornando-se seu primeiro presidente nacional.",
-    folder: "movimento-cristao-conservador",
+      "Lançamento do livro 'Fé e Política de Mãos Dadas'.",
+    folder: "livro-fe-e-politica",
   },
   {
-    year: "2022",
-    title: "Candidatura Presidencial",
+    year: "",
+    title: "Ilha de Maré",
+    cardTitle: "Ilha de Maré",
     description:
-      "Candidato à Presidência pelo PTB. Debates nacionais no SBT e Globo. Obtém 81.129 votos em 19 dias de campanha.",
-    folder: "candidatura-presidencial",
+      "Dia a dia das atividades de nossa passagem pela Ilha de Maré.",
+    folder: "ilha-de-mare",
+    coverFile: "ilha-015.webp",
+    coverFocus: "center",
   },
   {
-    year: "2023-2024",
-    title: "Foro do Brasil e Livro",
+    year: "",
+    title: "Atividades Políticas",
+    cardTitle: "Atividades Políticas",
     description:
-      "Funda o Foro do Brasil (29/06/2023). Lança o livro 'Fé e Política de Mãos Dadas'. Filia-se ao PL em agosto/2024.",
-    folder: "foro-do-brasil-e-livro",
-  },
-  {
-    year: "2025-2026",
-    title: "TV e Deputado Federal",
-    description:
-      "Programas na VV8 TV: 'Confessionário' e 'Oração pelo Brasil'. Candidato a Deputado Federal por São Paulo (PL).",
-    folder: "tv-e-deputado-federal",
+      "Algumas atividades diretas na área da política.",
+    folder: "atividades-politicas",
+    coverFile: "politica-capa.webp",
+    coverFocus: "center",
   },
 ];
 
 function photosForFolder(
   folder: string,
   title: string,
-  byFolder: Record<string, { src: string; name: string }[]> | undefined,
+  byFolder: Record<string, { src: string; name: string; kind?: "image" | "video" }[]> | undefined,
 ): TimelinePhoto[] {
   const files = byFolder?.[folder] ?? [];
-  return files.map((f, i) => ({
-    src: f.src,
-    alt: `${title} — foto ${i + 1}`,
-  }));
+  return files.map((f, i) => {
+    const kind = f.kind ?? "image";
+    return {
+      src: f.src,
+      kind,
+      alt: `${title} — ${kind === "video" ? "vídeo" : "foto"} ${i + 1}`,
+    };
+  });
 }
 
 function PhotoGalleryModal({
@@ -176,6 +185,8 @@ function PhotoGalleryModal({
   }, [open, photos.length]);
 
   const current = photos[index];
+  const videoCount = photos.filter((p) => p.kind === "video").length;
+  const imageCount = photos.length - videoCount;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -202,13 +213,25 @@ function PhotoGalleryModal({
         <div className="relative min-h-0 flex-1 overflow-hidden bg-neutral-100">
           {photos.length > 0 && current ? (
             <>
-              <div className="flex min-h-[280px] w-full items-center justify-center overflow-hidden px-12 py-3 sm:min-h-[420px] sm:px-14">
-                <img
-                  key={current.src}
-                  src={current.src}
-                  alt={current.alt}
-                  className="mx-auto block max-h-[60dvh] w-auto max-w-full object-contain"
-                />
+              <div className="flex min-h-[280px] w-full items-center justify-center overflow-hidden px-4 py-3 sm:min-h-[420px] sm:px-14">
+                {current.kind === "video" ? (
+                  <video
+                    key={current.src}
+                    src={current.src}
+                    controls
+                    playsInline
+                    className="mx-auto block max-h-[60dvh] w-auto max-w-full rounded-md bg-black"
+                  >
+                    <track kind="captions" />
+                  </video>
+                ) : (
+                  <img
+                    key={current.src}
+                    src={current.src}
+                    alt={current.alt}
+                    className="mx-auto block max-h-[60dvh] w-auto max-w-full object-contain"
+                  />
+                )}
               </div>
 
               {photos.length > 1 ? (
@@ -217,7 +240,7 @@ function PhotoGalleryModal({
                     type="button"
                     onClick={() => setIndex((i) => (i - 1 + photos.length) % photos.length)}
                     className="absolute left-2 top-[42%] z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow hover:bg-white"
-                    aria-label="Foto anterior"
+                    aria-label="Anterior"
                   >
                     <ChevronLeft className="size-5" />
                   </button>
@@ -225,7 +248,7 @@ function PhotoGalleryModal({
                     type="button"
                     onClick={() => setIndex((i) => (i + 1) % photos.length)}
                     className="absolute right-2 top-[42%] z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow hover:bg-white"
-                    aria-label="Próxima foto"
+                    aria-label="Próximo"
                   >
                     <ChevronRight className="size-5" />
                   </button>
@@ -235,6 +258,9 @@ function PhotoGalleryModal({
               <div className="border-t bg-white px-3 py-3 sm:px-4">
                 <p className="mb-2 text-center text-xs text-gray-500">
                   {index + 1} / {photos.length}
+                  {videoCount > 0
+                    ? ` · ${imageCount} foto${imageCount === 1 ? "" : "s"} · ${videoCount} vídeo${videoCount === 1 ? "" : "s"}`
+                    : null}
                 </p>
                 <div className="flex gap-2 overflow-x-auto pb-1">
                   {photos.map((item, i) => (
@@ -242,7 +268,7 @@ function PhotoGalleryModal({
                       key={item.src}
                       type="button"
                       onClick={() => setIndex(i)}
-                      aria-label={`Ir para foto ${i + 1}`}
+                      aria-label={`Ir para ${item.kind === "video" ? "vídeo" : "foto"} ${i + 1}`}
                       aria-current={i === index}
                       className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-md border-2 transition sm:h-16 sm:w-24 ${
                         i === index
@@ -250,13 +276,19 @@ function PhotoGalleryModal({
                           : "border-gray-200 opacity-80 hover:opacity-100"
                       }`}
                     >
-                      <img
-                        src={item.src}
-                        alt=""
-                        className="h-full w-full object-contain object-center bg-neutral-100"
-                        loading="lazy"
-                        decoding="async"
-                      />
+                      {item.kind === "video" ? (
+                        <span className="flex h-full w-full items-center justify-center bg-neutral-800 text-white">
+                          <Play className="size-5 fill-white" aria-hidden="true" />
+                        </span>
+                      ) : (
+                        <img
+                          src={item.src}
+                          alt=""
+                          className="h-full w-full object-contain object-center bg-neutral-100"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      )}
                     </button>
                   ))}
                 </div>
@@ -266,7 +298,7 @@ function PhotoGalleryModal({
             <div className="flex min-h-[220px] flex-col items-center justify-center gap-2 px-6 py-10 text-center">
               <Images className="size-10 text-gray-300" aria-hidden="true" />
               <p className="text-sm text-gray-500">
-                Nenhuma foto nesta pasta ainda. Coloque imagens em{" "}
+                Nenhuma mídia nesta pasta ainda. Coloque imagens ou vídeos em{" "}
                 <span className="font-semibold text-gray-700">public/timeline/</span>
               </p>
             </div>
@@ -287,8 +319,14 @@ function TimelineCard({
   index: number;
 }) {
   const [open, setOpen] = useState(false);
-  const cover = photos[0];
-  const hasPhotos = photos.length > 0;
+  const cover =
+    (item.coverFile
+      ? photos.find((p) => p.src.includes(`/${encodeURIComponent(item.coverFile!)}`) || p.src.includes(`/${item.coverFile}`))
+      : undefined) ??
+    photos.find((p) => p.kind === "image") ??
+    photos[0];
+  const hasMedia = photos.length > 0;
+  const hasVideos = photos.some((p) => p.kind === "video");
   const displayTitle = item.cardTitle ?? item.title;
 
   return (
@@ -302,7 +340,7 @@ function TimelineCard({
       >
         {/* Prévia padronizada: largura total do card × 150px */}
         <div className="relative h-[150px] w-full shrink-0 overflow-hidden bg-neutral-200">
-          {cover ? (
+          {cover?.kind === "image" ? (
             <img
               src={cover.src}
               alt={cover.alt}
@@ -310,8 +348,18 @@ function TimelineCard({
               height={150}
               loading="lazy"
               decoding="async"
-              className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+              className={`absolute inset-0 h-full w-full transition-transform duration-500 group-hover:scale-[1.03] ${
+                item.coverFocus === "contain"
+                  ? "object-contain object-center bg-neutral-100"
+                  : item.coverFocus === "center"
+                    ? "object-cover object-center"
+                    : "object-cover object-top"
+              }`}
             />
+          ) : cover?.kind === "video" ? (
+            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-900 to-blue-600">
+              <Play className="size-10 text-white/80" aria-hidden="true" />
+            </div>
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-900 to-blue-600">
               <Images className="size-10 text-white/50" aria-hidden="true" />
@@ -340,7 +388,11 @@ function TimelineCard({
               style={{ borderColor: "var(--blue-primary)", color: "var(--blue-primary)" }}
             >
               <Images className="size-4" aria-hidden="true" />
-              {hasPhotos ? "Ver fotos" : "Ver mais"}
+              {!hasMedia
+                ? "Ver mais"
+                : hasVideos
+                  ? "Ver fotos e vídeos"
+                  : "Ver fotos"}
             </Button>
           </div>
         </div>

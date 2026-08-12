@@ -38,10 +38,14 @@ export type SocialFeedsResult = {
 };
 
 const YOUTUBE_CHANNEL_ID = "UCA0aqdkBHj5G4eS0raaeZhg";
-/** YouTube "long-form videos" playlist (excludes Shorts): UULF + channelId without UC */
+/** Uploads do canal (vídeos + shorts misturados, mais recentes primeiro). */
+const YOUTUBE_UPLOADS_PLAYLIST_ID = `UU${YOUTUBE_CHANNEL_ID.slice(2)}`;
+/** Playlist só de Shorts. */
+const YOUTUBE_SHORTS_PLAYLIST_ID = `UUSH${YOUTUBE_CHANNEL_ID.slice(2)}`;
+/** Long-form (sem Shorts). */
 const YOUTUBE_LONG_FORM_PLAYLIST_ID = `UULF${YOUTUBE_CHANNEL_ID.slice(2)}`;
-/** Cache curto para novos posts/reels aparecerem rápido no site. */
-const CACHE_TTL_MS = 60 * 1000;
+/** Cache curto para novos posts/reels/stories aparecerem rápido no site. */
+const CACHE_TTL_MS = 30 * 1000;
 const POSTS_PER_NETWORK = 8;
 
 const NETWORK_META: Record<
@@ -136,10 +140,8 @@ const FALLBACK_POSTS: Record<SocialNetworkId, SocialPost[]> = {
 };
 
 let cache: { data: SocialFeedsResult; expiresAt: number } | null = null;
-const FEEDS_CACHE_VERSION = 16; // bump: force pinned reel + faster auto-refresh
+const FEEDS_CACHE_VERSION = 18; // bump: feeds públicos reforçados (sem token Meta)
 let cacheVersion = FEEDS_CACHE_VERSION;
-/** Reel fixo — SEMPRE o primeiro card da seção Instagram. */
-const INSTAGRAM_PINNED_REELS = ["Db53OtOxsZL"] as const;
 
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
@@ -185,37 +187,78 @@ async function isYouTubeShort(videoId: string): Promise<boolean> {
   }
 }
 
-async function fetchYouTubePosts(): Promise<SocialPost[]> {
-  // Official long-form playlist (UULF…) — never the Shorts playlist / mixed channel feed
+async function parseYouTubeAtomPlaylist(
+  playlistId: string,
+  opts?: { shortsOnly?: boolean; excludeShorts?: boolean },
+): Promise<Array<SocialPost & { publishedAt: number }>> {
   const xml = await fetchText(
-    `https://www.youtube.com/feeds/videos.xml?playlist_id=${YOUTUBE_LONG_FORM_PLAYLIST_ID}`,
+    `https://www.youtube.com/feeds/videos.xml?playlist_id=${playlistId}`,
   );
-
   const entries = [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map((m) => m[1]);
-  const posts: SocialPost[] = [];
+  const posts: Array<SocialPost & { publishedAt: number }> = [];
 
   for (const entry of entries) {
     const link = entry.match(/<link[^>]*rel="alternate"[^>]*href="([^"]+)"/)?.[1] ?? "";
-    if (/\/shorts\//i.test(link)) continue;
-
     const id = entry.match(/<yt:videoId>([^<]+)<\/yt:videoId>/)?.[1];
     if (!id) continue;
-    if (await isYouTubeShort(id)) continue;
+
+    const isShortLink = /\/shorts\//i.test(link);
+    let isShort = isShortLink;
+    if (opts?.shortsOnly) {
+      if (!isShort && !(await isYouTubeShort(id))) continue;
+      isShort = true;
+    } else if (opts?.excludeShorts) {
+      if (isShortLink) continue;
+      if (await isYouTubeShort(id)) continue;
+    } else if (!isShortLink) {
+      isShort = await isYouTubeShort(id);
+    }
 
     const title = entry.match(/<media:title>([^<]*)<\/media:title>/)?.[1];
     const thumbnail = entry.match(/<media:thumbnail url="([^"]+)"/)?.[1];
-    const post: SocialPost = {
+    const published =
+      entry.match(/<published>([^<]+)<\/published>/)?.[1] ??
+      entry.match(/<updated>([^<]+)<\/updated>/)?.[1];
+    const publishedAt = published ? Date.parse(published) : 0;
+
+    const post: SocialPost & { publishedAt: number } = {
       id,
-      url: `https://www.youtube.com/watch?v=${id}`,
+      url: isShort
+        ? `https://www.youtube.com/shorts/${id}`
+        : `https://www.youtube.com/watch?v=${id}`,
       embedUrl: `https://www.youtube.com/embed/${id}`,
+      publishedAt,
+      kind: isShort ? "reel" : "post",
     };
     if (title) post.title = title;
     if (thumbnail) post.thumbnail = thumbnail;
     posts.push(post);
-    if (posts.length >= POSTS_PER_NETWORK) break;
   }
 
   return posts;
+}
+
+async function fetchYouTubePosts(): Promise<SocialPost[]> {
+  // Combina uploads recentes + Shorts + long-form — ordena pelo mais novo
+  const batches = await Promise.allSettled([
+    parseYouTubeAtomPlaylist(YOUTUBE_UPLOADS_PLAYLIST_ID),
+    parseYouTubeAtomPlaylist(YOUTUBE_SHORTS_PLAYLIST_ID, { shortsOnly: true }),
+    parseYouTubeAtomPlaylist(YOUTUBE_LONG_FORM_PLAYLIST_ID, { excludeShorts: true }),
+  ]);
+
+  const byId = new Map<string, SocialPost & { publishedAt: number }>();
+  for (const batch of batches) {
+    if (batch.status !== "fulfilled") continue;
+    for (const post of batch.value) {
+      const prev = byId.get(post.id);
+      if (!prev || post.publishedAt >= prev.publishedAt) byId.set(post.id, post);
+    }
+  }
+
+  return [...byId.values()]
+    .sort((a, b) => b.publishedAt - a.publishedAt)
+    .slice(0, POSTS_PER_NETWORK)
+    .map(({ publishedAt: _p, ...post }) => post);
 }
 
 function isRealPostImage(url: string | undefined): url is string {
@@ -281,21 +324,27 @@ function instagramPostFromCode(
     (isRealPostImage(seeded?.thumbnail) ? seeded.thumbnail : undefined) ||
     `/instagram/${code}.jpg`;
 
-  const isReelOrStory = kind === "reel" || kind === "story";
+  const isReel = kind === "reel";
+  const isStory = kind === "story";
   return {
     id: code,
-    url: isReelOrStory
-      ? `https://www.instagram.com/reel/${code}/`
-      : `https://www.instagram.com/p/${code}/`,
-    embedUrl: isReelOrStory
+    url: isStory
+      ? `https://www.instagram.com/stories/pekelmon/${code}/`
+      : isReel
+        ? `https://www.instagram.com/reel/${code}/`
+        : `https://www.instagram.com/p/${code}/`,
+    embedUrl: isReel
       ? `https://www.instagram.com/reel/${code}/embed/`
-      : `https://www.instagram.com/p/${code}/embed/`,
+      : isStory
+        ? `https://www.instagram.com/stories/pekelmon/${code}/`
+        : `https://www.instagram.com/p/${code}/embed/`,
     thumbnail,
     kind,
   };
 }
 
 async function fetchInstagramPosts(): Promise<SocialPost[]> {
+  // Sem token Meta: várias fontes públicas em paralelo (jina + busca)
   const sources = [
     () =>
       fetchText("https://r.jina.ai/https://www.instagram.com/pekelmon/reels/", {
@@ -306,9 +355,23 @@ async function fetchInstagramPosts(): Promise<SocialPost[]> {
         headers: { Accept: "text/plain" },
       }),
     () =>
+      fetchText("https://r.jina.ai/https://www.instagram.com/pekelmon/channel/", {
+        headers: { Accept: "text/plain" },
+      }),
+    () =>
       fetchText("https://r.jina.ai/https://www.threads.com/@pekelmon", {
         headers: { Accept: "text/plain" },
       }),
+    () =>
+      fetchText(
+        "https://html.duckduckgo.com/html/?q=" +
+          encodeURIComponent("site:instagram.com/reel pekelmon"),
+      ),
+    () =>
+      fetchText(
+        "https://html.duckduckgo.com/html/?q=" +
+          encodeURIComponent("site:instagram.com/p/ pekelmon"),
+      ),
     () => fetchText("https://www.threads.com/@pekelmon"),
   ];
 
@@ -316,26 +379,24 @@ async function fetchInstagramPosts(): Promise<SocialPost[]> {
   const postCodes: string[] = [];
   const storyCodes: string[] = [];
 
-  for (const source of sources) {
-    try {
-      const text = await source();
-      reelCodes.push(
-        ...extractMatches(text, /instagram\.com\/reel\/([A-Za-z0-9_-]+)/g),
-        ...extractMatches(text, /\/reel\/([A-Za-z0-9_-]+)/g),
-      );
-      postCodes.push(
-        ...extractMatches(text, /instagram\.com\/p\/([A-Za-z0-9_-]+)/g),
-        ...extractMatches(text, /\/@pekelmon\/post\/([A-Za-z0-9_-]+)/g),
-        ...extractMatches(text, /threads\.com\/t\/([A-Za-z0-9_-]+)/g),
-      );
-      // Highlights / stories links quando expostos publicamente
-      storyCodes.push(
-        ...extractMatches(text, /instagram\.com\/stories\/pekelmon\/([A-Za-z0-9_-]+)/g),
-        ...extractMatches(text, /\/stories\/highlights\/(\d+)/g),
-      );
-    } catch {
-      // try next source
-    }
+  const results = await Promise.allSettled(sources.map((s) => s()));
+  for (const result of results) {
+    if (result.status !== "fulfilled") continue;
+    const text = result.value;
+    reelCodes.push(
+      ...extractMatches(text, /instagram\.com\/reel\/([A-Za-z0-9_-]+)/g),
+      ...extractMatches(text, /\/reel\/([A-Za-z0-9_-]+)/g),
+    );
+    postCodes.push(
+      ...extractMatches(text, /instagram\.com\/p\/([A-Za-z0-9_-]+)/g),
+      ...extractMatches(text, /\/@pekelmon\/post\/([A-Za-z0-9_-]+)/g),
+      ...extractMatches(text, /threads\.com\/t\/([A-Za-z0-9_-]+)/g),
+    );
+    storyCodes.push(
+      ...extractMatches(text, /instagram\.com\/stories\/pekelmon\/([A-Za-z0-9_-]+)/g).filter(
+        (id) => !/^\d+$/.test(id),
+      ),
+    );
   }
 
   const seedById = new Map(
@@ -343,28 +404,25 @@ async function fetchInstagramPosts(): Promise<SocialPost[]> {
   );
 
   const kindById = new Map<string, "post" | "reel" | "story">();
-  for (const code of INSTAGRAM_PINNED_REELS) kindById.set(code, "reel");
-  for (const code of uniqueLimit(reelCodes, 20)) kindById.set(code, "reel");
-  for (const code of uniqueLimit(storyCodes, 8)) {
-    if (!kindById.has(code)) kindById.set(code, "story");
+  for (const code of uniqueLimit(storyCodes, 8)) kindById.set(code, "story");
+  for (const code of uniqueLimit(reelCodes, 24)) {
+    if (!kindById.has(code)) kindById.set(code, "reel");
   }
-  for (const code of uniqueLimit(postCodes, 20)) {
+  for (const code of uniqueLimit(postCodes, 24)) {
     if (!kindById.has(code)) kindById.set(code, seedById.get(code)?.kind ?? "post");
   }
-  // seed fallbacks
   for (const seeded of FALLBACK_POSTS.instagram) {
     if (!kindById.has(seeded.id)) kindById.set(seeded.id, seeded.kind ?? "post");
   }
 
   const orderedCodes = uniqueLimit(
     [
-      ...INSTAGRAM_PINNED_REELS,
-      ...reelCodes,
       ...storyCodes,
+      ...reelCodes,
       ...postCodes,
       ...FALLBACK_POSTS.instagram.map((p) => p.id),
     ],
-    POSTS_PER_NETWORK + 4,
+    POSTS_PER_NETWORK + 6,
   );
 
   if (orderedCodes.length === 0) throw new Error("No Instagram posts/reels found");
@@ -383,31 +441,32 @@ async function fetchInstagramPosts(): Promise<SocialPost[]> {
   );
 
   const withImages = posts.filter((post) => isRealPostImage(post.thumbnail));
-  return ensurePinnedInstagramPosts(
+  const ordered = orderNewestInstagramPosts(
     withImages.length > 0 ? withImages : FALLBACK_POSTS.instagram,
   );
+
+  // Sem token não dá para listar stories efêmeros com segurança:
+  // inclui atalho fixo para os Stories públicos do perfil.
+  const storiesShortcut: SocialPost = {
+    id: "stories-pekelmon",
+    url: "https://www.instagram.com/stories/pekelmon/",
+    embedUrl: "https://www.instagram.com/stories/pekelmon/",
+    thumbnail:
+      FALLBACK_POSTS.instagram.find((p) => isRealPostImage(p.thumbnail))?.thumbnail ??
+      "/instagram/Db53OtOxsZL.jpg",
+    kind: "story",
+    title: "Stories mais recentes",
+  };
+
+  const withoutDupShortcut = ordered.filter((p) => p.id !== storiesShortcut.id);
+  return [storiesShortcut, ...withoutDupShortcut].slice(0, POSTS_PER_NETWORK);
 }
 
-/** Garante o reel pedido pelo cliente como 1º item, depois reels/stories/posts. */
-function ensurePinnedInstagramPosts(posts: SocialPost[]): SocialPost[] {
-  const seedById = new Map(FALLBACK_POSTS.instagram.map((p) => [p.id, p] as const));
-  const byId = new Map(posts.map((p) => [p.id, p] as const));
-
-  const pinned: SocialPost[] = INSTAGRAM_PINNED_REELS.map((code) => {
-    const existing = byId.get(code);
-    if (existing) return { ...existing, kind: "reel" as const };
-    return instagramPostFromCode(code, "reel", seedById.get(code));
-  });
-
-  const pinnedIds = new Set<string>(INSTAGRAM_PINNED_REELS);
-  const rest = posts.filter((p) => !pinnedIds.has(p.id));
-  rest.sort((a, b) => {
-    const rank = (p: SocialPost) =>
-      p.kind === "reel" ? 0 : p.kind === "story" ? 1 : 2;
-    return rank(a) - rank(b);
-  });
-
-  return [...pinned, ...rest].slice(0, POSTS_PER_NETWORK);
+/** Stories e reels primeiro (conteúdo recente), depois posts — sem pin fixo. */
+function orderNewestInstagramPosts(posts: SocialPost[]): SocialPost[] {
+  const rank = (p: SocialPost) =>
+    p.kind === "story" ? 0 : p.kind === "reel" ? 1 : 2;
+  return [...posts].sort((a, b) => rank(a) - rank(b)).slice(0, POSTS_PER_NETWORK);
 }
 
 async function fetchTikTokCover(videoUrl: string): Promise<{ thumbnail?: string; title?: string }> {
@@ -428,23 +487,31 @@ async function fetchTikTokCover(videoUrl: string): Promise<{ thumbnail?: string;
 }
 
 async function fetchTikTokPosts(): Promise<SocialPost[]> {
-  const queries = [
-    "site:tiktok.com/@pekelmon/video",
-    "pekelmon tiktok.com/@pekelmon/video",
+  const sources = [
+    () =>
+      fetchText("https://r.jina.ai/https://www.tiktok.com/@pekelmon", {
+        headers: { Accept: "text/plain" },
+      }),
+    () =>
+      fetchText(
+        "https://html.duckduckgo.com/html/?q=" +
+          encodeURIComponent("site:tiktok.com/@pekelmon/video"),
+      ),
+    () =>
+      fetchText(
+        "https://html.duckduckgo.com/html/?q=" +
+          encodeURIComponent("pekelmon tiktok.com/@pekelmon/video"),
+      ),
   ];
 
   let ids: string[] = [];
-  for (const q of queries) {
-    try {
-      const html = await fetchText(
-        "https://html.duckduckgo.com/html/?q=" + encodeURIComponent(q),
-      );
-      ids = uniqueLimit(extractMatches(html, /tiktok\.com\/@pekelmon\/video\/(\d+)/gi));
-      if (ids.length > 0) break;
-    } catch {
-      // try next query
-    }
+  const results = await Promise.allSettled(sources.map((s) => s()));
+  for (const result of results) {
+    if (result.status !== "fulfilled") continue;
+    const found = extractMatches(result.value, /tiktok\.com\/@pekelmon\/video\/(\d+)/gi);
+    ids.push(...found);
   }
+  ids = uniqueLimit(ids);
 
   if (ids.length === 0) {
     ids = FALLBACK_POSTS.tiktok.map((post) => post.id);
@@ -468,6 +535,7 @@ async function fetchTikTokPosts(): Promise<SocialPost[]> {
         url,
         embedUrl: `https://www.tiktok.com/embed/v2/${id}`,
         thumbnail,
+        kind: "reel",
       };
       if (live.title) post.title = live.title;
       return post;
@@ -485,26 +553,27 @@ async function fetchXPostIds(): Promise<string[]> {
         "https://html.duckduckgo.com/html/?q=" +
           encodeURIComponent("site:x.com/PeKelmon/status"),
       ),
+    () =>
+      fetchText("https://r.jina.ai/https://x.com/PeKelmon", {
+        headers: { Accept: "text/plain" },
+      }),
   ];
 
-  for (const source of sources) {
-    try {
-      const html = await source();
-      const ids = [
-        ...new Set(
-          [
-            ...extractMatches(html, /(?:x|twitter)\.com\/PeKelmon\/status\/(\d{15,})/gi),
-            ...extractMatches(html, /\/PeKelmon\/status\/(\d{15,})/gi),
-            ...extractMatches(html, /status\/(\d{15,})/gi),
-          ],
-        ),
-      ].sort((a, b) => (BigInt(b) > BigInt(a) ? 1 : -1));
-      if (ids.length > 0) return ids;
-    } catch {
-      // try next source
-    }
+  const all: string[] = [];
+  const results = await Promise.allSettled(sources.map((s) => s()));
+  for (const result of results) {
+    if (result.status !== "fulfilled") continue;
+    const html = result.value;
+    all.push(
+      ...extractMatches(html, /(?:x|twitter)\.com\/PeKelmon\/status\/(\d{15,})/gi),
+      ...extractMatches(html, /\/PeKelmon\/status\/(\d{15,})/gi),
+      ...extractMatches(html, /status\/(\d{15,})/gi),
+    );
   }
-  return [];
+
+  return [...new Set(all.filter(Boolean))].sort((a, b) =>
+    BigInt(b) > BigInt(a) ? 1 : -1,
+  );
 }
 
 async function fetchFxTweet(id: string): Promise<{
@@ -667,7 +736,6 @@ async function fetchFacebookThumbnail(postUrl: string): Promise<string | undefin
   }
 }
 
-/** Últimos 4 posts da página oficial https://www.facebook.com/PadreKelmon */
 async function fetchFacebookPosts(): Promise<SocialPost[]> {
   const page = FACEBOOK_PAGE_URL.replace(/\/$/, "");
   const seed = FALLBACK_POSTS.facebook;
@@ -675,29 +743,32 @@ async function fetchFacebookPosts(): Promise<SocialPost[]> {
 
   const sources = [
     () => fetchText(`https://r.jina.ai/${page}`, { headers: { Accept: "text/plain" } }),
+    () => fetchText(`https://r.jina.ai/${page}/posts`, { headers: { Accept: "text/plain" } }),
     () => fetchText(`https://r.jina.ai/${page}/photos_by`, { headers: { Accept: "text/plain" } }),
-    () => fetchText(`https://r.jina.ai/https://mbasic.facebook.com/${FACEBOOK_PAGE_SLUG}`, {
-      headers: { Accept: "text/plain" },
-    }),
+    () =>
+      fetchText(`https://r.jina.ai/https://mbasic.facebook.com/${FACEBOOK_PAGE_SLUG}`, {
+        headers: { Accept: "text/plain" },
+      }),
     () =>
       fetchText(
         "https://html.duckduckgo.com/html/?q=" +
           encodeURIComponent(`site:facebook.com/${FACEBOOK_PAGE_SLUG}/posts`),
       ),
+    () =>
+      fetchText(
+        "https://html.duckduckgo.com/html/?q=" +
+          encodeURIComponent(`site:facebook.com/${FACEBOOK_PAGE_SLUG} pfbid`),
+      ),
   ];
 
   let liveIds: string[] = [];
-  for (const source of sources) {
-    try {
-      const text = await source();
-      liveIds = extractFacebookPostIds(text);
-      if (liveIds.length >= POSTS_PER_NETWORK) break;
-    } catch {
-      // try next source
-    }
+  const results = await Promise.allSettled(sources.map((s) => s()));
+  for (const result of results) {
+    if (result.status !== "fulfilled") continue;
+    liveIds.push(...extractFacebookPostIds(result.value));
   }
+  liveIds = uniqueLimit(liveIds, POSTS_PER_NETWORK * 3);
 
-  // Prioriza posts ao vivo; completa com seed para sempre ter 4
   const mergedIds = uniqueLimit(
     [...liveIds, ...seed.map((post) => post.id)],
     POSTS_PER_NETWORK,
@@ -719,7 +790,6 @@ async function fetchFacebookPosts(): Promise<SocialPost[]> {
     }),
   );
 
-  // Garante exatamente 4 cards no grid
   while (posts.length < POSTS_PER_NETWORK && seed[posts.length]) {
     const seeded = seed[posts.length];
     if (seeded && !posts.some((p) => p.id === seeded.id)) {
@@ -740,14 +810,14 @@ async function safeFetch(
     const posts = await fetcher();
     if (posts.length > 0) {
       FALLBACK_POSTS[id] =
-        id === "instagram" ? ensurePinnedInstagramPosts(posts) : posts;
+        id === "instagram" ? orderNewestInstagramPosts(posts) : posts;
       return FALLBACK_POSTS[id];
     }
   } catch (error) {
     console.warn(`[social-feeds] ${id} fetch failed:`, error);
   }
   if (id === "instagram") {
-    return ensurePinnedInstagramPosts(FALLBACK_POSTS.instagram);
+    return orderNewestInstagramPosts(FALLBACK_POSTS.instagram);
   }
   return FALLBACK_POSTS[id] ?? [];
 }
@@ -762,7 +832,7 @@ async function buildFeeds(): Promise<SocialFeedsResult> {
   ]);
 
   const byId: Record<SocialNetworkId, SocialPost[]> = {
-    instagram: ensurePinnedInstagramPosts(instagram),
+    instagram: orderNewestInstagramPosts(instagram),
     youtube,
     tiktok,
     x,
@@ -777,7 +847,8 @@ async function buildFeeds(): Promise<SocialFeedsResult> {
       ...NETWORK_META[networkId],
       posts: byId[networkId].slice(0, POSTS_PER_NETWORK),
     })),
-    featuredVideoId: youtube[0]?.id ?? "EI-bTS70q0U",
+    featuredVideoId:
+      youtube.find((p) => p.kind !== "reel")?.id ?? youtube[0]?.id ?? "EI-bTS70q0U",
     updatedAt: new Date().toISOString(),
   };
 }
@@ -797,7 +868,7 @@ export const getSocialFeeds = createServerFn({ method: "GET" }).handler(async ()
   // Confirma o reel pinado mesmo se o scrape falhar parcialmente
   const ig = data.networks.find((network) => network.id === "instagram");
   if (ig) {
-    ig.posts = ensurePinnedInstagramPosts(ig.posts);
+    ig.posts = orderNewestInstagramPosts(ig.posts);
   }
   const hasThumbs = ig?.posts.every((post) => isRealPostImage(post.thumbnail));
   if (hasThumbs) {

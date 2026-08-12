@@ -16,7 +16,7 @@ import { getPressFeeds } from "@/lib/press-feeds";
 import { getVv8Feeds } from "@/lib/vv8-feeds";
 import { getSocialFeeds, type SocialNetworkId, type SocialPost } from "@/lib/social-feeds";
 
-const MEDIA_REFRESH_MS = 60 * 1000;
+const MEDIA_REFRESH_MS = 30 * 1000;
 const VV8_ACCENT = "#0168e1";
 
 import { PageShell, Reveal } from "./primitives";
@@ -60,11 +60,24 @@ const ICONS: Record<SocialNetworkId, () => ReactNode> = {
 };
 
 function InstagramCard({ post, color }: { post: SocialPost; color: string }) {
-  const isVideo = post.kind === "reel" || post.kind === "story";
-  const badge = post.kind === "reel" ? "Reel" : post.kind === "story" ? "Story" : null;
+  const isReel = post.kind === "reel";
+  const isStory = post.kind === "story";
+  const badge = isReel ? "Reel" : isStory ? "Story" : null;
 
-  // Reels/Stories: embed do Instagram para o vídeo tocar no site
-  if (isVideo) {
+  // Stories: capa + link (stories públicos não embutem bem no iframe)
+  if (isStory) {
+    return (
+      <CoverImageCard
+        post={post}
+        color={color}
+        label="Instagram"
+        aspectClass="aspect-[4/5]"
+      />
+    );
+  }
+
+  // Reels: embed do Instagram para o vídeo tocar no site
+  if (isReel) {
     return (
       <div
         className="group relative overflow-hidden rounded-xl border-2 bg-neutral-100 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
@@ -239,9 +252,14 @@ function PostCard({
 
   return (
     <div
-      className="overflow-hidden rounded-xl border-2 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+      className="relative overflow-hidden rounded-xl border-2 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
       style={{ borderColor: color + "40" }}
     >
+      {post.kind === "reel" ? (
+        <span className="absolute left-2 top-2 z-10 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+          Short
+        </span>
+      ) : null}
       <div className="aspect-video">
         <iframe
           src={post.embedUrl}
@@ -476,11 +494,18 @@ function SocialNetworkCarousel({
             >
               {social.handle}
             </a>
-            {social.id === "instagram" ? (
-              <p className="mt-0.5 text-xs text-gray-500">
-                Posts, Reels e Stories · atualização automática
-              </p>
-            ) : null}
+            <p className="mt-0.5 text-xs text-gray-500">
+              {social.id === "instagram"
+                ? "Posts, Reels e Stories mais recentes"
+                : social.id === "youtube"
+                  ? "Vídeos e Shorts mais recentes"
+                  : social.id === "tiktok"
+                    ? "Vídeos mais recentes"
+                    : social.id === "x"
+                      ? "Posts mais recentes"
+                      : "Posts mais recentes"}
+              {" · atualização automática"}
+            </p>
           </div>
         </div>
 
@@ -535,7 +560,7 @@ export function Media() {
   }, []);
 
   const socialQuery = useQuery({
-    queryKey: ["social-feeds", "v16-pinned-reel-auto"],
+    queryKey: ["social-feeds", "v18-public-no-meta-token"],
     queryFn: () => getSocialFeeds(),
     staleTime: MEDIA_REFRESH_MS,
     refetchInterval: MEDIA_REFRESH_MS,
@@ -602,9 +627,9 @@ export function Media() {
                 Padre Kelmon nas Redes Sociais
               </h2>
               <p className="text-sm leading-relaxed text-gray-700 text-justify sm:text-base">
-                Acompanhe a cobertura na imprensa (Portal VV8 e 7Minutos) e nas redes sociais.
-                As matérias e os feeds atualizam automaticamente a cada 1 minuto.
-                Novos posts, reels e vídeos públicos passam a aparecer no site sozinhos.
+                Acompanhe Instagram, Facebook, X, YouTube e TikTok com os posts e reels/shorts
+                públicos mais recentes. Os feeds usam conteúdo público e atualizam sozinhos a cada
+                30 segundos (sem token da Meta).
               </p>
               {hasUpdatedAt ? (
                 <p className="mt-3 text-xs text-gray-500">

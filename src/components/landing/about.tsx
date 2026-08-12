@@ -315,20 +315,6 @@ export function About() {
         </div>
 
         <TimelineCards />
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="mt-10 text-center"
-        >
-          <p className="text-sm text-gray-500">
-            <span className="font-semibold" style={{ color: "var(--blue-primary)" }}>
-              Fontes:
-            </span>{" "}
-            Foro Brasil (biografia oficial), Wikipédia e veículos de imprensa
-          </p>
-        </motion.div>
       </PageShell>
     </section>
   );
