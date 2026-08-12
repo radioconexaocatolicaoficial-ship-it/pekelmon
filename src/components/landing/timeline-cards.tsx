@@ -71,6 +71,38 @@ export const TIMELINE_CARD_META: TimelineCardMeta[] = [
     folder: "associacao",
   },
   {
+    year: "",
+    title: "Seminário Santana dos Melquitas",
+    cardTitle: "Seminário Melquitas",
+    description:
+      "Formação e vida no Seminário Santana dos Melquitas.",
+    folder: "seminario-santana-dos-melquitas",
+  },
+  {
+    year: "02/08/2015",
+    title: "Ordenação Sacerdotal Igreja Ortodoxa 02/08/2015",
+    cardTitle: "Ordenação Ortodoxa",
+    description:
+      "Ordenação sacerdotal na Igreja Ortodoxa em 02/08/2015.",
+    folder: "ordenacao-ortodoxa",
+  },
+  {
+    year: "",
+    title: "Missão Ortodoxa em Serrolândia",
+    cardTitle: "Missão Serrolândia",
+    description:
+      "Missão Ortodoxa em Serrolândia.",
+    folder: "missao-ortodoxa-em-serrolandia",
+  },
+  {
+    year: "",
+    title: "Pastoral com os Venezuelanos",
+    cardTitle: "Pastoral Venezuelanos",
+    description:
+      "Pastoral com os venezuelanos.",
+    folder: "pastoral-com-venezuelanos",
+  },
+  {
     year: "2019-2021",
     title: "Movimento Cristão Conservador",
     description:

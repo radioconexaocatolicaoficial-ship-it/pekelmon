@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 import { copyFile, mkdir, readdir, stat } from "node:fs/promises";
 import path from "node:path";
+import { spawn } from "node:child_process";
 
 const IMAGE_EXT = new Set([".webp", ".jpg", ".jpeg", ".png", ".gif", ".avif"]);
 
@@ -10,6 +11,10 @@ export const TIMELINE_FOLDERS = [
   "seminario",
   "ordenacao-diaconal",
   "associacao",
+  "seminario-santana-dos-melquitas",
+  "ordenacao-ortodoxa",
+  "missao-ortodoxa-em-serrolandia",
+  "pastoral-com-venezuelanos",
   "movimento-cristao-conservador",
   "candidatura-presidencial",
   "foro-do-brasil-e-livro",
@@ -49,7 +54,9 @@ function isImageFile(name: string): boolean {
 async function listImageFiles(dir: string): Promise<string[]> {
   try {
     const entries = await readdir(dir, { withFileTypes: true });
-    return entries.filter((e) => e.isFile() && isImageFile(e.name)).map((e) => e.name);
+    return entries
+      .filter((e) => e.isFile() && isImageFile(e.name) && !e.name.startsWith("."))
+      .map((e) => e.name);
   } catch {
     return [];
   }
@@ -82,9 +89,38 @@ async function syncFolderFromAssets(folder: string): Promise<void> {
   }
 }
 
-async function listFolderPhotos(folder: string): Promise<TimelinePhotoFile[]> {
-  await syncFolderFromAssets(folder);
+let fitRunning: Promise<void> | null = null;
 
+/** Ajusta automaticamente novas imagens (700x500, sem barras pretas, prioriza rostos). */
+function autoFitTimelineImages(): Promise<void> {
+  if (fitRunning) return fitRunning;
+
+  fitRunning = new Promise<void>((resolve) => {
+    const script = path.join(process.cwd(), "scripts", "auto-fit-timeline-images.py");
+    const child = spawn("python", [script], {
+      cwd: process.cwd(),
+      windowsHide: true,
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      fitRunning = null;
+      resolve();
+    };
+
+    child.on("error", finish);
+    child.on("close", finish);
+    // não trava o site se o python demorar
+    setTimeout(finish, 45_000);
+  });
+
+  return fitRunning;
+}
+
+async function listFolderPhotos(folder: string): Promise<TimelinePhotoFile[]> {
   const dir = path.join(publicTimelineRoot(), folder);
   try {
     const names = await listImageFiles(dir);
@@ -109,9 +145,14 @@ async function listFolderPhotos(folder: string): Promise<TimelinePhotoFile[]> {
   }
 }
 
-/** Lê as pastas a cada chamada — novas imagens aparecem sem rebuild. */
+/** Lê as pastas a cada chamada — novas imagens são ajustadas e aparecem sozinhas. */
 export const getTimelinePhotos = createServerFn({ method: "GET" }).handler(
   async (): Promise<TimelinePhotosResult> => {
+    // 1) sincroniza assets → public
+    await Promise.all(TIMELINE_FOLDERS.map((folder) => syncFolderFromAssets(folder)));
+    // 2) auto-ajusta imagens novas (700x500)
+    await autoFitTimelineImages();
+    // 3) lista o resultado
     const byFolder: Record<string, TimelinePhotoFile[]> = {};
     await Promise.all(
       TIMELINE_FOLDERS.map(async (folder) => {
