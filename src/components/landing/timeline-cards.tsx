@@ -56,10 +56,11 @@ export const TIMELINE_CARD_META: TimelineCardMeta[] = [
   },
   {
     year: "2014-2015",
-    title: "Ordenação Sacerdotal",
+    title: "Ordenação diaconal Igreja Sirian Ortodoxa.",
+    cardTitle: "Ordenação Diaconal",
     description:
       "Funda a associação Theotokos. Ordenado diácono (2014) e sacerdote (2015) na Igreja Ortodoxa da América.",
-    folder: "ordenacao-sacerdotal",
+    folder: "ordenacao-diaconal",
   },
   {
     year: "2010-2017",
@@ -257,6 +258,7 @@ function TimelineCard({
   const [open, setOpen] = useState(false);
   const cover = photos[0];
   const hasPhotos = photos.length > 0;
+  const displayTitle = item.cardTitle ?? item.title;
 
   return (
     <>
@@ -265,9 +267,10 @@ function TimelineCard({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.5, delay: index * 0.08 }}
-        className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all hover:-translate-y-1 hover:border-blue-500 hover:shadow-2xl"
+        className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all hover:-translate-y-1 hover:border-blue-500 hover:shadow-2xl"
       >
-        <div className="relative mx-auto h-[150px] w-[300px] max-w-full shrink-0 overflow-hidden bg-neutral-200">
+        {/* Prévia padronizada: largura total do card × 150px */}
+        <div className="relative h-[150px] w-full shrink-0 overflow-hidden bg-neutral-200">
           {cover ? (
             <img
               src={cover.src}
@@ -286,27 +289,32 @@ function TimelineCard({
         </div>
 
         <div className="flex min-h-0 flex-1 flex-col p-4 sm:p-5">
+          <p className="mb-1 text-[11px] font-bold uppercase tracking-wide text-gray-500">
+            {item.year}
+          </p>
           <h3
-            className="mb-2 truncate whitespace-nowrap text-base font-black leading-none sm:text-lg"
+            className="mb-2 h-7 truncate whitespace-nowrap text-base font-black leading-7 sm:text-lg"
             title={item.title}
             style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
           >
-            {item.cardTitle ?? item.title}
+            {displayTitle}
           </h3>
-          <p className="mb-4 line-clamp-3 min-h-[3.75rem] flex-1 text-sm leading-relaxed text-gray-700">
+          <p className="mb-4 line-clamp-3 min-h-[4.5rem] text-sm leading-relaxed text-gray-700">
             {item.description}
           </p>
 
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setOpen(true)}
-            className="h-11 w-full border-2 font-bold"
-            style={{ borderColor: "var(--blue-primary)", color: "var(--blue-primary)" }}
-          >
-            <Images className="size-4" aria-hidden="true" />
-            {hasPhotos ? "Ver fotos" : "Ver mais"}
-          </Button>
+          <div className="mt-auto">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setOpen(true)}
+              className="h-11 w-full border-2 font-bold"
+              style={{ borderColor: "var(--blue-primary)", color: "var(--blue-primary)" }}
+            >
+              <Images className="size-4" aria-hidden="true" />
+              {hasPhotos ? "Ver fotos" : "Ver mais"}
+            </Button>
+          </div>
         </div>
       </motion.article>
 
@@ -344,9 +352,11 @@ export function TimelineCards() {
   );
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+    <div className="grid auto-rows-fr grid-cols-1 items-stretch gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
       {cards.map(({ meta, photos }, i) => (
-        <TimelineCard key={meta.folder} item={meta} photos={photos} index={i} />
+        <div key={meta.folder} className="flex h-full min-w-0">
+          <TimelineCard item={meta} photos={photos} index={i} />
+        </div>
       ))}
     </div>
   );

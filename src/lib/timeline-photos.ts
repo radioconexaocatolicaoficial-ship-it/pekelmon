@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { readdir, stat } from "node:fs/promises";
+import { copyFile, mkdir, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 
 const IMAGE_EXT = new Set([".webp", ".jpg", ".jpeg", ".png", ".gif", ".avif"]);
@@ -8,13 +8,18 @@ export const TIMELINE_FOLDERS = [
   "minhas-raizes",
   "na-juventude",
   "seminario",
-  "ordenacao-sacerdotal",
+  "ordenacao-diaconal",
   "ativismo-e-missoes",
   "movimento-cristao-conservador",
   "candidatura-presidencial",
   "foro-do-brasil-e-livro",
   "tv-e-deputado-federal",
 ] as const;
+
+/** Pastas antigas → pasta atual (compatibilidade). */
+const FOLDER_ALIASES: Record<string, string[]> = {
+  "ordenacao-diaconal": ["ordenacao-diaconal", "ordenacao-sacerdotal"],
+};
 
 export type TimelineFolderId = (typeof TIMELINE_FOLDERS)[number];
 
@@ -28,23 +33,65 @@ export type TimelinePhotosResult = {
   updatedAt: string;
 };
 
-function timelineRoot(): string {
+function publicTimelineRoot(): string {
   return path.join(process.cwd(), "public", "timeline");
 }
 
-async function listFolderPhotos(folder: string): Promise<TimelinePhotoFile[]> {
-  const dir = path.join(timelineRoot(), folder);
+function assetsTimelineRoot(): string {
+  return path.join(process.cwd(), "src", "assets", "timeline");
+}
+
+function isImageFile(name: string): boolean {
+  return IMAGE_EXT.has(path.extname(name).toLowerCase());
+}
+
+async function listImageFiles(dir: string): Promise<string[]> {
   try {
     const entries = await readdir(dir, { withFileTypes: true });
-    const files = entries.filter(
-      (e) => e.isFile() && IMAGE_EXT.has(path.extname(e.name).toLowerCase()),
-    );
+    return entries.filter((e) => e.isFile() && isImageFile(e.name)).map((e) => e.name);
+  } catch {
+    return [];
+  }
+}
 
+/** Copia fotos de src/assets/timeline para public/timeline (onde o site serve). */
+async function syncFolderFromAssets(folder: string): Promise<void> {
+  const aliases = FOLDER_ALIASES[folder] ?? [folder];
+  const destDir = path.join(publicTimelineRoot(), folder);
+  await mkdir(destDir, { recursive: true });
+
+  for (const alias of aliases) {
+    const srcDir = path.join(assetsTimelineRoot(), alias);
+    const names = await listImageFiles(srcDir);
+    for (const name of names) {
+      const from = path.join(srcDir, name);
+      const to = path.join(destDir, name);
+      try {
+        const [srcStat, destStat] = await Promise.all([
+          stat(from),
+          stat(to).catch(() => null),
+        ]);
+        if (!destStat || srcStat.mtimeMs > destStat.mtimeMs) {
+          await copyFile(from, to);
+        }
+      } catch {
+        // ignore individual file errors
+      }
+    }
+  }
+}
+
+async function listFolderPhotos(folder: string): Promise<TimelinePhotoFile[]> {
+  await syncFolderFromAssets(folder);
+
+  const dir = path.join(publicTimelineRoot(), folder);
+  try {
+    const names = await listImageFiles(dir);
     const withMtime = await Promise.all(
-      files.map(async (f) => {
-        const full = path.join(dir, f.name);
+      names.map(async (name) => {
+        const full = path.join(dir, name);
         const info = await stat(full);
-        return { name: f.name, mtime: info.mtimeMs };
+        return { name, mtime: info.mtimeMs };
       }),
     );
 
@@ -54,7 +101,6 @@ async function listFolderPhotos(folder: string): Promise<TimelinePhotoFile[]> {
 
     return withMtime.map((f) => ({
       name: f.name,
-      // cache-bust quando o arquivo muda
       src: `/timeline/${folder}/${encodeURIComponent(f.name)}?v=${Math.floor(f.mtime)}`,
     }));
   } catch {
@@ -62,7 +108,7 @@ async function listFolderPhotos(folder: string): Promise<TimelinePhotoFile[]> {
   }
 }
 
-/** Lê public/timeline/* a cada chamada — novas imagens aparecem sem rebuild. */
+/** Lê as pastas a cada chamada — novas imagens aparecem sem rebuild. */
 export const getTimelinePhotos = createServerFn({ method: "GET" }).handler(
   async (): Promise<TimelinePhotosResult> => {
     const byFolder: Record<string, TimelinePhotoFile[]> = {};
