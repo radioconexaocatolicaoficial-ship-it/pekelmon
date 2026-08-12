@@ -13,7 +13,7 @@ export type PressFeedsResult = {
   live: boolean;
 };
 
-const CACHE_TTL_MS = 3 * 60 * 1000;
+const CACHE_TTL_MS = 60 * 1000;
 const MAX_ARTICLES = 16;
 const WP_SEARCH_URL =
   "https://7minutos.com.br/wp-json/wp/v2/posts?search=Kelmon&per_page=20&_embed=1&orderby=date&order=desc";

@@ -10,43 +10,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-import raizes1 from "@/assets/timeline/raizes-1.webp";
-import raizes2 from "@/assets/timeline/raizes-2.webp";
-import raizes3 from "@/assets/timeline/raizes-3.webp";
-import raizes4 from "@/assets/timeline/raizes-4.webp";
-import raizes5 from "@/assets/timeline/raizes-5.webp";
-import raizes6 from "@/assets/timeline/raizes-6.webp";
-import raizes7 from "@/assets/timeline/raizes-7.webp";
-import raizes8 from "@/assets/timeline/raizes-8.webp";
-import juventude1 from "@/assets/timeline/juventude-1.webp";
-import juventude2 from "@/assets/timeline/juventude-2.webp";
-import juventude3 from "@/assets/timeline/juventude-3.webp";
-import juventude4 from "@/assets/timeline/juventude-4.webp";
-import juventude5 from "@/assets/timeline/juventude-5.webp";
-import juventude6 from "@/assets/timeline/juventude-6.webp";
-import juventude7 from "@/assets/timeline/juventude-7.webp";
-import juventude8 from "@/assets/timeline/juventude-8.webp";
-import juventude9 from "@/assets/timeline/juventude-9.webp";
-import seminario1 from "@/assets/timeline/seminario-1.webp";
-import seminario2 from "@/assets/timeline/seminario-2.webp";
-import seminario3 from "@/assets/timeline/seminario-3.webp";
-import seminario4 from "@/assets/timeline/seminario-4.webp";
-import seminario5 from "@/assets/timeline/seminario-5.webp";
-import seminario6 from "@/assets/timeline/seminario-6.webp";
-import seminario7 from "@/assets/timeline/seminario-7.webp";
-import seminario8 from "@/assets/timeline/seminario-8.webp";
-import seminario9 from "@/assets/timeline/seminario-9.webp";
-import seminario10 from "@/assets/timeline/seminario-10.webp";
-import seminario11 from "@/assets/timeline/seminario-11.webp";
-import seminario12 from "@/assets/timeline/seminario-12.webp";
-import seminario13 from "@/assets/timeline/seminario-13.webp";
-import seminario14 from "@/assets/timeline/seminario-14.webp";
-import seminario15 from "@/assets/timeline/seminario-15.webp";
-import seminario16 from "@/assets/timeline/seminario-16.webp";
-import seminario17 from "@/assets/timeline/seminario-17.webp";
-import seminario18 from "@/assets/timeline/seminario-18.webp";
-import seminario19 from "@/assets/timeline/seminario-19.webp";
-
 export type TimelinePhoto = {
   src: string;
   alt: string;
@@ -56,53 +19,31 @@ export type TimelineCardItem = {
   year: string;
   title: string;
   description: string;
+  /** Pasta em src/assets/timeline/{folder}/ */
+  folder: string;
   photos: TimelinePhoto[];
 };
 
-const RAIZES_PHOTOS: TimelinePhoto[] = [
-  { src: raizes1, alt: "Padre Kelmon na infância com os irmãos" },
-  { src: raizes2, alt: "Família e formação escolar de Padre Kelmon" },
-  { src: raizes3, alt: "Turma escolar na infância de Padre Kelmon" },
-  { src: raizes4, alt: "Primeira Eucaristia — Padre Kelmon com religiosa" },
-  { src: raizes5, alt: "Primeira Eucaristia de Padre Kelmon" },
-  { src: raizes6, alt: "Padre Kelmon ainda criança" },
-  { src: raizes7, alt: "Crisma — unção na formação católica de Padre Kelmon" },
-  { src: raizes8, alt: "Infância em família — Padre Kelmon com os irmãos" },
-];
+/**
+ * Lê automaticamente todas as imagens da pasta do card.
+ * Coloque fotos em: src/assets/timeline/<nome-da-pasta>/
+ * Formatos: jpg, jpeg, png, webp
+ */
+function loadFolderPhotos(folder: string, altPrefix: string): TimelinePhoto[] {
+  // Vite exige glob estático — carrega todas as pastas e filtra pela pasta do card
+  const modules = import.meta.glob<string>(
+    "../../assets/timeline/*/*.{webp,jpg,jpeg,png,gif,avif,WEBP,JPG,JPEG,PNG}",
+    { eager: true, import: "default" },
+  );
 
-const JUVENTUDE_PHOTOS: TimelinePhoto[] = [
-  { src: juventude1, alt: "Juventude — encontro do movimento JUSPE" },
-  { src: juventude2, alt: "Juventude — amigos do JUSPE reunidos" },
-  { src: juventude3, alt: "Logo JUSPE — Jovens Unidos Semeando Paz e Esperança" },
-  { src: juventude4, alt: "Na juventude — irmãos na infância" },
-  { src: juventude5, alt: "Infância e juventude — celebração comunitária" },
-  { src: juventude6, alt: "Juventude — com a mãe" },
-  { src: juventude7, alt: "Na juventude com os irmãos" },
-  { src: juventude8, alt: "JUSPE — jovens em missão com o movimento" },
-  { src: juventude9, alt: "Juventude — com o cruz Tau franciscana" },
-];
-
-const SEMINARIO_PHOTOS: TimelinePhoto[] = [
-  { src: seminario1, alt: "Seminário Mater Ecclesiae — colegas em formação" },
-  { src: seminario2, alt: "Seminário — aula e convivência" },
-  { src: seminario3, alt: "Seminário — formação litúrgica" },
-  { src: seminario4, alt: "Seminário — confraternização" },
-  { src: seminario5, alt: "Seminário — prática litúrgica com turíbulo" },
-  { src: seminario6, alt: "Seminário — turma nas escadarias" },
-  { src: seminario7, alt: "Seminário — aula com o turíbulo" },
-  { src: seminario8, alt: "Vista do Seminário Mater Ecclesiae" },
-  { src: seminario9, alt: "Capela do seminário — oração" },
-  { src: seminario10, alt: "Campus do Seminário dos Legionários de Cristo" },
-  { src: seminario11, alt: "Padre Kelmon no período de seminário" },
-  { src: seminario12, alt: "Amigos do seminário" },
-  { src: seminario13, alt: "Turma do seminário nas escadas" },
-  { src: seminario14, alt: "Convivência no seminário" },
-  { src: seminario15, alt: "Seminaristas em frente ao prédio" },
-  { src: seminario16, alt: "Padre Kelmon e formador no seminário" },
-  { src: seminario17, alt: "Encontro no seminário" },
-  { src: seminario18, alt: "Turma de amigos do seminário" },
-  { src: seminario19, alt: "Turma do seminário em formação" },
-];
+  return Object.entries(modules)
+    .filter(([path]) => path.replace(/\\/g, "/").includes(`/timeline/${folder}/`))
+    .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+    .map(([path, src], i) => ({
+      src,
+      alt: `${altPrefix} — foto ${i + 1}`,
+    }));
+}
 
 export const TIMELINE_CARDS: TimelineCardItem[] = [
   {
@@ -110,63 +51,72 @@ export const TIMELINE_CARDS: TimelineCardItem[] = [
     title: "Minhas Raízes",
     description:
       "Nascimento em Salvador (21/10/1976). Batismo, Eucaristia e Crisma. Formação católica e primeiros passos na fé.",
-    photos: RAIZES_PHOTOS,
+    folder: "minhas-raizes",
+    photos: loadFolderPhotos("minhas-raizes", "Minhas Raízes"),
   },
   {
     year: "Juventude",
     title: "Na juventude",
     description:
       "Quando jovem, fundei o movimento JUSPE — Jovens Unidos Semeando Paz e Esperança.",
-    photos: JUVENTUDE_PHOTOS,
+    folder: "na-juventude",
+    photos: loadFolderPhotos("na-juventude", "Na juventude"),
   },
   {
     year: "1996-2003",
     title: "Seminário dos Legionários de Cristo. Mater Ecclesiae",
     description:
       "Formação no Seminário Maria Mater Ecclesiae, dos Legionários de Cristo, em São Paulo — Filosofia, Teologia e vida comunitária.",
-    photos: SEMINARIO_PHOTOS,
+    folder: "seminario",
+    photos: loadFolderPhotos("seminario", "Seminário"),
   },
   {
     year: "2014-2015",
     title: "Ordenação Sacerdotal",
     description:
       "Funda a associação Theotokos. Ordenado diácono (2014) e sacerdote (2015) na Igreja Ortodoxa da América.",
-    photos: [],
+    folder: "ordenacao-sacerdotal",
+    photos: loadFolderPhotos("ordenacao-sacerdotal", "Ordenação Sacerdotal"),
   },
   {
     year: "2010-2017",
     title: "Ativismo e Missões",
     description:
       "Campanha pró-vida em 2010. Missão humanitária em Roraima (2017) auxiliando refugiados venezuelanos.",
-    photos: [],
+    folder: "ativismo-e-missoes",
+    photos: loadFolderPhotos("ativismo-e-missoes", "Ativismo e Missões"),
   },
   {
     year: "2019-2021",
     title: "Movimento Cristão Conservador",
     description:
       "Conhece Roberto Jefferson. Funda o MCC a pedido do PTB, tornando-se seu primeiro presidente nacional.",
-    photos: [],
+    folder: "movimento-cristao-conservador",
+    photos: loadFolderPhotos("movimento-cristao-conservador", "Movimento Cristão Conservador"),
   },
   {
     year: "2022",
     title: "Candidatura Presidencial",
     description:
       "Candidato à Presidência pelo PTB. Debates nacionais no SBT e Globo. Obtém 81.129 votos em 19 dias de campanha.",
-    photos: [],
+    folder: "candidatura-presidencial",
+    photos: loadFolderPhotos("candidatura-presidencial", "Candidatura Presidencial"),
   },
   {
     year: "2023-2024",
     title: "Foro do Brasil e Livro",
     description:
       "Funda o Foro do Brasil (29/06/2023). Lança o livro 'Fé e Política de Mãos Dadas'. Filia-se ao PL em agosto/2024.",
-    photos: [],
+    folder: "foro-do-brasil-e-livro",
+    photos: loadFolderPhotos("foro-do-brasil-e-livro", "Foro do Brasil e Livro"),
   },
   {
     year: "2025-2026",
     title: "TV e Deputado Federal",
     description:
       "Programas na VV8 TV: 'Confessionário' e 'Oração pelo Brasil'. Candidato a Deputado Federal por São Paulo (PL).",
-    photos: [],
+    folder: "tv-e-deputado-federal",
+    photos: loadFolderPhotos("tv-e-deputado-federal", "TV e Deputado Federal"),
   },
 ];
 
@@ -244,12 +194,14 @@ function PhotoGalleryModal({
 
           {photo ? (
             <>
-              <div className="relative flex min-h-[40dvh] max-h-[58dvh] items-center justify-center bg-neutral-50 px-12 py-6 sm:min-h-[22rem]">
+              <div className="relative flex min-h-[44dvh] max-h-[62dvh] items-center justify-center bg-neutral-50 px-10 py-5 sm:min-h-[24rem]">
                 <img
                   key={photo.src}
                   src={photo.src}
                   alt={photo.alt}
-                  className="max-h-[52dvh] w-auto max-w-full object-contain"
+                  className="max-h-[56dvh] w-auto max-w-full object-contain"
+                  width={700}
+                  height={500}
                   decoding="async"
                 />
 
@@ -295,7 +247,7 @@ function PhotoGalleryModal({
                       onClick={() => setIndex(i)}
                       aria-label={`Ir para foto ${i + 1}`}
                       aria-current={i === index}
-                      className={`relative h-16 w-14 shrink-0 overflow-hidden rounded-md border-2 transition sm:h-20 sm:w-16 ${
+                      className={`relative h-14 w-20 shrink-0 overflow-hidden rounded-md border-2 transition sm:h-16 sm:w-24 ${
                         i === index
                           ? "border-[var(--blue-primary)]"
                           : "border-gray-200 opacity-80 hover:opacity-100"
@@ -304,7 +256,7 @@ function PhotoGalleryModal({
                       <img
                         src={item.src}
                         alt=""
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-cover object-center"
                         loading="lazy"
                         decoding="async"
                       />
@@ -332,27 +284,27 @@ function TimelineCard({ item, index }: { item: TimelineCardItem; index: number }
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.5, delay: index * 0.08 }}
-        className="group flex h-full flex-col overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all hover:-translate-y-1 hover:border-blue-500 hover:shadow-2xl"
+        className="group flex h-full w-full flex-col overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-lg transition-all hover:-translate-y-1 hover:border-blue-500 hover:shadow-2xl"
       >
-        <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-blue-900 to-blue-600">
+        <div className="relative mx-auto h-[150px] w-[300px] max-w-full shrink-0 overflow-hidden bg-neutral-200">
           {cover ? (
             <img
               src={cover.src}
               alt={cover.alt}
-              width={640}
-              height={480}
+              width={300}
+              height={150}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              className="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-[1.03]"
             />
           ) : (
-            <div className="flex h-full w-full items-center justify-center">
+            <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-blue-900 to-blue-600">
               <Images className="size-10 text-white/50" aria-hidden="true" />
             </div>
           )}
         </div>
 
-        <div className="flex flex-1 flex-col p-4 sm:p-5">
+        <div className="flex min-h-0 flex-1 flex-col p-4 sm:p-5">
           <h3
             className="mb-2 truncate whitespace-nowrap text-base font-black leading-none sm:text-lg"
             title={item.title}
@@ -360,7 +312,7 @@ function TimelineCard({ item, index }: { item: TimelineCardItem; index: number }
           >
             {item.title}
           </h3>
-          <p className="mb-4 line-clamp-3 flex-1 text-sm leading-relaxed text-gray-700">
+          <p className="mb-4 line-clamp-3 min-h-[3.75rem] flex-1 text-sm leading-relaxed text-gray-700">
             {item.description}
           </p>
 
@@ -391,7 +343,7 @@ function TimelineCard({ item, index }: { item: TimelineCardItem; index: number }
 
 export function TimelineCards() {
   return (
-    <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
       {TIMELINE_CARDS.map((item, i) => (
         <TimelineCard key={item.year} item={item} index={i} />
       ))}

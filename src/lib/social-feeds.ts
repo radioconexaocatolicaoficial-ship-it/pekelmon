@@ -18,6 +18,8 @@ export type SocialPost = {
   embedUrl: string;
   title?: string;
   thumbnail?: string;
+  /** Tipo da publicação (Instagram: post/reel/story). */
+  kind?: "post" | "reel" | "story";
 };
 
 export type SocialNetworkFeed = {
@@ -38,7 +40,8 @@ export type SocialFeedsResult = {
 const YOUTUBE_CHANNEL_ID = "UCA0aqdkBHj5G4eS0raaeZhg";
 /** YouTube "long-form videos" playlist (excludes Shorts): UULF + channelId without UC */
 const YOUTUBE_LONG_FORM_PLAYLIST_ID = `UULF${YOUTUBE_CHANNEL_ID.slice(2)}`;
-const CACHE_TTL_MS = 3 * 60 * 1000;
+/** Cache curto para novos posts/reels aparecerem rápido no site. */
+const CACHE_TTL_MS = 60 * 1000;
 const POSTS_PER_NETWORK = 8;
 
 const NETWORK_META: Record<
@@ -84,11 +87,13 @@ const FALLBACK_POSTS: Record<SocialNetworkId, SocialPost[]> = {
     url: string;
     embedUrl: string;
     thumbnail?: string;
+    kind?: "post" | "reel" | "story";
   }>).map((post) => ({
     id: post.id,
     url: post.url,
     embedUrl: post.embedUrl,
     ...(post.thumbnail ? { thumbnail: post.thumbnail } : {}),
+    ...(post.kind ? { kind: post.kind } : {}),
   })),
   youtube: [],
   tiktok: (tiktokPostsSeed as Array<{
@@ -131,8 +136,10 @@ const FALLBACK_POSTS: Record<SocialNetworkId, SocialPost[]> = {
 };
 
 let cache: { data: SocialFeedsResult; expiresAt: number } | null = null;
-const FEEDS_CACHE_VERSION = 13; // bump: 8 posts per network for carousels
+const FEEDS_CACHE_VERSION = 16; // bump: force pinned reel + faster auto-refresh
 let cacheVersion = FEEDS_CACHE_VERSION;
+/** Reel fixo — SEMPRE o primeiro card da seção Instagram. */
+const INSTAGRAM_PINNED_REELS = ["Db53OtOxsZL"] as const;
 
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36";
@@ -225,6 +232,8 @@ function isRealPostImage(url: string | undefined): url is string {
 
 async function fetchInstagramThumbnail(code: string): Promise<string | undefined> {
   const targets = [
+    `https://www.instagram.com/reel/${code}/`,
+    `https://www.instagram.com/p/${code}/`,
     `https://www.threads.com/@pekelmon/post/${code}`,
     `https://www.threads.net/@pekelmon/post/${code}`,
   ];
@@ -256,8 +265,46 @@ async function fetchInstagramThumbnail(code: string): Promise<string | undefined
   return undefined;
 }
 
+function instagramPostFromCode(
+  code: string,
+  kind: "post" | "reel" | "story",
+  seeded?: SocialPost,
+  liveThumb?: string,
+): SocialPost {
+  const localThumb =
+    seeded?.thumbnail?.startsWith("/instagram/") && isRealPostImage(seeded.thumbnail)
+      ? seeded.thumbnail
+      : undefined;
+  const thumbnail =
+    localThumb ||
+    (isRealPostImage(liveThumb) ? liveThumb : undefined) ||
+    (isRealPostImage(seeded?.thumbnail) ? seeded.thumbnail : undefined) ||
+    `/instagram/${code}.jpg`;
+
+  const isReelOrStory = kind === "reel" || kind === "story";
+  return {
+    id: code,
+    url: isReelOrStory
+      ? `https://www.instagram.com/reel/${code}/`
+      : `https://www.instagram.com/p/${code}/`,
+    embedUrl: isReelOrStory
+      ? `https://www.instagram.com/reel/${code}/embed/`
+      : `https://www.instagram.com/p/${code}/embed/`,
+    thumbnail,
+    kind,
+  };
+}
+
 async function fetchInstagramPosts(): Promise<SocialPost[]> {
   const sources = [
+    () =>
+      fetchText("https://r.jina.ai/https://www.instagram.com/pekelmon/reels/", {
+        headers: { Accept: "text/plain" },
+      }),
+    () =>
+      fetchText("https://r.jina.ai/https://www.instagram.com/pekelmon/", {
+        headers: { Accept: "text/plain" },
+      }),
     () =>
       fetchText("https://r.jina.ai/https://www.threads.com/@pekelmon", {
         headers: { Accept: "text/plain" },
@@ -265,56 +312,102 @@ async function fetchInstagramPosts(): Promise<SocialPost[]> {
     () => fetchText("https://www.threads.com/@pekelmon"),
   ];
 
-  let codes: string[] = [];
+  const reelCodes: string[] = [];
+  const postCodes: string[] = [];
+  const storyCodes: string[] = [];
 
   for (const source of sources) {
     try {
       const text = await source();
-      codes = uniqueLimit([
+      reelCodes.push(
+        ...extractMatches(text, /instagram\.com\/reel\/([A-Za-z0-9_-]+)/g),
+        ...extractMatches(text, /\/reel\/([A-Za-z0-9_-]+)/g),
+      );
+      postCodes.push(
+        ...extractMatches(text, /instagram\.com\/p\/([A-Za-z0-9_-]+)/g),
         ...extractMatches(text, /\/@pekelmon\/post\/([A-Za-z0-9_-]+)/g),
         ...extractMatches(text, /threads\.com\/t\/([A-Za-z0-9_-]+)/g),
-      ]);
-      if (codes.length > 0) break;
+      );
+      // Highlights / stories links quando expostos publicamente
+      storyCodes.push(
+        ...extractMatches(text, /instagram\.com\/stories\/pekelmon\/([A-Za-z0-9_-]+)/g),
+        ...extractMatches(text, /\/stories\/highlights\/(\d+)/g),
+      );
     } catch {
       // try next source
     }
   }
 
-  if (codes.length === 0) {
-    codes = FALLBACK_POSTS.instagram.map((post) => post.id);
-  }
-  if (codes.length === 0) throw new Error("No Instagram/Threads posts found");
-
   const seedById = new Map(
     FALLBACK_POSTS.instagram.map((post) => [post.id, post] as const),
   );
 
+  const kindById = new Map<string, "post" | "reel" | "story">();
+  for (const code of INSTAGRAM_PINNED_REELS) kindById.set(code, "reel");
+  for (const code of uniqueLimit(reelCodes, 20)) kindById.set(code, "reel");
+  for (const code of uniqueLimit(storyCodes, 8)) {
+    if (!kindById.has(code)) kindById.set(code, "story");
+  }
+  for (const code of uniqueLimit(postCodes, 20)) {
+    if (!kindById.has(code)) kindById.set(code, seedById.get(code)?.kind ?? "post");
+  }
+  // seed fallbacks
+  for (const seeded of FALLBACK_POSTS.instagram) {
+    if (!kindById.has(seeded.id)) kindById.set(seeded.id, seeded.kind ?? "post");
+  }
+
+  const orderedCodes = uniqueLimit(
+    [
+      ...INSTAGRAM_PINNED_REELS,
+      ...reelCodes,
+      ...storyCodes,
+      ...postCodes,
+      ...FALLBACK_POSTS.instagram.map((p) => p.id),
+    ],
+    POSTS_PER_NETWORK + 4,
+  );
+
+  if (orderedCodes.length === 0) throw new Error("No Instagram posts/reels found");
+
   const posts = await Promise.all(
-    codes.map(async (code) => {
+    orderedCodes.map(async (code) => {
       const seeded = seedById.get(code);
+      const kind = kindById.get(code) ?? "post";
       const localThumb =
         seeded?.thumbnail?.startsWith("/instagram/") && isRealPostImage(seeded.thumbnail)
           ? seeded.thumbnail
           : undefined;
       const liveThumb = localThumb ? undefined : await fetchInstagramThumbnail(code);
-      const thumbnail =
-        localThumb ||
-        (isRealPostImage(liveThumb) ? liveThumb : undefined) ||
-        (isRealPostImage(seeded?.thumbnail) ? seeded.thumbnail : undefined) ||
-        `/instagram/${code}.jpg`;
-
-      return {
-        id: code,
-        url: `https://www.instagram.com/p/${code}/`,
-        embedUrl: `https://www.instagram.com/p/${code}/embed/`,
-        thumbnail,
-      } satisfies SocialPost;
+      return instagramPostFromCode(code, kind, seeded, liveThumb);
     }),
   );
 
-  // Keep only posts that have a usable image card
   const withImages = posts.filter((post) => isRealPostImage(post.thumbnail));
-  return withImages.length > 0 ? withImages : FALLBACK_POSTS.instagram;
+  return ensurePinnedInstagramPosts(
+    withImages.length > 0 ? withImages : FALLBACK_POSTS.instagram,
+  );
+}
+
+/** Garante o reel pedido pelo cliente como 1º item, depois reels/stories/posts. */
+function ensurePinnedInstagramPosts(posts: SocialPost[]): SocialPost[] {
+  const seedById = new Map(FALLBACK_POSTS.instagram.map((p) => [p.id, p] as const));
+  const byId = new Map(posts.map((p) => [p.id, p] as const));
+
+  const pinned: SocialPost[] = INSTAGRAM_PINNED_REELS.map((code) => {
+    const existing = byId.get(code);
+    if (existing) return { ...existing, kind: "reel" as const };
+    return instagramPostFromCode(code, "reel", seedById.get(code));
+  });
+
+  const pinnedIds = new Set<string>(INSTAGRAM_PINNED_REELS);
+  const rest = posts.filter((p) => !pinnedIds.has(p.id));
+  rest.sort((a, b) => {
+    const rank = (p: SocialPost) =>
+      p.kind === "reel" ? 0 : p.kind === "story" ? 1 : 2;
+    return rank(a) - rank(b);
+  });
+
+  return [...pinned, ...rest].slice(0, POSTS_PER_NETWORK);
 }
 
 async function fetchTikTokCover(videoUrl: string): Promise<{ thumbnail?: string; title?: string }> {
@@ -646,11 +739,15 @@ async function safeFetch(
   try {
     const posts = await fetcher();
     if (posts.length > 0) {
-      FALLBACK_POSTS[id] = posts;
-      return posts;
+      FALLBACK_POSTS[id] =
+        id === "instagram" ? ensurePinnedInstagramPosts(posts) : posts;
+      return FALLBACK_POSTS[id];
     }
   } catch (error) {
     console.warn(`[social-feeds] ${id} fetch failed:`, error);
+  }
+  if (id === "instagram") {
+    return ensurePinnedInstagramPosts(FALLBACK_POSTS.instagram);
   }
   return FALLBACK_POSTS[id] ?? [];
 }
@@ -665,7 +762,7 @@ async function buildFeeds(): Promise<SocialFeedsResult> {
   ]);
 
   const byId: Record<SocialNetworkId, SocialPost[]> = {
-    instagram,
+    instagram: ensurePinnedInstagramPosts(instagram),
     youtube,
     tiktok,
     x,
@@ -697,9 +794,12 @@ export const getSocialFeeds = createServerFn({ method: "GET" }).handler(async ()
   }
 
   const data = await buildFeeds();
-  // Never cache Instagram without real thumbnails
-  const instagram = data.networks.find((network) => network.id === "instagram");
-  const hasThumbs = instagram?.posts.every((post) => isRealPostImage(post.thumbnail));
+  // Confirma o reel pinado mesmo se o scrape falhar parcialmente
+  const ig = data.networks.find((network) => network.id === "instagram");
+  if (ig) {
+    ig.posts = ensurePinnedInstagramPosts(ig.posts);
+  }
+  const hasThumbs = ig?.posts.every((post) => isRealPostImage(post.thumbnail));
   if (hasThumbs) {
     cache = { data, expiresAt: now + CACHE_TTL_MS };
   }

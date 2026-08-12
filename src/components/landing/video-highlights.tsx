@@ -15,17 +15,36 @@ import {
 } from "@/data/youtube-highlights";
 
 const SIDE_PAGE_SIZE = 4;
-const SIDE_ROTATE_MS = 7000;
-/** Quantos vídeos laterais entram na rotação (mais novos + mais vistos). */
+/** 1 minuto em cada conjunto / vídeo antes de trocar. */
+const SIDE_ROTATE_MS = 60_000;
+const FEATURED_ROTATE_MS = 60_000;
+/** Destaques grandes em rotação (mais novos + mais vistos). */
+const FEATURED_ROTATION_LIMIT = 8;
+/** Cards laterais em rotação. */
 const SIDE_ROTATION_LIMIT = 16;
 
-function sideRankScore(video: YoutubeHighlight, maxViews: number, minDate: number, maxDate: number) {
+function rankScore(
+  video: YoutubeHighlight,
+  maxViews: number,
+  minDate: number,
+  maxDate: number,
+) {
   const viewsScore = maxViews > 0 ? video.views / maxViews : 0;
   const published = Date.parse(video.published || "") || minDate;
   const dateRange = Math.max(maxDate - minDate, 1);
   const recencyScore = (published - minDate) / dateRange;
-  // Equilíbrio: visualizações + novidade
   return viewsScore * 0.55 + recencyScore * 0.45;
+}
+
+function rankVideos(videos: YoutubeHighlight[]) {
+  if (videos.length === 0) return [];
+  const maxViews = Math.max(...videos.map((v) => v.views), 1);
+  const dates = videos.map((v) => Date.parse(v.published || "") || 0);
+  const minDate = Math.min(...dates);
+  const maxDate = Math.max(...dates);
+  return [...videos].sort(
+    (a, b) => rankScore(b, maxViews, minDate, maxDate) - rankScore(a, maxViews, minDate, maxDate),
+  );
 }
 
 function VideoCard({
@@ -91,30 +110,35 @@ function VideoCard({
 }
 
 export function VideoHighlights() {
-  const featured =
-    YOUTUBE_HIGHLIGHTS.find((v) => v.id === YOUTUBE_FEATURED_ID) ?? YOUTUBE_HIGHLIGHTS[0];
+  const ranked = useMemo(() => rankVideos(YOUTUBE_HIGHLIGHTS), []);
 
-  const sideVideos = useMemo(() => {
-    const rest = YOUTUBE_HIGHLIGHTS.filter((v) => v.id !== featured.id);
-    if (rest.length === 0) return [];
+  const featuredPool = useMemo(() => {
+    const preferred = ranked.find((v) => v.id === YOUTUBE_FEATURED_ID);
+    const others = ranked.filter((v) => v.id !== YOUTUBE_FEATURED_ID);
+    const pool = preferred ? [preferred, ...others] : others;
+    return pool.slice(0, FEATURED_ROTATION_LIMIT);
+  }, [ranked]);
 
-    const maxViews = Math.max(...rest.map((v) => v.views), 1);
-    const dates = rest.map((v) => Date.parse(v.published || "") || 0);
-    const minDate = Math.min(...dates);
-    const maxDate = Math.max(...dates);
-
-    return [...rest]
-      .sort(
-        (a, b) =>
-          sideRankScore(b, maxViews, minDate, maxDate) -
-          sideRankScore(a, maxViews, minDate, maxDate),
-      )
-      .slice(0, SIDE_ROTATION_LIMIT);
-  }, [featured.id]);
-
-  const pageCount = Math.max(1, Math.ceil(sideVideos.length / SIDE_PAGE_SIZE));
+  const [featuredIndex, setFeaturedIndex] = useState(0);
   const [page, setPage] = useState(0);
   const [active, setActive] = useState<YoutubeHighlight | null>(null);
+
+  const featured = featuredPool[featuredIndex] ?? featuredPool[0] ?? YOUTUBE_HIGHLIGHTS[0];
+
+  const sideVideos = useMemo(() => {
+    return ranked.filter((v) => v.id !== featured.id).slice(0, SIDE_ROTATION_LIMIT);
+  }, [ranked, featured.id]);
+
+  const pageCount = Math.max(1, Math.ceil(sideVideos.length / SIDE_PAGE_SIZE));
+
+  useEffect(() => {
+    if (active || featuredPool.length <= 1) return;
+    const id = window.setInterval(() => {
+      setFeaturedIndex((current) => (current + 1) % featuredPool.length);
+      setPage(0);
+    }, FEATURED_ROTATE_MS);
+    return () => window.clearInterval(id);
+  }, [active, featuredPool.length]);
 
   useEffect(() => {
     if (active || pageCount <= 1) return;
@@ -122,7 +146,7 @@ export function VideoHighlights() {
       setPage((current) => (current + 1) % pageCount);
     }, SIDE_ROTATE_MS);
     return () => window.clearInterval(id);
-  }, [active, pageCount]);
+  }, [active, pageCount, featured.id]);
 
   const sidePage = sideVideos.slice(
     page * SIDE_PAGE_SIZE,
@@ -145,7 +169,7 @@ export function VideoHighlights() {
 
       <div className="grid items-stretch gap-3 lg:grid-cols-5 lg:gap-4">
         <div className="lg:col-span-3">
-          <VideoCard video={featured} onOpen={setActive} large />
+          <VideoCard key={featured.id} video={featured} onOpen={setActive} large />
         </div>
 
         <div className="grid grid-cols-2 grid-rows-2 gap-3 lg:col-span-2 lg:gap-3">
@@ -154,7 +178,13 @@ export function VideoHighlights() {
             if (!video) {
               return <div key={`empty-${index}`} className="rounded-xl bg-gray-50" />;
             }
-            return <VideoCard key={`${video.id}-${page}`} video={video} onOpen={setActive} />;
+            return (
+              <VideoCard
+                key={`${featured.id}-${video.id}-${page}`}
+                video={video}
+                onOpen={setActive}
+              />
+            );
           })}
         </div>
       </div>

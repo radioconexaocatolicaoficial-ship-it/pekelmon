@@ -10,7 +10,7 @@ export type Vv8FeedsResult = {
   live: boolean;
 };
 
-const CACHE_TTL_MS = 3 * 60 * 1000;
+const CACHE_TTL_MS = 60 * 1000;
 const MAX_ARTICLES = 16;
 const SEARCH_URL = VV8_SOURCE_URL;
 

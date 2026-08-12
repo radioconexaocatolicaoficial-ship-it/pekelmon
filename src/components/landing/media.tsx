@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { ExternalLink, Newspaper } from "lucide-react";
+import { ExternalLink, Newspaper, Play } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 
 import {
@@ -16,7 +16,7 @@ import { getPressFeeds } from "@/lib/press-feeds";
 import { getVv8Feeds } from "@/lib/vv8-feeds";
 import { getSocialFeeds, type SocialNetworkId, type SocialPost } from "@/lib/social-feeds";
 
-const MEDIA_REFRESH_MS = 3 * 60 * 1000;
+const MEDIA_REFRESH_MS = 60 * 1000;
 const VV8_ACCENT = "#0168e1";
 
 import { PageShell, Reveal } from "./primitives";
@@ -59,6 +59,49 @@ const ICONS: Record<SocialNetworkId, () => ReactNode> = {
   facebook: FacebookIcon,
 };
 
+function InstagramCard({ post, color }: { post: SocialPost; color: string }) {
+  const isVideo = post.kind === "reel" || post.kind === "story";
+  const badge = post.kind === "reel" ? "Reel" : post.kind === "story" ? "Story" : null;
+
+  // Reels/Stories: embed do Instagram para o vídeo tocar no site
+  if (isVideo) {
+    return (
+      <div
+        className="group relative overflow-hidden rounded-xl border-2 bg-neutral-100 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg"
+        style={{ borderColor: color + "40" }}
+      >
+        {badge ? (
+          <span className="absolute left-2 top-2 z-10 rounded-md bg-black/70 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white">
+            {badge}
+          </span>
+        ) : null}
+        <div className="aspect-[4/5] w-full overflow-hidden bg-black">
+          <iframe
+            src={`${post.embedUrl}${post.embedUrl.includes("?") ? "&" : "?"}utm_source=ig_embed`}
+            title={post.title ?? "Instagram Reel"}
+            className="h-full w-full border-0"
+            loading="eager"
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            allowFullScreen
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+        </div>
+        <a
+          href={post.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-between gap-2 border-t bg-white px-3 py-2 text-xs font-medium text-gray-600 transition-colors hover:text-[#E4405F]"
+        >
+          <span className="truncate">Abrir no Instagram</span>
+          <ExternalLink className="size-3.5 shrink-0" />
+        </a>
+      </div>
+    );
+  }
+
+  return <CoverImageCard post={post} color={color} label="Instagram" aspectClass="aspect-[4/5]" />;
+}
+
 function CoverImageCard({
   post,
   color,
@@ -72,6 +115,9 @@ function CoverImageCard({
 }) {
   const imageSrc = post.thumbnail;
   const isFacebook = label === "Facebook";
+  const isVideo = post.kind === "reel" || post.kind === "story" || label === "TikTok";
+  const badge =
+    post.kind === "reel" ? "Reel" : post.kind === "story" ? "Story" : null;
 
   return (
     <a
@@ -118,7 +164,23 @@ function CoverImageCard({
           Ver no {label}
         </span>
       </span>
-      <span className="absolute inset-0 z-10 bg-black/0 transition-colors group-hover:bg-black/15" />
+
+      {badge ? (
+        <span className="absolute left-2.5 top-2.5 z-20 rounded-full bg-black/65 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-white backdrop-blur-sm">
+          {badge}
+        </span>
+      ) : null}
+
+      {isVideo ? (
+        <span className="absolute inset-0 z-10 flex items-center justify-center">
+          <span className="inline-flex size-12 items-center justify-center rounded-full bg-black/55 text-white shadow-lg transition group-hover:scale-110">
+            <Play className="size-5 fill-current" aria-hidden="true" />
+          </span>
+        </span>
+      ) : (
+        <span className="absolute inset-0 z-10 bg-black/0 transition-colors group-hover:bg-black/15" />
+      )}
+
       <span className="absolute bottom-3 right-3 z-20 inline-flex size-8 items-center justify-center rounded-full bg-black/55 text-white opacity-0 transition-opacity group-hover:opacity-100">
         <ExternalLink className="size-4" />
       </span>
@@ -155,7 +217,7 @@ function PostCard({
   }
 
   if (networkId === "instagram") {
-    return <CoverImageCard post={post} color={color} label="Instagram" />;
+    return <InstagramCard post={post} color={color} />;
   }
 
   if (networkId === "tiktok") {
@@ -414,6 +476,11 @@ function SocialNetworkCarousel({
             >
               {social.handle}
             </a>
+            {social.id === "instagram" ? (
+              <p className="mt-0.5 text-xs text-gray-500">
+                Posts, Reels e Stories · atualização automática
+              </p>
+            ) : null}
           </div>
         </div>
 
@@ -468,11 +535,12 @@ export function Media() {
   }, []);
 
   const socialQuery = useQuery({
-    queryKey: ["social-feeds", "v15-auto-refresh"],
+    queryKey: ["social-feeds", "v16-pinned-reel-auto"],
     queryFn: () => getSocialFeeds(),
     staleTime: MEDIA_REFRESH_MS,
     refetchInterval: MEDIA_REFRESH_MS,
     refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
     enabled: ready,
   });
 
@@ -535,7 +603,8 @@ export function Media() {
               </h2>
               <p className="text-sm leading-relaxed text-gray-700 text-justify sm:text-base">
                 Acompanhe a cobertura na imprensa (Portal VV8 e 7Minutos) e nas redes sociais.
-                As matérias e os feeds atualizam automaticamente a cada poucos minutos.
+                As matérias e os feeds atualizam automaticamente a cada 1 minuto.
+                Novos posts, reels e vídeos públicos passam a aparecer no site sozinhos.
               </p>
               {hasUpdatedAt ? (
                 <p className="mt-3 text-xs text-gray-500">

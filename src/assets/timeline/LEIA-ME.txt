@@ -1,0 +1,25 @@
+﻿ONDE COLOCAR AS FOTOS DOS CARDS
+================================
+
+Cada card tem a SUA pasta. Coloque as imagens dentro da pasta do card.
+
+Caminho base:
+  src\assets\timeline\
+
+Pastas:
+  1) minhas-raizes                  â†’ card "Minhas RaÃ­zes"
+  2) na-juventude                   â†’ card "Na juventude"
+  3) seminario                      â†’ card "SeminÃ¡rio..."
+  4) ordenacao-sacerdotal           â†’ card "OrdenaÃ§Ã£o Sacerdotal"
+  5) ativismo-e-missoes             â†’ card "Ativismo e MissÃµes"
+  6) movimento-cristao-conservador  â†’ card "Movimento CristÃ£o Conservador"
+  7) candidatura-presidencial       â†’ card "Candidatura Presidencial"
+  8) foro-do-brasil-e-livro         â†’ card "Foro do Brasil e Livro"
+  9) tv-e-deputado-federal          â†’ card "TV e Deputado Federal"
+
+FORMATOS ACEITOS: .jpg  .jpeg  .png  .webp
+
+DICAS:
+- A primeira foto (ordem do nome: 01, 02, 03...) vira a prÃ©via do card.
+- PrÃ©via no site: 300 x 150 px (pode enviar maior; o site ajusta).
+- Depois de colocar as fotos, salve e atualize a pÃ¡gina (Ctrl+F5).
