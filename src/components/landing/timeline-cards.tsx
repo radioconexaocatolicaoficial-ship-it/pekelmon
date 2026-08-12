@@ -22,7 +22,10 @@ export type TimelinePhoto = {
 
 export type TimelineCardMeta = {
   year: string;
+  /** Título completo (aparece no modal). */
   title: string;
+  /** Título curto no card; se vazio, usa title. */
+  cardTitle?: string;
   description: string;
   /** Pasta em public/timeline/{folder}/ */
   folder: string;
@@ -46,6 +49,7 @@ export const TIMELINE_CARD_META: TimelineCardMeta[] = [
   {
     year: "1996-2003",
     title: "Seminário dos Legionários de Cristo. Mater Ecclesiae",
+    cardTitle: "Seminário",
     description:
       "Formação no Seminário Maria Mater Ecclesiae, dos Legionários de Cristo, em São Paulo — Filosofia, Teologia e vida comunitária.",
     folder: "seminario",
@@ -141,32 +145,37 @@ function PhotoGalleryModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[92dvh] max-w-[min(96vw,920px)] gap-0 overflow-hidden border-0 bg-white p-0 sm:rounded-2xl">
-        <div className="flex items-start justify-between gap-3 border-b px-4 py-3 sm:px-5">
-          <div className="min-w-0">
+      <DialogContent
+        hideCloseButton
+        className="flex max-h-[92dvh] w-[min(96vw,920px)] max-w-[min(96vw,920px)] flex-col gap-0 overflow-hidden border-0 bg-white p-0 sm:rounded-2xl"
+      >
+        <div className="relative flex shrink-0 items-start justify-between gap-3 border-b px-4 py-3 pr-12 sm:px-5 sm:pr-14">
+          <div className="min-w-0 flex-1">
             <DialogTitle
-              className="truncate text-lg font-black sm:text-xl"
+              className="text-balance text-base font-black leading-snug sm:text-xl"
               style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
             >
               {title}
             </DialogTitle>
-            <p className="text-xs font-semibold uppercase tracking-wide text-gray-500">{year}</p>
+            <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-gray-500">
+              {year}
+            </p>
             <p className="mt-1 line-clamp-2 text-sm text-gray-600">{description}</p>
           </div>
-          <DialogClose className="rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-800">
+          <DialogClose className="absolute right-3 top-3 rounded-full p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-800">
             <X className="size-5" />
             <span className="sr-only">Fechar</span>
           </DialogClose>
         </div>
 
-        <div className="relative bg-neutral-100">
+        <div className="relative min-h-0 flex-1 overflow-hidden bg-neutral-100">
           {photos.length > 0 && current ? (
             <>
-              <div className="flex min-h-[240px] items-center justify-center px-2 py-4 sm:min-h-[360px] sm:px-4">
+              <div className="flex w-full items-center justify-center overflow-hidden px-10 py-4 sm:min-h-[360px] sm:px-14">
                 <img
                   src={current.src}
                   alt={current.alt}
-                  className="max-h-[56dvh] w-auto max-w-full object-contain"
+                  className="mx-auto block h-auto max-h-[52dvh] w-auto max-w-full object-contain"
                 />
               </div>
 
@@ -175,7 +184,7 @@ function PhotoGalleryModal({
                   <button
                     type="button"
                     onClick={() => setIndex((i) => (i - 1 + photos.length) % photos.length)}
-                    className="absolute left-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow hover:bg-white"
+                    className="absolute left-2 top-[42%] z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow hover:bg-white"
                     aria-label="Foto anterior"
                   >
                     <ChevronLeft className="size-5" />
@@ -183,7 +192,7 @@ function PhotoGalleryModal({
                   <button
                     type="button"
                     onClick={() => setIndex((i) => (i + 1) % photos.length)}
-                    className="absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow hover:bg-white"
+                    className="absolute right-2 top-[42%] z-10 -translate-y-1/2 rounded-full bg-white/90 p-2 shadow hover:bg-white"
                     aria-label="Próxima foto"
                   >
                     <ChevronRight className="size-5" />
@@ -282,7 +291,7 @@ function TimelineCard({
             title={item.title}
             style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
           >
-            {item.title}
+            {item.cardTitle ?? item.title}
           </h3>
           <p className="mb-4 line-clamp-3 min-h-[3.75rem] flex-1 text-sm leading-relaxed text-gray-700">
             {item.description}
