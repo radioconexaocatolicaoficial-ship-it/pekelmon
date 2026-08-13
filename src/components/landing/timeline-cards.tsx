@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/dialog";
 import { getTimelinePhotos } from "@/lib/timeline-photos";
 
-/** Atualiza a lista de fotos a cada 8s quando você coloca imagens na pasta. */
-const TIMELINE_REFRESH_MS = 8 * 1000;
+/** Atualiza a lista ao adicionar/remover arquivos em public/timeline. */
+const TIMELINE_REFRESH_MS = 3 * 1000;
 
 export type TimelinePhoto = {
   src: string;
@@ -412,9 +412,10 @@ function TimelineCard({
 
 export function TimelineCards() {
   const photosQuery = useQuery({
-    queryKey: ["timeline-photos", "auto-refresh"],
+    queryKey: ["timeline-photos", "live-public-folder-v2"],
     queryFn: () => getTimelinePhotos(),
     staleTime: 0,
+    gcTime: 0,
     refetchInterval: TIMELINE_REFRESH_MS,
     refetchOnWindowFocus: true,
     refetchOnReconnect: true,

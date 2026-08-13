@@ -1,11 +1,12 @@
 import { createServerFn } from "@tanstack/react-start";
-import { copyFile, mkdir, readdir, stat } from "node:fs/promises";
+import { copyFile, mkdir, readdir, stat, unlink } from "node:fs/promises";
 import path from "node:path";
 import { spawn } from "node:child_process";
 
 const IMAGE_EXT = new Set([".webp", ".jpg", ".jpeg", ".png", ".gif", ".avif"]);
 const VIDEO_EXT = new Set([".mp4", ".webm", ".mov", ".m4v"]);
 const MEDIA_EXT = new Set([...IMAGE_EXT, ...VIDEO_EXT]);
+const RAW_IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".gif", ".avif"]);
 
 export const TIMELINE_FOLDERS = [
   "minhas-raizes",
@@ -67,6 +68,10 @@ function mediaKind(name: string): TimelineMediaKind {
   return isVideoFile(name) ? "video" : "image";
 }
 
+function stemOf(name: string): string {
+  return path.parse(name).name;
+}
+
 async function listImageFiles(dir: string): Promise<string[]> {
   try {
     const entries = await readdir(dir, { withFileTypes: true });
@@ -89,40 +94,41 @@ async function listMediaFiles(dir: string): Promise<string[]> {
   }
 }
 
-function stemOf(name: string): string {
-  return path.parse(name).name;
-}
-
-/** Já existe a versão .webp processada deste arquivo? */
-async function hasFittedWebp(destDir: string, name: string): Promise<boolean> {
-  const stem = stemOf(name);
-  const webp = path.join(destDir, `${stem}.webp`);
-  try {
-    await stat(webp);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/** Copia mídia de src/assets/timeline para public/timeline (onde o site serve). */
-async function syncFolderFromAssets(folder: string): Promise<void> {
+/**
+ * public/timeline = fonte da verdade.
+ * Espelha o que está em public para assets (backup) e remove de assets
+ * o que foi apagado em public — assim deletar na pasta some do site.
+ */
+async function mirrorPublicToAssets(folder: string): Promise<void> {
   const aliases = FOLDER_ALIASES[folder] ?? [folder];
-  const destDir = path.join(publicTimelineRoot(), folder);
-  await mkdir(destDir, { recursive: true });
+  const publicDir = path.join(publicTimelineRoot(), folder);
+  await mkdir(publicDir, { recursive: true });
+
+  const publicNames = new Set(await listMediaFiles(publicDir));
 
   for (const alias of aliases) {
-    const srcDir = path.join(assetsTimelineRoot(), alias);
-    const names = await listMediaFiles(srcDir);
-    for (const name of names) {
-      const from = path.join(srcDir, name);
-      const to = path.join(destDir, name);
-      const ext = path.extname(name).toLowerCase();
-      try {
-        // Não re-copia JPEG/PNG se o .webp já foi gerado (evita loop de duplicatas)
-        if (isImageFile(name) && ext !== ".webp" && (await hasFittedWebp(destDir, name))) {
-          continue;
+    const assetsDir = path.join(assetsTimelineRoot(), alias);
+    await mkdir(assetsDir, { recursive: true });
+
+    // Remove do assets o que não existe mais no public
+    const assetNames = await listMediaFiles(assetsDir);
+    await Promise.all(
+      assetNames.map(async (name) => {
+        if (!publicNames.has(name)) {
+          try {
+            await unlink(path.join(assetsDir, name));
+          } catch {
+            // ignore
+          }
         }
+      }),
+    );
+
+    // Copia public → assets (novos / atualizados)
+    for (const name of publicNames) {
+      const from = path.join(publicDir, name);
+      const to = path.join(assetsDir, name);
+      try {
         const [srcStat, destStat] = await Promise.all([
           stat(from),
           stat(to).catch(() => null),
@@ -131,7 +137,7 @@ async function syncFolderFromAssets(folder: string): Promise<void> {
           await copyFile(from, to);
         }
       } catch {
-        // ignore individual file errors
+        // ignore
       }
     }
   }
@@ -147,7 +153,7 @@ async function folderHasRawImages(): Promise<boolean> {
     for (const entry of folders) {
       if (!entry.isDirectory()) continue;
       const names = await listImageFiles(path.join(root, entry.name));
-      if (names.some((n) => path.extname(n).toLowerCase() !== ".webp")) {
+      if (names.some((n) => RAW_IMAGE_EXT.has(path.extname(n).toLowerCase()))) {
         return true;
       }
     }
@@ -157,11 +163,10 @@ async function folderHasRawImages(): Promise<boolean> {
   return false;
 }
 
-/** Ajusta automaticamente novas imagens (700x500, sem barras pretas, prioriza rostos). */
+/** Ajusta automaticamente novas imagens (em segundo plano). */
 function autoFitTimelineImages(): Promise<void> {
   if (fitRunning) return fitRunning;
-  // Evita relançar o Python a cada refetch (travava o site)
-  if (Date.now() - lastFitAt < 60_000) return Promise.resolve();
+  if (Date.now() - lastFitAt < 15_000) return Promise.resolve();
 
   fitRunning = (async () => {
     try {
@@ -195,23 +200,41 @@ function autoFitTimelineImages(): Promise<void> {
   return fitRunning;
 }
 
+/**
+ * Lista o que está em public/timeline agora.
+ * - Prefere .webp se existir o mesmo nome-base
+ * - Mostra jpg/png novos na hora (antes do auto-fit)
+ * - Vídeos sempre listados
+ */
 async function listFolderPhotos(folder: string): Promise<TimelinePhotoFile[]> {
   const dir = path.join(publicTimelineRoot(), folder);
   try {
-    const names = (await listMediaFiles(dir)).filter((name) => {
+    const names = await listMediaFiles(dir);
+    const webpStems = new Set(
+      names
+        .filter((n) => path.extname(n).toLowerCase() === ".webp")
+        .map((n) => stemOf(n).toLowerCase()),
+    );
+
+    const selected = names.filter((name) => {
       const ext = path.extname(name).toLowerCase();
-      // imagens: só .webp processado; vídeos: mp4/webm/mov
-      return ext === ".webp" || isVideoFile(name);
+      if (isVideoFile(name)) return true;
+      if (ext === ".webp") return true;
+      // raw só se ainda não tem webp do mesmo stem
+      if (RAW_IMAGE_EXT.has(ext)) {
+        return !webpStems.has(stemOf(name).toLowerCase());
+      }
+      return false;
     });
+
     const withMtime = await Promise.all(
-      names.map(async (name) => {
+      selected.map(async (name) => {
         const full = path.join(dir, name);
         const info = await stat(full);
         return { name, mtime: info.mtimeMs, kind: mediaKind(name) };
       }),
     );
 
-    // Fotos primeiro, depois vídeos; ordem alfabética/numérica dentro de cada grupo
     withMtime.sort((a, b) => {
       if (a.kind !== b.kind) return a.kind === "image" ? -1 : 1;
       return a.name.localeCompare(b.name, undefined, { numeric: true });
@@ -227,20 +250,23 @@ async function listFolderPhotos(folder: string): Promise<TimelinePhotoFile[]> {
   }
 }
 
-/** Lê as pastas a cada chamada — novas imagens são ajustadas e aparecem sozinhas. */
+/** Lê as pastas a cada chamada — adicionar/remover em public/timeline atualiza o site. */
 export const getTimelinePhotos = createServerFn({ method: "GET" }).handler(
   async (): Promise<TimelinePhotosResult> => {
-    // 1) sincroniza assets → public
-    await Promise.all(TIMELINE_FOLDERS.map((folder) => syncFolderFromAssets(folder)));
-    // 2) lista na hora (não espera o Python — senão o site fica em branco)
+    // 1) lista o que está em public agora (fonte da verdade)
     const byFolder: Record<string, TimelinePhotoFile[]> = {};
     await Promise.all(
       TIMELINE_FOLDERS.map(async (folder) => {
         byFolder[folder] = await listFolderPhotos(folder);
       }),
     );
-    // 3) auto-ajusta em segundo plano
+
+    // 2) espelha public → assets e remove do assets o que foi apagado
+    void Promise.all(TIMELINE_FOLDERS.map((folder) => mirrorPublicToAssets(folder)));
+
+    // 3) auto-ajusta jpg/png novos em segundo plano
     void autoFitTimelineImages();
+
     return { byFolder, updatedAt: new Date().toISOString() };
   },
 );
