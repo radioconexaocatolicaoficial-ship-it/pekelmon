@@ -114,7 +114,7 @@ function FeaturedLocalVideo() {
           src={FEATURED_VIDEO_SRC}
           controls
           playsInline
-          preload="metadata"
+          preload="auto"
           title={FEATURED_VIDEO_TITLE}
         >
           Seu navegador não reproduz vídeo.{" "}
@@ -174,12 +174,10 @@ export function VideoHighlights() {
         </p>
       </div>
 
-      <div className="grid items-stretch gap-3 lg:grid-cols-5 lg:gap-4">
-        <div className="lg:col-span-3">
-          <FeaturedLocalVideo />
-        </div>
+      <div className="space-y-3">
+        <FeaturedLocalVideo />
 
-        <div className="grid grid-cols-2 grid-rows-2 gap-3 lg:col-span-2 lg:gap-3">
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-3">
           {Array.from({ length: SIDE_PAGE_SIZE }, (_, index) => {
             const video = sidePage[index];
             if (!video) {

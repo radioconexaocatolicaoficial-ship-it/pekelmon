@@ -57,7 +57,7 @@ export default defineConfig(async ({ command, mode }) => {
               "cache-control": "public, max-age=31536000, immutable",
             },
           },
-          "/**/*.{webp,jpg,jpeg,png,ico,css,js,mjs}": {
+          "/**/*.{webp,jpg,jpeg,png,ico,css,js,mjs,mp4}": {
             headers: {
               "cache-control": "public, max-age=604800",
             },
