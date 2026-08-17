@@ -2,6 +2,24 @@ import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/r
 
 import { renderErrorPage } from "./lib/error-page";
 
+const GOOGLE_SITE_VERIFICATION_PATH = "/google6e3cc8fc1fe21502.html";
+const GOOGLE_SITE_VERIFICATION_BODY =
+  "google-site-verification: google6e3cc8fc1fe21502.html\n";
+
+const googleVerificationMiddleware = createMiddleware().server(async ({ next, request }) => {
+  const pathname = new URL(request.url).pathname.replace(/\/$/, "") || "/";
+  if (pathname === GOOGLE_SITE_VERIFICATION_PATH) {
+    return new Response(GOOGLE_SITE_VERIFICATION_BODY, {
+      status: 200,
+      headers: {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "no-cache, no-store, must-revalidate",
+      },
+    });
+  }
+  return next();
+});
+
 const errorMiddleware = createMiddleware().server(async ({ next }) => {
   try {
     return await next();
@@ -25,5 +43,5 @@ const csrfMiddleware = createCsrfMiddleware({
 });
 
 export const startInstance = createStart(() => ({
-  requestMiddleware: [errorMiddleware, csrfMiddleware],
+  requestMiddleware: [googleVerificationMiddleware, errorMiddleware, csrfMiddleware],
 }));
