@@ -21,7 +21,7 @@ import { YOUTUBE_HIGHLIGHTS, type YoutubeHighlight } from "@/data/youtube-highli
 const FEATURED_VIDEO_SRC = "/videos/video-destaque-padre-kelmon.mp4";
 const FEATURED_VIDEO_TITLE = "Padre Kelmon — vídeo em destaque";
 
-const SIDE_PAGE_SIZE = 6;
+const SIDE_PAGE_SIZE = 4;
 const SIDE_ROTATE_MS = 8_000;
 
 function rankScore(
@@ -165,7 +165,7 @@ export function VideoHighlights() {
           <CarouselContent>
             {pages.map((page, pageIndex) => (
               <CarouselItem key={pageIndex} className="basis-full">
-                <div className="grid grid-cols-3 grid-rows-2 gap-2 sm:gap-3">
+                <div className="grid h-full grid-cols-2 grid-rows-2 gap-2 sm:gap-3">
                   {Array.from({ length: SIDE_PAGE_SIZE }, (_, index) => {
                     const video = page[index];
                     if (!video) {
