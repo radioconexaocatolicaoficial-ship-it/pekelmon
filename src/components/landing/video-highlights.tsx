@@ -1,6 +1,7 @@
 import { Play } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
+import featuredVideoUrl from "@/assets/video-destaque-padre-kelmon.mp4?url";
 import {
   Carousel,
   CarouselContent,
@@ -18,7 +19,6 @@ import {
 } from "@/components/ui/dialog";
 import { YOUTUBE_HIGHLIGHTS, type YoutubeHighlight } from "@/data/youtube-highlights";
 
-const FEATURED_VIDEO_SRC = "/videos/video-destaque-padre-kelmon.mp4";
 const FEATURED_VIDEO_TITLE = "Padre Kelmon — vídeo em destaque";
 
 const SIDE_PAGE_SIZE = 4;
@@ -103,11 +103,11 @@ function VideoCard({
 
 function FeaturedLocalVideo() {
   return (
-    <div className="mx-auto w-full max-w-[270px] overflow-hidden rounded-2xl border-2 border-gray-200 bg-black shadow-md sm:max-w-[300px] lg:mx-0 lg:max-w-[min(100%,340px)]">
-      <div className="relative aspect-[1080/1920] w-full bg-black">
+    <div className="mx-auto w-[min(100%,20rem)] shrink-0 overflow-hidden lg:mx-0 lg:h-full lg:w-[20rem]">
+      <div className="relative aspect-[1080/1920] h-full w-full overflow-hidden bg-neutral-900">
         <video
-          className="absolute inset-0 h-full w-full object-cover"
-          src={FEATURED_VIDEO_SRC}
+          className="absolute inset-0 h-full w-full object-cover object-[center_18%]"
+          src={featuredVideoUrl}
           width={1080}
           height={1920}
           controls
@@ -116,7 +116,7 @@ function FeaturedLocalVideo() {
           title={FEATURED_VIDEO_TITLE}
         >
           Seu navegador não reproduz vídeo.{" "}
-          <a href={FEATURED_VIDEO_SRC} className="underline">
+          <a href={featuredVideoUrl} className="underline">
             Baixar o vídeo em destaque
           </a>
           .
@@ -154,13 +154,13 @@ export function VideoHighlights() {
         </p>
       </div>
 
-      <div className="grid items-stretch gap-4 lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-5">
+      <div className="flex flex-col items-stretch gap-4 lg:flex-row lg:gap-5">
         <FeaturedLocalVideo />
 
         <Carousel
           opts={{ align: "start", loop: true }}
           setApi={setApi}
-          className="relative min-w-0 w-full px-0 sm:px-10"
+          className="relative min-w-0 w-full flex-1 px-0 sm:px-10"
         >
           <CarouselContent>
             {pages.map((page, pageIndex) => (
