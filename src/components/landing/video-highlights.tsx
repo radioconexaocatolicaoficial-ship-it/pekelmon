@@ -2,6 +2,14 @@ import { Play } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
 import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+} from "@/components/ui/carousel";
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -13,11 +21,8 @@ import { YOUTUBE_HIGHLIGHTS, type YoutubeHighlight } from "@/data/youtube-highli
 const FEATURED_VIDEO_SRC = "/videos/video-destaque-padre-kelmon.mp4";
 const FEATURED_VIDEO_TITLE = "Padre Kelmon — vídeo em destaque";
 
-const SIDE_PAGE_SIZE = 4;
-/** 1 minuto em cada conjunto de cards laterais antes de trocar. */
-const SIDE_ROTATE_MS = 60_000;
-/** Cards laterais em rotação. */
-const SIDE_ROTATION_LIMIT = 16;
+const SIDE_PAGE_SIZE = 6;
+const SIDE_ROTATE_MS = 8_000;
 
 function rankScore(
   video: YoutubeHighlight,
@@ -43,61 +48,52 @@ function rankVideos(videos: YoutubeHighlight[]) {
   );
 }
 
+function chunkVideos(videos: YoutubeHighlight[], size: number) {
+  const pages: YoutubeHighlight[][] = [];
+  for (let i = 0; i < videos.length; i += size) {
+    pages.push(videos.slice(i, i + size));
+  }
+  return pages.length ? pages : [[]];
+}
+
 function VideoCard({
   video,
   onOpen,
-  large = false,
 }: {
   video: YoutubeHighlight;
   onOpen: (video: YoutubeHighlight) => void;
-  large?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={() => onOpen(video)}
-      className={`group flex h-full w-full flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white text-left shadow-sm transition hover:border-blue-500 hover:shadow-md ${
-        large ? "sm:rounded-2xl" : ""
-      }`}
+      className="group flex h-full w-full flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white text-left shadow-sm transition hover:border-blue-500 hover:shadow-md"
     >
       <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
         <img
-          src={large ? `https://i.ytimg.com/vi/${video.id}/hqdefault.jpg` : video.thumbnail}
+          src={video.thumbnail}
           alt=""
           width={480}
           height={360}
-          loading={large ? "eager" : "lazy"}
+          loading="lazy"
           decoding="async"
           className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
         />
         <span className="absolute inset-0 flex items-center justify-center bg-black/25 transition group-hover:bg-black/35">
-          <span
-            className={`inline-flex items-center justify-center rounded-full bg-red-600 text-white shadow-lg ${
-              large ? "size-14 sm:size-16" : "size-9 sm:size-10"
-            }`}
-          >
-            <Play
-              className={`fill-current ${large ? "size-7 sm:size-8" : "size-4 sm:size-5"}`}
-              aria-hidden="true"
-            />
+          <span className="inline-flex size-9 items-center justify-center rounded-full bg-red-600 text-white shadow-lg sm:size-10">
+            <Play className="size-4 fill-current sm:size-5" aria-hidden="true" />
           </span>
         </span>
       </div>
-      <div className={`flex flex-1 flex-col ${large ? "gap-1.5 p-3 sm:p-4" : "gap-1 p-2 sm:p-2.5"}`}>
+      <div className="flex flex-1 flex-col gap-1 p-2 sm:p-2.5">
         <h3
-          className={`truncate font-bold leading-snug ${
-            large ? "text-base sm:text-lg" : "text-xs sm:text-sm"
-          }`}
+          className="line-clamp-2 text-xs font-bold leading-snug sm:text-sm"
           style={{ color: "var(--blue-primary)" }}
           title={video.title}
         >
           {video.title}
         </h3>
-        <p
-          className={`line-clamp-3 text-gray-600 ${
-            large ? "text-sm leading-relaxed" : "text-[11px] leading-snug sm:text-xs"
-          }`}
-        >
+        <p className="line-clamp-2 text-[11px] leading-snug text-gray-600 sm:text-xs">
           {video.description}
         </p>
       </div>
@@ -107,11 +103,13 @@ function VideoCard({
 
 function FeaturedLocalVideo() {
   return (
-    <div className="flex h-full w-full flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-sm sm:rounded-2xl">
-      <div className="relative aspect-video w-full overflow-hidden bg-black">
+    <div className="mx-auto w-full max-w-[270px] overflow-hidden rounded-2xl border-2 border-gray-200 bg-black shadow-md sm:max-w-[300px] lg:mx-0 lg:max-w-[min(100%,340px)]">
+      <div className="relative aspect-[1080/1920] w-full bg-black">
         <video
-          className="absolute inset-0 h-full w-full object-contain"
+          className="absolute inset-0 h-full w-full object-cover"
           src={FEATURED_VIDEO_SRC}
+          width={1080}
+          height={1920}
           controls
           playsInline
           preload="auto"
@@ -124,41 +122,23 @@ function FeaturedLocalVideo() {
           .
         </video>
       </div>
-      <div className="flex flex-1 flex-col gap-1.5 p-3 sm:p-4">
-        <h3
-          className="truncate text-base font-bold leading-snug sm:text-lg"
-          style={{ color: "var(--blue-primary)" }}
-        >
-          {FEATURED_VIDEO_TITLE}
-        </h3>
-        <p className="text-sm leading-relaxed text-gray-600">
-          Assista ao vídeo em destaque da campanha.
-        </p>
-      </div>
     </div>
   );
 }
 
 export function VideoHighlights() {
   const ranked = useMemo(() => rankVideos(YOUTUBE_HIGHLIGHTS), []);
-  const [page, setPage] = useState(0);
+  const pages = useMemo(() => chunkVideos(ranked, SIDE_PAGE_SIZE), [ranked]);
+  const [api, setApi] = useState<CarouselApi>();
   const [active, setActive] = useState<YoutubeHighlight | null>(null);
 
-  const sideVideos = useMemo(() => ranked.slice(0, SIDE_ROTATION_LIMIT), [ranked]);
-  const pageCount = Math.max(1, Math.ceil(sideVideos.length / SIDE_PAGE_SIZE));
-
   useEffect(() => {
-    if (active || pageCount <= 1) return;
-    const id = window.setInterval(() => {
-      setPage((current) => (current + 1) % pageCount);
+    if (!api || active || pages.length <= 1) return;
+    const tickId = window.setInterval(() => {
+      api.scrollNext();
     }, SIDE_ROTATE_MS);
-    return () => window.clearInterval(id);
-  }, [active, pageCount]);
-
-  const sidePage = sideVideos.slice(
-    page * SIDE_PAGE_SIZE,
-    page * SIDE_PAGE_SIZE + SIDE_PAGE_SIZE,
-  );
+    return () => window.clearInterval(tickId);
+  }, [api, active, pages.length]);
 
   return (
     <div className="mb-8 space-y-4 sm:mb-10">
@@ -174,18 +154,38 @@ export function VideoHighlights() {
         </p>
       </div>
 
-      <div className="space-y-3">
+      <div className="grid items-stretch gap-4 lg:grid-cols-[auto_minmax(0,1fr)] lg:gap-5">
         <FeaturedLocalVideo />
 
-        <div className="grid grid-cols-2 gap-3 lg:grid-cols-4 lg:gap-3">
-          {Array.from({ length: SIDE_PAGE_SIZE }, (_, index) => {
-            const video = sidePage[index];
-            if (!video) {
-              return <div key={`empty-${index}`} className="rounded-xl bg-gray-50" />;
-            }
-            return <VideoCard key={`${video.id}-${page}`} video={video} onOpen={setActive} />;
-          })}
-        </div>
+        <Carousel
+          opts={{ align: "start", loop: true }}
+          setApi={setApi}
+          className="relative min-w-0 w-full px-0 sm:px-10"
+        >
+          <CarouselContent>
+            {pages.map((page, pageIndex) => (
+              <CarouselItem key={pageIndex} className="basis-full">
+                <div className="grid grid-cols-3 grid-rows-2 gap-2 sm:gap-3">
+                  {Array.from({ length: SIDE_PAGE_SIZE }, (_, index) => {
+                    const video = page[index];
+                    if (!video) {
+                      return <div key={`empty-${pageIndex}-${index}`} className="rounded-xl bg-gray-50" />;
+                    }
+                    return (
+                      <VideoCard
+                        key={`${pageIndex}-${video.id}`}
+                        video={video}
+                        onOpen={setActive}
+                      />
+                    );
+                  })}
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden border-blue-200 bg-white text-blue-700 hover:bg-blue-50 sm:inline-flex left-0" />
+          <CarouselNext className="hidden border-blue-200 bg-white text-blue-700 hover:bg-blue-50 sm:inline-flex right-0" />
+        </Carousel>
       </div>
 
       <Dialog open={Boolean(active)} onOpenChange={(open) => !open && setActive(null)}>
