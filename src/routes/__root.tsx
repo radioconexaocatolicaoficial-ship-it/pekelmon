@@ -79,6 +79,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=5",
       },
+      {
+        name: "google-site-verification",
+        content: "bcJCCb6X2PSfiJUJmaqbMVwrGSQxG0WHzVsjDVgdmxI",
+      },
       { name: "theme-color", content: "#1e5bb8" },
       { name: "color-scheme", content: "light" },
       { name: "format-detection", content: "telephone=no" },
