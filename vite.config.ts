@@ -75,6 +75,12 @@ export default defineConfig(async ({ command, mode }) => {
               "content-type": "application/manifest+json; charset=utf-8",
             },
           },
+          "/google6e3cc8fc1fe21502.html": {
+            headers: {
+              "cache-control": "no-cache, no-store, must-revalidate",
+              "content-type": "text/html; charset=utf-8",
+            },
+          },
         },
       }),
     );
