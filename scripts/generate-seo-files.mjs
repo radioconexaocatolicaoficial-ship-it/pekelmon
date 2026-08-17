@@ -33,18 +33,32 @@ const siteUrl = String(env.VITE_SITE_URL || "")
   .trim()
   .replace(/\/$/, "");
 
-const loc = siteUrl ? `${siteUrl}/` : "/";
 const sitemapUrl = siteUrl ? `${siteUrl}/sitemap.xml` : "/sitemap.xml";
 const lastmod = new Date().toISOString().slice(0, 10);
 
-const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>${loc}</loc>
+const pages = [
+  { path: "/", priority: "1.0" },
+  { path: "/sobre", priority: "0.9" },
+  { path: "/pautas", priority: "0.9" },
+  { path: "/midia", priority: "0.8" },
+  { path: "/numeros", priority: "0.8" },
+];
+
+const sitemapUrls = pages
+  .map((page) => {
+    const href = siteUrl ? `${siteUrl}${page.path === "/" ? "/" : page.path}` : page.path;
+    return `  <url>
+    <loc>${href}</loc>
     <lastmod>${lastmod}</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+    <priority>${page.priority}</priority>
+  </url>`;
+  })
+  .join("\n");
+
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapUrls}
 </urlset>
 `;
 

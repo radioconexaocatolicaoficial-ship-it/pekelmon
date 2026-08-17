@@ -1,25 +1,11 @@
-import type { MouseEvent } from "react";
+import { Link } from "@tanstack/react-router";
 import { Facebook, Instagram, Youtube, ArrowUpRight } from "lucide-react";
 
 import { CANDIDATE, FORO_BRASIL } from "@/lib/campaign-data";
-import { scrollToSection } from "@/lib/scroll-to-section";
+import { useGoToCadastro } from "@/hooks/use-go-to-cadastro";
+import { FOOTER_NAV_LINKS } from "@/lib/nav";
 import logo from "@/assets/Logo-Site-PAdre-kelmon.webp";
 import { PageShell } from "./primitives";
-
-function onInternalNav(e: MouseEvent<HTMLAnchorElement>, href: string) {
-  if (!href.startsWith("#")) return;
-  e.preventDefault();
-  scrollToSection(href.slice(1));
-}
-
-const QUICK_LINKS = [
-  { href: "#inicio", label: "Início" },
-  { href: "#historia", label: "Sobre" },
-  { href: "#bandeiras", label: "Pautas" },
-  { href: "#midia", label: "Mídia" },
-  { href: "#numeros", label: "Indicadores" },
-  { href: "#cadastro", label: "Faça parte" },
-];
 
 const USEFUL_LINKS = [
   { href: FORO_BRASIL.url, label: "Foro do Brasil", external: true },
@@ -58,6 +44,8 @@ const titleClass =
   "mb-1.5 text-[11px] font-bold uppercase leading-none tracking-[0.2em]";
 
 export function SiteFooter() {
+  const goToCadastro = useGoToCadastro();
+
   return (
     <footer
       className="relative overflow-hidden pb-[env(safe-area-inset-bottom,0px)] text-white"
@@ -76,9 +64,8 @@ export function SiteFooter() {
       <PageShell className="relative py-6 sm:py-7 lg:py-8">
         <div className="grid items-start gap-8 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.85fr)_minmax(0,0.85fr)_minmax(0,1.3fr)] lg:gap-x-12">
           <div className="sm:col-span-2 lg:col-span-1">
-            <a
-              href="#inicio"
-              onClick={(e) => onInternalNav(e, "#inicio")}
+            <Link
+              to="/"
               className="inline-flex items-center rounded-lg bg-white px-3 py-1.5 shadow-md"
             >
               <img
@@ -90,7 +77,7 @@ export function SiteFooter() {
                 decoding="async"
                 className="h-9 w-auto sm:h-10"
               />
-            </a>
+            </Link>
             <p className="mt-3 whitespace-nowrap text-[clamp(0.7rem,2.8vw,0.875rem)] font-bold leading-none text-white">
               Candidato a Deputado Federal · SP · PL
             </p>
@@ -119,15 +106,16 @@ export function SiteFooter() {
               Navegação
             </p>
             <ul className="space-y-1.5">
-              {QUICK_LINKS.map((l) => (
-                <li key={l.href}>
-                  <a
-                    href={l.href}
-                    onClick={(e) => onInternalNav(e, l.href)}
+              {FOOTER_NAV_LINKS.map((l) => (
+                <li key={l.label}>
+                  <Link
+                    to={l.to}
+                    hash={l.hash}
+                    onClick={l.hash === "cadastro" ? goToCadastro : undefined}
                     className="inline-flex min-h-9 items-center text-sm font-semibold text-white/85 transition-colors hover:text-white"
                   >
                     {l.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -140,15 +128,32 @@ export function SiteFooter() {
             <ul className="space-y-1.5">
               {USEFUL_LINKS.map((l) => (
                 <li key={l.label}>
-                  <a
-                    href={l.href}
-                    {...(l.external
-                      ? { target: "_blank", rel: "noopener noreferrer" }
-                      : { onClick: (e) => onInternalNav(e, l.href) })}
-                    className="inline-flex min-h-9 items-center text-sm font-semibold text-white/85 transition-colors hover:text-white"
-                  >
-                    {l.label}
-                  </a>
+                  {l.external ? (
+                    <a
+                      href={l.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-9 items-center text-sm font-semibold text-white/85 transition-colors hover:text-white"
+                    >
+                      {l.label}
+                    </a>
+                  ) : l.href === "#cadastro" ? (
+                    <Link
+                      to="/"
+                      hash="cadastro"
+                      onClick={goToCadastro}
+                      className="inline-flex min-h-9 items-center text-sm font-semibold text-white/85 transition-colors hover:text-white"
+                    >
+                      {l.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={l.href}
+                      className="inline-flex min-h-9 items-center text-sm font-semibold text-white/85 transition-colors hover:text-white"
+                    >
+                      {l.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -162,9 +167,10 @@ export function SiteFooter() {
               Dados usados apenas para comunicação da campanha, conforme a LGPD (Lei nº
               13.709/2018). Solicite acesso ou exclusão pelo canal oficial.
             </p>
-            <a
-              href="#cadastro"
-              onClick={(e) => onInternalNav(e, "#cadastro")}
+            <Link
+              to="/"
+              hash="cadastro"
+              onClick={goToCadastro}
               className="mt-3 inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-lg px-4 py-2 text-sm font-bold transition-transform hover:scale-105 sm:h-auto sm:w-auto"
               style={{
                 backgroundColor: "var(--yellow-primary)",
@@ -173,7 +179,7 @@ export function SiteFooter() {
             >
               Quero apoiar
               <ArrowUpRight className="size-3.5" />
-            </a>
+            </Link>
           </div>
         </div>
       </PageShell>

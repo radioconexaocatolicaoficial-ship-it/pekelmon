@@ -1,10 +1,12 @@
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { scrollToSection } from "@/lib/scroll-to-section";
+import { useGoToCadastro } from "@/hooks/use-go-to-cadastro";
 import { PageShell, Reveal } from "./primitives";
 
 export function CallToAction() {
+  const goToCadastro = useGoToCadastro();
+
   return (
     <section className="section-pad relative isolate overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
       <div
@@ -47,13 +49,7 @@ export function CallToAction() {
             size="xl"
             className="mt-7 h-12 w-full max-w-md text-sm font-bold sm:mt-8 sm:h-auto sm:w-auto sm:max-w-none sm:text-base"
           >
-            <a
-              href="#cadastro"
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToSection("cadastro");
-              }}
-            >
+            <a href="/#cadastro" onClick={goToCadastro}>
               Quero fazer parte dessa missão
               <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
             </a>

@@ -50,20 +50,23 @@ export function SectionHeading({
   title,
   subtitle,
   align = "center",
+  headingAs = "h2",
 }: {
   eyebrow?: string;
   title: string;
   subtitle?: string;
   align?: "center" | "left";
+  headingAs?: "h1" | "h2";
 }) {
+  const Heading = headingAs;
   return (
     <Reveal className={align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl"}>
       {eyebrow ? (
         <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">{eyebrow}</p>
       ) : null}
-      <h2 className="mt-3 text-[1.75rem] font-semibold leading-tight sm:text-3xl lg:text-4xl">
+      <Heading className="mt-3 text-[1.75rem] font-semibold leading-tight sm:text-3xl lg:text-4xl">
         {title}
-      </h2>
+      </Heading>
       <div className={`gold-rule mt-4 sm:mt-5 ${align === "center" ? "mx-auto" : ""}`} />
       {subtitle ? (
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground text-justify sm:mt-5 sm:text-base">

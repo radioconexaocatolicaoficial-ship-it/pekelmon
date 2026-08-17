@@ -552,7 +552,8 @@ function SocialNetworkCarousel({
   );
 }
 
-export function Media() {
+export function Media({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
+  const Heading = headingAs;
   // Importante: SSR e 1º render no cliente devem ser iguais (evita React #418).
   const [ready, setReady] = useState(false);
   useEffect(() => {
@@ -620,12 +621,12 @@ export function Media() {
               >
                 Mídia
               </p>
-              <h2
+              <Heading
                 className="mb-4 text-[1.75rem] font-black sm:text-4xl lg:text-5xl"
                 style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
               >
                 Padre Kelmon nas Redes Sociais
-              </h2>
+              </Heading>
               <p className="text-sm leading-relaxed text-gray-700 text-justify sm:text-base">
                 Acompanhe Instagram, Facebook, X, YouTube e TikTok com os posts e reels/shorts
                 públicos mais recentes. Os feeds usam conteúdo público e atualizam sozinhos a cada

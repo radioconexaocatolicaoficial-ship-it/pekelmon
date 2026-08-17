@@ -5,6 +5,7 @@ import {
   createRootRouteWithContext,
   HeadContent,
   Scripts,
+  useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -124,19 +125,19 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const locationHref = useRouterState({ select: (s) => s.location.href });
 
-  // Deep link: #secao → scroll com offset do header; limpa hash sem quebrar o destino
+  // Deep link: /#cadastro ou troca de rota com hash → scroll com offset do header
   useEffect(() => {
     const hash = window.location.hash.replace(/^#/, "");
     if (!hash) return;
 
     const timer = window.setTimeout(() => {
       scrollToSection(hash);
-      window.history.replaceState(null, "", window.location.pathname + window.location.search);
     }, 80);
 
     return () => window.clearTimeout(timer);
-  }, []);
+  }, [locationHref]);
 
   return (
     <QueryClientProvider client={queryClient}>

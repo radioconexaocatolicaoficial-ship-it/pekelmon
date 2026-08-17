@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dialog";
 import { PageShell } from "./primitives";
 import { TimelineCards } from "./timeline-cards";
+import { cn } from "@/lib/utils";
 
 const SOBRE_PORTRAITS = [
   {
@@ -124,11 +125,23 @@ function SobrePortraitCarousel() {
   );
 }
 
-export function About() {
+export function About({
+  headingAs = "h2",
+  standalone = false,
+}: {
+  headingAs?: "h1" | "h2";
+  standalone?: boolean;
+}) {
+  const Heading = headingAs;
   return (
     <section
       id="historia"
-      className="section-pad relative max-sm:!pt-3 md:-mt-[7%] md:scroll-mt-[calc(6rem+env(safe-area-inset-top,0px))] lg:mt-0 lg:scroll-mt-[calc(4.5rem+env(safe-area-inset-top,0px))]"
+      className={cn(
+        "section-pad relative",
+        standalone
+          ? "bg-white"
+          : "max-sm:!pt-3 md:-mt-[7%] md:scroll-mt-[calc(6rem+env(safe-area-inset-top,0px))] lg:mt-0 lg:scroll-mt-[calc(4.5rem+env(safe-area-inset-top,0px))]",
+      )}
       style={{ background: "linear-gradient(to bottom, #ffffff, #f9fafb)" }}
     >
       <PageShell>
@@ -155,12 +168,12 @@ export function About() {
               >
                 Sobre Padre Kelmon
               </p>
-              <h2
+              <Heading
                 className="text-[1.75rem] font-black sm:text-4xl lg:text-5xl"
                 style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
               >
                 Uma Vida de Fé e Serviço
-              </h2>
+              </Heading>
             </motion.div>
 
             <motion.div

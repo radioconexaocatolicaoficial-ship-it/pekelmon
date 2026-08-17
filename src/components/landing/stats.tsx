@@ -4,7 +4,8 @@ import confiancaImg from "@/assets/confianca-kelmon.webp";
 import { FORO_BRASIL, STATS, TRUST_PILLARS } from "@/lib/campaign-data";
 import { Counter, PageShell, Reveal } from "./primitives";
 
-export function Stats() {
+export function Stats({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
+  const Heading = headingAs;
   return (
     <section
       id="numeros"
@@ -35,12 +36,12 @@ export function Stats() {
                   >
                     Indicadores
                   </p>
-                  <h2
+                  <Heading
                     className="text-[1.75rem] font-black leading-tight sm:text-4xl lg:text-5xl"
                     style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
                   >
                     Trajetória que gera confiança
-                  </h2>
+                  </Heading>
                 </div>
 
                 <div className="mt-5 flex flex-col gap-3 text-sm leading-relaxed text-gray-700 sm:text-base">

@@ -2,11 +2,12 @@ import { Shield } from "lucide-react";
 import { BANDEIRAS } from "@/lib/campaign-data";
 import { PageShell, Reveal, SectionHeading } from "./primitives";
 
-export function Bandeiras() {
+export function Bandeiras({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
   return (
     <section id="bandeiras" className="section-pad bg-card/30">
       <PageShell>
         <SectionHeading
+          headingAs={headingAs}
           eyebrow="Pautas"
           title="As Pautas que Defendo"
           subtitle="Compromissos firmes e inquebráveis com o povo de São Paulo e com o Brasil. Uma agenda conservadora cristã fundamentada em valores tradicionais, liberdades fundamentais e na dignidade da pessoa humana, para transformar nossa realidade e resgatar a esperança do nosso país."

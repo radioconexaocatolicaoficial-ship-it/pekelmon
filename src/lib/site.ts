@@ -32,6 +32,89 @@ export function absoluteUrl(path = "/"): string {
   return `${SITE_URL}${normalized}`;
 }
 
+export const PAGE_SEO = {
+  sobre: {
+    path: "/sobre",
+    title: "Sobre Padre Kelmon — Trajetória e candidatura a Deputado Federal",
+    description:
+      "Conheça a biografia de Padre Kelmon: vida religiosa, atuação pública, Foro do Brasil e candidatura a Deputado Federal por São Paulo pelo PL em 2026.",
+  },
+  pautas: {
+    path: "/pautas",
+    title: "Pautas de Padre Kelmon — Fé, família e liberdade em São Paulo",
+    description:
+      "As pautas que Padre Kelmon defende como candidato a Deputado Federal por São Paulo: família, liberdade religiosa, valores cristãos e dignidade humana.",
+  },
+  midia: {
+    path: "/midia",
+    title: "Mídia — Padre Kelmon nas redes, imprensa e vídeos",
+    description:
+      "Acompanhe Padre Kelmon na imprensa, YouTube, Instagram, TikTok e demais redes. Notícias, vídeos e presença digital da campanha.",
+  },
+  numeros: {
+    path: "/numeros",
+    title: "Números da trajetória de Padre Kelmon — votos, fé e confiança",
+    description:
+      "Indicadores públicos da trajetória de Padre Kelmon: votos em 2022, décadas de fé e serviço, Foro do Brasil e candidatura a Deputado Federal por SP.",
+  },
+} as const;
+
+export function buildPageHead({
+  path,
+  title,
+  description,
+}: {
+  path: string;
+  title: string;
+  description: string;
+}) {
+  const pageUrl = absoluteUrl(path);
+  const ogImage = absoluteUrl(OG_IMAGE_PATH);
+
+  return {
+    meta: [
+      { title },
+      { name: "description", content: description },
+      { name: "keywords", content: SITE_KEYWORDS },
+      { name: "author", content: SITE_NAME },
+      {
+        name: "robots",
+        content:
+          "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+      },
+      { name: "googlebot", content: "index, follow" },
+      { name: "geo.region", content: "BR-SP" },
+      { name: "geo.placename", content: "São Paulo" },
+      { name: "language", content: "pt-BR" },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
+      { property: "og:type", content: "website" },
+      { property: "og:url", content: pageUrl },
+      { property: "og:locale", content: "pt_BR" },
+      { property: "og:site_name", content: SITE_NAME },
+      { property: "og:image", content: ogImage },
+      { property: "og:image:width", content: OG_IMAGE_WIDTH },
+      { property: "og:image:height", content: OG_IMAGE_HEIGHT },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: TWITTER_HANDLE },
+      { name: "twitter:title", content: title },
+      { name: "twitter:description", content: description },
+      { name: "twitter:image", content: ogImage },
+    ],
+    links: [
+      { rel: "canonical", href: pageUrl },
+      { rel: "alternate", hrefLang: "pt-BR", href: pageUrl },
+      { rel: "alternate", hrefLang: "x-default", href: pageUrl },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(buildWebPageJsonLd({ path, title, description })),
+      },
+    ],
+  };
+}
+
 export function buildPersonJsonLd() {
   const url = absoluteUrl("/");
   const image = absoluteUrl(OG_IMAGE_PATH);
@@ -109,15 +192,21 @@ export function buildWebSiteJsonLd() {
   };
 }
 
-export function buildWebPageJsonLd() {
-  const url = absoluteUrl("/");
+export function buildWebPageJsonLd(page?: {
+  path?: string;
+  title?: string;
+  description?: string;
+}) {
+  const url = absoluteUrl(page?.path ?? "/");
+  const name = page?.title ?? SITE_TITLE;
+  const description = page?.description ?? SITE_DESCRIPTION;
 
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": `${url}#webpage`,
-    name: SITE_TITLE,
-    description: SITE_DESCRIPTION,
+    name,
+    description,
     url,
     inLanguage: "pt-BR",
     isPartOf: {
