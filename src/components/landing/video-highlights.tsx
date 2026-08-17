@@ -8,18 +8,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  YOUTUBE_FEATURED_ID,
-  YOUTUBE_HIGHLIGHTS,
-  type YoutubeHighlight,
-} from "@/data/youtube-highlights";
+import { YOUTUBE_HIGHLIGHTS, type YoutubeHighlight } from "@/data/youtube-highlights";
+
+const FEATURED_VIDEO_SRC = "/videos/video-destaque-padre-kelmon.mp4";
+const FEATURED_VIDEO_TITLE = "Padre Kelmon — vídeo em destaque";
 
 const SIDE_PAGE_SIZE = 4;
-/** 1 minuto em cada conjunto / vídeo antes de trocar. */
+/** 1 minuto em cada conjunto de cards laterais antes de trocar. */
 const SIDE_ROTATE_MS = 60_000;
-const FEATURED_ROTATE_MS = 60_000;
-/** Destaques grandes em rotação (mais novos + mais vistos). */
-const FEATURED_ROTATION_LIMIT = 8;
 /** Cards laterais em rotação. */
 const SIDE_ROTATION_LIMIT = 16;
 
@@ -109,36 +105,47 @@ function VideoCard({
   );
 }
 
+function FeaturedLocalVideo() {
+  return (
+    <div className="flex h-full w-full flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-sm sm:rounded-2xl">
+      <div className="relative aspect-video w-full overflow-hidden bg-black">
+        <video
+          className="absolute inset-0 h-full w-full object-contain"
+          src={FEATURED_VIDEO_SRC}
+          controls
+          playsInline
+          preload="metadata"
+          title={FEATURED_VIDEO_TITLE}
+        >
+          Seu navegador não reproduz vídeo.{" "}
+          <a href={FEATURED_VIDEO_SRC} className="underline">
+            Baixar o vídeo em destaque
+          </a>
+          .
+        </video>
+      </div>
+      <div className="flex flex-1 flex-col gap-1.5 p-3 sm:p-4">
+        <h3
+          className="truncate text-base font-bold leading-snug sm:text-lg"
+          style={{ color: "var(--blue-primary)" }}
+        >
+          {FEATURED_VIDEO_TITLE}
+        </h3>
+        <p className="text-sm leading-relaxed text-gray-600">
+          Assista ao vídeo em destaque da campanha.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 export function VideoHighlights() {
   const ranked = useMemo(() => rankVideos(YOUTUBE_HIGHLIGHTS), []);
-
-  const featuredPool = useMemo(() => {
-    const preferred = ranked.find((v) => v.id === YOUTUBE_FEATURED_ID);
-    const others = ranked.filter((v) => v.id !== YOUTUBE_FEATURED_ID);
-    const pool = preferred ? [preferred, ...others] : others;
-    return pool.slice(0, FEATURED_ROTATION_LIMIT);
-  }, [ranked]);
-
-  const [featuredIndex, setFeaturedIndex] = useState(0);
   const [page, setPage] = useState(0);
   const [active, setActive] = useState<YoutubeHighlight | null>(null);
 
-  const featured = featuredPool[featuredIndex] ?? featuredPool[0] ?? YOUTUBE_HIGHLIGHTS[0];
-
-  const sideVideos = useMemo(() => {
-    return ranked.filter((v) => v.id !== featured.id).slice(0, SIDE_ROTATION_LIMIT);
-  }, [ranked, featured.id]);
-
+  const sideVideos = useMemo(() => ranked.slice(0, SIDE_ROTATION_LIMIT), [ranked]);
   const pageCount = Math.max(1, Math.ceil(sideVideos.length / SIDE_PAGE_SIZE));
-
-  useEffect(() => {
-    if (active || featuredPool.length <= 1) return;
-    const id = window.setInterval(() => {
-      setFeaturedIndex((current) => (current + 1) % featuredPool.length);
-      setPage(0);
-    }, FEATURED_ROTATE_MS);
-    return () => window.clearInterval(id);
-  }, [active, featuredPool.length]);
 
   useEffect(() => {
     if (active || pageCount <= 1) return;
@@ -146,7 +153,7 @@ export function VideoHighlights() {
       setPage((current) => (current + 1) % pageCount);
     }, SIDE_ROTATE_MS);
     return () => window.clearInterval(id);
-  }, [active, pageCount, featured.id]);
+  }, [active, pageCount]);
 
   const sidePage = sideVideos.slice(
     page * SIDE_PAGE_SIZE,
@@ -169,7 +176,7 @@ export function VideoHighlights() {
 
       <div className="grid items-stretch gap-3 lg:grid-cols-5 lg:gap-4">
         <div className="lg:col-span-3">
-          <VideoCard key={featured.id} video={featured} onOpen={setActive} large />
+          <FeaturedLocalVideo />
         </div>
 
         <div className="grid grid-cols-2 grid-rows-2 gap-3 lg:col-span-2 lg:gap-3">
@@ -178,13 +185,7 @@ export function VideoHighlights() {
             if (!video) {
               return <div key={`empty-${index}`} className="rounded-xl bg-gray-50" />;
             }
-            return (
-              <VideoCard
-                key={`${featured.id}-${video.id}-${page}`}
-                video={video}
-                onOpen={setActive}
-              />
-            );
+            return <VideoCard key={`${video.id}-${page}`} video={video} onOpen={setActive} />;
           })}
         </div>
       </div>
