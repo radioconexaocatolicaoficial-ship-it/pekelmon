@@ -1,5 +1,4 @@
 import { motion } from "motion/react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import {
@@ -8,28 +7,28 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import banner1 from "@/assets/Banner-topo-1.webp";
-import banner2 from "@/assets/Banner-topo-2.webp";
-import banner3 from "@/assets/Banner-topo-3.webp";
+import banner4 from "@/assets/banner-topo-padre-kelmon-4.png";
+import banner5 from "@/assets/banner-topo-padre-kelmon-5.png";
+import banner6 from "@/assets/banner-topo-padre-kelmon-6.png";
 import { PageShell } from "./primitives";
 
 const HERO_BANNERS = [
   {
-    src: banner1,
-    alt: "Padre Kelmon — Fé para servir, coragem para defender. Candidato a Deputado Federal por São Paulo",
+    src: banner4,
+    alt: "Padre Kelmon 2202 — Uma vida de missões. A nova missão é por São Paulo",
+    holdMs: 24000,
   },
   {
-    src: banner2,
-    alt: "Padre Kelmon — Servir para construir, amar para resgatar. Candidato a Deputado Federal por São Paulo",
+    src: banner5,
+    alt: "Padre Kelmon 2202 — Deputado Federal por São Paulo, com a chapa do PL",
+    holdMs: 12000,
   },
   {
-    src: banner3,
-    alt: "Agora é oficial — Padre Kelmon, candidato a Deputado Federal por São Paulo, aprovado em convenção",
+    src: banner6,
+    alt: "Padre Kelmon 2202 — Fé para servir, coragem para defender. Deputado Federal por São Paulo",
+    holdMs: 12000,
   },
 ] as const;
-
-/** Tempo visível de cada banner no autoplay. */
-const HERO_HOLD_MS = 12000;
 
 export function Hero() {
   const [api, setApi] = useState<CarouselApi>();
@@ -47,10 +46,10 @@ export function Hero() {
 
   useEffect(() => {
     if (!api) return;
-    const id = window.setInterval(() => {
+    const id = window.setTimeout(() => {
       api.scrollNext();
-    }, HERO_HOLD_MS);
-    return () => window.clearInterval(id);
+    }, HERO_BANNERS[active]?.holdMs ?? 12000);
+    return () => window.clearTimeout(id);
   }, [api, active]);
 
   return (
@@ -81,8 +80,8 @@ export function Hero() {
                     <img
                       src={banner.src}
                       alt={banner.alt}
-                      width={2280}
-                      height={1000}
+                      width={1140}
+                      height={500}
                       sizes="(min-width: 1120px) 1120px, 100vw"
                       fetchPriority={index === 0 ? "high" : "low"}
                       decoding="async"
@@ -94,25 +93,7 @@ export function Hero() {
               ))}
             </CarouselContent>
 
-            {/* Controles só no desktop — mobile/tablet usa swipe */}
-            <button
-              type="button"
-              aria-label="Banner anterior"
-              onClick={() => api?.scrollPrev()}
-              className="absolute left-3 top-1/2 z-10 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/35 text-white backdrop-blur-sm transition hover:bg-black/55 lg:inline-flex"
-            >
-              <ChevronLeft className="size-6" aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              aria-label="Próximo banner"
-              onClick={() => api?.scrollNext()}
-              className="absolute right-3 top-1/2 z-10 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/40 bg-black/35 text-white backdrop-blur-sm transition hover:bg-black/55 lg:inline-flex"
-            >
-              <ChevronRight className="size-6" aria-hidden="true" />
-            </button>
-
-            <div className="absolute bottom-3.5 left-1/2 z-10 hidden -translate-x-1/2 items-center gap-2 lg:flex">
+            <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full bg-black/30 px-2.5 py-1.5 backdrop-blur-sm sm:bottom-3.5">
               {HERO_BANNERS.map((banner, index) => (
                 <button
                   key={banner.src}
@@ -123,7 +104,7 @@ export function Hero() {
                   className={`h-2 rounded-full transition-all duration-300 ${
                     index === active
                       ? "w-6 bg-white shadow"
-                      : "w-2 bg-white/50 hover:bg-white/80"
+                      : "w-2 bg-white/55 hover:bg-white/85"
                   }`}
                 />
               ))}
