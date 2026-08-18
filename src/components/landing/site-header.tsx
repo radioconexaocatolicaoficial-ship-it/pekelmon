@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { useGoToCadastro } from "@/hooks/use-go-to-cadastro";
 import { NAV_LINKS, TOP_NAV_LINKS, type NavLink } from "@/lib/nav";
 import { scrollToPageTop } from "@/lib/scroll-to-section";
-import logo from "@/assets/Logo-Site-PAdre-kelmon.webp";
 import { PageShell } from "./primitives";
 
 export function SiteHeader() {
@@ -43,12 +42,12 @@ export function SiteHeader() {
           <PageShell className="flex min-w-0 items-center gap-3 py-2 sm:py-2.5 md:gap-4 md:py-[0.6rem]">
             <Link to="/" onClick={() => scrollToPageTop()} className="flex shrink-0 items-center">
               <img
-                src={logo}
+                src="/Logo-Site-Padre-kelmon-campanha.png"
                 alt="Padre Kelmon 2202 — Deputado Federal"
                 width={220}
                 height={50}
                 decoding="async"
-                className="h-10 w-auto max-w-[42vw] object-contain object-left sm:h-11 md:h-11 md:max-w-[11rem] lg:h-12 lg:max-w-none"
+                className="h-10 w-auto max-w-[42vw] rounded-md object-contain object-left sm:h-11 md:h-11 md:max-w-[11rem] lg:h-12 lg:max-w-none"
               />
             </Link>
 

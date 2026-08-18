@@ -27,6 +27,7 @@ export const CANDIDATE = {
   youtube: "https://www.youtube.com/@PadreKelmonBr",
   x: "https://x.com/PeKelmon",
   tiktok: "https://www.tiktok.com/@pekelmon",
+  cnpj: "68.353.198/0001-20",
 };
 
 export type TimelineItem = {

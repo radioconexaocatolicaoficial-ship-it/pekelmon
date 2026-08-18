@@ -8,7 +8,11 @@ export function CallToAction() {
   const goToCadastro = useGoToCadastro();
 
   return (
-    <section className="relative isolate overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
+    <section
+      className="relative isolate overflow-hidden"
+      data-cnpj-on-dark
+      style={{ background: "var(--gradient-hero)" }}
+    >
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10 opacity-10"

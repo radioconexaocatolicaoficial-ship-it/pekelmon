@@ -241,7 +241,7 @@ export function buildOrganizationJsonLd() {
     name: SITE_NAME,
     alternateName: CANDIDATE.fullName,
     url,
-    logo: absoluteUrl("/favicon.png?v=5"),
+    logo: absoluteUrl("/Logo-Site-Padre-kelmon-campanha.png"),
     description: SITE_DESCRIPTION,
     foundingDate: "2023-06-29",
     areaServed: {

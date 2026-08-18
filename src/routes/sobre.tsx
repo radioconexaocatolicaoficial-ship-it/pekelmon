@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { About } from "@/components/landing/about";
 import { InnerPage } from "@/components/landing/inner-page";
+import { SocialStrip } from "@/components/landing/social-strip";
 import { PAGE_SEO, buildPageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/sobre")({
@@ -13,6 +14,7 @@ function SobrePage() {
   return (
     <InnerPage>
       <About headingAs="h1" standalone />
+      <SocialStrip />
     </InnerPage>
   );
 }

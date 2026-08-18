@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Toaster } from "../components/ui/sonner";
 import { PwaRegister } from "../components/pwa-register";
+import { CnpjRail } from "../components/landing/cnpj-rail";
 import { scrollToSection } from "../lib/scroll-to-section";
 
 function NotFoundComponent() {
@@ -96,10 +97,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "manifest", href: "/manifest.webmanifest" },
-      { rel: "icon", href: "/favicon.ico?v=5", type: "image/x-icon", sizes: "any" },
-      { rel: "icon", href: "/favicon.png?v=5", type: "image/png", sizes: "512x512" },
-      { rel: "shortcut icon", href: "/favicon.ico?v=5", type: "image/x-icon" },
-      { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png?v=5" },
+      { rel: "icon", href: "/favicon-campanha.png?v=6", type: "image/png", sizes: "any" },
+      { rel: "shortcut icon", href: "/favicon-campanha.png?v=6", type: "image/png" },
+      { rel: "apple-touch-icon", sizes: "180x180", href: "/favicon-campanha.png?v=6" },
     ],
   }),
 
@@ -143,6 +143,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <CnpjRail />
       <PwaRegister />
       <Toaster position="top-center" richColors />
     </QueryClientProvider>

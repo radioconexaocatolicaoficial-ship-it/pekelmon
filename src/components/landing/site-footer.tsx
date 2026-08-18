@@ -5,7 +5,6 @@ import { CANDIDATE, FORO_BRASIL } from "@/lib/campaign-data";
 import { useGoToCadastro } from "@/hooks/use-go-to-cadastro";
 import { FOOTER_NAV_LINKS } from "@/lib/nav";
 import { scrollToPageTop } from "@/lib/scroll-to-section";
-import logo from "@/assets/Logo-Site-PAdre-kelmon.webp";
 import { PageShell } from "./primitives";
 
 const USEFUL_LINKS = [
@@ -49,6 +48,8 @@ export function SiteFooter() {
 
   return (
     <footer
+      id="rodape"
+      data-cnpj-on-dark
       className="relative overflow-hidden pb-[env(safe-area-inset-bottom,0px)] text-white"
       style={{ background: "var(--gradient-hero)" }}
     >
@@ -68,16 +69,16 @@ export function SiteFooter() {
             <Link
               to="/"
               onClick={() => scrollToPageTop()}
-              className="inline-flex items-center rounded-lg bg-white px-3 py-1.5 shadow-md"
+              className="inline-flex items-center"
             >
               <img
-                src={logo}
+                src="/Logo-Site-Padre-kelmon-campanha.png"
                 alt="Padre Kelmon 2202 — Deputado Federal"
                 width={200}
                 height={45}
                 loading="lazy"
                 decoding="async"
-                className="h-9 w-auto sm:h-10"
+                className="h-9 w-auto rounded-md sm:h-10"
               />
             </Link>
             <p className="mt-3 whitespace-nowrap text-[clamp(0.7rem,2.8vw,0.875rem)] font-bold leading-none text-white">
@@ -86,6 +87,9 @@ export function SiteFooter() {
             <p className="mt-2 text-sm leading-relaxed text-white/90">
               Fé, família e coragem para representar São Paulo e resgatar o Brasil. Liderança no
               Foro do Brasil e compromisso com a liberdade religiosa.
+            </p>
+            <p className="mt-2 text-xs font-semibold tracking-wide text-white/75 sm:text-sm">
+              CNPJ: {CANDIDATE.cnpj}
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               {SOCIALS.map(({ label, href, Icon }) => (
