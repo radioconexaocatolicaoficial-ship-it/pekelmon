@@ -3,10 +3,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/landing/site-header";
 import { Hero } from "@/components/landing/hero";
 import { Highlights } from "@/components/landing/highlights";
-import { About } from "@/components/landing/about";
-import { Bandeiras } from "@/components/landing/bandeiras";
-import { Media } from "@/components/landing/media";
-import { Stats } from "@/components/landing/stats";
 import { CallToAction } from "@/components/landing/call-to-action";
 import { SignupForm } from "@/components/landing/signup-form";
 import { SocialLinks } from "@/components/landing/social-links";
@@ -137,10 +133,6 @@ function Index() {
       <main id="conteudo" tabIndex={-1} className="overflow-x-clip outline-none">
         <Hero />
         <Highlights />
-        <About />
-        <Bandeiras />
-        <Media />
-        <Stats />
         <CallToAction />
         <SignupForm />
         <SocialLinks />

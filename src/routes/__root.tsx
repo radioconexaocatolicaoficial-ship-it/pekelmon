@@ -127,16 +127,16 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const locationHref = useRouterState({ select: (s) => s.location.href });
 
-  // Deep link: /#cadastro ou troca de rota com hash → scroll com offset do header
+  // Hash (#cadastro) rola até o formulário; sem hash, cada aba abre no topo.
   useEffect(() => {
     const hash = window.location.hash.replace(/^#/, "");
-    if (!hash) return;
-
-    const timer = window.setTimeout(() => {
-      scrollToSection(hash);
-    }, 80);
-
-    return () => window.clearTimeout(timer);
+    if (hash) {
+      const timer = window.setTimeout(() => {
+        scrollToSection(hash);
+      }, 80);
+      return () => window.clearTimeout(timer);
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [locationHref]);
 
   return (

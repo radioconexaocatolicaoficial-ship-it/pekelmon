@@ -4,6 +4,7 @@ import { Facebook, Instagram, Youtube, ArrowUpRight } from "lucide-react";
 import { CANDIDATE, FORO_BRASIL } from "@/lib/campaign-data";
 import { useGoToCadastro } from "@/hooks/use-go-to-cadastro";
 import { FOOTER_NAV_LINKS } from "@/lib/nav";
+import { scrollToPageTop } from "@/lib/scroll-to-section";
 import logo from "@/assets/Logo-Site-PAdre-kelmon.webp";
 import { PageShell } from "./primitives";
 
@@ -66,6 +67,7 @@ export function SiteFooter() {
           <div className="sm:col-span-2 lg:col-span-1">
             <Link
               to="/"
+              onClick={() => scrollToPageTop()}
               className="inline-flex items-center rounded-lg bg-white px-3 py-1.5 shadow-md"
             >
               <img
@@ -111,7 +113,7 @@ export function SiteFooter() {
                   <Link
                     to={l.to}
                     hash={l.hash}
-                    onClick={l.hash === "cadastro" ? goToCadastro : undefined}
+                    onClick={l.hash === "cadastro" ? goToCadastro : () => scrollToPageTop()}
                     className="inline-flex min-h-9 items-center text-sm font-semibold text-white/85 transition-colors hover:text-white"
                   >
                     {l.label}

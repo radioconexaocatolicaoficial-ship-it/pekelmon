@@ -11,6 +11,10 @@ export function getBottomNavOffset() {
   return Math.ceil(nav.getBoundingClientRect().height);
 }
 
+export function scrollToPageTop(behavior: ScrollBehavior = "smooth") {
+  window.scrollTo({ top: 0, left: 0, behavior });
+}
+
 export function scrollToSection(id: string) {
   const el = document.getElementById(id);
   if (!el) return;

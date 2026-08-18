@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useGoToCadastro } from "@/hooks/use-go-to-cadastro";
 import { NAV_LINKS, TOP_NAV_LINKS, type NavLink } from "@/lib/nav";
+import { scrollToPageTop } from "@/lib/scroll-to-section";
 import logo from "@/assets/Logo-Site-PAdre-kelmon.webp";
 import { PageShell } from "./primitives";
 
@@ -11,7 +12,6 @@ export function SiteHeader() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const goToCadastro = useGoToCadastro();
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("inicio");
   const bottomNavRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
 
@@ -22,34 +22,7 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  useEffect(() => {
-    if (pathname !== "/") return;
-
-    const sections = NAV_LINKS.map((l) => document.getElementById(l.sectionId)).filter(
-      (el): el is HTMLElement => Boolean(el),
-    );
-    if (!sections.length) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible[0]?.target?.id) {
-          setActiveSection(visible[0].target.id);
-        }
-      },
-      {
-        rootMargin: "-28% 0px -42% 0px",
-        threshold: [0.12, 0.3, 0.55],
-      },
-    );
-
-    sections.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [pathname]);
-
-  const activeKey = navActiveKey(pathname, activeSection);
+  const activeKey = navActiveKey(pathname);
 
   useEffect(() => {
     const el = itemRefs.current[activeKey];
@@ -68,7 +41,7 @@ export function SiteHeader() {
       >
         <nav aria-label="Navegação principal" className="w-full">
           <PageShell className="flex min-w-0 items-center gap-3 py-2 sm:py-2.5 md:gap-4 md:py-[0.6rem]">
-            <Link to="/" className="flex shrink-0 items-center">
+            <Link to="/" onClick={() => scrollToPageTop()} className="flex shrink-0 items-center">
               <img
                 src={logo}
                 alt="Padre Kelmon 2202 — Deputado Federal"
@@ -83,11 +56,12 @@ export function SiteHeader() {
               <ul className="hidden min-w-0 items-center justify-end gap-[0.95rem] overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:gap-6 xl:gap-7 [&::-webkit-scrollbar]:hidden">
                 {TOP_NAV_LINKS.map((l) => {
                   const Icon = l.icon;
-                  const isActive = isNavActive(l, pathname, activeSection);
+                  const isActive = isNavActive(l, pathname);
                   return (
                     <li key={l.sectionId} className="flex shrink-0">
                       <Link
                         to={l.to}
+                        onClick={() => scrollToPageTop()}
                         className={`inline-flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 transition-colors lg:gap-2 lg:px-3 lg:py-2 ${
                           isActive
                             ? "bg-blue-50 text-[var(--blue-primary)]"
@@ -133,7 +107,7 @@ export function SiteHeader() {
         >
           {NAV_LINKS.map((l) => {
             const Icon = l.icon;
-            const isActive = isNavActive(l, pathname, activeSection);
+            const isActive = isNavActive(l, pathname);
             const isAccent = Boolean(l.accent);
 
             return (
@@ -144,7 +118,7 @@ export function SiteHeader() {
                 }}
                 to={l.to}
                 hash={l.hash}
-                onClick={l.hash === "cadastro" ? goToCadastro : undefined}
+                onClick={l.hash === "cadastro" ? goToCadastro : () => scrollToPageTop()}
                 className={`relative flex min-w-0 flex-1 flex-col items-center justify-center gap-0.5 rounded-xl px-0.5 py-1 outline-none transition-colors ${
                   isActive
                     ? isAccent
@@ -167,14 +141,12 @@ export function SiteHeader() {
   );
 }
 
-function isNavActive(link: NavLink, pathname: string, scrollSection: string) {
-  if (link.hash === "cadastro") return scrollSection === "cadastro";
-  if (pathname !== "/") return pathname === link.to;
-  return scrollSection === link.sectionId;
+function isNavActive(link: NavLink, pathname: string) {
+  if (link.hash === "cadastro") return false;
+  return pathname === link.to;
 }
 
-function navActiveKey(pathname: string, scrollSection: string) {
-  if (scrollSection === "cadastro") return "cadastro";
-  const current = NAV_LINKS.find((l) => !l.hash && (pathname === "/" ? l.sectionId === scrollSection : l.to === pathname));
+function navActiveKey(pathname: string) {
+  const current = NAV_LINKS.find((l) => !l.hash && l.to === pathname);
   return current?.sectionId ?? "inicio";
 }

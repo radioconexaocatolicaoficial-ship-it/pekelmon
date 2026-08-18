@@ -1,3 +1,4 @@
+import { useRouterState } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
 import { CallToAction } from "@/components/landing/call-to-action";
@@ -5,11 +6,14 @@ import { SignupForm } from "@/components/landing/signup-form";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { SiteHeader } from "@/components/landing/site-header";
 import { SocialLinks } from "@/components/landing/social-links";
+import { scrollToPageTop } from "@/lib/scroll-to-section";
 
 export function InnerPage({ children }: { children: ReactNode }) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  }, []);
+    scrollToPageTop("auto");
+  }, [pathname]);
 
   return (
     <div className="min-h-dvh bg-white md:min-h-screen">

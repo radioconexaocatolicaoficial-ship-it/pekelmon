@@ -10,24 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as SobreRouteImport } from './routes/sobre'
-import { Route as PautasRouteImport } from './routes/pautas'
 import { Route as MidiaRouteImport } from './routes/midia'
 import { Route as NumerosRouteImport } from './routes/numeros'
+import { Route as PautasRouteImport } from './routes/pautas'
+import { Route as SobreRouteImport } from './routes/sobre'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SobreRoute = SobreRouteImport.update({
-  id: '/sobre',
-  path: '/sobre',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PautasRoute = PautasRouteImport.update({
-  id: '/pautas',
-  path: '/pautas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MidiaRoute = MidiaRouteImport.update({
@@ -40,43 +30,53 @@ const NumerosRoute = NumerosRouteImport.update({
   path: '/numeros',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PautasRoute = PautasRouteImport.update({
+  id: '/pautas',
+  path: '/pautas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/sobre': typeof SobreRoute
-  '/pautas': typeof PautasRoute
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
+  '/pautas': typeof PautasRoute
+  '/sobre': typeof SobreRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/sobre': typeof SobreRoute
-  '/pautas': typeof PautasRoute
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
+  '/pautas': typeof PautasRoute
+  '/sobre': typeof SobreRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/sobre': typeof SobreRoute
-  '/pautas': typeof PautasRoute
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
+  '/pautas': typeof PautasRoute
+  '/sobre': typeof SobreRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sobre' | '/pautas' | '/midia' | '/numeros'
+  fullPaths: '/' | '/midia' | '/numeros' | '/pautas' | '/sobre'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sobre' | '/pautas' | '/midia' | '/numeros'
-  id: '__root__' | '/' | '/sobre' | '/pautas' | '/midia' | '/numeros'
+  to: '/' | '/midia' | '/numeros' | '/pautas' | '/sobre'
+  id: '__root__' | '/' | '/midia' | '/numeros' | '/pautas' | '/sobre'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  SobreRoute: typeof SobreRoute
-  PautasRoute: typeof PautasRoute
   MidiaRoute: typeof MidiaRoute
   NumerosRoute: typeof NumerosRoute
+  PautasRoute: typeof PautasRoute
+  SobreRoute: typeof SobreRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -86,20 +86,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sobre': {
-      id: '/sobre'
-      path: '/sobre'
-      fullPath: '/sobre'
-      preLoaderRoute: typeof SobreRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pautas': {
-      id: '/pautas'
-      path: '/pautas'
-      fullPath: '/pautas'
-      preLoaderRoute: typeof PautasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/midia': {
@@ -116,15 +102,29 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NumerosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/pautas': {
+      id: '/pautas'
+      path: '/pautas'
+      fullPath: '/pautas'
+      preLoaderRoute: typeof PautasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  SobreRoute: SobreRoute,
-  PautasRoute: PautasRoute,
   MidiaRoute: MidiaRoute,
   NumerosRoute: NumerosRoute,
+  PautasRoute: PautasRoute,
+  SobreRoute: SobreRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

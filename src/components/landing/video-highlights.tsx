@@ -6,8 +6,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi,
 } from "@/components/ui/carousel";
 import {
@@ -67,9 +65,9 @@ function VideoCard({
     <button
       type="button"
       onClick={() => onOpen(video)}
-      className="group flex h-full w-full flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white text-left shadow-sm transition hover:border-blue-500 hover:shadow-md"
+      className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white text-left shadow-sm transition hover:border-blue-500 hover:shadow-md"
     >
-      <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
+      <div className="relative min-h-0 w-full flex-1 overflow-hidden bg-gray-100">
         <img
           src={video.thumbnail}
           alt=""
@@ -85,7 +83,7 @@ function VideoCard({
           </span>
         </span>
       </div>
-      <div className="flex flex-1 flex-col gap-1 p-2 sm:p-2.5">
+      <div className="flex shrink-0 flex-col gap-1 p-2 sm:p-2.5">
         <h3
           className="line-clamp-2 text-xs font-bold leading-snug sm:text-sm"
           style={{ color: "var(--blue-primary)" }}
@@ -103,8 +101,8 @@ function VideoCard({
 
 function FeaturedLocalVideo() {
   return (
-    <div className="mx-auto w-[min(100%,20rem)] shrink-0 overflow-hidden lg:mx-0 lg:h-full lg:w-[20rem]">
-      <div className="relative aspect-[1080/1920] h-full w-full overflow-hidden bg-neutral-900">
+    <div className="mx-auto w-[min(100%,20rem)] overflow-hidden rounded-xl lg:mx-0 lg:w-full">
+      <div className="relative aspect-[1080/1920] w-full overflow-hidden rounded-xl bg-neutral-900">
         <video
           className="absolute inset-0 h-full w-full object-cover object-[center_18%]"
           src={featuredVideoUrl}
@@ -154,17 +152,17 @@ export function VideoHighlights() {
         </p>
       </div>
 
-      <div className="flex flex-col items-stretch gap-4 lg:flex-row lg:gap-5">
+      <div className="grid items-stretch gap-4 lg:grid-cols-[20rem_minmax(0,1fr)] lg:gap-5">
         <FeaturedLocalVideo />
 
         <Carousel
           opts={{ align: "start", loop: true }}
           setApi={setApi}
-          className="relative min-w-0 w-full flex-1 px-0 sm:px-10"
+          className="relative min-h-0 min-w-0 w-full lg:h-[calc(20rem*16/9)] [&>div]:h-full"
         >
-          <CarouselContent>
+          <CarouselContent className="-ml-0 h-full">
             {pages.map((page, pageIndex) => (
-              <CarouselItem key={pageIndex} className="basis-full">
+              <CarouselItem key={pageIndex} className="h-full basis-full pl-0">
                 <div className="grid h-full grid-cols-2 grid-rows-2 gap-2 sm:gap-3">
                   {Array.from({ length: SIDE_PAGE_SIZE }, (_, index) => {
                     const video = page[index];
@@ -183,8 +181,6 @@ export function VideoHighlights() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden border-blue-200 bg-white text-blue-700 hover:bg-blue-50 sm:inline-flex left-0" />
-          <CarouselNext className="hidden border-blue-200 bg-white text-blue-700 hover:bg-blue-50 sm:inline-flex right-0" />
         </Carousel>
       </div>
 
