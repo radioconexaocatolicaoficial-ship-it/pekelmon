@@ -8,8 +8,21 @@ export type YoutubeHighlight = {
   published: string;
 };
 
+/** Vídeo fixo no primeiro card da grade 2×2, abaixo do banner. */
+export const YOUTUBE_PINNED_GRID_ID = 'k8n5EIaJVlk';
+
 /** Videos do Padre Kelmon — destaque fixo + demais por data. */
 export const YOUTUBE_HIGHLIGHTS: YoutubeHighlight[] = [
+  {
+    id: 'k8n5EIaJVlk',
+    title: 'FALA CANDIDATO | PADRE KELMON (PL) FALA DE SUA CANDIDATURA E OS DESAFIOS DO BRASIL',
+    description:
+      'No podcast Fala Candidato, da Lima TV, Padre Kelmon fala da candidatura a deputado federal pelo PL e dos desafios do Brasil.',
+    url: 'https://www.youtube.com/watch?v=k8n5EIaJVlk',
+    thumbnail: 'https://i.ytimg.com/vi/k8n5EIaJVlk/hqdefault.jpg',
+    views: 0,
+    published: '2026-08-16',
+  },
   {
     id: 'DGrflujR5kw',
     title: 'PADRE KELMON - RELIGIÃO E POLÍTICA - SEM LIMITES #185',

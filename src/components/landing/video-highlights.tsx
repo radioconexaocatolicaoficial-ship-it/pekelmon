@@ -3,24 +3,22 @@ import { useEffect, useMemo, useState } from "react";
 
 import featuredVideoUrl from "@/assets/video-destaque-padre-kelmon.mp4?url";
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "@/components/ui/carousel";
-import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { YOUTUBE_HIGHLIGHTS, type YoutubeHighlight } from "@/data/youtube-highlights";
+import { YOUTUBE_HIGHLIGHTS, YOUTUBE_PINNED_GRID_ID, type YoutubeHighlight } from "@/data/youtube-highlights";
 
 const FEATURED_VIDEO_TITLE = "Padre Kelmon — vídeo em destaque";
 
 const SIDE_PAGE_SIZE = 4;
-const SIDE_ROTATE_MS = 8_000;
+const ROTATING_SLOT_COUNT = SIDE_PAGE_SIZE - 1;
+/** 1 minuto em cada conjunto de cards laterais antes de trocar. */
+const SIDE_ROTATE_MS = 60_000;
+/** Cards laterais em rotação (além do vídeo fixo). */
+const SIDE_ROTATION_LIMIT = 16;
 
 function rankScore(
   video: YoutubeHighlight,
@@ -44,14 +42,6 @@ function rankVideos(videos: YoutubeHighlight[]) {
   return [...videos].sort(
     (a, b) => rankScore(b, maxViews, minDate, maxDate) - rankScore(a, maxViews, minDate, maxDate),
   );
-}
-
-function chunkVideos(videos: YoutubeHighlight[], size: number) {
-  const pages: YoutubeHighlight[][] = [];
-  for (let i = 0; i < videos.length; i += size) {
-    pages.push(videos.slice(i, i + size));
-  }
-  return pages.length ? pages : [[]];
 }
 
 function VideoCard({
@@ -101,7 +91,7 @@ function VideoCard({
 
 function FeaturedLocalVideo() {
   return (
-    <div className="mx-auto w-[min(100%,20rem)] overflow-hidden rounded-xl lg:mx-0 lg:w-full">
+    <div className="mx-auto w-[min(100%,20rem)] shrink-0 overflow-hidden rounded-xl md:mx-0 md:w-full">
       <div className="relative aspect-[1080/1920] w-full overflow-hidden rounded-xl bg-neutral-900">
         <video
           className="absolute inset-0 h-full w-full object-cover object-[center_18%]"
@@ -126,17 +116,31 @@ function FeaturedLocalVideo() {
 
 export function VideoHighlights() {
   const ranked = useMemo(() => rankVideos(YOUTUBE_HIGHLIGHTS), []);
-  const pages = useMemo(() => chunkVideos(ranked, SIDE_PAGE_SIZE), [ranked]);
-  const [api, setApi] = useState<CarouselApi>();
+  const [page, setPage] = useState(0);
   const [active, setActive] = useState<YoutubeHighlight | null>(null);
 
+  const pinned =
+    YOUTUBE_HIGHLIGHTS.find((video) => video.id === YOUTUBE_PINNED_GRID_ID) ?? ranked[0];
+
+  const rotatingVideos = useMemo(
+    () => ranked.filter((video) => video.id !== pinned.id).slice(0, SIDE_ROTATION_LIMIT),
+    [ranked, pinned.id],
+  );
+  const pageCount = Math.max(1, Math.ceil(rotatingVideos.length / ROTATING_SLOT_COUNT));
+
   useEffect(() => {
-    if (!api || active || pages.length <= 1) return;
-    const tickId = window.setInterval(() => {
-      api.scrollNext();
+    if (active || pageCount <= 1) return;
+    const id = window.setInterval(() => {
+      setPage((current) => (current + 1) % pageCount);
     }, SIDE_ROTATE_MS);
-    return () => window.clearInterval(tickId);
-  }, [api, active, pages.length]);
+    return () => window.clearInterval(id);
+  }, [active, pageCount]);
+
+  const rotatingPage = rotatingVideos.slice(
+    page * ROTATING_SLOT_COUNT,
+    page * ROTATING_SLOT_COUNT + ROTATING_SLOT_COUNT,
+  );
+  const sidePage = [pinned, ...rotatingPage];
 
   return (
     <div className="mb-8 space-y-4 sm:mb-10">
@@ -152,36 +156,24 @@ export function VideoHighlights() {
         </p>
       </div>
 
-      <div className="grid items-stretch gap-4 lg:grid-cols-[20rem_minmax(0,1fr)] lg:gap-5">
+      <div className="grid items-stretch gap-4 md:grid-cols-[20rem_minmax(0,1fr)] md:gap-5">
         <FeaturedLocalVideo />
 
-        <Carousel
-          opts={{ align: "start", loop: true }}
-          setApi={setApi}
-          className="relative min-h-0 min-w-0 w-full lg:h-[calc(20rem*16/9)] [&>div]:h-full"
-        >
-          <CarouselContent className="-ml-0 h-full">
-            {pages.map((page, pageIndex) => (
-              <CarouselItem key={pageIndex} className="h-full basis-full pl-0">
-                <div className="grid h-full grid-cols-2 grid-rows-2 gap-2 sm:gap-3">
-                  {Array.from({ length: SIDE_PAGE_SIZE }, (_, index) => {
-                    const video = page[index];
-                    if (!video) {
-                      return <div key={`empty-${pageIndex}-${index}`} className="rounded-xl bg-gray-50" />;
-                    }
-                    return (
-                      <VideoCard
-                        key={`${pageIndex}-${video.id}`}
-                        video={video}
-                        onOpen={setActive}
-                      />
-                    );
-                  })}
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+        <div className="grid min-h-0 min-w-0 grid-cols-2 grid-rows-2 gap-2 sm:gap-3 md:h-[calc(20rem*16/9)]">
+          {Array.from({ length: SIDE_PAGE_SIZE }, (_, index) => {
+            const video = sidePage[index];
+            if (!video) {
+              return <div key={`empty-${index}`} className="rounded-xl bg-gray-50" />;
+            }
+            return (
+              <VideoCard
+                key={video.id === pinned.id ? video.id : `${video.id}-${page}`}
+                video={video}
+                onOpen={setActive}
+              />
+            );
+          })}
+        </div>
       </div>
 
       <Dialog open={Boolean(active)} onOpenChange={(open) => !open && setActive(null)}>

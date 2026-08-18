@@ -8,7 +8,7 @@ export function CallToAction() {
   const goToCadastro = useGoToCadastro();
 
   return (
-    <section className="section-pad relative isolate overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
+    <section className="relative isolate overflow-hidden" style={{ background: "var(--gradient-hero)" }}>
       <div
         aria-hidden="true"
         className="absolute inset-0 -z-10 opacity-10"
@@ -24,7 +24,7 @@ export function CallToAction() {
         style={{ background: "var(--yellow-primary)" }}
       />
 
-      <PageShell className="text-center">
+      <PageShell className="py-10 text-center sm:py-12 lg:py-14">
         <Reveal>
           <p
             className="mb-3 text-sm font-bold uppercase tracking-widest"
@@ -56,6 +56,12 @@ export function CallToAction() {
           </Button>
         </Reveal>
       </PageShell>
+
+      <div
+        aria-hidden="true"
+        className="h-1 w-full"
+        style={{ background: "var(--yellow-primary)" }}
+      />
     </section>
   );
 }

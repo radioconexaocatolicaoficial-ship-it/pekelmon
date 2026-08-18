@@ -345,9 +345,151 @@ export const FORO_BRASIL = {
   name: "Foro do Brasil",
   url: "https://forobrasil.org/",
   aboutUrl: "https://forobrasil.org/sobre/",
+  directoriesUrl: "https://forobrasil.org/diretorios/",
+  contactUrl: "https://forobrasil.org/contato/",
   founded: "29 de junho de 2023",
   role: "Presidente Nacional",
+  slogan: "Liberdade, Humanidade, Cristianismo e a União entre povos",
   tagline: "Pelo Brasil que acreditamos, pelos direitos que defendemos",
   description:
-    "Espaço de representação e defesa da liberdade, da propriedade, da livre expressão e da dignidade humana. Com caravanas, diretórios estaduais e frentes de juventude, mulheres e indígenas, o Foro fortalece a cultura, a educação e a soberania nacional sob a liderança do Padre Kelmon.",
+    "O Foro do Brasil é um espaço de representação e defesa dos valores que sustentam uma sociedade livre e justa. Atua em prol da liberdade, da propriedade, da livre expressão e do direito dos cidadãos, promovendo iniciativas que fortalecem a cultura, a educação, a saúde e a dignidade humana.",
+  quote:
+    "O Brasil precisa de uma organização política que una cidadãos comprometidos com a liberdade, a ordem e o progresso. O Foro do Brasil é esse espaço.",
+  quoteAuthor: "Padre Kelmon, Presidente Nacional",
+  values: [
+    {
+      title: "Liberdade",
+      description: "Defesa das liberdades fundamentais e dos direitos individuais.",
+    },
+    {
+      title: "Propriedade",
+      description: "Proteção da propriedade e da livre iniciativa das famílias brasileiras.",
+    },
+    {
+      title: "Livre expressão",
+      description: "Direito de falar, crer e participar da vida pública sem censura.",
+    },
+    {
+      title: "Dignidade humana",
+      description: "Cultura, educação, saúde e respeito à pessoa humana em primeiro lugar.",
+    },
+  ],
+  pillars: [
+    {
+      title: "Defendendo valores, fortalecendo a sociedade",
+      description:
+        "Conheça a missão, os princípios e a atuação do Foro em defesa da liberdade, da justiça e dos direitos individuais.",
+      href: "https://forobrasil.org/sobre/",
+      cta: "Conheça o Foro",
+    },
+    {
+      title: "Presença em todo o Brasil e no mundo",
+      description:
+        "Diretórios e lideranças em cada região, com frentes de juventude, mulheres, indígenas e presença no Equador e no Peru.",
+      href: "https://forobrasil.org/diretorios/",
+      cta: "Conheça os Diretórios",
+    },
+    {
+      title: "Junte-se a nós e apoie o Foro do Brasil",
+      description:
+        "Seja parte dessa transformação. Descubra como contribuir e fortalecer a missão pelo Brasil que acreditamos.",
+      href: "https://forobrasil.org/contato/",
+      cta: "Faça Parte",
+    },
+  ],
+  fronts: [
+    { label: "Diretórios Estaduais", href: "https://forobrasil.org/diretorios/" },
+    { label: "Juventude", href: "https://forobrasil.org/foro-do-brasil-juventude/" },
+    { label: "Mulher", href: "https://forobrasil.org/foro-do-brasil-mulher/" },
+    { label: "Indígena", href: "https://forobrasil.org/foro-do-brasil-indigena/" },
+    { label: "Equador", href: "https://forobrasil.org/foro-do-brasil-equador/" },
+    { label: "Peru", href: "https://forobrasil.org/foro-do-brasil-peru/" },
+  ],
+};
+
+export const PARTIDO_LIBERAL = {
+  name: "Partido Liberal",
+  shortName: "PL",
+  number: "22",
+  url: "https://partidoliberal.org.br/",
+  affiliationUrl:
+    "https://partidoliberal.org.br/valdemar-assina-ficha-de-filiacao-de-padre-kelmon-ao-pl/",
+  joinUrl: "https://queromefiliaraopl.com.br/",
+  donateUrl: "https://www.partidoliberal.org.br/doacao/",
+  joined: "14 de agosto de 2024",
+  role: "Filiado ao PL 22",
+  photoCredit: "Foto: Beto Barata/PL",
+  slogan: "Liberdade, Verdade e Fé, pelo bem do Brasil",
+  description:
+    "Em 14 de agosto de 2024, na sede do Partido Liberal em Brasília, o presidente nacional Valdemar Costa Neto assinou a ficha de filiação de Padre Kelmon. A chegada do sacerdote fortalece o partido e reafirma o compromisso da sigla com o futuro do Brasil. Na cerimônia, Kelmon destacou 25 anos dedicados à juventude e o chamado a líderes comprometidos com Deus, pátria, família, vida e liberdade.",
+  quote:
+    "Como padre, meu compromisso é servir ao povo, e na política, não é diferente. Estamos aqui para servir à comunidade, ao povo, à nação. No PL, pretendo me dedicar com o mesmo zelo, pois precisamos de líderes comprometidos com Deus, pátria, família, vida e liberdade.",
+  quoteAuthor: "Padre Kelmon, na filiação ao PL",
+  values: [
+    {
+      title: "Deus",
+      description: "Fé cristã na vida pública e liberdade religiosa como compromisso inegociável.",
+    },
+    {
+      title: "Pátria",
+      description: "Servir à nação com zelo, responsabilidade e amor ao Brasil.",
+    },
+    {
+      title: "Família e vida",
+      description: "Defesa da família e da vida, do nascimento à dignidade de cada pessoa.",
+    },
+    {
+      title: "Liberdade",
+      description: "Líderes comprometidos com a liberdade do povo e com o futuro do Brasil.",
+    },
+  ],
+  news: [
+    {
+      source: "PL 22",
+      date: "16/08/2026",
+      title: "Flávio Bolsonaro vai honrar a escolha do pai com o lema “O Brasil Vai Vencer”",
+      description:
+        "O candidato do PL à Presidência reafirma o lema da campanha e o compromisso de honrar a escolha de Jair Bolsonaro.",
+      href: "https://partidoliberal.org.br/flavio-bolsonaro-vai-honrar-a-escolha-do-pai-com-o-lema-o-brasil-vai-vencer/",
+      image: "/news/flavio-brasil-vai-vencer.jpg",
+    },
+    {
+      source: "PL 22",
+      date: "11/08/2026",
+      title:
+        "“Juntos com este time para resgatar o Brasil”, diz Flávio Bolsonaro ao lado dos candidatos ao Senado",
+      description:
+        "O senador recebe candidatos conservadores ao Senado e reforça a união para resgatar o Brasil.",
+      href: "https://partidoliberal.org.br/juntos-com-este-time-para-resgatar-o-brasil-diz-flavio-bolsonaro-ao-lado-dos-candidatos-conservadores-ao-senado/",
+      image: "/news/flavio-time-senado.jpg",
+    },
+    {
+      source: "PL 22",
+      date: "25/07/2026",
+      title: "Flávio Bolsonaro fala em resgatar o Brasil e varrer o PT na Convenção do PL",
+      description:
+        "A Convenção Nacional do PL, em São Paulo, oficializa a candidatura de Flávio Bolsonaro à Presidência.",
+      href: "https://partidoliberal.org.br/flavio-bolsonaro-fala-em-resgatar-o-brasil-e-varrer-o-pt-na-convencao-do-pl/",
+      image: "/news/flavio-convencao-pl.jpg",
+    },
+    {
+      source: "PL 22",
+      date: "07/07/2026",
+      title:
+        "Valdemar Costa Neto anuncia o lançamento da candidatura de Flávio Bolsonaro à Presidência",
+      description:
+        "O presidente nacional do PL convoca o Brasil para a Convenção que lança a chapa presidencial da legenda.",
+      href: "https://partidoliberal.org.br/valdemar-costa-neto-anuncia-lancamento-da-candidatura-do-senador-flavio-bolsonaro-a-presidencia-da-republica/",
+      image: "/news/flavio-valdemar-lancamento.jpg",
+    },
+  ],
+  fronts: [
+    {
+      label: "Matéria da filiação",
+      href: "https://partidoliberal.org.br/valdemar-assina-ficha-de-filiacao-de-padre-kelmon-ao-pl/",
+    },
+    { label: "Site oficial", href: "https://partidoliberal.org.br/" },
+    { label: "Filie-se", href: "https://queromefiliaraopl.com.br/" },
+    { label: "Doação", href: "https://www.partidoliberal.org.br/doacao/" },
+  ],
 };
