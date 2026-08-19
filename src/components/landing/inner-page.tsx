@@ -2,13 +2,22 @@ import { useRouterState } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
 import { CallToAction } from "@/components/landing/call-to-action";
+import { ForoNews } from "@/components/landing/foro-news";
+import { Hero } from "@/components/landing/hero";
 import { SignupForm } from "@/components/landing/signup-form";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { SiteHeader } from "@/components/landing/site-header";
 import { SocialLinks } from "@/components/landing/social-links";
+import { SocialStrip } from "@/components/landing/social-strip";
 import { scrollToPageTop } from "@/lib/scroll-to-section";
 
-export function InnerPage({ children }: { children: ReactNode }) {
+export function InnerPage({
+  children,
+  afterCta,
+}: {
+  children: ReactNode;
+  afterCta?: ReactNode;
+}) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -38,8 +47,12 @@ export function InnerPage({ children }: { children: ReactNode }) {
         tabIndex={-1}
         className="overflow-x-clip pt-[4.25rem] outline-none sm:pt-[4.75rem]"
       >
+        <Hero embedded />
         {children}
+        <SocialStrip />
         <CallToAction />
+        <ForoNews />
+        {afterCta}
         <SignupForm />
         <SocialLinks />
       </main>

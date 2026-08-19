@@ -7,6 +7,7 @@ import {
   ShieldCheck,
   Scale,
   Users,
+  Landmark,
   type LucideIcon,
 } from "lucide-react";
 
@@ -186,6 +187,13 @@ export const BANDEIRAS: Bandeira[] = [
     description:
       "Investimento na formação integral dos jovens brasileiros com educação de qualidade, oportunidades de primeiro emprego e incentivos ao empreendedorismo juvenil. Proteção contra drogas, violência e ideologias destrutivas, promovendo valores sólidos e esperança no futuro.",
   },
+  {
+    icon: Landmark,
+    title: "Foro do Brasil",
+    badge: "Conservadorismo",
+    description:
+      "Fortalecer o Foro do Brasil, movimento fundado por Padre Kelmon em 29 de junho de 2023 no Congresso Nacional, do qual é Presidente Nacional. Unir cidadãos em defesa da liberdade, da fé cristã, da ordem e do progresso, com diretórios em todo o país e no exterior. Levar à Câmara dos Deputados a mesma missão: articular o pensamento conservador e resgatar o Brasil com valores cristãos, soberania nacional e dignidade da pessoa humana.",
+  },
 ];
 
 export type GalleryItem = {
@@ -345,6 +353,7 @@ export const TRUST_PILLARS: TrustPillar[] = [
 export const FORO_BRASIL = {
   name: "Foro do Brasil",
   url: "https://forobrasil.org/",
+  newsUrl: "https://forobrasil.org/noticias/",
   aboutUrl: "https://forobrasil.org/sobre/",
   directoriesUrl: "https://forobrasil.org/diretorios/",
   contactUrl: "https://forobrasil.org/contato/",

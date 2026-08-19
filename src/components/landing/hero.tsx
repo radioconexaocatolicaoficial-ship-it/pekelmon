@@ -11,6 +11,7 @@ import banner4 from "@/assets/banner-topo-padre-kelmon-4.png";
 import banner5 from "@/assets/banner-topo-padre-kelmon-5.png";
 import banner6 from "@/assets/banner-topo-padre-kelmon-6.png";
 import { PageShell } from "./primitives";
+import { HeroSocialBar } from "./hero-social-bar";
 
 const HERO_BANNERS = [
   {
@@ -30,7 +31,7 @@ const HERO_BANNERS = [
   },
 ] as const;
 
-export function Hero() {
+export function Hero({ embedded = false }: { embedded?: boolean }) {
   const [api, setApi] = useState<CarouselApi>();
   const [active, setActive] = useState(0);
 
@@ -54,14 +55,18 @@ export function Hero() {
 
   return (
     <section
-      id="inicio"
-      className="relative isolate bg-white pt-[4.25rem] pb-2 sm:pt-[4.75rem] sm:pb-3 lg:pb-0"
+      id={embedded ? undefined : "inicio"}
+      className={`relative isolate bg-white pb-2 sm:pb-3 lg:pb-0 ${
+        embedded ? "pt-2 sm:pt-3" : "pt-[4.25rem] sm:pt-[4.75rem]"
+      }`}
     >
       <PageShell>
-        <h1 className="sr-only">
-          Padre Kelmon — Candidato a Deputado Federal por São Paulo pelo PL, aprovado em
-          convenção
-        </h1>
+        {embedded ? null : (
+          <h1 className="sr-only">
+            Padre Kelmon — Candidato a Deputado Federal por São Paulo pelo PL, aprovado em
+            convenção
+          </h1>
+        )}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -92,25 +97,9 @@ export function Hero() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-
-            <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 rounded-full bg-black/30 px-2.5 py-1.5 backdrop-blur-sm sm:bottom-3.5">
-              {HERO_BANNERS.map((banner, index) => (
-                <button
-                  key={banner.src}
-                  type="button"
-                  aria-label={`Ir para banner ${index + 1}`}
-                  aria-current={index === active}
-                  onClick={() => api?.scrollTo(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    index === active
-                      ? "w-6 bg-white shadow"
-                      : "w-2 bg-white/55 hover:bg-white/85"
-                  }`}
-                />
-              ))}
-            </div>
           </Carousel>
         </motion.div>
+        <HeroSocialBar />
       </PageShell>
     </section>
   );

@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 
 import { About } from "@/components/landing/about";
+import { ChapaNews } from "@/components/landing/chapa-news";
 import { InnerPage } from "@/components/landing/inner-page";
-import { SocialStrip } from "@/components/landing/social-strip";
 import { PAGE_SEO, buildPageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/sobre")({
@@ -12,9 +12,8 @@ export const Route = createFileRoute("/sobre")({
 
 function SobrePage() {
   return (
-    <InnerPage>
+    <InnerPage afterCta={<ChapaNews />}>
       <About headingAs="h1" standalone />
-      <SocialStrip />
     </InnerPage>
   );
 }
