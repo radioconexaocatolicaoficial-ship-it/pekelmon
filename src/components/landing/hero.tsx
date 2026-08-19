@@ -63,8 +63,7 @@ export function Hero({ embedded = false }: { embedded?: boolean }) {
       <PageShell>
         {embedded ? null : (
           <h1 className="sr-only">
-            Padre Kelmon — Candidato a Deputado Federal por São Paulo pelo PL, aprovado em
-            convenção
+            Padre Kelmon — Candidato a Deputado Federal
           </h1>
         )}
         <motion.div

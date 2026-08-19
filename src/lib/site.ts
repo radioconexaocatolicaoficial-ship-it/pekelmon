@@ -9,8 +9,7 @@ export const SITE_URL = (
 
 export const SITE_NAME = "Padre Kelmon";
 
-export const SITE_TITLE =
-  "Padre Kelmon — Candidato a Deputado Federal, aprovado em convenção";
+export const SITE_TITLE = "Padre Kelmon — Candidato a Deputado Federal";
 
 /** Meta description distinta do title (~150–160 caracteres) para SEO e redes. */
 export const SITE_DESCRIPTION =
