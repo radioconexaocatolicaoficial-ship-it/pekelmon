@@ -11,6 +11,7 @@ import banner4 from "@/assets/banner-topo-padre-kelmon-4.png";
 import banner5 from "@/assets/banner-topo-padre-kelmon-5.png";
 import banner6 from "@/assets/banner-topo-padre-kelmon-6.png";
 import { PageShell } from "./primitives";
+import { HeroServiceCards } from "./hero-service-cards";
 import { HeroSocialBar } from "./hero-social-bar";
 
 const HERO_BANNERS = [
@@ -99,6 +100,7 @@ export function Hero({ embedded = false }: { embedded?: boolean }) {
           </Carousel>
         </motion.div>
         <HeroSocialBar />
+        <HeroServiceCards />
       </PageShell>
     </section>
   );
