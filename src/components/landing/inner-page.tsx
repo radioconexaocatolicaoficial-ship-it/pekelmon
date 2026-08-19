@@ -2,6 +2,7 @@ import { useRouterState } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
 import { CallToAction } from "@/components/landing/call-to-action";
+import { ChapaNews } from "@/components/landing/chapa-news";
 import { ForoNews } from "@/components/landing/foro-news";
 import { Hero } from "@/components/landing/hero";
 import { SignupForm } from "@/components/landing/signup-form";
@@ -13,10 +14,8 @@ import { scrollToPageTop } from "@/lib/scroll-to-section";
 
 export function InnerPage({
   children,
-  afterCta,
 }: {
   children: ReactNode;
-  afterCta?: ReactNode;
 }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -52,8 +51,8 @@ export function InnerPage({
         <SocialStrip />
         <CallToAction />
         <ForoNews />
-        {afterCta}
         <SignupForm />
+        <ChapaNews />
         <SocialLinks />
       </main>
       <SiteFooter />

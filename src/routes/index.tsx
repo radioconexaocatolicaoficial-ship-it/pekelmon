@@ -5,6 +5,7 @@ import { Hero } from "@/components/landing/hero";
 import { Highlights } from "@/components/landing/highlights";
 import { ForoDoBrasil } from "@/components/landing/foro-do-brasil";
 import { ForoNews } from "@/components/landing/foro-news";
+import { ChapaNews } from "@/components/landing/chapa-news";
 import { SocialStrip } from "@/components/landing/social-strip";
 import { PartidoLiberal } from "@/components/landing/partido-liberal";
 import { CallToAction } from "@/components/landing/call-to-action";
@@ -142,6 +143,7 @@ function Index() {
         <ForoNews />
         <PartidoLiberal />
         <SignupForm />
+        <ChapaNews />
         <SocialLinks />
       </main>
       <SiteFooter />
