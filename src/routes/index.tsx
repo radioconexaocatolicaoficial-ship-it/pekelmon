@@ -60,7 +60,7 @@ export const Route = createFileRoute("/")({
         { property: "og:site_name", content: SITE_NAME },
         { property: "og:image", content: ogImage },
         { property: "og:image:secure_url", content: ogImage },
-        { property: "og:image:type", content: "image/jpeg" },
+        { property: "og:image:type", content: "image/png" },
         { property: "og:image:width", content: OG_IMAGE_WIDTH },
         { property: "og:image:height", content: OG_IMAGE_HEIGHT },
         {

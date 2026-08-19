@@ -20,9 +20,9 @@ export const SITE_KEYWORDS =
   "Padre Kelmon, Deputado Federal, São Paulo, PL, Partido Liberal, candidato 2026, fé, família, liberdade religiosa, Foro do Brasil";
 
 /** Query v= força WhatsApp/Facebook a buscar a imagem nova (cache agressivo). */
-export const OG_IMAGE_PATH = "/og-image.jpg?v=12";
-export const OG_IMAGE_WIDTH = "1200";
-export const OG_IMAGE_HEIGHT = "630";
+export const OG_IMAGE_PATH = "/og-image.png?v=13";
+export const OG_IMAGE_WIDTH = "1140";
+export const OG_IMAGE_HEIGHT = "500";
 
 export const TWITTER_HANDLE = "@PeKelmon";
 
@@ -93,8 +93,11 @@ export function buildPageHead({
       { property: "og:locale", content: "pt_BR" },
       { property: "og:site_name", content: SITE_NAME },
       { property: "og:image", content: ogImage },
+      { property: "og:image:secure_url", content: ogImage },
+      { property: "og:image:type", content: "image/png" },
       { property: "og:image:width", content: OG_IMAGE_WIDTH },
       { property: "og:image:height", content: OG_IMAGE_HEIGHT },
+      { property: "og:image:alt", content: title },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: TWITTER_HANDLE },
       { name: "twitter:title", content: title },
