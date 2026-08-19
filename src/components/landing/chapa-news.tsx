@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 
-import comoVotarImg from "@/assets/como-votar-eleicoes-2026.png";
+import fotoPadreNoticiasPl from "@/assets/foto-padre-noticias-pl.png";
 import { PageShell, Reveal } from "./primitives";
 
 const CHAPA_NEWS = [
@@ -116,15 +116,15 @@ export function ChapaNews() {
             </div>
           </div>
 
-          <figure className="aspect-[1080/1920] w-full overflow-hidden rounded-xl border-2 border-gray-200 bg-neutral-900 shadow-lg">
+          <figure className="aspect-[1080/1920] w-full overflow-hidden rounded-xl border-2 border-gray-200 bg-[#c5daf0] shadow-lg">
             <img
-              src={comoVotarImg}
-              alt="Como votar nas eleições 2026 — Padre Kelmon 2202, André do Prado 222, Guilherme Derrite 111, Tarcísio de Freitas 10 e Flávio Bolsonaro 22"
+              src={fotoPadreNoticiasPl}
+              alt="Padre Kelmon 2202 — O Padre do Bolsonaro, candidato a Deputado Federal pelo PL"
               width={1080}
               height={1920}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover object-center"
+              className="h-full w-full object-cover object-top"
             />
           </figure>
         </div>
