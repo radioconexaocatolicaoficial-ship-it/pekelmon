@@ -18,8 +18,8 @@ export const SITE_DESCRIPTION =
 export const SITE_KEYWORDS =
   "Padre Kelmon, Deputado Federal, São Paulo, PL, Partido Liberal, candidato 2026, fé, família, liberdade religiosa, Foro do Brasil";
 
-/** Arquivo novo: o WhatsApp ignora ?v= e continua mostrando o PNG antigo. JPEG 1200×630 é o formato da prévia. */
-export const OG_IMAGE_PATH = "/og-banner-oficial.jpg";
+/** JPEG 1200×630 do banner “Fé para servir”. Nome novo para o WhatsApp não reusar o cache. */
+export const OG_IMAGE_PATH = "/og-banner-fe-para-servir.jpg";
 export const OG_IMAGE_WIDTH = "1200";
 export const OG_IMAGE_HEIGHT = "630";
 
