@@ -13,7 +13,7 @@ import { SignupForm } from "@/components/landing/signup-form";
 import { SocialLinks } from "@/components/landing/social-links";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { scrollToSection } from "@/lib/scroll-to-section";
-import heroKvUrl from "@/assets/banner-topo-padre-kelmon-4.png?url";
+import heroKvUrl from "@/assets/Banner-topo.jpg?url";
 import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
@@ -90,7 +90,7 @@ export const Route = createFileRoute("/")({
           rel: "preload",
           as: "image",
           href: heroKvUrl,
-          type: "image/webp",
+          type: "image/jpeg",
         },
       ],
       scripts: [
