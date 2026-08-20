@@ -29,7 +29,6 @@ const NETWORKS = [
 export function HeroSocialBar() {
   return (
     <div
-      data-cnpj-on-dark
       className="mt-3 overflow-hidden rounded-2xl shadow-lg"
       style={{ background: "var(--gradient-hero)" }}
     >

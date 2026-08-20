@@ -49,7 +49,6 @@ export function SiteFooter() {
   return (
     <footer
       id="rodape"
-      data-cnpj-on-dark
       className="relative overflow-hidden pb-[env(safe-area-inset-bottom,0px)] text-white"
       style={{ background: "var(--gradient-hero)" }}
     >
@@ -87,9 +86,6 @@ export function SiteFooter() {
             <p className="mt-2 text-sm leading-relaxed text-white/90">
               Fé, família e coragem para representar São Paulo e resgatar o Brasil. Liderança no
               Foro do Brasil e compromisso com a liberdade religiosa.
-            </p>
-            <p className="mt-2 text-xs font-semibold tracking-wide text-white/75 sm:text-sm">
-              CNPJ: {CANDIDATE.cnpj}
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               {SOCIALS.map(({ label, href, Icon }) => (

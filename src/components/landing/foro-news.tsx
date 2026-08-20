@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import fotoPadreKelmon from "@/assets/foto-padre-kelmon-sozinho.png";
+import fotoPadreKelmonForo from "@/assets/foto-padre-kelmon-foro.png";
 import { FORO_ARTICLES } from "@/data/foro-articles";
 import { getForoFeeds } from "@/lib/foro-feeds";
 import { PageShell, Reveal } from "./primitives";
@@ -95,15 +95,15 @@ export function ForoNews() {
             </div>
           </div>
 
-          <figure className="aspect-[527/648] w-full overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-lg lg:aspect-auto lg:h-full">
+          <figure className="aspect-[576/1024] w-full overflow-hidden rounded-xl border-2 border-gray-200 bg-[#e8f0f8] shadow-lg lg:aspect-auto lg:h-full">
             <img
-              src={fotoPadreKelmon}
-              alt="Padre Kelmon, candidato a Deputado Federal por São Paulo"
-              width={527}
-              height={648}
+              src={fotoPadreKelmonForo}
+              alt="Padre Kelmon, presidente do Foro do Brasil"
+              width={576}
+              height={1024}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-contain object-center"
+              className="h-full w-full object-cover object-top"
             />
           </figure>
         </div>

@@ -12,7 +12,6 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Toaster } from "../components/ui/sonner";
 import { PwaRegister } from "../components/pwa-register";
-import { CnpjRail } from "../components/landing/cnpj-rail";
 import { scrollToSection } from "../lib/scroll-to-section";
 
 function NotFoundComponent() {
@@ -144,7 +143,6 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
-      <CnpjRail />
       <PwaRegister />
       <Toaster position="top-center" richColors />
     </QueryClientProvider>
