@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 
-import fotoPadreNoticiasPl from "@/assets/foto-padre-noticias-pl.png";
+import fotoPadreKelmon from "@/assets/foto-padre-kelmon-sozinho.png";
 import { PageShell, Reveal } from "./primitives";
 
 const CHAPA_NEWS = [
@@ -116,15 +116,15 @@ export function ChapaNews() {
             </div>
           </div>
 
-          <figure className="aspect-[1080/1920] w-full overflow-hidden rounded-xl border-2 border-gray-200 bg-[#c5daf0] shadow-lg">
+          <figure className="aspect-[527/648] w-full overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-lg lg:aspect-auto lg:h-full">
             <img
-              src={fotoPadreNoticiasPl}
-              alt="Padre Kelmon 2202 — O Padre do Bolsonaro, candidato a Deputado Federal pelo PL"
-              width={1080}
-              height={1920}
+              src={fotoPadreKelmon}
+              alt="Padre Kelmon, candidato a Deputado Federal por São Paulo"
+              width={527}
+              height={648}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover object-top"
+              className="h-full w-full object-contain object-center"
             />
           </figure>
         </div>

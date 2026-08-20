@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { BANDEIRAS, type Bandeira } from "@/lib/campaign-data";
-import fotoPadrePautas from "@/assets/foto-padre-pautas.png";
+import fotoPadreKelmon from "@/assets/foto-padre-kelmon-sozinho.png";
 import { PageShell, Reveal } from "./primitives";
 
 export function Bandeiras({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
@@ -32,15 +32,15 @@ export function Bandeiras({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
                 Agenda conservadora cristã em defesa da família, da liberdade e do Brasil.
               </p>
             </Reveal>
-            <figure className="relative aspect-[1080/1920] min-h-0 w-full overflow-hidden rounded-xl border-2 border-gray-200 bg-[#c5daf0] shadow-lg lg:aspect-auto lg:flex-1">
+            <figure className="relative aspect-[527/648] min-h-0 w-full overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-lg lg:aspect-auto lg:flex-1">
               <img
-                src={fotoPadrePautas}
-                alt="Padre Kelmon 2202 — O Padre do Bolsonaro, candidato a Deputado Federal pelo PL"
-                width={1080}
-                height={1920}
+                src={fotoPadreKelmon}
+                alt="Padre Kelmon, candidato a Deputado Federal por São Paulo"
+                width={527}
+                height={648}
                 loading="lazy"
                 decoding="async"
-                className="absolute inset-0 block h-full w-full object-cover object-top"
+                className="absolute inset-0 block h-full w-full object-contain object-center"
               />
             </figure>
           </div>
