@@ -18,10 +18,10 @@ export const SITE_DESCRIPTION =
 export const SITE_KEYWORDS =
   "Padre Kelmon, Deputado Federal, São Paulo, PL, Partido Liberal, candidato 2026, fé, família, liberdade religiosa, Foro do Brasil";
 
-/** Query v= força WhatsApp/Facebook a buscar a imagem nova (cache agressivo). */
-export const OG_IMAGE_PATH = "/og-image.png?v=14";
-export const OG_IMAGE_WIDTH = "1140";
-export const OG_IMAGE_HEIGHT = "500";
+/** Arquivo novo: o WhatsApp ignora ?v= e continua mostrando o PNG antigo. JPEG 1200×630 é o formato da prévia. */
+export const OG_IMAGE_PATH = "/og-banner-oficial.jpg";
+export const OG_IMAGE_WIDTH = "1200";
+export const OG_IMAGE_HEIGHT = "630";
 
 export const TWITTER_HANDLE = "@PeKelmon";
 
@@ -93,7 +93,7 @@ export function buildPageHead({
       { property: "og:site_name", content: SITE_NAME },
       { property: "og:image", content: ogImage },
       { property: "og:image:secure_url", content: ogImage },
-      { property: "og:image:type", content: "image/png" },
+      { property: "og:image:type", content: "image/jpeg" },
       { property: "og:image:width", content: OG_IMAGE_WIDTH },
       { property: "og:image:height", content: OG_IMAGE_HEIGHT },
       { property: "og:image:alt", content: title },
@@ -107,6 +107,7 @@ export function buildPageHead({
       { rel: "canonical", href: pageUrl },
       { rel: "alternate", hrefLang: "pt-BR", href: pageUrl },
       { rel: "alternate", hrefLang: "x-default", href: pageUrl },
+      { rel: "image_src", href: ogImage },
     ],
     scripts: [
       {

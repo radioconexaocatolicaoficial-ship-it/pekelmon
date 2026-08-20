@@ -61,7 +61,7 @@ export const Route = createFileRoute("/")({
         { property: "og:site_name", content: SITE_NAME },
         { property: "og:image", content: ogImage },
         { property: "og:image:secure_url", content: ogImage },
-        { property: "og:image:type", content: "image/png" },
+        { property: "og:image:type", content: "image/jpeg" },
         { property: "og:image:width", content: OG_IMAGE_WIDTH },
         { property: "og:image:height", content: OG_IMAGE_HEIGHT },
         {
@@ -83,6 +83,7 @@ export const Route = createFileRoute("/")({
         { rel: "canonical", href: pageUrl },
         { rel: "alternate", hrefLang: "pt-BR", href: pageUrl },
         { rel: "alternate", hrefLang: "x-default", href: pageUrl },
+        { rel: "image_src", href: ogImage },
         { rel: "icon", href: "/favicon.png?v=7", type: "image/png", sizes: "any" },
         { rel: "icon", href: "/favicon-32x32.png?v=7", type: "image/png", sizes: "32x32" },
         { rel: "shortcut icon", href: "/favicon.ico?v=7" },
