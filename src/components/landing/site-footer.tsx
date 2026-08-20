@@ -72,13 +72,13 @@ export function SiteFooter() {
               className="inline-flex items-center"
             >
               <img
-                src="/Logo-Site-Padre-kelmon-campanha.png"
-                alt="Padre Kelmon 2202 — Deputado Federal"
+                src="/Logo-Site-PAdre-kelmon.png"
+                alt="Padre Kelmon — Fé, Família, Liberdade, Pátria"
                 width={200}
-                height={45}
+                height={55}
                 loading="lazy"
                 decoding="async"
-                className="h-9 w-auto rounded-md sm:h-10"
+                className="h-9 w-auto rounded-md bg-white/95 px-2 py-1 sm:h-10"
               />
             </Link>
             <p className="mt-3 whitespace-nowrap text-[clamp(0.7rem,2.8vw,0.875rem)] font-bold leading-none text-white">

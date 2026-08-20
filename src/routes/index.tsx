@@ -83,9 +83,10 @@ export const Route = createFileRoute("/")({
         { rel: "canonical", href: pageUrl },
         { rel: "alternate", hrefLang: "pt-BR", href: pageUrl },
         { rel: "alternate", hrefLang: "x-default", href: pageUrl },
-        { rel: "icon", href: "/favicon-campanha.png?v=6", type: "image/png", sizes: "any" },
-        { rel: "shortcut icon", href: "/favicon-campanha.png?v=6", type: "image/png" },
-        { rel: "apple-touch-icon", sizes: "180x180", href: "/favicon-campanha.png?v=6" },
+        { rel: "icon", href: "/favicon.png?v=7", type: "image/png", sizes: "any" },
+        { rel: "icon", href: "/favicon-32x32.png?v=7", type: "image/png", sizes: "32x32" },
+        { rel: "shortcut icon", href: "/favicon.ico?v=7" },
+        { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png?v=7" },
         {
           rel: "preload",
           as: "image",
