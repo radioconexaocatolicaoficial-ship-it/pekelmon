@@ -8,11 +8,21 @@ export type YoutubeHighlight = {
   published: string;
 };
 
-/** Vídeo fixo no primeiro card da grade 2×2, abaixo do banner. */
-export const YOUTUBE_PINNED_GRID_ID = 'k8n5EIaJVlk';
+/** Vídeos fixos nos dois primeiros cards da grade 2×2 (direita). */
+export const YOUTUBE_PINNED_GRID_IDS = ['lmZkXZeEbBk', 'k8n5EIaJVlk'] as const;
 
 /** Videos do Padre Kelmon — destaque fixo + demais por data. */
 export const YOUTUBE_HIGHLIGHTS: YoutubeHighlight[] = [
+  {
+    id: 'lmZkXZeEbBk',
+    title: 'Missa de Lançamento da Campanha Padre Kelmon Deputado Federal.',
+    description:
+      'Missa de lançamento da campanha do Padre Kelmon a deputado federal. Assista à transmissão completa.',
+    url: 'https://www.youtube.com/live/lmZkXZeEbBk',
+    thumbnail: 'https://i.ytimg.com/vi/lmZkXZeEbBk/hqdefault.jpg',
+    views: 0,
+    published: '2026-08-22',
+  },
   {
     id: 'k8n5EIaJVlk',
     title: 'FALA CANDIDATO | PADRE KELMON (PL) FALA DE SUA CANDIDATURA E OS DESAFIOS DO BRASIL',

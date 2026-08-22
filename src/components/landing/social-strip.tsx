@@ -63,6 +63,7 @@ export function SocialStrip() {
   return (
     <section
       aria-labelledby="redes-faixa-heading"
+      data-cnpj-on-dark
       className="relative overflow-hidden"
       style={{ background: "var(--gradient-hero)" }}
     >

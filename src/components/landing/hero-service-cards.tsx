@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import {
-  ArrowUpRight,
   Bus,
   Cloud,
   CloudFog,
@@ -8,6 +7,10 @@ import {
   CloudRain,
   CloudSnow,
   CloudSun,
+  Fuel,
+  IdCard,
+  LineChart,
+  MapPin,
   Sun,
   Train,
   TrainFront,
@@ -17,6 +20,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import type { CetRegion } from "@/lib/cet-traffic";
 import { getLocalNow, type LocalNowResult } from "@/lib/local-now";
+import { getMarketFuel, type FuelPrices, type MarketQuote } from "@/lib/market-fuel";
 
 const SP_LAT = -23.5505;
 const SP_LON = -46.6333;
@@ -26,6 +30,8 @@ const CET_PAGE =
   "https://www.cetsp.com.br/transito-agora/transito-nas-principais-vias.aspx";
 const ARTESP_TRANSIT_PAGE = "https://ccm.artesp.sp.gov.br/metroferroviario/status-linhas/";
 const WEATHER_PAGE = "https://www.climatempo.com.br/previsao-do-tempo/cidade/558/saopaulo-sp";
+const MARKET_PAGE = "https://www.infomoney.com.br/ferramentas/cambio/";
+const FUEL_PAGE = "https://precos.petrobras.com.br/";
 const LOCAL_REFRESH_MS = 2 * 60 * 1000;
 const ZONE_ORDER = ["Norte", "Oeste", "Centro", "Leste", "Sul"] as const;
 
@@ -36,6 +42,7 @@ function zoneLabel(name: string) {
 
 function weatherLabel(code: number): { label: string; Icon: LucideIcon } {
   if (code === 0) return { label: "Céu limpo", Icon: Sun };
+  if (code === 1) return { label: "Principalmente limpo", Icon: CloudSun };
   if (code <= 2) return { label: "Parcialmente nublado", Icon: CloudSun };
   if (code === 3) return { label: "Nublado", Icon: Cloud };
   if (code === 45 || code === 48) return { label: "Neblina", Icon: CloudFog };
@@ -46,29 +53,15 @@ function weatherLabel(code: number): { label: string; Icon: LucideIcon } {
   return { label: "Tempo instável", Icon: Cloud };
 }
 
-function statusTone(status: string) {
-  if (/normal/i.test(status)) {
-    return { ink: "text-[var(--blue-primary)]" };
-  }
-  if (/paralis/i.test(status)) {
-    return { ink: "text-[var(--blue-dark)]" };
-  }
-  return { ink: "text-[var(--blue-dark)]" };
-}
-
-function CityPass({
+function PulseCard({
   href,
-  accent,
-  kicker,
+  icon,
   title,
-  live,
   children,
 }: {
   href: string;
-  accent: string;
-  kicker: string;
+  icon: ReactNode;
   title: string;
-  live?: boolean;
   children: ReactNode;
 }) {
   return (
@@ -76,117 +69,52 @@ function CityPass({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative flex h-full min-h-[9.2rem] overflow-hidden rounded-2xl border-2 border-gray-200 bg-white shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[var(--blue-primary)] hover:shadow-md"
+      className="group flex flex-col rounded-xl border border-[#d7e4f2] bg-white px-3.5 py-2 shadow-[0_6px_16px_rgba(30,91,184,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(30,91,184,0.12)]"
     >
-      <span className="w-1.5 shrink-0" style={{ background: accent }} aria-hidden="true" />
-      <div className="flex min-w-0 flex-1 flex-col px-3.5 py-3">
-        <div className="mb-2.5 flex items-start justify-between gap-2">
-          <div className="min-w-0">
-            <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[var(--yellow-primary)]">
-              {live ? "Ao vivo · " : ""}
-              {kicker}
-            </p>
-            <h3
-              className="truncate text-sm font-black leading-tight"
-              style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
-            >
-              {title}
-            </h3>
-          </div>
-          <span
-            className="mt-0.5 inline-flex size-6 shrink-0 items-center justify-center rounded-md text-white transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            style={{ backgroundColor: "var(--blue-primary)" }}
-          >
-            <ArrowUpRight className="size-3.5" strokeWidth={2.6} />
-          </span>
-        </div>
-        {children}
+      <div className="mb-1 flex items-center gap-1.5">
+        {icon}
+        <h3
+          className="text-[11px] font-bold uppercase tracking-[0.08em]"
+          style={{ color: "var(--blue-primary)" }}
+        >
+          {title}
+        </h3>
       </div>
+      <div>{children}</div>
+      <span className="mt-1.5 text-[11px] font-semibold" style={{ color: "var(--blue-primary)" }}>
+        Ver detalhes →
+      </span>
     </a>
   );
 }
 
-function LicensePlate({ plates, hours }: { plates: string; hours: string }) {
-  if (!plates) {
-    return (
-      <div className="text-center">
-        <p className="text-[11px] font-bold tracking-wide text-[var(--blue-primary)]">Sem rodízio hoje</p>
-      </div>
-    );
-  }
-
+function VotingCard() {
   return (
-    <div className="flex w-[7.5rem] shrink-0 flex-col items-center">
-      <div className="w-[7.5rem] overflow-hidden rounded-[4px] border border-[var(--blue-primary)] bg-white">
-        <div className="flex h-2.5 items-center justify-between bg-[var(--blue-primary)] px-1.5 text-[6px] font-black tracking-[0.16em] text-white">
-          <span>BRASIL</span>
-          <span>SP</span>
-        </div>
-        <p
-          className="whitespace-nowrap py-0.5 text-center text-[11px] font-black leading-none tracking-[0.22em] text-[#111]"
-          style={{ fontFamily: "var(--font-display)" }}
-        >
-          {plates}
-        </p>
-      </div>
-      {hours ? (
-        <p className="mt-0.5 whitespace-nowrap text-[9px] font-bold text-gray-600">{hours}</p>
-      ) : null}
-    </div>
-  );
-}
-
-function ZoneMeters({ regions }: { regions: CetRegion[] }) {
-  const byName = new Map(regions.map((region) => [region.name, region]));
-
-  return (
-    <div className="grid grid-cols-5 gap-1">
-      {ZONE_ORDER.map((name) => {
-        const region = byName.get(name);
-        const percent = region?.percent ?? 0;
-        const km = region?.km ?? 0;
-        const label = zoneLabel(name);
-        return (
-          <div key={name} className="min-w-0 text-center" title={`${label}: ${km} km (${percent}%)`}>
-            <div className="flex h-7 items-end overflow-hidden rounded-sm bg-black/5">
-              <div
-                className="w-full rounded-sm bg-[var(--blue-primary)]"
-                style={{ height: `${Math.max(12, Math.min(100, percent))}%` }}
-              />
-            </div>
-            <p className="mt-0.5 truncate text-[8px] font-black leading-none text-[var(--blue-primary)]">
-              {label}
-            </p>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
-function VotingPlaceCard() {
-  return (
-    <CityPass href={TSE_LOCAL_VOTACAO} accent="var(--yellow-primary)" kicker="Eleições 2026" title="Meu local de votação">
-      <p className="mb-2 text-[11px] font-semibold leading-snug text-gray-700">
-        Ache sua seção no TSE com um destes dados:
+    <PulseCard
+      href={TSE_LOCAL_VOTACAO}
+      title="Votação"
+      icon={<IdCard className="size-4 text-sky-600" aria-hidden="true" />}
+    >
+      <p className="mb-1 text-[12px] font-bold" style={{ color: "var(--blue-primary)" }}>
+        Meu local de votação
       </p>
-      <div className="grid grid-cols-3 gap-1">
+      <ul className="flex flex-wrap gap-1">
         {["Título", "CPF", "Nome"].map((field) => (
-          <span
+          <li
             key={field}
-            className="rounded-md border border-[var(--blue-primary)]/30 bg-white px-1 py-1.5 text-center text-[10px] font-black uppercase tracking-wide text-[var(--blue-primary)]"
+            className="rounded-md border border-[#d7e4f2] px-2 py-0.5 text-[11px] font-semibold"
+            style={{ color: "var(--blue-primary)" }}
           >
             {field}
-          </span>
+          </li>
         ))}
-      </div>
-    </CityPass>
+      </ul>
+    </PulseCard>
   );
 }
 
 function TransportCard({ data, loading }: { data?: LocalNowResult; loading: boolean }) {
-  const artesp = data?.artesp;
-  const modes = artesp?.live ? artesp.modes : [];
+  const modes = data?.artesp?.live ? data.artesp.modes : [];
   const lineColor: Record<string, string> = {
     Metrô: "#0057A8",
     Trens: "#EE3E34",
@@ -199,77 +127,91 @@ function TransportCard({ data, loading }: { data?: LocalNowResult; loading: bool
   };
 
   return (
-    <CityPass
+    <PulseCard
       href={ARTESP_TRANSIT_PAGE}
-      accent="var(--blue-primary)"
-      kicker="ARTESP ao vivo"
-      title="Transporte público"
-      live={Boolean(artesp?.live)}
+      title="Transporte"
+      icon={<TrainFront className="size-4 text-sky-600" aria-hidden="true" />}
     >
       {modes.length > 0 ? (
-        <ul className="space-y-1.5">
+        <ul className="space-y-0.5">
           {modes.map((item) => {
             const Icon = lineIcon[item.mode] ?? Bus;
-            const tone = statusTone(item.status);
             return (
-              <li
-                key={item.mode}
-                className="flex min-w-0 items-center gap-2"
-              >
-                <span
-                  className="h-4 w-[3px] shrink-0 rounded-full"
-                  style={{ background: lineColor[item.mode] ?? "var(--blue-primary)" }}
+              <li key={item.mode} className="flex items-center gap-2">
+                <Icon
+                  className="size-3.5 shrink-0"
+                  style={{ color: lineColor[item.mode] }}
+                  aria-hidden="true"
                 />
-                <Icon className="size-3.5 shrink-0" style={{ color: lineColor[item.mode] }} aria-hidden="true" />
-                <p className={`min-w-0 flex-1 truncate text-[11px] font-bold ${tone.ink}`}>
-                  {item.status} · {item.mode}
-                  {item.note ? ` · ${item.note}` : ""}
+                <p className="shrink-0 text-[13px] font-semibold" style={{ color: "var(--blue-primary)" }}>
+                  {item.mode}
                 </p>
+                <span className="min-w-0 flex-1 text-right text-[11px] font-bold leading-snug text-gray-500">
+                  {item.status}
+                </span>
               </li>
             );
           })}
         </ul>
       ) : (
-        <p className="text-[11px] font-semibold text-gray-600">
+        <p className="text-[11px] font-semibold text-gray-500">
           {loading ? "Atualizando metrô, trens e ônibus…" : "Abra o painel da ARTESP para ver o status."}
         </p>
       )}
-    </CityPass>
+    </PulseCard>
   );
+}
+
+function zoneTone(percent: number) {
+  if (percent >= 40) return "text-amber-500";
+  if (percent >= 20) return "text-amber-400";
+  return "text-emerald-600";
 }
 
 function TrafficCard({ data, loading }: { data?: LocalNowResult; loading: boolean }) {
   const traffic = data?.traffic;
   const live = Boolean(traffic?.live && traffic.regions.length);
-  const worst = traffic?.regions.slice().sort((a, b) => b.percent - a.percent)[0];
+  const byName = new Map((traffic?.regions ?? []).map((region: CetRegion) => [region.name, region]));
 
   return (
-    <CityPass href={CET_PAGE} accent="var(--yellow-primary)" kicker="CET ao vivo" title="Trânsito agora" live={live}>
+    <PulseCard
+      href={CET_PAGE}
+      title="Trânsito"
+      icon={<MapPin className="size-4 text-sky-600" aria-hidden="true" />}
+    >
       {live && traffic ? (
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between gap-2">
-            <p className="text-[22px] font-black leading-none" style={{ color: "var(--blue-primary)" }}>
-              {traffic.totalKm}
-              <span className="ml-1 text-[10px] font-bold tracking-wide text-gray-500">km lentos</span>
+        <div>
+          <div className="mb-1 flex items-baseline justify-between gap-2">
+            <p className="text-[12px] font-bold" style={{ color: "var(--blue-primary)" }}>
+              São Paulo · {traffic.totalKm} km
             </p>
-            <LicensePlate plates={traffic.rodizioPlates} hours={traffic.rodizioHours} />
+            <p className="text-[10px] text-gray-500">
+              {traffic.rodizioPlates ? `Rodízio ${traffic.rodizioPlates}` : "Sem rodízio"}
+            </p>
           </div>
-          <ZoneMeters regions={traffic.regions} />
-          {worst ? (
-            <p className="truncate text-[10px] font-bold text-gray-600">
-              Maior lentidão: {zoneLabel(worst.name)} {worst.percent}%
-            </p>
-          ) : null}
+          <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5">
+            {ZONE_ORDER.map((name) => {
+              const region = byName.get(name);
+              const percent = region?.percent ?? 0;
+              return (
+                <li key={name} className="flex items-center justify-between gap-1">
+                  <span className="text-[11px] font-semibold" style={{ color: "var(--blue-primary)" }}>
+                    {zoneLabel(name)}
+                  </span>
+                  <span className={`text-[11px] font-bold ${zoneTone(percent)}`}>
+                    {percent}%
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       ) : (
-        <div className="space-y-1.5">
-          <LicensePlate plates={traffic?.rodizioPlates ?? ""} hours={traffic?.rodizioHours ?? ""} />
-          <p className="text-[11px] font-semibold text-gray-600">
-            {loading ? "Atualizando o trânsito em São Paulo…" : "Abra o mapa da CET para ver as zonas."}
-          </p>
-        </div>
+        <p className="text-[11px] font-semibold text-gray-500">
+          {loading ? "Atualizando o trânsito em São Paulo…" : "Abra o mapa da CET para ver as zonas."}
+        </p>
       )}
-    </CityPass>
+    </PulseCard>
   );
 }
 
@@ -277,41 +219,115 @@ function WeatherCard({ data, loading }: { data?: LocalNowResult; loading: boolea
   const weather = data?.weather;
   const info = weather ? weatherLabel(weather.code) : { label: "Carregando…", Icon: CloudSun };
   const WeatherIcon = info.Icon;
-  const range = weather ? Math.max(1, weather.max - weather.min) : 1;
-  const marker = weather ? Math.min(100, Math.max(0, ((weather.temp - weather.min) / range) * 100)) : 0;
 
   return (
-    <CityPass href={WEATHER_PAGE} accent="var(--blue-primary)" kicker="São Paulo agora" title="Previsão do tempo" live={Boolean(weather)}>
+    <PulseCard
+      href={WEATHER_PAGE}
+      title="Tempo"
+      icon={<CloudSun className="size-4 text-sky-500" aria-hidden="true" />}
+    >
       {weather ? (
-        <div className="space-y-2.5">
-          <div className="flex items-center gap-2.5">
-            <span className="inline-flex size-8 items-center justify-center rounded-md bg-[var(--blue-primary)] text-white">
-              <WeatherIcon className="size-4" strokeWidth={2.4} />
-            </span>
-            <p className="text-[22px] font-black leading-none" style={{ color: "var(--blue-primary)" }}>
-              {weather.temp}°
-              <span className="ml-1.5 text-[11px] font-bold text-gray-600">{info.label}</span>
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <p className="text-[12px] font-bold leading-tight" style={{ color: "var(--blue-primary)" }}>
+              São Paulo
+            </p>
+            <p className="text-[11px] leading-snug text-gray-500">
+              {info.label} — {weather.min}°/{weather.max}°
+            </p>
+            <p className="mt-1 inline-flex items-center gap-1 text-[11px] text-gray-500">
+              <WeatherIcon className="size-3.5 text-sky-500" aria-hidden="true" />
+              Umidade {weather.humidity}%
             </p>
           </div>
-          <div>
-            <div className="relative h-1.5 rounded-full bg-gradient-to-r from-[var(--blue-primary)] to-[var(--yellow-primary)]">
-              <span
-                className="absolute top-1/2 size-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-white bg-[var(--blue-primary)]"
-                style={{ left: `${marker}%` }}
-              />
-            </div>
-            <div className="mt-1 flex justify-between text-[10px] font-bold text-gray-500">
-              <span>Mín. {weather.min}°</span>
-              <span>Máx. {weather.max}°</span>
-            </div>
-          </div>
+          <p className="text-[22px] font-black leading-none" style={{ color: "var(--blue-primary)" }}>
+            {weather.temp}°
+          </p>
         </div>
       ) : (
-        <p className="text-[11px] font-semibold text-gray-600">
+        <p className="text-[11px] font-semibold text-gray-500">
           {loading ? "Atualizando o tempo em São Paulo…" : "Abra a previsão completa de São Paulo."}
         </p>
       )}
-    </CityPass>
+    </PulseCard>
+  );
+}
+
+function MarketCard({ market, loading }: { market: MarketQuote[]; loading: boolean }) {
+  const icons = [
+    { bg: "#22c55e", label: "$", color: "#fff" },
+    { bg: "var(--blue-primary)", label: "€", color: "#fff" },
+    { bg: "var(--yellow-primary)", label: "↗", color: "var(--blue-primary)" },
+  ];
+
+  return (
+    <PulseCard
+      href={MARKET_PAGE}
+      title="Mercado"
+      icon={<LineChart className="size-4 text-sky-600" aria-hidden="true" />}
+    >
+      {market.length > 0 ? (
+        <ul className="space-y-1">
+          {market.map((item, index) => (
+            <li key={item.name} className="flex items-center gap-1.5">
+              <span
+                className="inline-flex size-4 shrink-0 items-center justify-center rounded-full text-[9px] font-black"
+                style={{ background: icons[index]?.bg, color: icons[index]?.color }}
+              >
+                {icons[index]?.label}
+              </span>
+              <p className="shrink-0 text-[12px] font-semibold" style={{ color: "var(--blue-primary)" }}>
+                {item.name}
+              </p>
+              <p className="ml-auto shrink-0 text-[12px] font-black" style={{ color: "var(--blue-primary)" }}>
+                {item.value}
+              </p>
+              <p className="w-11 shrink-0 text-right text-[11px] text-gray-500">{item.change}</p>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-[11px] font-semibold text-gray-500">
+          {loading ? "Atualizando cotações…" : "Abra o mercado para ver dólar, euro e bolsa."}
+        </p>
+      )}
+    </PulseCard>
+  );
+}
+
+function FuelCard({ fuel }: { fuel: FuelPrices }) {
+  const rows = [
+    ["Gasolina", fuel.saoPaulo.gasolina, fuel.brasil.gasolina],
+    ["Aditivada", fuel.saoPaulo.aditivada, fuel.brasil.aditivada],
+    ["Etanol", fuel.saoPaulo.etanol, fuel.brasil.etanol],
+  ] as const;
+
+  return (
+    <PulseCard
+      href={FUEL_PAGE}
+      title="Combustível"
+      icon={<Fuel className="size-4 text-amber-500" aria-hidden="true" />}
+    >
+      <div className="grid grid-cols-2 gap-2">
+        {(["São Paulo", "Brasil"] as const).map((title, col) => (
+          <div key={title}>
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[var(--yellow-dark)]">
+              {title}
+            </p>
+            <ul className="space-y-1">
+              {rows.map((row) => (
+                <li key={row[0]} className="flex items-baseline justify-between gap-1">
+                  <span className="text-[11px] text-gray-500">{row[0]}</span>
+                  <span className="whitespace-nowrap text-[12px] font-black" style={{ color: "var(--blue-primary)" }}>
+                    {row[col + 1]}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </PulseCard>
   );
 }
 
@@ -325,15 +341,31 @@ export function HeroServiceCards() {
     refetchOnReconnect: true,
   });
 
+  const marketQuery = useQuery({
+    queryKey: ["market-fuel"],
+    queryFn: () => getMarketFuel(),
+    staleTime: LOCAL_REFRESH_MS,
+    refetchInterval: LOCAL_REFRESH_MS,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
+
   const loading = localQuery.isLoading;
   const data = localQuery.data;
+  const market = marketQuery.data?.market ?? [];
+  const fuel = marketQuery.data?.fuel ?? {
+    saoPaulo: { gasolina: "—", aditivada: "—", etanol: "—" },
+    brasil: { gasolina: "—", aditivada: "—", etanol: "—" },
+  };
 
   return (
-    <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      <VotingPlaceCard />
+    <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <VotingCard />
       <TransportCard data={data} loading={loading} />
       <TrafficCard data={data} loading={loading} />
       <WeatherCard data={data} loading={loading} />
+      <MarketCard market={market} loading={marketQuery.isLoading} />
+      <FuelCard fuel={fuel} />
     </div>
   );
 }

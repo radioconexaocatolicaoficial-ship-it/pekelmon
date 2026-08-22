@@ -7,27 +7,27 @@ import {
   CarouselItem,
   type CarouselApi,
 } from "@/components/ui/carousel";
-import bannerOficial from "@/assets/Banner-topo.jpg";
-import bannerFe from "@/assets/Banner-topo-1.jpg";
-import bannerServir from "@/assets/Banner-topo-2.jpg";
+import banner4 from "@/assets/banner-topo-padre-kelmon-4.png";
+import banner5 from "@/assets/banner-topo-padre-kelmon-5.png";
+import banner6 from "@/assets/banner-topo-padre-kelmon-6.png";
 import { PageShell } from "./primitives";
 import { HeroServiceCards } from "./hero-service-cards";
 import { HeroSocialBar } from "./hero-social-bar";
 
 const HERO_BANNERS = [
   {
-    src: bannerOficial,
-    alt: "Agora é oficial: Padre Kelmon, candidato a Deputado Federal por São Paulo, pelo Brasil. Aprovado em Convenção.",
+    src: banner4,
+    alt: "Padre Kelmon 2202 — Uma vida de missões. A nova missão é por São Paulo",
+    holdMs: 24000,
+  },
+  {
+    src: banner5,
+    alt: "Padre Kelmon 2202 — Deputado Federal por São Paulo, com a chapa do PL",
     holdMs: 12000,
   },
   {
-    src: bannerFe,
-    alt: "Padre Kelmon — Fé para servir, coragem para defender. Candidato a Deputado Federal por São Paulo, pelo Brasil.",
-    holdMs: 12000,
-  },
-  {
-    src: bannerServir,
-    alt: "Padre Kelmon — Servir para construir, amar para resgatar. Candidato a Deputado Federal por São Paulo, pelo Brasil.",
+    src: banner6,
+    alt: "Padre Kelmon 2202 — Fé para servir, coragem para defender. Deputado Federal por São Paulo",
     holdMs: 12000,
   },
 ] as const;

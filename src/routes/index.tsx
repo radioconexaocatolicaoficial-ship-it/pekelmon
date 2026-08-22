@@ -13,7 +13,7 @@ import { SignupForm } from "@/components/landing/signup-form";
 import { SocialLinks } from "@/components/landing/social-links";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { scrollToSection } from "@/lib/scroll-to-section";
-import heroKvUrl from "@/assets/Banner-topo.jpg?url";
+import heroKvUrl from "@/assets/banner-topo-padre-kelmon-4.png?url";
 import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,
@@ -84,15 +84,14 @@ export const Route = createFileRoute("/")({
         { rel: "alternate", hrefLang: "pt-BR", href: pageUrl },
         { rel: "alternate", hrefLang: "x-default", href: pageUrl },
         { rel: "image_src", href: ogImage },
-        { rel: "icon", href: "/favicon.png?v=7", type: "image/png", sizes: "any" },
-        { rel: "icon", href: "/favicon-32x32.png?v=7", type: "image/png", sizes: "32x32" },
-        { rel: "shortcut icon", href: "/favicon.ico?v=7" },
-        { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png?v=7" },
+        { rel: "icon", href: "/favicon-campanha.png?v=8", type: "image/png", sizes: "any" },
+        { rel: "shortcut icon", href: "/favicon-campanha.png?v=8", type: "image/png" },
+        { rel: "apple-touch-icon", sizes: "180x180", href: "/favicon-campanha.png?v=8" },
         {
           rel: "preload",
           as: "image",
           href: heroKvUrl,
-          type: "image/jpeg",
+          type: "image/png",
         },
       ],
       scripts: [

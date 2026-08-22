@@ -9,15 +9,16 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { YOUTUBE_HIGHLIGHTS, YOUTUBE_PINNED_GRID_ID, type YoutubeHighlight } from "@/data/youtube-highlights";
+import { YOUTUBE_HIGHLIGHTS, YOUTUBE_PINNED_GRID_IDS, type YoutubeHighlight } from "@/data/youtube-highlights";
 
 const FEATURED_VIDEO_TITLE = "Padre Kelmon — vídeo em destaque";
 
 const SIDE_PAGE_SIZE = 4;
-const ROTATING_SLOT_COUNT = SIDE_PAGE_SIZE - 1;
+const PINNED_SLOT_COUNT = YOUTUBE_PINNED_GRID_IDS.length;
+const ROTATING_SLOT_COUNT = SIDE_PAGE_SIZE - PINNED_SLOT_COUNT;
 /** 1 minuto em cada conjunto de cards laterais antes de trocar. */
 const SIDE_ROTATE_MS = 60_000;
-/** Cards laterais em rotação (além do vídeo fixo). */
+/** Cards laterais em rotação (além dos vídeos fixos). */
 const SIDE_ROTATION_LIMIT = 16;
 
 function rankScore(
@@ -119,12 +120,17 @@ export function VideoHighlights() {
   const [page, setPage] = useState(0);
   const [active, setActive] = useState<YoutubeHighlight | null>(null);
 
-  const pinned =
-    YOUTUBE_HIGHLIGHTS.find((video) => video.id === YOUTUBE_PINNED_GRID_ID) ?? ranked[0];
+  const pinned = useMemo(() => {
+    const byId = new Map(YOUTUBE_HIGHLIGHTS.map((video) => [video.id, video]));
+    return YOUTUBE_PINNED_GRID_IDS.map((id) => byId.get(id)).filter(
+      (video): video is YoutubeHighlight => Boolean(video),
+    );
+  }, []);
+  const pinnedIds = useMemo(() => new Set(pinned.map((video) => video.id)), [pinned]);
 
   const rotatingVideos = useMemo(
-    () => ranked.filter((video) => video.id !== pinned.id).slice(0, SIDE_ROTATION_LIMIT),
-    [ranked, pinned.id],
+    () => ranked.filter((video) => !pinnedIds.has(video.id)).slice(0, SIDE_ROTATION_LIMIT),
+    [ranked, pinnedIds],
   );
   const pageCount = Math.max(1, Math.ceil(rotatingVideos.length / ROTATING_SLOT_COUNT));
 
@@ -140,7 +146,7 @@ export function VideoHighlights() {
     page * ROTATING_SLOT_COUNT,
     page * ROTATING_SLOT_COUNT + ROTATING_SLOT_COUNT,
   );
-  const sidePage = [pinned, ...rotatingPage];
+  const sidePage = [...pinned, ...rotatingPage];
 
   return (
     <div className="mb-8 space-y-4 sm:mb-10">
@@ -167,7 +173,7 @@ export function VideoHighlights() {
             }
             return (
               <VideoCard
-                key={video.id === pinned.id ? video.id : `${video.id}-${page}`}
+                key={pinnedIds.has(video.id) ? video.id : `${video.id}-${page}`}
                 video={video}
                 onOpen={setActive}
               />

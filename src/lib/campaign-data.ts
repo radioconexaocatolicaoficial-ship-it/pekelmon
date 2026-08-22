@@ -28,6 +28,8 @@ export const CANDIDATE = {
   youtube: "https://www.youtube.com/@PadreKelmonBr",
   x: "https://x.com/PeKelmon",
   tiktok: "https://www.tiktok.com/@pekelmon",
+  razaoSocial: "ELEICAO 2026 KELMON LUIS DA SILVA SOUZA DEPUTADO FEDERAL",
+  cnpj: "68.353.198/0001-20",
 };
 
 export type TimelineItem = {

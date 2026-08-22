@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 
-import fotoPadreKelmonPl from "@/assets/foto-padre-kelmon-pl.png";
+import fotoComoVotarPl from "@/assets/como-votar-noticias-pl.png";
 import { PageShell, Reveal } from "./primitives";
 
 const CHAPA_NEWS = [
@@ -116,15 +116,15 @@ export function ChapaNews() {
             </div>
           </div>
 
-          <figure className="aspect-[576/1024] w-full overflow-hidden rounded-xl border-2 border-gray-200 bg-[#1a4d8c] shadow-lg lg:aspect-auto lg:h-full">
+          <figure className="aspect-[3/4] w-full overflow-hidden rounded-xl border-2 border-gray-200 bg-[#6b7280] shadow-lg lg:aspect-auto lg:h-full">
             <img
-              src={fotoPadreKelmonPl}
-              alt="Padre Kelmon, candidato a Deputado Federal pelo PL"
-              width={576}
+              src={fotoComoVotarPl}
+              alt="Como votar nas eleições 2026 — Padre Kelmon 2202, chapa da direita em São Paulo"
+              width={768}
               height={1024}
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover object-top"
+              className="h-full w-full object-contain object-center"
             />
           </figure>
         </div>

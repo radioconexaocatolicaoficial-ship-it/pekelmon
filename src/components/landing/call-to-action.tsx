@@ -10,6 +10,7 @@ export function CallToAction() {
   return (
     <section
       className="relative isolate overflow-hidden"
+      data-cnpj-on-dark
       style={{ background: "var(--gradient-hero)" }}
     >
       <div

@@ -49,6 +49,7 @@ export function SiteFooter() {
   return (
     <footer
       id="rodape"
+      data-cnpj-on-dark
       className="relative overflow-hidden pb-[env(safe-area-inset-bottom,0px)] text-white"
       style={{ background: "var(--gradient-hero)" }}
     >
@@ -71,13 +72,13 @@ export function SiteFooter() {
               className="inline-flex items-center"
             >
               <img
-                src="/Logo-Site-PAdre-kelmon.png"
-                alt="Padre Kelmon — Fé, Família, Liberdade, Pátria"
+                src="/Logo-Site-Padre-kelmon-campanha.png"
+                alt="Padre Kelmon 2202 — Deputado Federal"
                 width={200}
-                height={55}
+                height={45}
                 loading="lazy"
                 decoding="async"
-                className="h-9 w-auto rounded-md bg-white/95 px-2 py-1 sm:h-10"
+                className="h-9 w-auto rounded-md sm:h-10"
               />
             </Link>
             <p className="mt-3 whitespace-nowrap text-[clamp(0.7rem,2.8vw,0.875rem)] font-bold leading-none text-white">
@@ -86,6 +87,9 @@ export function SiteFooter() {
             <p className="mt-2 text-sm leading-relaxed text-white/90">
               Fé, família e coragem para representar São Paulo e resgatar o Brasil. Liderança no
               Foro do Brasil e compromisso com a liberdade religiosa.
+            </p>
+            <p className="mt-2 text-[10px] font-semibold leading-snug tracking-wide text-white/75 sm:text-xs">
+              {CANDIDATE.razaoSocial} — CNPJ: {CANDIDATE.cnpj}
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               {SOCIALS.map(({ label, href, Icon }) => (

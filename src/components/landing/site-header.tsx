@@ -42,12 +42,12 @@ export function SiteHeader() {
           <PageShell className="flex min-w-0 items-center gap-3 py-2 sm:py-2.5 md:gap-4 md:py-[0.6rem]">
             <Link to="/" onClick={() => scrollToPageTop()} className="flex shrink-0 items-center">
               <img
-                src="/Logo-Site-PAdre-kelmon.png"
-                alt="Padre Kelmon — Fé, Família, Liberdade, Pátria"
+                src="/Logo-Site-Padre-kelmon-campanha.png"
+                alt="Padre Kelmon 2202 — Deputado Federal"
                 width={220}
-                height={60}
+                height={50}
                 decoding="async"
-                className="h-10 w-auto max-w-[48vw] object-contain object-left sm:h-11 md:h-11 md:max-w-[14rem] lg:h-12 lg:max-w-none"
+                className="h-10 w-auto max-w-[42vw] rounded-md object-contain object-left sm:h-11 md:h-11 md:max-w-[11rem] lg:h-12 lg:max-w-none"
               />
             </Link>
 
