@@ -105,7 +105,7 @@ export function ForoDoBrasil() {
                 className="mt-3 text-xs font-bold uppercase tracking-wide"
                 style={{ color: "var(--blue-primary)" }}
               >
-                — {FORO_BRASIL.quoteAuthor}
+                {FORO_BRASIL.quoteAuthor}
               </footer>
             </blockquote>
           </Reveal>

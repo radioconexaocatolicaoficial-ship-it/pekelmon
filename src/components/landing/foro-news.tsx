@@ -54,8 +54,8 @@ export function ForoNews() {
                 O movimento conservador em todo o país
               </h2>
               <p className="mt-2 text-sm leading-relaxed text-gray-600 sm:mt-3 sm:text-base">
-                Acompanhe as notícias oficiais do Foro do Brasil, presidido pelo Padre Kelmon —
-                liberdade, fé cristã e união entre os povos.
+                Acompanhe as notícias oficiais do Foro do Brasil, presidido pelo Padre Kelmon.
+                Liberdade, fé cristã e união entre os povos.
               </p>
             </Reveal>
 
@@ -98,7 +98,7 @@ export function ForoNews() {
           <figure className="aspect-[3/4] w-full overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-lg lg:aspect-auto lg:h-full">
             <img
               src={fotoPadreKelmonForo}
-              alt="Padre Kelmon 2202 — O padre do Bolsonaro, candidato a Deputado Federal pelo PL"
+              alt="Padre Kelmon 2202, candidato a Deputado Federal pelo PL"
               width={768}
               height={1024}
               loading="lazy"

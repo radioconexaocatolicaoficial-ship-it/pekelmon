@@ -233,7 +233,7 @@ function WeatherCard({ data, loading }: { data?: LocalNowResult; loading: boolea
               São Paulo
             </p>
             <p className="text-[11px] leading-snug text-gray-500">
-              {info.label} — {weather.min}°/{weather.max}°
+              {info.label} · {weather.min}°/{weather.max}°
             </p>
             <p className="mt-1 inline-flex items-center gap-1 text-[11px] text-gray-500">
               <WeatherIcon className="size-3.5 text-sky-500" aria-hidden="true" />

@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as MidiaRouteImport } from './routes/midia'
 import { Route as NumerosRouteImport } from './routes/numeros'
 import { Route as PautasRouteImport } from './routes/pautas'
+import { Route as SaibaMaisRouteImport } from './routes/saiba-mais'
 import { Route as SobreRouteImport } from './routes/sobre'
 
 const IndexRoute = IndexRouteImport.update({
@@ -35,6 +36,11 @@ const PautasRoute = PautasRouteImport.update({
   path: '/pautas',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SaibaMaisRoute = SaibaMaisRouteImport.update({
+  id: '/saiba-mais',
+  path: '/saiba-mais',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
@@ -46,6 +52,7 @@ export interface FileRoutesByFullPath {
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
+  '/saiba-mais': typeof SaibaMaisRoute
   '/sobre': typeof SobreRoute
 }
 export interface FileRoutesByTo {
@@ -53,6 +60,7 @@ export interface FileRoutesByTo {
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
+  '/saiba-mais': typeof SaibaMaisRoute
   '/sobre': typeof SobreRoute
 }
 export interface FileRoutesById {
@@ -61,14 +69,22 @@ export interface FileRoutesById {
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
+  '/saiba-mais': typeof SaibaMaisRoute
   '/sobre': typeof SobreRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/midia' | '/numeros' | '/pautas' | '/sobre'
+  fullPaths: '/' | '/midia' | '/numeros' | '/pautas' | '/saiba-mais' | '/sobre'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/midia' | '/numeros' | '/pautas' | '/sobre'
-  id: '__root__' | '/' | '/midia' | '/numeros' | '/pautas' | '/sobre'
+  to: '/' | '/midia' | '/numeros' | '/pautas' | '/saiba-mais' | '/sobre'
+  id:
+    | '__root__'
+    | '/'
+    | '/midia'
+    | '/numeros'
+    | '/pautas'
+    | '/saiba-mais'
+    | '/sobre'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,6 +92,7 @@ export interface RootRouteChildren {
   MidiaRoute: typeof MidiaRoute
   NumerosRoute: typeof NumerosRoute
   PautasRoute: typeof PautasRoute
+  SaibaMaisRoute: typeof SaibaMaisRoute
   SobreRoute: typeof SobreRoute
 }
 
@@ -109,6 +126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PautasRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/saiba-mais': {
+      id: '/saiba-mais'
+      path: '/saiba-mais'
+      fullPath: '/saiba-mais'
+      preLoaderRoute: typeof SaibaMaisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sobre': {
       id: '/sobre'
       path: '/sobre'
@@ -124,6 +148,7 @@ const rootRouteChildren: RootRouteChildren = {
   MidiaRoute: MidiaRoute,
   NumerosRoute: NumerosRoute,
   PautasRoute: PautasRoute,
+  SaibaMaisRoute: SaibaMaisRoute,
   SobreRoute: SobreRoute,
 }
 export const routeTree = rootRouteImport

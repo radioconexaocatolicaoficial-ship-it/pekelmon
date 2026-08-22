@@ -43,7 +43,7 @@ export function SiteHeader() {
             <Link to="/" onClick={() => scrollToPageTop()} className="flex shrink-0 items-center">
               <img
                 src="/Logo-Site-Padre-kelmon-campanha.png"
-                alt="Padre Kelmon 2202 — Deputado Federal"
+                alt="Padre Kelmon 2202, Deputado Federal"
                 width={220}
                 height={50}
                 decoding="async"
@@ -52,7 +52,7 @@ export function SiteHeader() {
             </Link>
 
             <div className="ml-auto flex min-w-0 flex-1 items-center justify-end gap-3 md:gap-4 lg:gap-5">
-              <ul className="hidden min-w-0 items-center justify-end gap-[0.95rem] overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:gap-6 xl:gap-7 [&::-webkit-scrollbar]:hidden">
+              <ul className="hidden min-w-0 items-center justify-end gap-[0.9rem] overflow-x-auto overscroll-x-contain [scrollbar-width:none] [-ms-overflow-style:none] md:flex lg:gap-[1.425rem] xl:gap-[1.66rem] [&::-webkit-scrollbar]:hidden">
                 {TOP_NAV_LINKS.map((l) => {
                   const Icon = l.icon;
                   const isActive = isNavActive(l, pathname);
@@ -61,7 +61,7 @@ export function SiteHeader() {
                       <Link
                         to={l.to}
                         onClick={() => scrollToPageTop()}
-                        className={`inline-flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 transition-colors lg:gap-2 lg:px-3 lg:py-2 ${
+                        className={`inline-flex items-center gap-1.5 rounded-xl px-[0.594rem] py-1.5 transition-colors lg:gap-[0.475rem] lg:px-[0.713rem] lg:py-2 ${
                           isActive
                             ? "bg-blue-50 text-[var(--blue-primary)]"
                             : "text-gray-600 hover:bg-blue-50 hover:text-[var(--blue-primary)]"
@@ -70,7 +70,7 @@ export function SiteHeader() {
                         aria-current={isActive ? "page" : undefined}
                       >
                         <Icon className="size-4 shrink-0 stroke-[2.25] lg:size-[1.15rem]" aria-hidden="true" />
-                        <span className="whitespace-nowrap text-xs font-bold leading-none tracking-wide lg:text-sm">
+                        <span className="whitespace-nowrap text-[11.4px] font-bold leading-none tracking-wide lg:text-[13.3px]">
                           {l.label}
                         </span>
                       </Link>

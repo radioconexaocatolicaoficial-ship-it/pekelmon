@@ -73,7 +73,7 @@ export function SiteFooter() {
             >
               <img
                 src="/Logo-Site-Padre-kelmon-campanha.png"
-                alt="Padre Kelmon 2202 — Deputado Federal"
+                alt="Padre Kelmon 2202, Deputado Federal"
                 width={200}
                 height={45}
                 loading="lazy"
@@ -85,11 +85,11 @@ export function SiteFooter() {
               Candidato a Deputado Federal · SP · PL
             </p>
             <p className="mt-2 text-sm leading-relaxed text-white/90">
-              Fé, família e coragem para representar São Paulo e resgatar o Brasil. Liderança no
-              Foro do Brasil e compromisso com a liberdade religiosa.
+              Fé, família e coragem para representar São Paulo e resgatar o Brasil. Presidente do
+              Foro do Brasil e defesa da liberdade religiosa.
             </p>
             <p className="mt-2 text-[10px] font-semibold leading-snug tracking-wide text-white/75 sm:text-xs">
-              {CANDIDATE.razaoSocial} — CNPJ: {CANDIDATE.cnpj}
+              {CANDIDATE.razaoSocial} · CNPJ: {CANDIDATE.cnpj}
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               {SOCIALS.map(({ label, href, Icon }) => (

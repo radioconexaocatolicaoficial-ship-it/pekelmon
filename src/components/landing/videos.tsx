@@ -11,7 +11,7 @@ export function Videos() {
         <SectionHeading
           eyebrow="Vídeos"
           title="Palavra e presença"
-          subtitle="Os vídeos oficiais do YouTube e do Instagram serão incorporados aqui. Enquanto isso, os cartões levam ao perfil oficial."
+          subtitle="Vídeos oficiais no YouTube e no Instagram. Os cartões levam ao perfil."
         />
 
         <div className="mt-14 grid gap-6 md:grid-cols-3">
@@ -29,7 +29,7 @@ export function Videos() {
                     aria-hidden="true"
                   />
                   <span className="absolute bottom-3 right-3 rounded-full border border-border bg-background/70 px-2 py-1 text-[10px] uppercase tracking-widest text-muted-foreground">
-                    Placeholder
+                    Vídeo
                   </span>
                 </div>
                 <div className="flex flex-1 flex-col p-6">

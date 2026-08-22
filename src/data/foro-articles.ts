@@ -13,7 +13,7 @@ export const FORO_NEWS_URL = "https://forobrasil.org/noticias/";
 export const FORO_ARTICLES: ForoArticle[] = [
   {
     id: "1576",
-    title: "Foro do Brasil celebra 2 anos de existência com grande evento em Salvador – BA",
+    title: "Foro do Brasil celebra 2 anos de existência com grande evento em Salvador, BA",
     excerpt:
       "No último dia 01 de julho de 2025, o Foro do Brasil comemorou seu segundo aniversário com um grande evento realizado no Salão Nobre da Associação Atlética da Bahia, em Salvador.",
     date: "18/07/2025",

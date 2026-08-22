@@ -44,7 +44,7 @@ export const TIMELINE: TimelineItem[] = [
     year: "1976",
     title: "Nascimento em Salvador, Bahia",
     description:
-      "Nasce em 21 de outubro de 1976, às 14h45, em Salvador, Bahia. Primogênito de Risoldete da Silva Souza e José Gomes de Souza, cresce com mais três irmãos em uma família católica tradicional.",
+      "Nasce em 21 de outubro de 1976, às 14h45, em Salvador, Bahia. Primogênito de Risoldete da Silva Souza e José Gomes de Souza. Cresce com mais três irmãos em uma família católica tradicional.",
   },
   {
     year: "1977-1995",
@@ -66,9 +66,9 @@ export const TIMELINE: TimelineItem[] = [
   },
   {
     year: "2010",
-    title: "Ativismo pró-vida",
+    title: "Mobilização pró-vida",
     description:
-      "Coordena ação nacional de conscientização contra a então candidata Dilma Rousseff, baseada em documento da CNBB Regional Sul 1, com apoio de Dom Luiz Gonzaga Bergonzini. Consolida-se como voz conservadora cristã.",
+      "Coordena a distribuição nacional do documento “Apelo a Todos os Brasileiros e Brasileiras”, da Comissão em Defesa da Vida do Regional Sul 1 da CNBB, durante as eleições presidenciais. Episódio que relembrou em entrevista à VV8.",
   },
   {
     year: "2014-2015",
@@ -80,7 +80,7 @@ export const TIMELINE: TimelineItem[] = [
     year: "2017",
     title: "Missão humanitária em Roraima",
     description:
-      "Viaja a Roraima para testemunhar e auxiliar refugiados venezuelanos na crise humanitária, fortalecendo sua oposição aos regimes socialistas na América Latina.",
+      "Viaja a Roraima para testemunhar e auxiliar refugiados venezuelanos na crise humanitária. A experiência reforçou sua oposição aos regimes socialistas na América Latina.",
   },
   {
     year: "2019-2021",
@@ -98,7 +98,7 @@ export const TIMELINE: TimelineItem[] = [
     year: "2023",
     title: "Fundação do Foro do Brasil",
     description:
-      "Funda o Foro do Brasil em cerimônia no Congresso Nacional (29/06/2023). O movimento articula o pensamento conservador nacional, com diretórios em diversos estados.",
+      "Funda o Foro do Brasil em cerimônia no Congresso Nacional (29/06/2023). O movimento reúne o pensamento conservador no país, com diretórios em diversos estados.",
   },
   {
     year: "2024",
@@ -110,13 +110,13 @@ export const TIMELINE: TimelineItem[] = [
     year: "2025",
     title: "Programas na VV8 TV",
     description:
-      "Estreia em 2 de junho o talk show 'Confessionário com Padre Kelmon' e 'Oração pelo Brasil' na VV8 TV (Valinhos/SP), abordando fé, política e cultura sob perspectiva conservadora.",
+      "Estreia em 2 de junho o talk show 'Confessionário com Padre Kelmon' e 'Oração pelo Brasil' na VV8 TV (Valinhos/SP). Programas sobre fé, política e cultura.",
   },
   {
     year: "2026",
     title: "Deputado Federal por São Paulo",
     description:
-      "Confirma candidatura à Câmara dos Deputados por São Paulo pelo PL. Com formação em Filosofia, Teologia e Pedagogia, afirma cumprir 'a missão de Deus'. Mensagem: 'Juntos vamos resgatar o Brasil.'",
+      "Confirma candidatura à Câmara dos Deputados por São Paulo pelo PL. Formação em Filosofia, Teologia e Pedagogia. Mensagem: “Juntos vamos resgatar o Brasil.”",
   },
 ];
 
@@ -137,63 +137,63 @@ export const BANDEIRAS: Bandeira[] = [
     title: "Defesa da Família",
     badge: "Família",
     description:
-      "Fortalecer a família tradicional brasileira como núcleo fundamental da sociedade. Defender o direito dos pais na educação dos filhos, proteção da infância e juventude contra ideologias nocivas, e promoção de políticas públicas que valorizem o casamento e a maternidade.",
+      "A família é a base do Brasil. Defender o direito dos pais de educar os filhos e apoiar políticas que valorizem o casamento, a maternidade e a proteção da infância.",
   },
   {
     icon: Shield,
     title: "Defesa da Vida",
     badge: "Segurança",
     description:
-      "Proteção incondicional da vida humana desde a concepção até a morte natural. Combate ao aborto em todas as suas formas, apoio a mães em situação de vulnerabilidade, e defesa de uma cultura que valorize e proteja a vida em todas as suas fases.",
+      "A vida humana deve ser protegida desde a concepção até a morte natural. Combater o aborto e apoiar mães em situação de vulnerabilidade.",
   },
   {
     icon: Church,
     title: "Liberdade Religiosa",
     badge: "Livre arbítrio",
     description:
-      "Garantia plena da liberdade de culto, expressão da fé e manifestação religiosa. Proteção dos templos, ministros religiosos e fiéis contra perseguições, censura ou restrições injustas. Defesa do direito de viver e anunciar os valores cristãos no espaço público.",
+      "Ninguém pode ser perseguido por crer. Garantir o culto, proteger templos e fiéis e defender o direito de viver a fé cristã em público.",
   },
   {
     icon: Flag,
     title: "Patriotismo",
     badge: "Brasil",
     description:
-      "Valorização dos símbolos nacionais, resgate da história do Brasil e promoção do amor à pátria. Defesa da soberania nacional, fortalecimento das Forças Armadas, e combate a ideologias que desvalorizam a identidade e os valores do povo brasileiro.",
+      "Resgatar o amor à pátria, os símbolos nacionais e a história do Brasil. Defender a soberania e as Forças Armadas.",
   },
   {
     icon: TrendingUp,
     title: "Liberdade Econômica",
     badge: "Seu dinheiro",
     description:
-      "Redução da burocracia e do peso do Estado sobre empreendedores e trabalhadores. Defesa da livre iniciativa, simplificação tributária, incentivo à geração de empregos e apoio aos pequenos e médios empresários que sustentam suas famílias e movem a economia do país.",
+      "Menos burocracia e menos peso do Estado sobre quem trabalha. Apoiar a livre iniciativa, o emprego e os pequenos e médios empresários.",
   },
   {
     icon: ShieldCheck,
     title: "Combate à Corrupção",
     badge: "Fora esquerda",
     description:
-      "Rigor absoluto contra desvios de recursos públicos e transparência total no uso do dinheiro do cidadão. Punição severa para políticos corruptos, fortalecimento dos órgãos de controle e fiscalização, e compromisso com a ética e honestidade na gestão pública.",
+      "O dinheiro público é do cidadão. Punir desvio, exigir transparência e tratar a gestão pública com ética e honestidade.",
   },
   {
     icon: Scale,
     title: "Defesa da Constituição",
     badge: "Respeito",
     description:
-      "Respeito irrestrito ao Estado Democrático de Direito e à separação dos Poderes. Defesa das liberdades individuais, direitos fundamentais e garantias constitucionais. Combate a abusos de autoridade e preservação do equilíbrio institucional da República.",
+      "Respeito à Constituição, à separação dos Poderes e às liberdades individuais. Sem abuso de autoridade e sem atropelar a República.",
   },
   {
     icon: Users,
     title: "Valorização da Juventude",
     badge: "Futuro",
     description:
-      "Investimento na formação integral dos jovens brasileiros com educação de qualidade, oportunidades de primeiro emprego e incentivos ao empreendedorismo juvenil. Proteção contra drogas, violência e ideologias destrutivas, promovendo valores sólidos e esperança no futuro.",
+      "Educação de verdade, primeiro emprego e proteção contra drogas e violência. Os jovens precisam de valores sólidos e de esperança.",
   },
   {
     icon: Landmark,
     title: "Foro do Brasil",
     badge: "Conservadorismo",
     description:
-      "Fortalecer o Foro do Brasil, movimento fundado por Padre Kelmon em 29 de junho de 2023 no Congresso Nacional, do qual é Presidente Nacional. Unir cidadãos em defesa da liberdade, da fé cristã, da ordem e do progresso, com diretórios em todo o país e no exterior. Levar à Câmara dos Deputados a mesma missão: articular o pensamento conservador e resgatar o Brasil com valores cristãos, soberania nacional e dignidade da pessoa humana.",
+      "Fortalecer o Foro do Brasil, fundado em 2023 no Congresso Nacional. Unir o país em defesa da liberdade, da fé cristã e da dignidade da pessoa humana.",
   },
 ];
 
@@ -213,42 +213,42 @@ export const GALLERY: GalleryItem[] = [
   {
     src: gallery1,
     alt: "Multidão em ato público com bandeiras do Brasil ao entardecer",
-    caption: "Imagem ilustrativa — substituir por foto oficial de ato público",
+    caption: "Ato público com bandeiras do Brasil",
     width: 1024,
     height: 1280,
   },
   {
     src: gallery2,
     alt: "Interior de igreja cristã com velas acesas e ícones dourados",
-    caption: "Imagem ilustrativa — substituir por registro de celebração religiosa",
+    caption: "Celebração religiosa",
     width: 1024,
     height: 768,
   },
   {
     src: heroPortrait,
     alt: "Silhueta de sacerdote discursando em um púlpito",
-    caption: "Imagem ilustrativa — substituir por foto institucional do Padre Kelmon",
+    caption: "Padre Kelmon",
     width: 1024,
     height: 1280,
   },
   {
     src: gallery3,
     alt: "Bandeira do Brasil tremulando contra o céu azul",
-    caption: "Imagem ilustrativa — substituir por registro de agenda patriótica",
+    caption: "Bandeira do Brasil",
     width: 1024,
     height: 1024,
   },
   {
     src: gallery4,
     alt: "Mãos de uma família unidas em oração sobre uma mesa de madeira",
-    caption: "Imagem ilustrativa — substituir por foto com apoiadores e famílias",
+    caption: "Família em oração",
     width: 1024,
     height: 1280,
   },
   {
     src: gallery5,
     alt: "Vista aérea da cidade de São Paulo no fim da tarde",
-    caption: "Imagem ilustrativa — substituir por registro de agenda em São Paulo",
+    caption: "São Paulo",
     width: 1280,
     height: 853,
   },
@@ -267,17 +267,17 @@ export type VideoItem = {
 export const VIDEOS: VideoItem[] = [
   {
     title: "Anúncio da candidatura",
-    description: "Pronunciamento publicado nas redes sociais confirmando a disputa por São Paulo.",
+    description: "Pronunciamento nas redes confirmando a disputa por São Paulo.",
     url: CANDIDATE.instagram,
   },
   {
     title: "Fé, família e Brasil",
-    description: "Espaço reservado para o vídeo de apresentação das bandeiras da campanha.",
+    description: "As bandeiras da campanha em vídeo.",
     url: CANDIDATE.instagram,
   },
   {
     title: "Agenda com apoiadores",
-    description: "Espaço reservado para os melhores momentos dos encontros pelo estado.",
+    description: "Encontros da campanha pelo estado.",
     url: CANDIDATE.instagram,
   },
 ];
@@ -301,7 +301,7 @@ export const STATS: StatItem[] = [
   {
     value: 81129,
     label: "Votos na eleição presidencial de 2022",
-    note: "Alcance nacional em 19 dias de campanha — resultado oficial do TSE",
+    note: "Alcance nacional em 19 dias de campanha. Resultado oficial do TSE.",
   },
   {
     value: 2,
@@ -313,13 +313,13 @@ export const STATS: StatItem[] = [
     value: 6,
     suffix: "+",
     label: "Estados com presença organizada",
-    note: "Diretórios e caravanas em SP, RJ, SC, MG, PR e outros",
+    note: "Diretórios e caravanas em SP, RJ, SC, MG, PR e outros estados",
   },
   {
     value: 30,
     suffix: "+",
     label: "Anos de fé e serviço comunitário",
-    note: "Da formação juvenil e missionária à defesa pública dos valores cristãos",
+    note: "Da formação na juventude e nas missões à defesa pública da fé cristã",
   },
 ];
 
@@ -329,25 +329,25 @@ export const TRUST_PILLARS: TrustPillar[] = [
     icon: Flag,
     title: "Experiência nacional",
     description:
-      "Ex-candidato à Presidência da República, com participação em debates nacionais e mensagem clara em defesa da família, da liberdade e do Brasil.",
+      "Ex-candidato à Presidência da República. Debates nacionais e mensagem clara em defesa da família, da liberdade e do Brasil.",
   },
   {
     icon: Users,
     title: "Liderança do Foro do Brasil",
     description:
-      "Fundador e Presidente Nacional do Foro do Brasil — articulação conservadora com juventude, mulheres, indígenas e presença internacional.",
+      "Fundador e Presidente Nacional do Foro do Brasil. Junta juventude, mulheres, indígenas e tem presença no exterior.",
   },
   {
     icon: ShieldCheck,
     title: "Candidatura pelo PL em São Paulo",
     description:
-      "Candidato a Deputado Federal por São Paulo pelo Partido Liberal, alinhado ao projeto de resgate do Brasil e à representação do povo paulista.",
+      "Candidato a Deputado Federal por São Paulo pelo Partido Liberal. Representa o povo paulista e ajuda a resgatar o Brasil.",
   },
   {
     icon: Church,
     title: "Voz cristã na vida pública",
     description:
-      "Trajetória marcada pela fé ortodoxa, programas de comunicação e defesa da liberdade religiosa, da vida e da dignidade da pessoa humana.",
+      "Fé ortodoxa, programas de comunicação e defesa da liberdade religiosa, da vida e da dignidade da pessoa humana.",
   },
 ];
 
@@ -363,7 +363,7 @@ export const FORO_BRASIL = {
   slogan: "Liberdade, Humanidade, Cristianismo e a União entre povos",
   tagline: "Pelo Brasil que acreditamos, pelos direitos que defendemos",
   description:
-    "O Foro do Brasil é um espaço de representação e defesa dos valores que sustentam uma sociedade livre e justa. Atua em prol da liberdade, da propriedade, da livre expressão e do direito dos cidadãos, promovendo iniciativas que fortalecem a cultura, a educação, a saúde e a dignidade humana.",
+    "O Foro do Brasil reúne quem defende uma sociedade livre e justa. Atua pela liberdade, pela propriedade, pela livre expressão e pelos direitos do cidadão.",
   quote:
     "O Brasil precisa de uma organização política que una cidadãos comprometidos com a liberdade, a ordem e o progresso. O Foro do Brasil é esse espaço.",
   quoteAuthor: "Padre Kelmon, Presidente Nacional",
@@ -389,21 +389,21 @@ export const FORO_BRASIL = {
     {
       title: "Defendendo valores, fortalecendo a sociedade",
       description:
-        "Conheça a missão, os princípios e a atuação do Foro em defesa da liberdade, da justiça e dos direitos individuais.",
+        "Missão e princípios do Foro em defesa da liberdade e dos direitos individuais.",
       href: "https://forobrasil.org/sobre/",
       cta: "Conheça o Foro",
     },
     {
       title: "Presença em todo o Brasil e no mundo",
       description:
-        "Diretórios e lideranças em cada região, com frentes de juventude, mulheres, indígenas e presença no Equador e no Peru.",
+        "Diretórios em cada região, com frentes de juventude, mulheres, indígenas e presença no Equador e no Peru.",
       href: "https://forobrasil.org/diretorios/",
       cta: "Conheça os Diretórios",
     },
     {
       title: "Junte-se a nós e apoie o Foro do Brasil",
       description:
-        "Seja parte dessa transformação. Descubra como contribuir e fortalecer a missão pelo Brasil que acreditamos.",
+        "Saiba como contribuir e fortalecer a missão pelo Brasil que acreditamos.",
       href: "https://forobrasil.org/contato/",
       cta: "Faça Parte",
     },
@@ -432,14 +432,14 @@ export const PARTIDO_LIBERAL = {
   photoCredit: "Foto: Beto Barata/PL",
   slogan: "Liberdade, Verdade e Fé, pelo bem do Brasil",
   description:
-    "Em 14 de agosto de 2024, na sede do Partido Liberal em Brasília, o presidente nacional Valdemar Costa Neto assinou a ficha de filiação de Padre Kelmon. A chegada do sacerdote fortalece o partido e reafirma o compromisso da sigla com o futuro do Brasil. Na cerimônia, Kelmon destacou 25 anos dedicados à juventude e o chamado a líderes comprometidos com Deus, pátria, família, vida e liberdade.",
+    "Em 14 de agosto de 2024, na sede do Partido Liberal em Brasília, o presidente nacional Valdemar Costa Neto assinou a ficha de filiação de Padre Kelmon. Na cerimônia, Kelmon falou de 25 anos dedicados à juventude e do chamado a líderes comprometidos com Deus, pátria, família, vida e liberdade.",
   quote:
     "Como padre, meu compromisso é servir ao povo, e na política, não é diferente. Estamos aqui para servir à comunidade, ao povo, à nação. No PL, pretendo me dedicar com o mesmo zelo, pois precisamos de líderes comprometidos com Deus, pátria, família, vida e liberdade.",
   quoteAuthor: "Padre Kelmon, na filiação ao PL",
   values: [
     {
       title: "Deus",
-      description: "Fé cristã na vida pública e liberdade religiosa como compromisso inegociável.",
+      description: "Fé cristã na vida pública e liberdade religiosa sem concessões.",
     },
     {
       title: "Pátria",
@@ -460,7 +460,7 @@ export const PARTIDO_LIBERAL = {
       date: "16/08/2026",
       title: "Flávio Bolsonaro vai honrar a escolha do pai com o lema “O Brasil Vai Vencer”",
       description:
-        "O candidato do PL à Presidência reafirma o lema da campanha e o compromisso de honrar a escolha de Jair Bolsonaro.",
+        "Flávio Bolsonaro confirma o lema da campanha e diz que vai honrar a escolha de Jair Bolsonaro.",
       href: "https://partidoliberal.org.br/flavio-bolsonaro-vai-honrar-a-escolha-do-pai-com-o-lema-o-brasil-vai-vencer/",
       image: "/news/flavio-brasil-vai-vencer.jpg",
     },

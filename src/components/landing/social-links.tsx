@@ -49,12 +49,11 @@ export function SocialLinks() {
               className="text-[1.75rem] font-black leading-tight sm:text-4xl lg:text-5xl"
               style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
             >
-              Acompanhe de perto
+              Siga Padre Kelmon
             </h2>
             <div className="gold-rule mx-auto mt-4 sm:mt-5" />
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-gray-700 sm:mt-5 sm:text-base">
-              Siga o Padre Kelmon nas redes oficiais e acompanhe a campanha, os posicionamentos e os
-              encontros pelo Brasil.
+              Redes oficiais da campanha. Posicionamentos e encontros pelo Brasil.
             </p>
           </div>
         </Reveal>

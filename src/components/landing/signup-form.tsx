@@ -337,7 +337,7 @@ export function SignupForm() {
               <div className="relative h-full min-h-[480px] w-full overflow-hidden rounded-2xl shadow-2xl lg:min-h-full">
                 <img
                   src={sobreImg}
-                  alt="Padre Kelmon — cadastre-se para apoiar a campanha"
+                  alt="Padre Kelmon, cadastre-se para apoiar a campanha"
                   loading="lazy"
                   decoding="async"
                   className="absolute inset-0 h-full w-full object-cover object-top"

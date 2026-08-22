@@ -40,7 +40,7 @@ export function Stats({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
                     className="text-[1.75rem] font-black leading-tight sm:text-4xl lg:text-5xl"
                     style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
                   >
-                    Trajetória que gera confiança
+                    Trajetória pública e confiança
                   </Heading>
                 </div>
 
@@ -58,14 +58,13 @@ export function Stats({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
                     >
                       Foro do Brasil
                     </a>
-                    , do qual é Presidente Nacional — defendendo liberdade, família e dignidade
+                    , do qual é Presidente Nacional. Defende liberdade, família e dignidade
                     humana em vários estados do país.
                   </p>
                   <p className="text-justify">
                     Candidato a Deputado Federal por São Paulo pelo PL, com mais de{" "}
                     <strong style={{ color: "var(--blue-primary)" }}>30 anos</strong> de fé e
-                    serviço. Os indicadores abaixo são públicos e verificáveis, para você votar com
-                    confiança.
+                    serviço. Os números abaixo são públicos e conferíveis.
                   </p>
                 </div>
 
@@ -83,7 +82,7 @@ export function Stats({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
               <div className="relative mx-auto h-full w-full overflow-hidden rounded-2xl shadow-2xl md:ml-auto md:max-w-none md:aspect-[4/5] md:max-h-[480px]">
                 <img
                   src={confiancaImg}
-                  alt="Padre Kelmon — trajetória pública e alianças"
+                  alt="Padre Kelmon em ato público"
                   width={800}
                   height={1000}
                   loading="lazy"
@@ -172,7 +171,7 @@ export function Stats({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
                   </p>
                   <p className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-white/95">
                     <Quote className="size-4 shrink-0" style={{ color: "var(--yellow-primary)" }} />
-                    Padre Kelmon — {FORO_BRASIL.role}
+                    Padre Kelmon, {FORO_BRASIL.role}
                   </p>
                 </div>
 
@@ -231,7 +230,7 @@ export function Stats({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
 
           <Reveal delay={0.1}>
             <p className="mt-10 text-center text-xs leading-relaxed text-muted-foreground">
-              Fontes públicas: resultado eleitoral de 2022 (TSE); biografia e atuação no{" "}
+              Fontes públicas: resultado eleitoral de 2022 (TSE); biografia e trabalho no{" "}
               <a
                 href={FORO_BRASIL.url}
                 target="_blank"

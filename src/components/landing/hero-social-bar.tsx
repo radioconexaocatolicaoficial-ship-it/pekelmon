@@ -42,7 +42,7 @@ export function HeroSocialBar() {
           id="hero-redes-heading"
           className="mb-2 px-1 text-left text-[9px] font-semibold uppercase tracking-[0.22em] text-white/70 sm:text-[10px]"
         >
-          Acompanhe o Padre nas redes sociais
+          Acompanhe nas redes sociais
         </h2>
         <ul className="grid min-w-0 grid-cols-5">
           {NETWORKS.map(({ label, href, Icon, handle }) => (

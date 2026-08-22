@@ -9,17 +9,17 @@ export const SITE_URL = (
 
 export const SITE_NAME = "Padre Kelmon";
 
-export const SITE_TITLE = "Padre Kelmon — Candidato a Deputado Federal";
+export const SITE_TITLE = "Padre Kelmon | Candidato a Deputado Federal";
 
 /** Meta description distinta do title (~150–160 caracteres) para SEO e redes. */
 export const SITE_DESCRIPTION =
-  "Padre Kelmon, candidato a Deputado Federal por São Paulo pelo PL. Fé, família e liberdade religiosa. Conheça a trajetória, as pautas e apoie a campanha.";
+  "Padre Kelmon, candidato a Deputado Federal por São Paulo pelo PL. Fé, família e liberdade religiosa. Pautas da campanha e como apoiar.";
 
 export const SITE_KEYWORDS =
   "Padre Kelmon, Deputado Federal, São Paulo, PL, Partido Liberal, candidato 2026, fé, família, liberdade religiosa, Foro do Brasil";
 
-/** JPEG 1200×630 do banner “Fé para servir”. Nome novo para o WhatsApp não reusar o cache. */
-export const OG_IMAGE_PATH = "/og-banner-fe-para-servir.jpg";
+/** JPEG 1200×630 do banner com Flávio Bolsonaro. Nome novo para o WhatsApp não reusar o cache. */
+export const OG_IMAGE_PATH = "/og-banner-padre-kelmon-2202-flavio.jpg";
 export const OG_IMAGE_WIDTH = "1200";
 export const OG_IMAGE_HEIGHT = "630";
 
@@ -34,27 +34,33 @@ export function absoluteUrl(path = "/"): string {
 export const PAGE_SEO = {
   sobre: {
     path: "/sobre",
-    title: "Sobre Padre Kelmon — Trajetória e candidatura a Deputado Federal",
+    title: "Sobre Padre Kelmon | Trajetória e candidatura a Deputado Federal",
     description:
-      "Conheça a biografia de Padre Kelmon: vida religiosa, atuação pública, Foro do Brasil e candidatura a Deputado Federal por São Paulo pelo PL em 2026.",
+      "Biografia de Padre Kelmon: vida religiosa, Foro do Brasil e candidatura a Deputado Federal por São Paulo pelo PL em 2026.",
+  },
+  saibaMais: {
+    path: "/saiba-mais",
+    title: "Saiba mais | A vida e a missão de Padre Kelmon",
+    description:
+      "A mobilização pró-vida de 2010 e o projeto Pâncreas Online, app em desenvolvimento para o cuidado da diabetes juvenil com pacientes, pais, professores e médicos.",
   },
   pautas: {
     path: "/pautas",
-    title: "Pautas de Padre Kelmon — Fé, família e liberdade em São Paulo",
+    title: "Pautas de Padre Kelmon | Fé, família e liberdade em São Paulo",
     description:
       "As pautas que Padre Kelmon defende como candidato a Deputado Federal por São Paulo: família, liberdade religiosa, valores cristãos e dignidade humana.",
   },
   midia: {
     path: "/midia",
-    title: "Mídia — Padre Kelmon nas redes, imprensa e vídeos",
+    title: "Mídia | Padre Kelmon nas redes, imprensa e vídeos",
     description:
-      "Acompanhe Padre Kelmon na imprensa, YouTube, Instagram, TikTok e demais redes. Notícias, vídeos e presença digital da campanha.",
+      "Padre Kelmon na imprensa, YouTube, Instagram, TikTok e demais redes. Notícias, vídeos e presença digital da campanha.",
   },
   numeros: {
     path: "/numeros",
-    title: "Números da trajetória de Padre Kelmon — votos, fé e confiança",
+    title: "Números de Padre Kelmon | votos, fé e confiança",
     description:
-      "Indicadores públicos da trajetória de Padre Kelmon: votos em 2022, décadas de fé e serviço, Foro do Brasil e candidatura a Deputado Federal por SP.",
+      "Números públicos de Padre Kelmon: votos em 2022, décadas de fé e serviço, Foro do Brasil e candidatura a Deputado Federal por SP.",
   },
 } as const;
 

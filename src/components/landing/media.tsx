@@ -144,7 +144,7 @@ function CoverImageCard({
       {imageSrc ? (
         <img
           src={imageSrc}
-          alt={`Publicação recente de ${label} — Padre Kelmon`}
+          alt={`Publicação recente de ${label}, Padre Kelmon`}
           className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
           loading="lazy"
           decoding="async"
@@ -307,7 +307,7 @@ function PressCard({ article }: { article: PressArticle }) {
       <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
         <img
           src={article.image}
-          alt={`${article.title} — ${article.source}`}
+          alt={`${article.title} · ${article.source}`}
           width={640}
           height={400}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
@@ -362,7 +362,7 @@ function PressNewsCarousel({
   sourceUrl = PRESS_SOURCE_URL,
   showPlaceholders = false,
   heading = "Padre Kelmon na imprensa",
-  subheading = "Matérias no portal 7Minutos · atualização automática",
+  subheading = "Matérias no portal 7Minutos",
   accentColor = "var(--blue-primary)",
   skeletonKey = "press",
 }: {
@@ -504,7 +504,6 @@ function SocialNetworkCarousel({
                     : social.id === "x"
                       ? "Posts mais recentes"
                       : "Posts mais recentes"}
-              {" · atualização automática"}
             </p>
           </div>
         </div>
@@ -561,7 +560,7 @@ export function Media({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
   }, []);
 
   const socialQuery = useQuery({
-    queryKey: ["social-feeds", "v18-public-no-meta-token"],
+    queryKey: ["social-feeds", "v19-youtube-seed"],
     queryFn: () => getSocialFeeds(),
     staleTime: MEDIA_REFRESH_MS,
     refetchInterval: MEDIA_REFRESH_MS,
@@ -571,7 +570,7 @@ export function Media({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
   });
 
   const pressQuery = useQuery({
-    queryKey: ["press-feeds", "v2-7minutos-auto"],
+    queryKey: ["press-feeds", "v3-7minutos-aug2026"],
     queryFn: () => getPressFeeds(),
     staleTime: MEDIA_REFRESH_MS,
     refetchInterval: MEDIA_REFRESH_MS,
@@ -580,7 +579,7 @@ export function Media({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
   });
 
   const vv8Query = useQuery({
-    queryKey: ["vv8-feeds", "v1-portalvv8-auto"],
+    queryKey: ["vv8-feeds", "v2-portalvv8-aug2026"],
     queryFn: () => getVv8Feeds(),
     staleTime: MEDIA_REFRESH_MS,
     refetchInterval: MEDIA_REFRESH_MS,
@@ -628,9 +627,8 @@ export function Media({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
                 Padre Kelmon nas Redes Sociais
               </Heading>
               <p className="text-sm leading-relaxed text-gray-700 text-justify sm:text-base">
-                Acompanhe Instagram, Facebook, X, YouTube e TikTok com os posts e reels/shorts
-                públicos mais recentes. Os feeds usam conteúdo público e atualizam sozinhos a cada
-                30 segundos (sem token da Meta).
+                Acompanhe Instagram, Facebook, X, YouTube e TikTok com os posts e reels públicos
+                mais recentes. Os feeds usam conteúdo público e se atualizam sozinhos.
               </p>
               {hasUpdatedAt ? (
                 <p className="mt-3 text-xs text-gray-500">
@@ -671,7 +669,7 @@ export function Media({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
                 sourceUrl={pressSourceUrl}
                 showPlaceholders={showPressPlaceholders}
                 heading="Padre Kelmon na imprensa"
-                subheading="Matérias no portal 7Minutos · atualização automática"
+                subheading="Matérias no portal 7Minutos"
                 skeletonKey="7minutos"
               />
             </Reveal>

@@ -124,7 +124,7 @@ export function PartidoLiberal() {
                 className="mt-3 text-xs font-bold uppercase tracking-wide"
                 style={{ color: "var(--blue-primary)" }}
               >
-                — {PARTIDO_LIBERAL.quoteAuthor}
+                {PARTIDO_LIBERAL.quoteAuthor}
               </footer>
             </blockquote>
           </Reveal>

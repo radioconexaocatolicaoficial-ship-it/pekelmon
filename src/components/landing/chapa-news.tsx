@@ -119,7 +119,7 @@ export function ChapaNews() {
           <figure className="aspect-[3/4] w-full overflow-hidden rounded-xl border-2 border-gray-200 bg-[#6b7280] shadow-lg lg:aspect-auto lg:h-full">
             <img
               src={fotoComoVotarPl}
-              alt="Como votar nas eleições 2026 — Padre Kelmon 2202, chapa da direita em São Paulo"
+              alt="Como votar nas eleições 2026. Padre Kelmon 2202, chapa da direita em São Paulo"
               width={768}
               height={1024}
               loading="lazy"

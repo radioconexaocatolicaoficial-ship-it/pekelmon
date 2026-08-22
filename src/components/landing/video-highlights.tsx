@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 import { YOUTUBE_HIGHLIGHTS, YOUTUBE_PINNED_GRID_IDS, type YoutubeHighlight } from "@/data/youtube-highlights";
 
-const FEATURED_VIDEO_TITLE = "Padre Kelmon — vídeo em destaque";
+const FEATURED_VIDEO_TITLE = "Padre Kelmon, vídeo em destaque";
 
 const SIDE_PAGE_SIZE = 4;
 const PINNED_SLOT_COUNT = YOUTUBE_PINNED_GRID_IDS.length;
@@ -158,7 +158,7 @@ export function VideoHighlights() {
           Padre Kelmon no YouTube
         </h2>
         <p className="mt-1 text-sm text-gray-600">
-          Entrevistas, lives e podcasts — clique para assistir.
+          Entrevistas, lives e podcasts. Clique para assistir.
         </p>
       </div>
 

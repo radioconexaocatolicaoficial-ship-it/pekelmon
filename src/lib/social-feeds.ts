@@ -4,6 +4,7 @@ import facebookPostsSeed from "@/data/facebook-posts.json";
 import instagramPostsSeed from "@/data/instagram-posts.json";
 import tiktokPostsSeed from "@/data/tiktok-posts.json";
 import xPostsSeed from "@/data/x-posts.json";
+import youtubePostsSeed from "@/data/youtube-posts.json";
 import { CANDIDATE } from "@/lib/campaign-data";
 
 /** Página oficial do Facebook — fonte única */
@@ -99,7 +100,21 @@ const FALLBACK_POSTS: Record<SocialNetworkId, SocialPost[]> = {
     ...(post.thumbnail ? { thumbnail: post.thumbnail } : {}),
     ...(post.kind ? { kind: post.kind } : {}),
   })),
-  youtube: [],
+  youtube: (youtubePostsSeed as Array<{
+    id: string;
+    url: string;
+    embedUrl: string;
+    thumbnail?: string;
+    title?: string;
+    kind?: "post" | "reel" | "story";
+  }>).map((post) => ({
+    id: post.id,
+    url: post.url,
+    embedUrl: post.embedUrl,
+    ...(post.thumbnail ? { thumbnail: post.thumbnail } : {}),
+    ...(post.title ? { title: post.title } : {}),
+    ...(post.kind ? { kind: post.kind } : {}),
+  })),
   tiktok: (tiktokPostsSeed as Array<{
     id: string;
     url: string;
@@ -140,7 +155,7 @@ const FALLBACK_POSTS: Record<SocialNetworkId, SocialPost[]> = {
 };
 
 let cache: { data: SocialFeedsResult; expiresAt: number } | null = null;
-const FEEDS_CACHE_VERSION = 18; // bump: feeds públicos reforçados (sem token Meta)
+const FEEDS_CACHE_VERSION = 19; // bump: YouTube seed + VV8/7Minutos atualizados
 let cacheVersion = FEEDS_CACHE_VERSION;
 
 const UA =

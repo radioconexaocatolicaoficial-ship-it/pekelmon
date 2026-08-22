@@ -39,6 +39,7 @@ const lastmod = new Date().toISOString().slice(0, 10);
 const pages = [
   { path: "/", priority: "1.0" },
   { path: "/sobre", priority: "0.9" },
+  { path: "/saiba-mais", priority: "0.9" },
   { path: "/pautas", priority: "0.9" },
   { path: "/midia", priority: "0.8" },
   { path: "/numeros", priority: "0.8" },

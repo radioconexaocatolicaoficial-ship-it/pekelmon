@@ -48,7 +48,7 @@ export function CnpjRail() {
         }`}
         style={{ writingMode: "vertical-rl", transform: "rotate(180deg)" }}
       >
-        {CANDIDATE.razaoSocial} — CNPJ {CANDIDATE.cnpj}
+        {CANDIDATE.razaoSocial} · CNPJ {CANDIDATE.cnpj}
       </p>
     </aside>
   );

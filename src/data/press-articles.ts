@@ -10,7 +10,24 @@ export type PressArticle = {
 
 export const PRESS_ARTICLES: PressArticle[] = [
   {
-    id: "flavio-bolsonaro-2026",
+    id: "195383",
+    title:
+      "O DIA em que PADRE KELMON enfrentou LULA DIANTE DO BRASIL, e agora VOLTA ÀS URNAS com o 2202",
+    eyebrow: "Eleições 2026",
+    url: "https://7minutos.com.br/noticias/o-dia-em-que-padre-kelmon-enfrentou-lula-diante-do-brasil-e-agora-volta-as-urnas-com-o-2202/",
+    image: "https://7minutos.com.br/wp-content/uploads/2026/08/padr-kelmon-x-Lula-1.webp",
+    source: "7Minutos",
+  },
+  {
+    id: "195349",
+    title: "PADRE KELMON reage a HUGO MOTTA e COBRA EXPLICAÇÕES após APOIO a LULA",
+    eyebrow: "Hugo Motta",
+    url: "https://7minutos.com.br/noticias/padre-kelmon-reage-a-hugo-motta-e-cobra-explicacoes-apos-apoio-a-lula/",
+    image: "https://7minutos.com.br/wp-content/uploads/2026/08/Kelmon-x-Hugo.webp",
+    source: "7Minutos",
+  },
+  {
+    id: "195036",
     title:
       "Padre Kelmon reúne lideranças cristãs em apoio à pré-campanha de Flávio Bolsonaro e celebra 11 anos de sacerdócio",
     eyebrow: "Política",
@@ -19,25 +36,24 @@ export const PRESS_ARTICLES: PressArticle[] = [
     source: "7Minutos",
   },
   {
-    id: "lula-2026",
-    title:
-      "Padre Kelmon critica declarações de Lula e defende mudança de rumo nas eleições de 2026",
+    id: "194883",
+    title: "Padre Kelmon critica declarações de Lula e defende mudança de rumo nas eleições de 2026",
     eyebrow: "Em ano de eleições",
     url: "https://7minutos.com.br/noticias/padre-kelmon-critica-declaracoes-de-lula-e-defende-mudanca-de-rumo-nas-eleicoes-de-2026/",
     image: "https://7minutos.com.br/wp-content/uploads/2026/07/Ppadre-Kelmon-1.webp",
     source: "7Minutos",
   },
   {
-    id: "premio-notavel",
+    id: "194778",
     title:
       "Padre Kelmon confirma candidatura à Câmara Federal e recebe o Prêmio Notável",
     eyebrow: "Reconhecimento nacional",
-    url: "https://7minutos.com.br/noticias/padre-kelmon-confirma-candidatura-a-camara-federal-e-agora-recebe-reconhecimento-nacional-com-o-premio-notavel/",
+    url: "https://7minutos.com.br/noticias/padre-kelmon-confirma-pre-candidatura-a-camara-federal-e-agora-recebe-reconhecimento-nacional-com-o-premio-notavel/",
     image: "https://7minutos.com.br/wp-content/uploads/2026/07/premi-Kelmon.webp",
     source: "7Minutos",
   },
   {
-    id: "candidatura-2026",
+    id: "191601",
     title: "Padre Kelmon confirma candidatura e entra de vez na disputa de 2026",
     eyebrow: "São Paulo aguardava e ele veio",
     url: "https://7minutos.com.br/noticias/padre-kelmon-confirma-candidatura-e-entra-de-vez-na-disputa-de-2026/",
@@ -45,7 +61,7 @@ export const PRESS_ARTICLES: PressArticle[] = [
     source: "7Minutos",
   },
   {
-    id: "lima-peru",
+    id: "190720",
     title:
       "Padre Kelmon reforça oração pelo Brasil como liderança do clero ortodoxo em Lima",
     eyebrow: "Orações pelo Brasil no Peru",
@@ -54,7 +70,7 @@ export const PRESS_ARTICLES: PressArticle[] = [
     source: "7Minutos",
   },
   {
-    id: "homilia-consulado",
+    id: "190563",
     title: "A homilia de Padre Kelmon que ecoou diante do Consulado Americano",
     eyebrow: "Voz do Brasil",
     url: "https://7minutos.com.br/noticias/padre-kelmon-e-a-homilia-que-ecoou-diante-do-consulado-americano/",
@@ -62,7 +78,7 @@ export const PRESS_ARTICLES: PressArticle[] = [
     source: "7Minutos",
   },
   {
-    id: "paulista",
+    id: "189025",
     title: "A caminhada de Padre Kelmon na Paulista mostra a força de um povo indomável",
     eyebrow: "Paulistas erguem a voz",
     url: "https://7minutos.com.br/noticias/a-caminhada-de-padre-kelmon-na-paulista-mostra-a-forca-de-um-povo-indomavel/",
@@ -70,7 +86,7 @@ export const PRESS_ARTICLES: PressArticle[] = [
     source: "7Minutos",
   },
   {
-    id: "nome-pl",
+    id: "188394",
     title: "Padre Kelmon desponta como nome forte do PL",
     eyebrow: "Postura firme",
     url: "https://7minutos.com.br/noticias/padre-kelmon-desponta-como-nome-forte-do-pl/",
@@ -78,16 +94,15 @@ export const PRESS_ARTICLES: PressArticle[] = [
     source: "7Minutos",
   },
   {
-    id: "intolerancia",
-    title:
-      "Padre Kelmon e Nelson Hossri denunciam vereador do PCdoB por intolerância religiosa",
+    id: "188157",
+    title: "Padre Kelmon e Nelson Hossri denunciam vereador do PCdoB por intolerância religiosa",
     eyebrow: "Repercussão nacional",
     url: "https://7minutos.com.br/estilo/padre-kelmon-e-nelson-hossri-denunciam-vereador-do-pcdob-por-intolerancia-religiosa/",
     image: "https://7minutos.com.br/wp-content/uploads/2025/10/Padre-Kelmon-e-Nelson-denuncia.jpg",
     source: "7Minutos",
   },
   {
-    id: "bolsonaro",
+    id: "185090",
     title: "Padre Kelmon se reúne com Jair Bolsonaro e apoiadores em Brasília",
     eyebrow: "Futuro político do país",
     url: "https://7minutos.com.br/noticias/padre-kelmon-se-reune-com-jair-bolsonaro-e-apoiadores-em-brasilia/",
@@ -95,7 +110,7 @@ export const PRESS_ARTICLES: PressArticle[] = [
     source: "7Minutos",
   },
   {
-    id: "bunker",
+    id: "184283",
     title:
       "‘Cristãos da boca pra fora’: Padre Kelmon expõe políticos e promete revolução cristã",
     eyebrow: "Podcast do Bunker",
@@ -104,7 +119,7 @@ export const PRESS_ARTICLES: PressArticle[] = [
     source: "7Minutos",
   },
   {
-    id: "nova-missao",
+    id: "184275",
     title: "A Nova Missão do Padre Kelmon",
     eyebrow: "Estilo",
     url: "https://7minutos.com.br/estilo/a-nova-missao-do-padre-kelmon/",

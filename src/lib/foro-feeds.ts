@@ -28,11 +28,12 @@ function cleanText(raw: string): string {
     .replace(/&#0*39;|&apos;/gi, "'")
     .replace(/&#8216;|&#8217;|&lsquo;|&rsquo;/gi, "'")
     .replace(/&#8220;|&#8221;|&ldquo;|&rdquo;/gi, '"')
-    .replace(/&#8211;|&ndash;/gi, "–")
-    .replace(/&#8212;|&mdash;/gi, "—")
+    .replace(/&#8211;|&ndash;/gi, " - ")
+    .replace(/&#8212;|&mdash;/gi, " - ")
     .replace(/&amp;/gi, "&")
     .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
     .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCharCode(parseInt(h, 16)))
+    .replace(/[\u2013\u2014\u2015]/g, " - ")
     .replace(/\s+/g, " ")
     .trim();
 }

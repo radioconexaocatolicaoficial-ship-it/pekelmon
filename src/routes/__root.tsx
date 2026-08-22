@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { Toaster } from "../components/ui/sonner";
 import { PwaRegister } from "../components/pwa-register";
+import { CookieBanner } from "../components/cookie-banner";
 import { CnpjRail } from "../components/landing/cnpj-rail";
 import { scrollToSection } from "../lib/scroll-to-section";
 
@@ -145,6 +146,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <CnpjRail />
+      <CookieBanner />
       <PwaRegister />
       <Toaster position="top-center" richColors />
     </QueryClientProvider>

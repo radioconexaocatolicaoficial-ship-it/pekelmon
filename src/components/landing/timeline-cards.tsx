@@ -48,20 +48,20 @@ export const TIMELINE_CARD_META: TimelineCardMeta[] = [
     year: "Juventude",
     title: "Na juventude",
     description:
-      "Quando jovem, fundei o movimento JUSPE — Jovens Unidos Semeando Paz e Esperança.",
+      "Quando jovem, fundei o movimento JUSPE, Jovens Unidos Semeando Paz e Esperança.",
     folder: "na-juventude",
   },
   {
     year: "1996-2003",
-    title: "Seminário dos Legionários de Cristo. Mater Ecclesiae",
+    title: "Seminário dos Legionários de Cristo, Mater Ecclesiae",
     cardTitle: "Seminário",
     description:
-      "Formação no Seminário Maria Mater Ecclesiae, dos Legionários de Cristo, em São Paulo — Filosofia, Teologia e vida comunitária.",
+      "Formação no Seminário Maria Mater Ecclesiae, dos Legionários de Cristo, em São Paulo. Filosofia, Teologia e vida comunitária.",
     folder: "seminario",
   },
   {
     year: "2014-2015",
-    title: "Ordenação diaconal Igreja Sirian Ortodoxa.",
+    title: "Ordenação diaconal na Igreja Sirian Ortodoxa",
     cardTitle: "Ordenação Diaconal",
     description:
       "Funda a associação Theotokos. Ordenado diácono (2014) e sacerdote (2015) na Igreja Ortodoxa da América.",
@@ -130,7 +130,7 @@ export const TIMELINE_CARD_META: TimelineCardMeta[] = [
     title: "Atividades Políticas",
     cardTitle: "Atividades Políticas",
     description:
-      "Algumas atividades diretas na área da política.",
+      "Atividades políticas da campanha.",
     folder: "atividades-politicas",
     coverFile: "politica-capa.webp",
     coverFocus: "center",
@@ -148,7 +148,7 @@ function photosForFolder(
     return {
       src: f.src,
       kind,
-      alt: `${title} — ${kind === "video" ? "vídeo" : "foto"} ${i + 1}`,
+      alt: `${title}, ${kind === "video" ? "vídeo" : "foto"} ${i + 1}`,
     };
   });
 }

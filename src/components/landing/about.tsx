@@ -1,20 +1,12 @@
-import { Quote, X } from "lucide-react";
+import { Quote } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 
-import heroPortrait from "@/assets/hero-portrait.webp";
 import sobreRotating1 from "@/assets/sobre-rotating-1.webp";
 import sobreRotating2 from "@/assets/sobre-rotating-2.webp";
 import sobreRotating3 from "@/assets/sobre-rotating-3.webp";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { PageShell } from "./primitives";
 import { TimelineCards } from "./timeline-cards";
 import { cn } from "@/lib/utils";
@@ -22,15 +14,15 @@ import { cn } from "@/lib/utils";
 const SOBRE_PORTRAITS = [
   {
     src: sobreRotating1,
-    alt: "Padre Kelmon — retrato com fundo amarelo",
+    alt: "Padre Kelmon, retrato com fundo amarelo",
   },
   {
     src: sobreRotating2,
-    alt: "Padre Kelmon — retrato com fundo azul",
+    alt: "Padre Kelmon, retrato com fundo azul",
   },
   {
     src: sobreRotating3,
-    alt: "Padre Kelmon — retrato com fundo verde",
+    alt: "Padre Kelmon, retrato com fundo verde",
   },
 ] as const;
 
@@ -38,49 +30,9 @@ const SOBRE_ROTATE_MS = 5500;
 
 /** Preview curto — mesma altura aproximada do bloco atual (3 parágrafos). */
 const BIO_PREVIEW = [
-  "Nascido em Salvador, Bahia, em 1976, Padre Kelmon construiu sua trajetória a partir da vida religiosa, dedicando mais de três décadas à formação espiritual, ao trabalho pastoral e à participação em iniciativas voltadas ao debate entre fé, sociedade e política.",
-  "Sua caminhada começou ainda na juventude, com participação em movimentos ligados à Igreja Católica, entre eles a Legião de Maria. Posteriormente aprofundou estudos em Filosofia, Teologia e Pedagogia e participou de ações missionárias e humanitárias.",
-  "Para as eleições de 2026, confirmou sua candidatura a Deputado Federal por São Paulo pelo Partido Liberal (PL), ampliando sua presença no debate público nacional.",
-];
-
-const BIO_FULL_SECTIONS: { heading?: string; paragraphs: string[] }[] = [
-  {
-    heading: "Uma trajetória marcada pela vida religiosa e pela participação no debate público",
-    paragraphs: [
-      "Nascido em Salvador, Bahia, em 1976, Padre Kelmon construiu sua trajetória a partir da vida religiosa, dedicando mais de três décadas à formação espiritual, ao trabalho pastoral e à participação em iniciativas voltadas ao debate entre fé, sociedade e política.",
-      "Sua caminhada começou ainda na juventude, com participação em movimentos ligados à Igreja Católica, entre eles a Legião de Maria. Posteriormente ingressou na formação religiosa, aprofundando seus estudos em Filosofia, Teologia e Pedagogia, áreas que influenciaram sua atuação junto à comunidade e em projetos educacionais e sociais.",
-      "Ao longo dos anos, também participou de ações missionárias e atividades humanitárias, desenvolvendo trabalhos voltados ao atendimento de comunidades e à formação de lideranças.",
-    ],
-  },
-  {
-    heading: "Atuação pública",
-    paragraphs: [
-      "Padre Kelmon tornou-se conhecido nacionalmente durante o processo eleitoral de 2022, quando participou de debates presidenciais. Sua presença ampliou sua visibilidade no cenário político nacional e o colocou entre as figuras públicas associadas à defesa de pautas inspiradas em princípios cristãos e conservadores.",
-      "Nos anos seguintes, participou da criação do Foro do Brasil, iniciativa voltada ao debate sobre temas políticos e institucionais sob a perspectiva do conservadorismo, além de ampliar sua atuação em veículos de comunicação.",
-      "Também é autor do livro Fé e Política de Mãos Dadas, obra na qual apresenta reflexões sobre a relação entre valores religiosos, participação cidadã e representação política.",
-    ],
-  },
-  {
-    heading: "Comunicação e presença nacional",
-    paragraphs: [
-      "Além da atuação religiosa, Padre Kelmon mantém presença constante em programas de televisão e plataformas digitais, onde comenta temas relacionados à política, liberdade religiosa, cidadania e questões sociais.",
-      "Sua participação em entrevistas, debates e programas ampliou seu alcance junto a diferentes públicos interessados no debate político nacional.",
-    ],
-  },
-  {
-    heading: "Candidatura em 2026",
-    paragraphs: [
-      "Para as eleições de 2026, Padre Kelmon confirmou sua candidatura ao cargo de Deputado Federal pelo estado de São Paulo, pelo Partido Liberal (PL).",
-      "Segundo declarações públicas, sua candidatura pretende representar eleitores que defendem maior participação dos princípios cristãos no debate político, além de temas relacionados à liberdade religiosa, à família, ao fortalecimento das instituições democráticas e ao desenvolvimento do país.",
-      "Como ocorre com todos os candidatos, suas propostas e compromissos deverão ser apresentados e debatidos ao longo do período eleitoral, permitindo que os eleitores conheçam suas posições sobre os principais desafios nacionais.",
-    ],
-  },
-  {
-    heading: "Um nome em evidência no cenário político",
-    paragraphs: [
-      "Independentemente das diferentes posições existentes no debate público brasileiro, Padre Kelmon tornou-se uma figura conhecida da política nacional nos últimos anos. Sua trajetória reúne experiência na vida religiosa, participação em discussões públicas e atuação em meios de comunicação, elementos que contribuíram para consolidar sua presença no cenário político brasileiro e motivaram sua entrada na disputa por uma cadeira na Câmara dos Deputados nas eleições de 2026.",
-    ],
-  },
+  "Padre Kelmon nasceu em Salvador, na Bahia, em 1976. Há mais de 30 anos vive a fé no dia a dia: formação, pastoral e o debate público.",
+  "Começou na juventude, na Legião de Maria. Depois estudou Filosofia, Teologia e Pedagogia e atuou em missões e ações humanitárias.",
+  "Em 2026, confirma a candidatura a Deputado Federal por São Paulo pelo Partido Liberal (PL).",
 ];
 
 function SobrePortraitCarousel() {
@@ -194,107 +146,9 @@ export function About({
                 </p>
               ))}
 
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="yellow" className="h-11 px-6 text-base font-bold">
-                    Ler mais
-                  </Button>
-                </DialogTrigger>
-                <DialogContent
-                  hideCloseButton
-                  className="max-h-[90dvh] w-[min(100%-1.5rem,42rem)] max-w-3xl gap-0 overflow-hidden border-2 border-blue-200 bg-white p-0 shadow-2xl sm:rounded-2xl"
-                >
-                  <DialogClose
-                    className="absolute right-3 top-3 z-20 inline-flex size-11 cursor-pointer items-center justify-center rounded-xl border-2 border-white/80 bg-[var(--blue-primary)] text-white shadow-lg transition-all hover:scale-105 hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--yellow-primary)] focus-visible:ring-offset-2"
-                    aria-label="Fechar"
-                  >
-                    <X className="size-5 stroke-[2.5]" aria-hidden="true" />
-                  </DialogClose>
-
-                  <div className="max-h-[90dvh] overflow-y-auto">
-                    <div
-                      className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[16/10]"
-                      style={{ background: "var(--gradient-hero)" }}
-                    >
-                      <img
-                        src={heroPortrait}
-                        alt="Padre Kelmon"
-                        width={800}
-                        height={1000}
-                        className="h-full w-full object-cover object-top"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[var(--blue-primary)]/80 via-transparent to-black/20" />
-                      <div className="absolute bottom-4 left-5 right-14 sm:bottom-5 sm:left-7">
-                        <p
-                          className="mb-1 text-xs font-bold uppercase tracking-widest"
-                          style={{ color: "var(--yellow-primary)" }}
-                        >
-                          Sobre Padre Kelmon
-                        </p>
-                        <p
-                          className="text-lg font-black text-white sm:text-xl"
-                          style={{ fontFamily: "var(--font-display)" }}
-                        >
-                          Uma Vida de Fé e Serviço
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="space-y-5 bg-gradient-to-b from-white to-slate-50 px-5 pb-7 pt-5 sm:px-7 sm:pb-8">
-                      <DialogHeader className="space-y-3 text-left">
-                        <DialogTitle
-                          className="text-left text-xl font-black leading-tight sm:text-2xl"
-                          style={{
-                            fontFamily: "var(--font-display)",
-                            color: "var(--blue-primary)",
-                          }}
-                        >
-                          Padre Kelmon: trajetória religiosa, atuação pública e candidatura à
-                          Câmara dos Deputados
-                        </DialogTitle>
-                        <div
-                          className="h-1 w-16 rounded-full"
-                          style={{ background: "var(--gradient-yellow)" }}
-                          aria-hidden="true"
-                        />
-                      </DialogHeader>
-
-                      {BIO_FULL_SECTIONS.map((section) => (
-                        <div key={section.heading} className="space-y-3">
-                          {section.heading ? (
-                            <h3
-                              className="text-base font-black sm:text-lg"
-                              style={{ color: "var(--blue-primary)" }}
-                            >
-                              {section.heading}
-                            </h3>
-                          ) : null}
-                          {section.paragraphs.map((paragraph) => (
-                            <p
-                              key={paragraph.slice(0, 48)}
-                              className="text-sm leading-relaxed text-gray-700 text-justify sm:text-base"
-                            >
-                              {paragraph}
-                            </p>
-                          ))}
-                        </div>
-                      ))}
-
-                      <div className="flex justify-end border-t border-blue-100 pt-5">
-                        <DialogClose asChild>
-                          <Button
-                            variant="campaign"
-                            className="h-11 px-6 font-bold text-white"
-                            style={{ backgroundColor: "var(--blue-primary)" }}
-                          >
-                            Fechar
-                          </Button>
-                        </DialogClose>
-                      </div>
-                    </div>
-                  </div>
-                </DialogContent>
-              </Dialog>
+              <Button asChild variant="yellow" className="h-11 px-6 text-base font-bold">
+                <Link to="/saiba-mais">Saiba mais</Link>
+              </Button>
             </motion.div>
 
             <motion.blockquote
@@ -321,7 +175,7 @@ export function About({
                 "Juntos vamos resgatar o Brasil."
               </p>
               <footer className="relative mt-3 text-center text-xs font-semibold uppercase tracking-wider text-yellow-300">
-                Padre Kelmon — São Paulo, 2026
+                Padre Kelmon, São Paulo, 2026
               </footer>
             </motion.blockquote>
           </div>
