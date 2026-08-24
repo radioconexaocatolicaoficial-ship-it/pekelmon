@@ -21,6 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { CetRegion } from "@/lib/cet-traffic";
 import { getLocalNow, type LocalNowResult } from "@/lib/local-now";
 import { getMarketFuel, type FuelPrices, type MarketQuote } from "@/lib/market-fuel";
+import { cn } from "@/lib/utils";
 
 const SP_LAT = -23.5505;
 const SP_LON = -46.6333;
@@ -331,7 +332,7 @@ function FuelCard({ fuel }: { fuel: FuelPrices }) {
   );
 }
 
-export function HeroServiceCards() {
+export function HeroServiceCards({ className }: { className?: string }) {
   const localQuery = useQuery({
     queryKey: ["local-now", "sao-paulo"],
     queryFn: () => getLocalNow({ data: { lat: SP_LAT, lon: SP_LON } }),
@@ -359,7 +360,12 @@ export function HeroServiceCards() {
   };
 
   return (
-    <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    <div
+      className={cn(
+        "mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3",
+        className,
+      )}
+    >
       <VotingCard />
       <TransportCard data={data} loading={loading} />
       <TrafficCard data={data} loading={loading} />

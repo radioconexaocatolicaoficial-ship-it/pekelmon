@@ -1,9 +1,9 @@
-import { BookOpen, BookText, Film, Flag, Home, TrendingUp, UserPlus, type LucideIcon } from "lucide-react";
+import { BookOpen, BookText, Film, Flag, Globe, Home, TrendingUp, type LucideIcon } from "lucide-react";
 
 export type NavLink = {
   to: "/" | "/sobre" | "/saiba-mais" | "/pautas" | "/midia" | "/numeros" | "/links";
   hash?: "cadastro";
-  sectionId: "inicio" | "historia" | "saiba-mais" | "bandeiras" | "midia" | "numeros" | "cadastro";
+  sectionId: "inicio" | "historia" | "saiba-mais" | "bandeiras" | "midia" | "numeros" | "site";
   label: string;
   icon: LucideIcon;
   accent?: boolean;
@@ -16,17 +16,10 @@ export const NAV_LINKS: readonly NavLink[] = [
   { to: "/pautas", sectionId: "bandeiras", label: "Pautas", icon: Flag },
   { to: "/midia", sectionId: "midia", label: "Mídia", icon: Film },
   { to: "/numeros", sectionId: "numeros", label: "Números", icon: TrendingUp },
-  {
-    to: "/",
-    hash: "cadastro",
-    sectionId: "cadastro",
-    label: "Apoiar",
-    icon: UserPlus,
-    accent: true,
-  },
+  { to: "/", sectionId: "site", label: "Site", icon: Globe },
 ] as const;
 
-export const TOP_NAV_LINKS = NAV_LINKS.filter((l) => l.sectionId !== "cadastro");
+export const TOP_NAV_LINKS = NAV_LINKS.filter((l) => l.sectionId !== "site");
 
 export const FOOTER_NAV_LINKS = [
   { to: "/" as const, label: "Início" },

@@ -13,7 +13,7 @@ import { SignupForm } from "@/components/landing/signup-form";
 import { SocialLinks } from "@/components/landing/social-links";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { scrollToSection } from "@/lib/scroll-to-section";
-import heroKvUrl from "@/assets/banner-topo-padre-kelmon-flavio.jpg?url";
+import heroKvUrl from "@/assets/banner-kelmon-1-fe-para-servir.jpg?url";
 import {
   SITE_DESCRIPTION,
   SITE_KEYWORDS,

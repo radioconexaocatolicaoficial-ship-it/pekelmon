@@ -2,7 +2,8 @@ import { ChevronRight, Facebook, Globe, Instagram, Youtube } from "lucide-react"
 import { Link } from "@tanstack/react-router";
 import { useLayoutEffect, useRef, useState, type ComponentType } from "react";
 
-import bioBanner from "@/assets/bio-banner-padre-kelmon.jpg";
+import { HeroBannerCarousel } from "@/components/landing/hero-banner-carousel";
+import { HeroServiceCards } from "@/components/landing/hero-service-cards";
 import { CANDIDATE } from "@/lib/campaign-data";
 
 function XIcon(props: { className?: string }) {
@@ -174,16 +175,9 @@ export function LinkInBio() {
       >
         <div className="h-1 w-full" style={{ background: "var(--yellow-primary)" }} />
 
-        <header className="w-full p-[20px]">
+        <header className="w-full p-[20px] pb-3">
           <h1 className="sr-only">Padre Kelmon, candidato a Deputado Federal por São Paulo, 2202</h1>
-          <img
-            src={bioBanner}
-            alt="Padre Kelmon, Deputado Federal por São Paulo, 2202. Fé para servir, coragem para defender."
-            width={1024}
-            height={449}
-            decoding="sync"
-            className="block h-auto w-full rounded-2xl"
-          />
+          <HeroBannerCarousel className="rounded-2xl" sizes="430px" />
         </header>
 
         <nav aria-label="Redes oficiais" className="flex flex-col gap-2.5 px-5">
@@ -192,7 +186,11 @@ export function LinkInBio() {
           ))}
         </nav>
 
-        <div className="mt-auto w-full px-5 pb-[max(5.5rem,calc(env(safe-area-inset-bottom)+4.75rem))] pt-10">
+        <div className="px-5 pt-1">
+          <HeroServiceCards className="grid-cols-2 gap-2 sm:grid-cols-2 lg:grid-cols-2" />
+        </div>
+
+        <div className="mt-auto w-full px-5 pb-[max(6.5rem,calc(env(safe-area-inset-bottom)+5.75rem))] pt-8">
           <LegalLine />
         </div>
       </div>

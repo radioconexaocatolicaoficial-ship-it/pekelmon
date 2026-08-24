@@ -36,7 +36,7 @@ export function CookieBanner() {
       aria-label="Aviso de cookies"
       className={`fixed inset-x-0 z-40 ${
         isBio
-          ? "bottom-[calc(0.5rem+env(safe-area-inset-bottom,0px))] px-4"
+          ? "bottom-[calc(4.6rem+env(safe-area-inset-bottom,0px))] px-4"
           : "bottom-[calc(4.6rem+env(safe-area-inset-bottom,0px))] px-3 sm:px-4 md:bottom-4 md:px-6"
       }`}
     >

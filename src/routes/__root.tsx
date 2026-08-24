@@ -14,6 +14,7 @@ import { Toaster } from "../components/ui/sonner";
 import { PwaRegister } from "../components/pwa-register";
 import { CookieBanner } from "../components/cookie-banner";
 import { CnpjRail } from "../components/landing/cnpj-rail";
+import { MobileBottomNav } from "../components/landing/mobile-bottom-nav";
 import { scrollToSection } from "../lib/scroll-to-section";
 
 function NotFoundComponent() {
@@ -146,6 +147,7 @@ function RootComponent() {
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <CnpjRail />
+      <MobileBottomNav />
       <CookieBanner />
       <PwaRegister />
       <Toaster position="top-center" richColors />
