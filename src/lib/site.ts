@@ -67,9 +67,9 @@ export const PAGE_SEO = {
     title: "Links Padre Kelmon | redes oficiais",
     description:
       "Redes oficiais de Padre Kelmon, candidato a Deputado Federal por São Paulo pelo PL. Instagram, TikTok, YouTube, Facebook, X e o site da campanha.",
-    image: "/og-banner-links-padre-kelmon-topo.jpg",
-    imageWidth: "1024",
-    imageHeight: "449",
+    image: "/og-links-padre-kelmon-whatsapp-1200.jpg",
+    imageWidth: "1200",
+    imageHeight: "630",
   },
 } as const;
 
