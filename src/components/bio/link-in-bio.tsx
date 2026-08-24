@@ -2,7 +2,7 @@ import { ChevronRight, Facebook, Globe, Instagram, Youtube } from "lucide-react"
 import { Link } from "@tanstack/react-router";
 import type { ComponentType } from "react";
 
-import bioRetrato from "@/assets/bio-padre-kelmon.jpg";
+import bioBanner from "@/assets/bio-banner-padre-kelmon.jpg";
 import { CANDIDATE } from "@/lib/campaign-data";
 
 function XIcon(props: { className?: string }) {
@@ -139,30 +139,19 @@ export function LinkInBio() {
       >
         <div className="h-1 w-full" style={{ background: "var(--yellow-primary)" }} />
 
-        <header className="px-6 pt-7 text-center">
+        <header className="w-full">
           <h1 className="sr-only">Padre Kelmon, candidato a Deputado Federal por São Paulo, 2202</h1>
-          <div className="mx-auto size-[9.75rem] overflow-hidden rounded-full">
-            <img
-              src={bioRetrato}
-              alt="Padre Kelmon, Deputado Federal por São Paulo, 2202"
-              width={1024}
-              height={1024}
-              decoding="sync"
-              className="h-full w-full scale-[1.08] object-cover"
-            />
-          </div>
-          <p
-            className="mt-4 text-[11px] font-bold uppercase tracking-[0.28em]"
-            style={{ color: "var(--blue-primary)" }}
-          >
-            2202
-          </p>
-          <p className="mt-1.5 text-[13px] font-medium tracking-wide text-[#7a90ab]">
-            Deputado Federal · São Paulo
-          </p>
+          <img
+            src={bioBanner}
+            alt="Padre Kelmon, Deputado Federal por São Paulo, 2202. Fé para servir, coragem para defender."
+            width={1024}
+            height={682}
+            decoding="sync"
+            className="block h-auto w-full"
+          />
         </header>
 
-        <nav aria-label="Redes oficiais" className="mt-7 flex flex-col gap-2.5 px-5">
+        <nav aria-label="Redes oficiais" className="mt-5 flex flex-col gap-2.5 px-5">
           {LINKS.map((link) => (
             <BioButton key={link.label} link={link} />
           ))}
