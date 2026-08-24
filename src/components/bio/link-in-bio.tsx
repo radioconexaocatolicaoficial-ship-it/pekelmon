@@ -1,6 +1,6 @@
 import { ChevronRight, Facebook, Globe, Instagram, Youtube } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import type { ComponentType } from "react";
+import { useLayoutEffect, useRef, useState, type ComponentType } from "react";
 
 import bioBanner from "@/assets/bio-banner-padre-kelmon.jpg";
 import { CANDIDATE } from "@/lib/campaign-data";
@@ -17,6 +17,41 @@ function TikTokIcon(props: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
       <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15.3a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.73a8.19 8.19 0 0 0 4.76 1.52V6.8a4.84 4.84 0 0 1-1-.11Z" />
+    </svg>
+  );
+}
+
+function LegalLine() {
+  const text = `${CANDIDATE.razaoSocial} · CNPJ ${CANDIDATE.cnpj}`;
+  const textRef = useRef<SVGTextElement>(null);
+  const [boxWidth, setBoxWidth] = useState(520);
+
+  useLayoutEffect(() => {
+    const length = textRef.current?.getComputedTextLength();
+    if (length && length > 0) setBoxWidth(length + 4);
+  }, [text]);
+
+  return (
+    <svg
+      viewBox={`0 0 ${boxWidth} 16`}
+      className="block w-full"
+      style={{ aspectRatio: `${boxWidth} / 16` }}
+      preserveAspectRatio="xMidYMid meet"
+      role="img"
+      aria-label={text}
+    >
+      <text
+        ref={textRef}
+        x="50%"
+        y="12.5"
+        textAnchor="middle"
+        fill="#9aafc4"
+        fontSize="13"
+        fontWeight="500"
+        fontFamily="Arial, Helvetica, sans-serif"
+      >
+        {text}
+      </text>
     </svg>
   );
 }
@@ -139,43 +174,26 @@ export function LinkInBio() {
       >
         <div className="h-1 w-full" style={{ background: "var(--yellow-primary)" }} />
 
-        <header className="w-full">
+        <header className="w-full p-[20px]">
           <h1 className="sr-only">Padre Kelmon, candidato a Deputado Federal por São Paulo, 2202</h1>
           <img
             src={bioBanner}
             alt="Padre Kelmon, Deputado Federal por São Paulo, 2202. Fé para servir, coragem para defender."
-            width={1024}
-            height={682}
+            width={500}
+            height={300}
             decoding="sync"
-            className="block h-auto w-full"
+            className="block h-auto w-full rounded-2xl"
           />
         </header>
 
-        <nav aria-label="Redes oficiais" className="mt-5 flex flex-col gap-2.5 px-5">
+        <nav aria-label="Redes oficiais" className="flex flex-col gap-2.5 px-5">
           {LINKS.map((link) => (
             <BioButton key={link.label} link={link} />
           ))}
         </nav>
 
         <div className="mt-auto w-full px-5 pb-[max(5.5rem,calc(env(safe-area-inset-bottom)+4.75rem))] pt-10">
-          <svg
-            viewBox="0 0 640 16"
-            className="block h-3.5 w-full"
-            role="img"
-            aria-label={`${CANDIDATE.razaoSocial} · CNPJ ${CANDIDATE.cnpj}`}
-          >
-            <text
-              x="50%"
-              y="12"
-              textAnchor="middle"
-              fill="#9aafc4"
-              fontSize="11"
-              fontWeight="500"
-              fontFamily="Arial, Helvetica, sans-serif"
-            >
-              {CANDIDATE.razaoSocial} · CNPJ {CANDIDATE.cnpj}
-            </text>
-          </svg>
+          <LegalLine />
         </div>
       </div>
     </div>
