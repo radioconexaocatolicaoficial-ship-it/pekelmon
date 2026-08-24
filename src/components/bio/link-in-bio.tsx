@@ -179,8 +179,8 @@ export function LinkInBio() {
           <img
             src={bioBanner}
             alt="Padre Kelmon, Deputado Federal por São Paulo, 2202. Fé para servir, coragem para defender."
-            width={500}
-            height={300}
+            width={1024}
+            height={449}
             decoding="sync"
             className="block h-auto w-full rounded-2xl"
           />
