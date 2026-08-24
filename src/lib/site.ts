@@ -18,8 +18,8 @@ export const SITE_DESCRIPTION =
 export const SITE_KEYWORDS =
   "Padre Kelmon, Deputado Federal, São Paulo, PL, Partido Liberal, candidato 2026, fé, família, liberdade religiosa, Foro do Brasil";
 
-/** JPEG 1200×630 do banner topo 2. Nome único para todas as prévias (WhatsApp, Facebook, X). */
-export const OG_IMAGE_PATH = "/og-kelmon-todas-previas.jpg";
+/** JPEG 1200×630 da arte de prévia. Nome novo para o WhatsApp não reusar o cache. */
+export const OG_IMAGE_PATH = "/og-banner-previa-kelmon.jpg";
 export const OG_IMAGE_WIDTH = "1200";
 export const OG_IMAGE_HEIGHT = "630";
 
