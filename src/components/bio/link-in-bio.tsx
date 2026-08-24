@@ -187,7 +187,7 @@ export function LinkInBio() {
         </nav>
 
         <div className="px-5 pt-1">
-          <HeroServiceCards className="grid-cols-2 gap-2 sm:grid-cols-2 lg:grid-cols-2" />
+          <HeroServiceCards compact className="grid-cols-2 gap-2 sm:grid-cols-2 lg:grid-cols-2" />
         </div>
 
         <div className="mt-auto w-full px-5 pb-[max(6.5rem,calc(env(safe-area-inset-bottom)+5.75rem))] pt-8">

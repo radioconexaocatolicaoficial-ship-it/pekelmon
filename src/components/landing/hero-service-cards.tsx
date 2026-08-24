@@ -59,51 +59,69 @@ function PulseCard({
   icon,
   title,
   children,
+  compact = false,
 }: {
   href: string;
   icon: ReactNode;
   title: string;
   children: ReactNode;
+  compact?: boolean;
 }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex flex-col rounded-xl border border-[#d7e4f2] bg-white px-3.5 py-2 shadow-[0_6px_16px_rgba(30,91,184,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(30,91,184,0.12)]"
+      className={cn(
+        "group flex min-w-0 flex-col overflow-hidden rounded-xl border border-[#d7e4f2] bg-white shadow-[0_6px_16px_rgba(30,91,184,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_8px_18px_rgba(30,91,184,0.12)]",
+        compact ? "px-2.5 py-2" : "px-3.5 py-2",
+      )}
     >
-      <div className="mb-1 flex items-center gap-1.5">
+      <div className={cn("mb-1 flex min-w-0 items-center gap-1", compact ? "gap-1" : "gap-1.5")}>
         {icon}
         <h3
-          className="text-[11px] font-bold uppercase tracking-[0.08em]"
+          className={cn(
+            "min-w-0 truncate font-bold uppercase",
+            compact ? "text-[10px] tracking-[0.04em]" : "text-[11px] tracking-[0.08em]",
+          )}
           style={{ color: "var(--blue-primary)" }}
         >
           {title}
         </h3>
       </div>
-      <div>{children}</div>
-      <span className="mt-1.5 text-[11px] font-semibold" style={{ color: "var(--blue-primary)" }}>
-        Ver detalhes →
+      <div className="min-w-0">{children}</div>
+      <span
+        className={cn("font-semibold", compact ? "mt-1 text-[10px]" : "mt-1.5 text-[11px]")}
+        style={{ color: "var(--blue-primary)" }}
+      >
+        {compact ? "Detalhes →" : "Ver detalhes →"}
       </span>
     </a>
   );
 }
 
-function VotingCard() {
+function VotingCard({ compact = false }: { compact?: boolean }) {
   return (
     <PulseCard
       href={TSE_LOCAL_VOTACAO}
       title="Votação"
-      icon={<IdCard className="size-4 text-sky-600" aria-hidden="true" />}
+      compact={compact}
+      icon={<IdCard className={cn(compact ? "size-3.5" : "size-4", "shrink-0 text-sky-600")} aria-hidden="true" />}
     >
-      <p className="mb-1 text-[12px] font-bold" style={{ color: "var(--blue-primary)" }}>
-        Meu local de votação
+      <p
+        className={cn("mb-1 font-bold", compact ? "text-[11px] leading-tight" : "text-[12px]")}
+        style={{ color: "var(--blue-primary)" }}
+      >
+        Local de votação
       </p>
-      <ul className="flex flex-wrap gap-1">
+      <ul className="flex min-w-0 flex-wrap gap-1">
         {["Título", "CPF", "Nome"].map((field) => (
           <li
             key={field}
-            className="rounded-md border border-[#d7e4f2] px-2 py-0.5 text-[11px] font-semibold"
+            className={cn(
+              "rounded-md border border-[#d7e4f2] font-semibold",
+              compact ? "px-1.5 py-0.5 text-[10px]" : "px-2 py-0.5 text-[11px]",
+            )}
             style={{ color: "var(--blue-primary)" }}
           >
             {field}
@@ -114,7 +132,15 @@ function VotingCard() {
   );
 }
 
-function TransportCard({ data, loading }: { data?: LocalNowResult; loading: boolean }) {
+function TransportCard({
+  data,
+  loading,
+  compact = false,
+}: {
+  data?: LocalNowResult;
+  loading: boolean;
+  compact?: boolean;
+}) {
   const modes = data?.artesp?.live ? data.artesp.modes : [];
   const lineColor: Record<string, string> = {
     Metrô: "#0057A8",
@@ -131,14 +157,31 @@ function TransportCard({ data, loading }: { data?: LocalNowResult; loading: bool
     <PulseCard
       href={ARTESP_TRANSIT_PAGE}
       title="Transporte"
-      icon={<TrainFront className="size-4 text-sky-600" aria-hidden="true" />}
+      compact={compact}
+      icon={<TrainFront className={cn(compact ? "size-3.5" : "size-4", "shrink-0 text-sky-600")} aria-hidden="true" />}
     >
       {modes.length > 0 ? (
         <ul className="space-y-0.5">
           {modes.map((item) => {
             const Icon = lineIcon[item.mode] ?? Bus;
-            return (
-              <li key={item.mode} className="flex items-center gap-2">
+            return compact ? (
+              <li key={item.mode} className="flex min-w-0 items-start gap-1.5">
+                <Icon
+                  className="mt-0.5 size-3.5 shrink-0"
+                  style={{ color: lineColor[item.mode] }}
+                  aria-hidden="true"
+                />
+                <div className="min-w-0 flex-1">
+                  <p className="text-[11px] font-semibold" style={{ color: "var(--blue-primary)" }}>
+                    {item.mode}
+                  </p>
+                  <p className="break-words text-[10px] font-bold leading-snug text-gray-500">
+                    {item.status}
+                  </p>
+                </div>
+              </li>
+            ) : (
+              <li key={item.mode} className="flex min-w-0 items-center gap-2">
                 <Icon
                   className="size-3.5 shrink-0"
                   style={{ color: lineColor[item.mode] }}
@@ -155,8 +198,8 @@ function TransportCard({ data, loading }: { data?: LocalNowResult; loading: bool
           })}
         </ul>
       ) : (
-        <p className="text-[11px] font-semibold text-gray-500">
-          {loading ? "Atualizando metrô, trens e ônibus…" : "Abra o painel da ARTESP para ver o status."}
+        <p className={cn("font-semibold text-gray-500", compact ? "text-[10px] leading-snug" : "text-[11px]")}>
+          {loading ? "Atualizando linhas…" : "Abra o painel da ARTESP."}
         </p>
       )}
     </PulseCard>
@@ -169,7 +212,15 @@ function zoneTone(percent: number) {
   return "text-emerald-600";
 }
 
-function TrafficCard({ data, loading }: { data?: LocalNowResult; loading: boolean }) {
+function TrafficCard({
+  data,
+  loading,
+  compact = false,
+}: {
+  data?: LocalNowResult;
+  loading: boolean;
+  compact?: boolean;
+}) {
   const traffic = data?.traffic;
   const live = Boolean(traffic?.live && traffic.regions.length);
   const byName = new Map((traffic?.regions ?? []).map((region: CetRegion) => [region.name, region]));
@@ -178,28 +229,33 @@ function TrafficCard({ data, loading }: { data?: LocalNowResult; loading: boolea
     <PulseCard
       href={CET_PAGE}
       title="Trânsito"
-      icon={<MapPin className="size-4 text-sky-600" aria-hidden="true" />}
+      compact={compact}
+      icon={<MapPin className={cn(compact ? "size-3.5" : "size-4", "shrink-0 text-sky-600")} aria-hidden="true" />}
     >
       {live && traffic ? (
-        <div>
-          <div className="mb-1 flex items-baseline justify-between gap-2">
-            <p className="text-[12px] font-bold" style={{ color: "var(--blue-primary)" }}>
-              São Paulo · {traffic.totalKm} km
-            </p>
-            <p className="text-[10px] text-gray-500">
-              {traffic.rodizioPlates ? `Rodízio ${traffic.rodizioPlates}` : "Sem rodízio"}
-            </p>
-          </div>
-          <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5">
+        <div className="min-w-0">
+          <p
+            className={cn("mb-1 truncate font-bold", compact ? "text-[11px] leading-tight" : "text-[12px]")}
+            style={{ color: "var(--blue-primary)" }}
+          >
+            SP · {traffic.totalKm} km
+          </p>
+          <p className={cn("mb-1 truncate text-gray-500", compact ? "text-[9px]" : "text-[10px]")}>
+            {traffic.rodizioPlates ? `Rodízio ${traffic.rodizioPlates}` : "Sem rodízio"}
+          </p>
+          <ul className={cn(compact ? "space-y-0.5" : "grid grid-cols-2 gap-x-3 gap-y-0.5")}>
             {ZONE_ORDER.map((name) => {
               const region = byName.get(name);
               const percent = region?.percent ?? 0;
               return (
-                <li key={name} className="flex items-center justify-between gap-1">
-                  <span className="text-[11px] font-semibold" style={{ color: "var(--blue-primary)" }}>
-                    {zoneLabel(name)}
+                <li key={name} className="flex min-w-0 items-center justify-between gap-1">
+                  <span
+                    className={cn("min-w-0 truncate font-semibold", compact ? "text-[10px]" : "text-[11px]")}
+                    style={{ color: "var(--blue-primary)" }}
+                  >
+                    {compact ? name : zoneLabel(name)}
                   </span>
-                  <span className={`text-[11px] font-bold ${zoneTone(percent)}`}>
+                  <span className={cn("shrink-0 font-bold tabular-nums", compact ? "text-[10px]" : "text-[11px]", zoneTone(percent))}>
                     {percent}%
                   </span>
                 </li>
@@ -208,15 +264,23 @@ function TrafficCard({ data, loading }: { data?: LocalNowResult; loading: boolea
           </ul>
         </div>
       ) : (
-        <p className="text-[11px] font-semibold text-gray-500">
-          {loading ? "Atualizando o trânsito em São Paulo…" : "Abra o mapa da CET para ver as zonas."}
+        <p className={cn("font-semibold text-gray-500", compact ? "text-[10px] leading-snug" : "text-[11px]")}>
+          {loading ? "Atualizando o trânsito…" : "Abra o mapa da CET."}
         </p>
       )}
     </PulseCard>
   );
 }
 
-function WeatherCard({ data, loading }: { data?: LocalNowResult; loading: boolean }) {
+function WeatherCard({
+  data,
+  loading,
+  compact = false,
+}: {
+  data?: LocalNowResult;
+  loading: boolean;
+  compact?: boolean;
+}) {
   const weather = data?.weather;
   const info = weather ? weatherLabel(weather.code) : { label: "Carregando…", Icon: CloudSun };
   const WeatherIcon = info.Icon;
@@ -225,36 +289,51 @@ function WeatherCard({ data, loading }: { data?: LocalNowResult; loading: boolea
     <PulseCard
       href={WEATHER_PAGE}
       title="Tempo"
-      icon={<CloudSun className="size-4 text-sky-500" aria-hidden="true" />}
+      compact={compact}
+      icon={<CloudSun className={cn(compact ? "size-3.5" : "size-4", "shrink-0 text-sky-500")} aria-hidden="true" />}
     >
       {weather ? (
-        <div className="flex items-start justify-between gap-2">
+        <div className="flex min-w-0 items-start justify-between gap-1.5">
           <div className="min-w-0">
-            <p className="text-[12px] font-bold leading-tight" style={{ color: "var(--blue-primary)" }}>
+            <p
+              className={cn("truncate font-bold leading-tight", compact ? "text-[11px]" : "text-[12px]")}
+              style={{ color: "var(--blue-primary)" }}
+            >
               São Paulo
             </p>
-            <p className="text-[11px] leading-snug text-gray-500">
-              {info.label} · {weather.min}°/{weather.max}°
+            <p className={cn("truncate leading-snug text-gray-500", compact ? "text-[10px]" : "text-[11px]")}>
+              {info.label}
             </p>
-            <p className="mt-1 inline-flex items-center gap-1 text-[11px] text-gray-500">
-              <WeatherIcon className="size-3.5 text-sky-500" aria-hidden="true" />
-              Umidade {weather.humidity}%
+            <p className={cn("mt-1 inline-flex items-center gap-1 text-gray-500", compact ? "text-[10px]" : "text-[11px]")}>
+              <WeatherIcon className="size-3.5 shrink-0 text-sky-500" aria-hidden="true" />
+              {weather.min}°/{weather.max}°
             </p>
           </div>
-          <p className="text-[22px] font-black leading-none" style={{ color: "var(--blue-primary)" }}>
+          <p
+            className={cn("shrink-0 font-black leading-none", compact ? "text-[18px]" : "text-[22px]")}
+            style={{ color: "var(--blue-primary)" }}
+          >
             {weather.temp}°
           </p>
         </div>
       ) : (
-        <p className="text-[11px] font-semibold text-gray-500">
-          {loading ? "Atualizando o tempo em São Paulo…" : "Abra a previsão completa de São Paulo."}
+        <p className={cn("font-semibold text-gray-500", compact ? "text-[10px] leading-snug" : "text-[11px]")}>
+          {loading ? "Atualizando o tempo…" : "Abra a previsão de São Paulo."}
         </p>
       )}
     </PulseCard>
   );
 }
 
-function MarketCard({ market, loading }: { market: MarketQuote[]; loading: boolean }) {
+function MarketCard({
+  market,
+  loading,
+  compact = false,
+}: {
+  market: MarketQuote[];
+  loading: boolean;
+  compact?: boolean;
+}) {
   const icons = [
     { bg: "#22c55e", label: "$", color: "#fff" },
     { bg: "var(--blue-primary)", label: "€", color: "#fff" },
@@ -265,38 +344,53 @@ function MarketCard({ market, loading }: { market: MarketQuote[]; loading: boole
     <PulseCard
       href={MARKET_PAGE}
       title="Mercado"
-      icon={<LineChart className="size-4 text-sky-600" aria-hidden="true" />}
+      compact={compact}
+      icon={<LineChart className={cn(compact ? "size-3.5" : "size-4", "shrink-0 text-sky-600")} aria-hidden="true" />}
     >
       {market.length > 0 ? (
         <ul className="space-y-1">
           {market.map((item, index) => (
-            <li key={item.name} className="flex items-center gap-1.5">
+            <li key={item.name} className="flex min-w-0 items-start gap-1">
               <span
-                className="inline-flex size-4 shrink-0 items-center justify-center rounded-full text-[9px] font-black"
+                className="mt-0.5 inline-flex size-4 shrink-0 items-center justify-center rounded-full text-[9px] font-black"
                 style={{ background: icons[index]?.bg, color: icons[index]?.color }}
               >
                 {icons[index]?.label}
               </span>
-              <p className="shrink-0 text-[12px] font-semibold" style={{ color: "var(--blue-primary)" }}>
+              <p
+                className={cn("min-w-0 flex-1 truncate font-semibold", compact ? "text-[10px]" : "text-[12px]")}
+                style={{ color: "var(--blue-primary)" }}
+              >
                 {item.name}
               </p>
-              <p className="ml-auto shrink-0 text-[12px] font-black" style={{ color: "var(--blue-primary)" }}>
-                {item.value}
-              </p>
-              <p className="w-11 shrink-0 text-right text-[11px] text-gray-500">{item.change}</p>
+              <div className="shrink-0 text-right">
+                <p
+                  className={cn("font-black tabular-nums", compact ? "text-[10px]" : "text-[12px]")}
+                  style={{ color: "var(--blue-primary)" }}
+                >
+                  {item.value}
+                </p>
+                <p className={cn("tabular-nums text-gray-500", compact ? "text-[9px]" : "text-[11px]")}>
+                  {item.change}
+                </p>
+              </div>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-[11px] font-semibold text-gray-500">
-          {loading ? "Atualizando cotações…" : "Abra o mercado para ver dólar, euro e bolsa."}
+        <p className={cn("font-semibold text-gray-500", compact ? "text-[10px] leading-snug" : "text-[11px]")}>
+          {loading ? "Atualizando cotações…" : "Abra o mercado."}
         </p>
       )}
     </PulseCard>
   );
 }
 
-function FuelCard({ fuel }: { fuel: FuelPrices }) {
+function shortPrice(value: string) {
+  return value.replace(/^R\$\s?/, "");
+}
+
+function FuelCard({ fuel, compact = false }: { fuel: FuelPrices; compact?: boolean }) {
   const rows = [
     ["Gasolina", fuel.saoPaulo.gasolina, fuel.brasil.gasolina],
     ["Aditivada", fuel.saoPaulo.aditivada, fuel.brasil.aditivada],
@@ -307,32 +401,62 @@ function FuelCard({ fuel }: { fuel: FuelPrices }) {
     <PulseCard
       href={FUEL_PAGE}
       title="Combustível"
-      icon={<Fuel className="size-4 text-amber-500" aria-hidden="true" />}
+      compact={compact}
+      icon={<Fuel className={cn(compact ? "size-3.5" : "size-4", "shrink-0 text-amber-500")} aria-hidden="true" />}
     >
-      <div className="grid grid-cols-2 gap-2">
-        {(["São Paulo", "Brasil"] as const).map((title, col) => (
-          <div key={title}>
-            <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[var(--yellow-dark)]">
-              {title}
-            </p>
-            <ul className="space-y-1">
-              {rows.map((row) => (
-                <li key={row[0]} className="flex items-baseline justify-between gap-1">
-                  <span className="text-[11px] text-gray-500">{row[0]}</span>
-                  <span className="whitespace-nowrap text-[12px] font-black" style={{ color: "var(--blue-primary)" }}>
-                    {row[col + 1]}
-                  </span>
-                </li>
-              ))}
-            </ul>
+      {compact ? (
+        <div className="min-w-0">
+          <div className="mb-0.5 grid grid-cols-[minmax(0,1fr)_auto_auto] gap-x-2 text-[9px] font-bold uppercase tracking-wide text-[var(--yellow-dark)]">
+            <span />
+            <span>SP</span>
+            <span>BR</span>
           </div>
-        ))}
-      </div>
+          <ul className="space-y-0.5">
+            {rows.map((row) => (
+              <li key={row[0]} className="grid grid-cols-[minmax(0,1fr)_auto_auto] items-baseline gap-x-2">
+                <span className="truncate text-[10px] text-gray-500">{row[0]}</span>
+                <span className="text-[10px] font-black tabular-nums" style={{ color: "var(--blue-primary)" }}>
+                  {shortPrice(row[1])}
+                </span>
+                <span className="text-[10px] font-black tabular-nums" style={{ color: "var(--blue-primary)" }}>
+                  {shortPrice(row[2])}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-2">
+          {(["São Paulo", "Brasil"] as const).map((title, col) => (
+            <div key={title} className="min-w-0">
+              <p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[var(--yellow-dark)]">
+                {title}
+              </p>
+              <ul className="space-y-1">
+                {rows.map((row) => (
+                  <li key={row[0]} className="flex items-baseline justify-between gap-1">
+                    <span className="min-w-0 truncate text-[11px] text-gray-500">{row[0]}</span>
+                    <span className="shrink-0 whitespace-nowrap text-[12px] font-black" style={{ color: "var(--blue-primary)" }}>
+                      {row[col + 1]}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
     </PulseCard>
   );
 }
 
-export function HeroServiceCards({ className }: { className?: string }) {
+export function HeroServiceCards({
+  className,
+  compact = false,
+}: {
+  className?: string;
+  compact?: boolean;
+}) {
   const localQuery = useQuery({
     queryKey: ["local-now", "sao-paulo"],
     queryFn: () => getLocalNow({ data: { lat: SP_LAT, lon: SP_LON } }),
@@ -363,15 +487,16 @@ export function HeroServiceCards({ className }: { className?: string }) {
     <div
       className={cn(
         "mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3",
+        compact && "items-stretch [&>*]:min-w-0",
         className,
       )}
     >
-      <VotingCard />
-      <TransportCard data={data} loading={loading} />
-      <TrafficCard data={data} loading={loading} />
-      <WeatherCard data={data} loading={loading} />
-      <MarketCard market={market} loading={marketQuery.isLoading} />
-      <FuelCard fuel={fuel} />
+      <VotingCard compact={compact} />
+      <TransportCard data={data} loading={loading} compact={compact} />
+      <TrafficCard data={data} loading={loading} compact={compact} />
+      <WeatherCard data={data} loading={loading} compact={compact} />
+      <MarketCard market={market} loading={marketQuery.isLoading} compact={compact} />
+      <FuelCard fuel={fuel} compact={compact} />
     </div>
   );
 }

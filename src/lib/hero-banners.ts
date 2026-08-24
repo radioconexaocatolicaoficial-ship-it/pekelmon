@@ -10,7 +10,7 @@ export const HERO_BANNER_HEIGHT = 449;
 export const HERO_BANNERS = [
   {
     src: banner1,
-    alt: "Padre Kelmon 2202 e Flávio Bolsonaro 22. Fé para servir, coragem para defender. Deputado Federal por São Paulo",
+    alt: "Vote Padre Kelmon 2202 e Flávio Bolsonaro 22. Deputado Federal por São Paulo",
     holdMs: 8000,
   },
   {
