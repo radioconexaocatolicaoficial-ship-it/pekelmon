@@ -62,9 +62,9 @@ export const PAGE_SEO = {
     description:
       "Números públicos de Padre Kelmon: votos em 2022, décadas de fé e serviço, Foro do Brasil e candidatura a Deputado Federal por SP.",
   },
-  bio: {
-    path: "/bio",
-    title: "Padre Kelmon | redes oficiais",
+  links: {
+    path: "/links",
+    title: "Links Padre Kelmon | redes oficiais",
     description:
       "Redes oficiais de Padre Kelmon, candidato a Deputado Federal por São Paulo pelo PL. Instagram, TikTok, YouTube, Facebook, X e o site da campanha.",
   },

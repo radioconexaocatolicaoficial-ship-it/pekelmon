@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BioRouteImport } from './routes/bio'
+import { Route as LinksRouteImport } from './routes/links'
 import { Route as MidiaRouteImport } from './routes/midia'
 import { Route as NumerosRouteImport } from './routes/numeros'
 import { Route as PautasRouteImport } from './routes/pautas'
@@ -25,6 +26,11 @@ const IndexRoute = IndexRouteImport.update({
 const BioRoute = BioRouteImport.update({
   id: '/bio',
   path: '/bio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LinksRoute = LinksRouteImport.update({
+  id: '/links',
+  path: '/links',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MidiaRoute = MidiaRouteImport.update({
@@ -56,6 +62,7 @@ const SobreRoute = SobreRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bio': typeof BioRoute
+  '/links': typeof LinksRoute
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
@@ -65,6 +72,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bio': typeof BioRoute
+  '/links': typeof LinksRoute
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bio': typeof BioRoute
+  '/links': typeof LinksRoute
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
@@ -84,14 +93,29 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/bio' | '/midia' | '/numeros' | '/pautas' | '/saiba-mais' | '/sobre'
+    | '/'
+    | '/bio'
+    | '/links'
+    | '/midia'
+    | '/numeros'
+    | '/pautas'
+    | '/saiba-mais'
+    | '/sobre'
   fileRoutesByTo: FileRoutesByTo
   to:
-    '/' | '/bio' | '/midia' | '/numeros' | '/pautas' | '/saiba-mais' | '/sobre'
+    | '/'
+    | '/bio'
+    | '/links'
+    | '/midia'
+    | '/numeros'
+    | '/pautas'
+    | '/saiba-mais'
+    | '/sobre'
   id:
     | '__root__'
     | '/'
     | '/bio'
+    | '/links'
     | '/midia'
     | '/numeros'
     | '/pautas'
@@ -102,6 +126,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BioRoute: typeof BioRoute
+  LinksRoute: typeof LinksRoute
   MidiaRoute: typeof MidiaRoute
   NumerosRoute: typeof NumerosRoute
   PautasRoute: typeof PautasRoute
@@ -123,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/bio'
       fullPath: '/bio'
       preLoaderRoute: typeof BioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/links': {
+      id: '/links'
+      path: '/links'
+      fullPath: '/links'
+      preLoaderRoute: typeof LinksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/midia': {
@@ -166,6 +198,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BioRoute: BioRoute,
+  LinksRoute: LinksRoute,
   MidiaRoute: MidiaRoute,
   NumerosRoute: NumerosRoute,
   PautasRoute: PautasRoute,

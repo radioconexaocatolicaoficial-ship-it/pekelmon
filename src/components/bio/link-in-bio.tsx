@@ -1,4 +1,4 @@
-import { Facebook, Globe, Instagram, Youtube } from "lucide-react";
+import { ChevronRight, Facebook, Globe, Instagram, Youtube } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import type { ComponentType } from "react";
 
@@ -72,33 +72,44 @@ const LINKS: BioLink[] = [
 ];
 
 function BioButton({ link }: { link: BioLink }) {
-  const className = `group flex min-h-14 w-full items-center gap-3 rounded-2xl px-4 py-3 shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0 ${
-    link.featured ? "text-[var(--blue-primary)]" : "bg-white text-gray-900"
-  }`;
+  const className = link.featured
+    ? "flex min-h-12 w-full items-center gap-3 rounded-2xl px-3.5 text-white active:opacity-90"
+    : "flex min-h-12 w-full items-center gap-3 rounded-2xl bg-white px-3.5 ring-1 ring-[#d7e4f4] active:bg-[#f4f8fc]";
+
   const style = link.featured
-    ? { backgroundColor: "var(--yellow-primary)" }
+    ? { backgroundColor: "var(--blue-primary)" }
     : undefined;
 
   const inner = (
     <>
       <span
-        className={`inline-flex size-11 shrink-0 items-center justify-center rounded-xl ${
-          link.featured ? "bg-[var(--blue-primary)] text-white" : "text-white"
+        className={`inline-flex size-9 shrink-0 items-center justify-center rounded-full ${
+          link.featured ? "bg-white/15 text-white" : "text-white"
         }`}
         style={link.featured ? undefined : { backgroundColor: "var(--blue-primary)" }}
       >
-        <link.Icon className="size-5" aria-hidden="true" />
+        <link.Icon className="size-4" aria-hidden="true" />
       </span>
       <span className="min-w-0 flex-1 text-left">
-        <span className="block truncate text-sm font-black">{link.label}</span>
         <span
-          className={`block truncate text-xs font-semibold ${
-            link.featured ? "text-[var(--blue-primary)]/70" : "text-gray-500"
+          className={`block truncate text-[15px] font-semibold leading-none ${
+            link.featured ? "text-white" : "text-[#163a6b]"
+          }`}
+        >
+          {link.label}
+        </span>
+        <span
+          className={`mt-1 block truncate text-[11px] leading-none ${
+            link.featured ? "text-white/75" : "text-[#7a90ab]"
           }`}
         >
           {link.handle}
         </span>
       </span>
+      <ChevronRight
+        className={`size-4 shrink-0 ${link.featured ? "text-white/70" : "text-[#b7c7da]"}`}
+        aria-hidden="true"
+      />
     </>
   );
 
@@ -119,15 +130,18 @@ function BioButton({ link }: { link: BioLink }) {
 
 export function LinkInBio() {
   return (
-    <div
-      data-cnpj-on-dark
-      className="relative flex min-h-dvh flex-col overflow-x-clip"
-      style={{ background: "var(--gradient-hero)" }}
-    >
-      <div className="mx-auto flex w-full max-w-md flex-1 flex-col">
-        <header className="w-full px-5 pt-6">
+    <div className="min-h-dvh bg-[#eaf1f8]">
+      <div
+        className="relative mx-auto flex min-h-dvh w-full max-w-[430px] flex-col bg-white [touch-action:manipulation]"
+        style={{
+          paddingTop: "env(safe-area-inset-top, 0px)",
+        }}
+      >
+        <div className="h-1 w-full" style={{ background: "var(--yellow-primary)" }} />
+
+        <header className="px-6 pt-7 text-center">
           <h1 className="sr-only">Padre Kelmon, candidato a Deputado Federal por São Paulo, 2202</h1>
-          <div className="mx-auto aspect-square w-[min(92vw,26rem)] overflow-hidden rounded-full">
+          <div className="mx-auto size-[9.75rem] overflow-hidden rounded-full">
             <img
               src={bioRetrato}
               alt="Padre Kelmon, Deputado Federal por São Paulo, 2202"
@@ -137,19 +151,43 @@ export function LinkInBio() {
               className="h-full w-full scale-[1.08] object-cover"
             />
           </div>
+          <p
+            className="mt-4 text-[11px] font-bold uppercase tracking-[0.28em]"
+            style={{ color: "var(--blue-primary)" }}
+          >
+            2202
+          </p>
+          <p className="mt-1.5 text-[13px] font-medium tracking-wide text-[#7a90ab]">
+            Deputado Federal · São Paulo
+          </p>
         </header>
 
-        <main className="flex flex-1 flex-col px-5 pb-24 pt-6">
-        <nav aria-label="Redes oficiais" className="flex flex-col gap-3">
+        <nav aria-label="Redes oficiais" className="mt-7 flex flex-col gap-2.5 px-5">
           {LINKS.map((link) => (
             <BioButton key={link.label} link={link} />
           ))}
         </nav>
 
-          <p className="mt-auto pt-8 text-center text-[10px] font-semibold leading-relaxed tracking-wide text-white/55">
-            {CANDIDATE.razaoSocial}
-          </p>
-      </main>
+        <div className="mt-auto w-full px-5 pb-[max(5.5rem,calc(env(safe-area-inset-bottom)+4.75rem))] pt-10">
+          <svg
+            viewBox="0 0 640 16"
+            className="block h-3.5 w-full"
+            role="img"
+            aria-label={`${CANDIDATE.razaoSocial} · CNPJ ${CANDIDATE.cnpj}`}
+          >
+            <text
+              x="50%"
+              y="12"
+              textAnchor="middle"
+              fill="#9aafc4"
+              fontSize="11"
+              fontWeight="500"
+              fontFamily="Arial, Helvetica, sans-serif"
+            >
+              {CANDIDATE.razaoSocial} · CNPJ {CANDIDATE.cnpj}
+            </text>
+          </svg>
+        </div>
       </div>
     </div>
   );

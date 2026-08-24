@@ -1,13 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-import { LinkInBio } from "@/components/bio/link-in-bio";
-import { PAGE_SEO, buildPageHead } from "@/lib/site";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/bio")({
-  component: BioPage,
-  head: () => buildPageHead(PAGE_SEO.bio),
+  beforeLoad: () => {
+    throw redirect({ to: "/links" });
+  },
 });
-
-function BioPage() {
-  return <LinkInBio />;
-}

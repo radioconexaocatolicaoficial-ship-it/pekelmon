@@ -36,7 +36,7 @@ export function CnpjRail() {
     };
   }, [pathname]);
 
-  if (pathname === "/bio") return null;
+  if (pathname === "/links" || pathname === "/bio") return null;
 
   return (
     <aside
