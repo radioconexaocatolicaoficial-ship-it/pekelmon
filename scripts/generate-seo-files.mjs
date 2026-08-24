@@ -43,6 +43,7 @@ const pages = [
   { path: "/pautas", priority: "0.9" },
   { path: "/midia", priority: "0.8" },
   { path: "/numeros", priority: "0.8" },
+  { path: "/bio", priority: "0.7" },
 ];
 
 const sitemapUrls = pages

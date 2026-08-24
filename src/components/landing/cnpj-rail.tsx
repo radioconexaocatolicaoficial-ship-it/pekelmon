@@ -36,6 +36,8 @@ export function CnpjRail() {
     };
   }, [pathname]);
 
+  if (pathname === "/bio") return null;
+
   return (
     <aside
       ref={railRef}
