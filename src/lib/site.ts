@@ -67,6 +67,9 @@ export const PAGE_SEO = {
     title: "Links Padre Kelmon | redes oficiais",
     description:
       "Redes oficiais de Padre Kelmon, candidato a Deputado Federal por São Paulo pelo PL. Instagram, TikTok, YouTube, Facebook, X e o site da campanha.",
+    image: "/og-banner-links-padre-kelmon.jpg",
+    imageWidth: "500",
+    imageHeight: "300",
   },
 } as const;
 
@@ -74,13 +77,21 @@ export function buildPageHead({
   path,
   title,
   description,
+  image,
+  imageWidth,
+  imageHeight,
 }: {
   path: string;
   title: string;
   description: string;
+  image?: string;
+  imageWidth?: string;
+  imageHeight?: string;
 }) {
   const pageUrl = absoluteUrl(path);
-  const ogImage = absoluteUrl(OG_IMAGE_PATH);
+  const ogImage = absoluteUrl(image ?? OG_IMAGE_PATH);
+  const width = imageWidth ?? OG_IMAGE_WIDTH;
+  const height = imageHeight ?? OG_IMAGE_HEIGHT;
 
   return {
     meta: [
@@ -106,8 +117,8 @@ export function buildPageHead({
       { property: "og:image", content: ogImage },
       { property: "og:image:secure_url", content: ogImage },
       { property: "og:image:type", content: "image/jpeg" },
-      { property: "og:image:width", content: OG_IMAGE_WIDTH },
-      { property: "og:image:height", content: OG_IMAGE_HEIGHT },
+      { property: "og:image:width", content: width },
+      { property: "og:image:height", content: height },
       { property: "og:image:alt", content: title },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: TWITTER_HANDLE },
@@ -124,7 +135,9 @@ export function buildPageHead({
     scripts: [
       {
         type: "application/ld+json",
-        children: JSON.stringify(buildWebPageJsonLd({ path, title, description })),
+        children: JSON.stringify(
+          buildWebPageJsonLd({ path, title, description, image, imageWidth, imageHeight }),
+        ),
       },
     ],
   };
@@ -211,10 +224,16 @@ export function buildWebPageJsonLd(page?: {
   path?: string;
   title?: string;
   description?: string;
+  image?: string;
+  imageWidth?: string;
+  imageHeight?: string;
 }) {
   const url = absoluteUrl(page?.path ?? "/");
   const name = page?.title ?? SITE_TITLE;
   const description = page?.description ?? SITE_DESCRIPTION;
+  const imagePath = page?.image ?? OG_IMAGE_PATH;
+  const imageWidth = page?.imageWidth ?? OG_IMAGE_WIDTH;
+  const imageHeight = page?.imageHeight ?? OG_IMAGE_HEIGHT;
 
   return {
     "@context": "https://schema.org",
@@ -235,9 +254,9 @@ export function buildWebPageJsonLd(page?: {
     },
     primaryImageOfPage: {
       "@type": "ImageObject",
-      url: absoluteUrl(OG_IMAGE_PATH),
-      width: Number(OG_IMAGE_WIDTH),
-      height: Number(OG_IMAGE_HEIGHT),
+      url: absoluteUrl(imagePath),
+      width: Number(imageWidth),
+      height: Number(imageHeight),
     },
     speakable: {
       "@type": "SpeakableSpecification",
