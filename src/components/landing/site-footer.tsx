@@ -81,15 +81,8 @@ export function SiteFooter() {
                 className="h-9 w-auto rounded-md sm:h-10"
               />
             </Link>
-            <p className="mt-3 whitespace-nowrap text-[clamp(0.7rem,2.8vw,0.875rem)] font-bold leading-none text-white">
-              Candidato a Deputado Federal · SP · PL
-            </p>
-            <p className="mt-2 text-sm leading-relaxed text-white/90">
-              Fé, família e coragem para representar São Paulo e resgatar o Brasil. Presidente do
-              Foro do Brasil e defesa da liberdade religiosa.
-            </p>
-            <p className="mt-2 text-[10px] font-semibold leading-snug tracking-wide text-white/75 sm:text-xs">
-              {CANDIDATE.razaoSocial} · CNPJ: {CANDIDATE.cnpj}
+            <p className="mt-3 text-[10px] font-semibold leading-snug tracking-wide text-white/75 sm:text-xs">
+              {CANDIDATE.legalLine}
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
               {SOCIALS.map(({ label, href, Icon }) => (

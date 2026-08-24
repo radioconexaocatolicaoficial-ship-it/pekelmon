@@ -1,6 +1,6 @@
 import { ChevronRight, Facebook, Globe, Instagram, Youtube } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { useLayoutEffect, useRef, useState, type ComponentType } from "react";
+import { type ComponentType } from "react";
 
 import { HeroBannerCarousel } from "@/components/landing/hero-banner-carousel";
 import { HeroServiceCards } from "@/components/landing/hero-service-cards";
@@ -23,37 +23,10 @@ function TikTokIcon(props: { className?: string }) {
 }
 
 function LegalLine() {
-  const text = `${CANDIDATE.razaoSocial} · CNPJ ${CANDIDATE.cnpj}`;
-  const textRef = useRef<SVGTextElement>(null);
-  const [boxWidth, setBoxWidth] = useState(520);
-
-  useLayoutEffect(() => {
-    const length = textRef.current?.getComputedTextLength();
-    if (length && length > 0) setBoxWidth(length + 4);
-  }, [text]);
-
   return (
-    <svg
-      viewBox={`0 0 ${boxWidth} 16`}
-      className="block w-full"
-      style={{ aspectRatio: `${boxWidth} / 16` }}
-      preserveAspectRatio="xMidYMid meet"
-      role="img"
-      aria-label={text}
-    >
-      <text
-        ref={textRef}
-        x="50%"
-        y="12.5"
-        textAnchor="middle"
-        fill="#9aafc4"
-        fontSize="13"
-        fontWeight="500"
-        fontFamily="Arial, Helvetica, sans-serif"
-      >
-        {text}
-      </text>
-    </svg>
+    <p className="text-center text-[10px] font-medium leading-snug text-[#9aafc4]">
+      {CANDIDATE.legalLine}
+    </p>
   );
 }
 

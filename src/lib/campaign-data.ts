@@ -30,6 +30,8 @@ export const CANDIDATE = {
   tiktok: "https://www.tiktok.com/@pekelmon",
   razaoSocial: "ELEICAO 2026 KELMON LUIS DA SILVA SOUZA DEPUTADO FEDERAL",
   cnpj: "68.353.198/0001-20",
+  legalLine:
+    "ELEICAO 2026 KELMON LUIS DA SILVA SOUZA DEPUTADO FEDERAL · CNPJ: 68.353.198/0001-20 COLIGAÇÃO CORAGEM PARA SEGUIR AVANÇANDO (Republicanos + MDB + PL + Federação União Progressista (União Brasil / Progressistas) + PSD + Federação Renovação Solidária (Solidariedade / PRD) + Democrata + Avante)",
 };
 
 export type TimelineItem = {
