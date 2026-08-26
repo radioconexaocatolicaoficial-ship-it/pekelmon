@@ -8,7 +8,7 @@ export type YoutubeHighlight = {
   published: string;
 };
 
-/** Vídeos fixos nos dois primeiros cards da grade 2×2 (direita). */
+/** Vídeos do YouTube fixos após o primeiro card da grade 2×2 (o primeiro é a live da Kick). */
 export const YOUTUBE_PINNED_GRID_IDS = ['lmZkXZeEbBk', 'k8n5EIaJVlk'] as const;
 
 /** Videos do Padre Kelmon — destaque fixo + demais por data. */
