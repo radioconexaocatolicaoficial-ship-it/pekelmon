@@ -65,7 +65,6 @@ export function MobileBottomNav() {
 }
 
 function isNavActive(link: NavLink, pathname: string) {
-  if (link.sectionId === "site") return false;
   return pathname === link.to;
 }
 

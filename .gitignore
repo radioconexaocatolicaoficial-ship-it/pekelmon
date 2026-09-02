@@ -36,3 +36,8 @@ dist-ssr
 
 # GitHub recusa arquivos > 100 MB. Enviar estes MP4s pelo File Manager da hospedagem.
 public/videos/defesa/*.mp4
+public/downloads/**/*.mp4
+public/downloads/**/*.psd
+public/downloads/**/*.psb
+public/downloads/**/*.ai
+public/downloads/**/*.eps
