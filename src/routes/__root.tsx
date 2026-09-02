@@ -87,6 +87,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "google-site-verification",
         content: "bcJCCb6X2PSfiJUJmaqbMVwrGSQxG0WHzVsjDVgdmxI",
       },
+      {
+        name: "facebook-domain-verification",
+        content: "82m9eas0exktmg3bfd42o6gdjxhpvv",
+      },
       { name: "theme-color", content: "#1e5bb8" },
       { name: "color-scheme", content: "light" },
       { name: "format-detection", content: "telephone=no" },
