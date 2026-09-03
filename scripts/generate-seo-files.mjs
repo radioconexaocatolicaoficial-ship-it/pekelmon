@@ -43,7 +43,6 @@ const pages = [
   { path: "/pautas", priority: "0.9" },
   { path: "/midia", priority: "0.8" },
   { path: "/numeros", priority: "0.8" },
-  { path: "/downloads", priority: "0.7" },
   { path: "/links", priority: "0.7" },
 ];
 

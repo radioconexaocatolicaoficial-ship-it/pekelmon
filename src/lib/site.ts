@@ -68,12 +68,6 @@ export const PAGE_SEO = {
     description:
       "Redes oficiais de Padre Kelmon, candidato a Deputado Federal por São Paulo pelo PL. Instagram, TikTok, YouTube, Facebook, X e o site da campanha.",
   },
-  downloads: {
-    path: "/downloads",
-    title: "Downloads | Materiais da campanha Padre Kelmon 2202",
-    description:
-      "Baixe a marca, PDFs, artes editáveis, KVs, posts e vídeos oficiais da campanha de Padre Kelmon, candidato a Deputado Federal por São Paulo.",
-  },
 } as const;
 
 export function buildPageHead({

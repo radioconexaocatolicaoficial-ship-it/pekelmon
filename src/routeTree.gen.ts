@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BioRouteImport } from './routes/bio'
-import { Route as DownloadsRouteImport } from './routes/downloads'
 import { Route as LinksRouteImport } from './routes/links'
 import { Route as MidiaRouteImport } from './routes/midia'
 import { Route as NumerosRouteImport } from './routes/numeros'
@@ -27,11 +26,6 @@ const IndexRoute = IndexRouteImport.update({
 const BioRoute = BioRouteImport.update({
   id: '/bio',
   path: '/bio',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DownloadsRoute = DownloadsRouteImport.update({
-  id: '/downloads',
-  path: '/downloads',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LinksRoute = LinksRouteImport.update({
@@ -68,7 +62,6 @@ const SobreRoute = SobreRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bio': typeof BioRoute
-  '/downloads': typeof DownloadsRoute
   '/links': typeof LinksRoute
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
@@ -79,7 +72,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bio': typeof BioRoute
-  '/downloads': typeof DownloadsRoute
   '/links': typeof LinksRoute
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
@@ -91,7 +83,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bio': typeof BioRoute
-  '/downloads': typeof DownloadsRoute
   '/links': typeof LinksRoute
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
@@ -104,7 +95,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/bio'
-    | '/downloads'
     | '/links'
     | '/midia'
     | '/numeros'
@@ -115,7 +105,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/bio'
-    | '/downloads'
     | '/links'
     | '/midia'
     | '/numeros'
@@ -126,7 +115,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/bio'
-    | '/downloads'
     | '/links'
     | '/midia'
     | '/numeros'
@@ -138,7 +126,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BioRoute: typeof BioRoute
-  DownloadsRoute: typeof DownloadsRoute
   LinksRoute: typeof LinksRoute
   MidiaRoute: typeof MidiaRoute
   NumerosRoute: typeof NumerosRoute
@@ -161,13 +148,6 @@ declare module '@tanstack/react-router' {
       path: '/bio'
       fullPath: '/bio'
       preLoaderRoute: typeof BioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/downloads': {
-      id: '/downloads'
-      path: '/downloads'
-      fullPath: '/downloads'
-      preLoaderRoute: typeof DownloadsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/links': {
@@ -218,7 +198,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BioRoute: BioRoute,
-  DownloadsRoute: DownloadsRoute,
   LinksRoute: LinksRoute,
   MidiaRoute: MidiaRoute,
   NumerosRoute: NumerosRoute,
