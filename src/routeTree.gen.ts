@@ -11,13 +11,13 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BioRouteImport } from './routes/bio'
-import { Route as DownloadsRouteImport } from './routes/downloads'
 import { Route as LinksRouteImport } from './routes/links'
 import { Route as MidiaRouteImport } from './routes/midia'
 import { Route as NumerosRouteImport } from './routes/numeros'
 import { Route as PautasRouteImport } from './routes/pautas'
 import { Route as SaibaMaisRouteImport } from './routes/saiba-mais'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as Imprensa7DeSetembroRouteImport } from './routes/imprensa.7-de-setembro'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -27,11 +27,6 @@ const IndexRoute = IndexRouteImport.update({
 const BioRoute = BioRouteImport.update({
   id: '/bio',
   path: '/bio',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DownloadsRoute = DownloadsRouteImport.update({
-  id: '/downloads',
-  path: '/downloads',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LinksRoute = LinksRouteImport.update({
@@ -64,87 +59,92 @@ const SobreRoute = SobreRouteImport.update({
   path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Imprensa7DeSetembroRoute = Imprensa7DeSetembroRouteImport.update({
+  id: '/imprensa/7-de-setembro',
+  path: '/imprensa/7-de-setembro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bio': typeof BioRoute
-  '/downloads': typeof DownloadsRoute
   '/links': typeof LinksRoute
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
   '/saiba-mais': typeof SaibaMaisRoute
   '/sobre': typeof SobreRoute
+  '/imprensa/7-de-setembro': typeof Imprensa7DeSetembroRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bio': typeof BioRoute
-  '/downloads': typeof DownloadsRoute
   '/links': typeof LinksRoute
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
   '/saiba-mais': typeof SaibaMaisRoute
   '/sobre': typeof SobreRoute
+  '/imprensa/7-de-setembro': typeof Imprensa7DeSetembroRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bio': typeof BioRoute
-  '/downloads': typeof DownloadsRoute
   '/links': typeof LinksRoute
   '/midia': typeof MidiaRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
   '/saiba-mais': typeof SaibaMaisRoute
   '/sobre': typeof SobreRoute
+  '/imprensa/7-de-setembro': typeof Imprensa7DeSetembroRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/bio'
-    | '/downloads'
     | '/links'
     | '/midia'
     | '/numeros'
     | '/pautas'
     | '/saiba-mais'
     | '/sobre'
+    | '/imprensa/7-de-setembro'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/bio'
-    | '/downloads'
     | '/links'
     | '/midia'
     | '/numeros'
     | '/pautas'
     | '/saiba-mais'
     | '/sobre'
+    | '/imprensa/7-de-setembro'
   id:
     | '__root__'
     | '/'
     | '/bio'
-    | '/downloads'
     | '/links'
     | '/midia'
     | '/numeros'
     | '/pautas'
     | '/saiba-mais'
     | '/sobre'
+    | '/imprensa/7-de-setembro'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BioRoute: typeof BioRoute
-  DownloadsRoute: typeof DownloadsRoute
   LinksRoute: typeof LinksRoute
   MidiaRoute: typeof MidiaRoute
   NumerosRoute: typeof NumerosRoute
   PautasRoute: typeof PautasRoute
   SaibaMaisRoute: typeof SaibaMaisRoute
   SobreRoute: typeof SobreRoute
+  Imprensa7DeSetembroRoute: typeof Imprensa7DeSetembroRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -161,13 +161,6 @@ declare module '@tanstack/react-router' {
       path: '/bio'
       fullPath: '/bio'
       preLoaderRoute: typeof BioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/downloads': {
-      id: '/downloads'
-      path: '/downloads'
-      fullPath: '/downloads'
-      preLoaderRoute: typeof DownloadsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/links': {
@@ -212,19 +205,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/imprensa/7-de-setembro': {
+      id: '/imprensa/7-de-setembro'
+      path: '/imprensa/7-de-setembro'
+      fullPath: '/imprensa/7-de-setembro'
+      preLoaderRoute: typeof Imprensa7DeSetembroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BioRoute: BioRoute,
-  DownloadsRoute: DownloadsRoute,
   LinksRoute: LinksRoute,
   MidiaRoute: MidiaRoute,
   NumerosRoute: NumerosRoute,
   PautasRoute: PautasRoute,
   SaibaMaisRoute: SaibaMaisRoute,
   SobreRoute: SobreRoute,
+  Imprensa7DeSetembroRoute: Imprensa7DeSetembroRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

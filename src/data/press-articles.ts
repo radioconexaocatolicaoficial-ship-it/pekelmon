@@ -1,4 +1,6 @@
 /** Matérias sobre Padre Kelmon no portal 7Minutos (fonte pública). */
+import { SETE_SETEMBRO_ARTICLE } from "./sete-setembro-article";
+
 export type PressArticle = {
   id: string;
   title: string;
@@ -6,9 +8,21 @@ export type PressArticle = {
   url: string;
   image: string;
   source: string;
+  objectPosition?: string;
+};
+
+export const FEATURED_PRESS_ARTICLE: PressArticle = {
+  id: SETE_SETEMBRO_ARTICLE.id,
+  title: SETE_SETEMBRO_ARTICLE.title,
+  eyebrow: SETE_SETEMBRO_ARTICLE.eyebrow,
+  url: SETE_SETEMBRO_ARTICLE.url,
+  image: SETE_SETEMBRO_ARTICLE.image,
+  source: SETE_SETEMBRO_ARTICLE.source,
+  objectPosition: SETE_SETEMBRO_ARTICLE.imagePosition,
 };
 
 export const PRESS_ARTICLES: PressArticle[] = [
+  FEATURED_PRESS_ARTICLE,
   {
     id: "195383",
     title:

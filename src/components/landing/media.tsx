@@ -11,10 +11,12 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { PRESS_ARTICLES, PRESS_SOURCE_URL, type PressArticle } from "@/data/press-articles";
+import { SETE_SETEMBRO_ARTICLE } from "@/data/sete-setembro-article";
 import { VV8_ARTICLES, VV8_SOURCE_URL } from "@/data/vv8-articles";
 import { getPressFeeds } from "@/lib/press-feeds";
 import { getVv8Feeds } from "@/lib/vv8-feeds";
 import { getSocialFeeds, type SocialNetworkId, type SocialPost } from "@/lib/social-feeds";
+import { SeteSetembroArticleModal } from "@/components/landing/sete-setembro-article-modal";
 
 const MEDIA_REFRESH_MS = 30 * 1000;
 const VV8_ACCENT = "#0168e1";
@@ -297,13 +299,14 @@ function PostSkeleton({ color }: { color: string }) {
 }
 
 function PressCard({ article }: { article: PressArticle }) {
-  return (
-    <a
-      href={article.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group flex h-full flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:border-blue-500 hover:shadow-lg"
-    >
+  const [articleOpen, setArticleOpen] = useState(false);
+  const isExternal = article.url.startsWith("http");
+  const opensModal = article.id === SETE_SETEMBRO_ARTICLE.id;
+  const cardClassName =
+    "group flex h-full flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white text-left shadow-sm transition-all hover:-translate-y-1 hover:border-blue-500 hover:shadow-lg";
+
+  const body = (
+    <>
       <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
         <img
           src={article.image}
@@ -311,6 +314,7 @@ function PressCard({ article }: { article: PressArticle }) {
           width={640}
           height={400}
           className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+          style={article.objectPosition ? { objectPosition: article.objectPosition } : undefined}
           loading="lazy"
           decoding="async"
           referrerPolicy="no-referrer"
@@ -334,9 +338,31 @@ function PressCard({ article }: { article: PressArticle }) {
         </h4>
         <span className="mt-auto inline-flex items-center gap-1 pt-3 text-xs font-semibold text-blue-700">
           Ler matéria
-          <ExternalLink className="size-3.5" />
+          {isExternal ? <ExternalLink className="size-3.5" /> : null}
         </span>
       </div>
+    </>
+  );
+
+  if (opensModal) {
+    return (
+      <div className="h-full">
+        <button type="button" onClick={() => setArticleOpen(true)} className={`${cardClassName} h-full w-full`}>
+          {body}
+        </button>
+        <SeteSetembroArticleModal open={articleOpen} onOpenChange={setArticleOpen} />
+      </div>
+    );
+  }
+
+  return (
+    <a
+      href={article.url}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer" : undefined}
+      className={cardClassName}
+    >
+      {body}
     </a>
   );
 }
