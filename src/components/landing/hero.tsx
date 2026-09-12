@@ -2,6 +2,7 @@ import { motion } from "motion/react";
 
 import { PageShell } from "./primitives";
 import { HeroBannerCarousel } from "./hero-banner-carousel";
+import { HeroServiceCards } from "./hero-service-cards";
 import { HeroSocialBar } from "./hero-social-bar";
 import { HeroStoryCarousel } from "./hero-story-carousel";
 
@@ -30,6 +31,9 @@ export function Hero({ embedded = false }: { embedded?: boolean }) {
           </div>
         </motion.div>
         <HeroSocialBar />
+        <div className="civic-mobile-rail">
+          <HeroServiceCards slots="rail" />
+        </div>
       </PageShell>
     </section>
   );

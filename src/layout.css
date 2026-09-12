@@ -241,6 +241,17 @@
   gap: 0.75rem;
 }
 
+.civic-mobile-rail {
+  display: block;
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 1023px) {
+  .youtube-civic-row > .civic-stack {
+    display: none !important;
+  }
+}
+
 .civic-rail-spacer {
   display: none;
 }
@@ -306,6 +317,10 @@
 }
 
 @media (min-width: 1024px) {
+  .civic-mobile-rail {
+    display: none !important;
+  }
+
   .site-nav-desktop {
     display: flex;
   }
