@@ -295,6 +295,7 @@ export function VideoHighlights() {
       </div>
 
       <div className="youtube-grid-row min-w-0">
+        <FeaturedVideoCarousel />
         <div className="youtube-cards">
           {latestVideo ? <VideoCard video={latestVideo} onOpen={setActive} /> : null}
           {Array.from({ length: SIDE_PAGE_SIZE - LATEST_SLOT_COUNT }, (_, index) => {
@@ -311,7 +312,6 @@ export function VideoHighlights() {
             );
           })}
         </div>
-        <FeaturedVideoCarousel />
       </div>
 
       <Dialog open={Boolean(active)} onOpenChange={(open) => !open && setActive(null)}>

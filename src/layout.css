@@ -239,7 +239,7 @@
   }
 
   .youtube-grid-row {
-    grid-template-columns: minmax(0, 1fr) minmax(14rem, 20rem);
+    grid-template-columns: minmax(14rem, 20rem) minmax(0, 1fr);
     align-items: stretch;
     gap: 1.25rem;
   }
@@ -269,7 +269,7 @@
   }
 
   .youtube-civic-row {
-    grid-template-columns: minmax(16rem, 20rem) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 20rem);
     gap: 1.25rem;
     align-items: start;
   }
@@ -295,6 +295,13 @@
     flex-direction: row;
     align-items: stretch;
     gap: 1.25rem;
+  }
+
+  .imprensa-book {
+    width: min(20rem, 34%);
+    max-width: 20rem;
+    margin-inline: 0;
+    flex: 0 0 auto;
   }
 
   .imprensa-news-grid {

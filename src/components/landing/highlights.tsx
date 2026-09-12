@@ -18,11 +18,11 @@ export function Highlights() {
           className="youtube-civic-row"
           style={{ display: "grid", alignItems: "start", gap: "1rem" }}
         >
-          <HeroServiceCards slots="rail" />
           <div className="highlights-main">
             <VideoHighlights />
             <NewsAndBook />
           </div>
+          <HeroServiceCards slots="rail" />
         </div>
       </PageShell>
     </section>

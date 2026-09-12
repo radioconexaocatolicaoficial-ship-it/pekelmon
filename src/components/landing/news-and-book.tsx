@@ -118,6 +118,37 @@ export function NewsAndBook() {
       </div>
 
       <div className="imprensa-row">
+        <a
+          href={BOOK_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="imprensa-book mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-lg transition hover:border-blue-500 hover:shadow-xl md:mx-0 md:max-w-lg"
+        >
+          <div className="flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden bg-white">
+            <img
+              src={livroImg}
+              alt="Livro Fé e Política de Mãos Dadas, de Padre Kelmon"
+              width={500}
+              height={500}
+              loading="lazy"
+              decoding="async"
+              className="block h-auto w-full"
+              style={{ objectFit: "contain" }}
+            />
+          </div>
+          <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 bg-white px-4 py-2.5 sm:px-5">
+            <span
+              className="text-sm font-black"
+              style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
+            >
+              Padre Kelmon
+            </span>
+            <span className="text-xs font-semibold uppercase tracking-wide text-gray-600">
+              Livro · Fé e Política de Mãos Dadas
+            </span>
+          </div>
+        </a>
+
         <div className="imprensa-news-grid">
           {HOME_NEWS.map((item) => {
             if (item.opensModal) {
@@ -147,37 +178,6 @@ export function NewsAndBook() {
             );
           })}
         </div>
-
-        <a
-          href={BOOK_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-lg transition hover:border-blue-500 hover:shadow-xl md:mx-0 md:max-w-lg"
-        >
-          <div className="flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden bg-white">
-            <img
-              src={livroImg}
-              alt="Livro Fé e Política de Mãos Dadas, de Padre Kelmon"
-              width={500}
-              height={500}
-              loading="lazy"
-              decoding="async"
-              className="block h-auto w-full"
-              style={{ objectFit: "contain" }}
-            />
-          </div>
-          <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 bg-white px-4 py-2.5 sm:px-5">
-            <span
-              className="text-sm font-black"
-              style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
-            >
-              Padre Kelmon
-            </span>
-            <span className="text-xs font-semibold uppercase tracking-wide text-gray-600">
-              Livro · Fé e Política de Mãos Dadas
-            </span>
-          </div>
-        </a>
       </div>
 
       <SeteSetembroArticleModal open={articleOpen} onOpenChange={setArticleOpen} />
