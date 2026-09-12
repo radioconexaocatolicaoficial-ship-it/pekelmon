@@ -1,7 +1,14 @@
 import { Newspaper } from "lucide-react";
-import { useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 
-import livroImg from "@/assets/livro-fe-e-politica-kelmon.png";
+import livroSlide01 from "@/assets/livro-slide-01.jpg";
+import livroSlide02 from "@/assets/livro-slide-02.jpg";
+import livroSlide03 from "@/assets/livro-slide-03.jpg";
+import livroSlide04 from "@/assets/livro-slide-04.jpg";
+import livroSlide05 from "@/assets/livro-slide-05.jpg";
+import livroSlide06 from "@/assets/livro-slide-06.jpg";
+import livroSlide07 from "@/assets/livro-slide-07.jpg";
+import livroSlide08 from "@/assets/livro-slide-08.jpg";
 import { SeteSetembroArticleModal } from "@/components/landing/sete-setembro-article-modal";
 import { SETE_SETEMBRO_ARTICLE } from "@/data/sete-setembro-article";
 
@@ -57,8 +64,144 @@ const HOME_NEWS = [
   },
 ] as const;
 
-const BOOK_URL =
-  "https://7minutos.com.br/variedades/leitura/padre-kelmon-lanca-seu-livro-fe-e-politica-de-maos-dadas/";
+const BOOK_SLIDES = [
+  {
+    src: livroSlide01,
+    alt: "Capa do livro Fé e Política de Mãos Dadas, de Padre Kelmon",
+  },
+  {
+    src: livroSlide02,
+    alt: "Lançamento do livro Fé e Política de Mãos Dadas",
+  },
+  {
+    src: livroSlide03,
+    alt: "Padre Kelmon apresenta o livro Fé e Política de Mãos Dadas",
+  },
+  {
+    src: livroSlide04,
+    alt: "Padre Kelmon com o livro Fé e Política de Mãos Dadas no PL",
+  },
+  {
+    src: livroSlide05,
+    alt: "Padre Kelmon com o livro Fé e Política de Mãos Dadas em livraria",
+  },
+  {
+    src: livroSlide06,
+    alt: "Padre Kelmon apresenta o livro em entrevista",
+  },
+  {
+    src: livroSlide07,
+    alt: "Padre Kelmon com o livro Fé e Política de Mãos Dadas",
+  },
+  {
+    src: livroSlide08,
+    alt: "Apresentação do livro Fé e Política de Mãos Dadas",
+  },
+] as const;
+
+const BOOK_ROTATE_MS = 60_000;
+const BOOK_SWIPE_PX = 40;
+const BOOK_HOVER_PX = 72;
+
+function BookCarousel() {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const pointer = useRef<{ id: number; x: number; y: number } | null>(null);
+  const hoverX = useRef<number | null>(null);
+  const hoverAt = useRef(0);
+
+  const go = (direction: 1 | -1) => {
+    setIndex((current) => (current + direction + BOOK_SLIDES.length) % BOOK_SLIDES.length);
+  };
+
+  useEffect(() => {
+    if (paused) return;
+    const id = window.setInterval(() => {
+      setIndex((current) => (current + 1) % BOOK_SLIDES.length);
+    }, BOOK_ROTATE_MS);
+    return () => window.clearInterval(id);
+  }, [paused, index]);
+
+  const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    pointer.current = { id: event.pointerId, x: event.clientX, y: event.clientY };
+    try {
+      event.currentTarget.setPointerCapture(event.pointerId);
+    } catch {
+      /* pointer capture is optional; swipe still reads the up coordinates */
+    }
+  };
+
+  const onPointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    const start = pointer.current;
+    pointer.current = null;
+    if (!start || start.id !== event.pointerId) return;
+    const dx = event.clientX - start.x;
+    const dy = event.clientY - start.y;
+    if (Math.abs(dx) >= BOOK_SWIPE_PX && Math.abs(dx) > Math.abs(dy)) {
+      go(dx < 0 ? 1 : -1);
+    }
+  };
+
+  return (
+    <div
+      className="imprensa-book mx-auto overflow-hidden rounded-xl border-2 border-gray-200 bg-neutral-100 shadow-lg md:mx-0"
+      role="region"
+      aria-roledescription="carrossel"
+      aria-label="Fotos do livro Fé e Política de Mãos Dadas"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => {
+        setPaused(false);
+        hoverX.current = null;
+      }}
+      onMouseMove={(event) => {
+        if (pointer.current) return;
+        if (hoverX.current == null) {
+          hoverX.current = event.clientX;
+          return;
+        }
+        const dx = event.clientX - hoverX.current;
+        const now = Date.now();
+        if (Math.abs(dx) >= BOOK_HOVER_PX && now - hoverAt.current > 800) {
+          go(dx < 0 ? 1 : -1);
+          hoverX.current = event.clientX;
+          hoverAt.current = now;
+        }
+      }}
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+      onPointerCancel={() => {
+        pointer.current = null;
+      }}
+    >
+      {BOOK_SLIDES.map((slide, slideIndex) => (
+        <img
+          key={slide.src}
+          src={slide.src}
+          alt={slide.alt}
+          width={1080}
+          height={1440}
+          loading={slideIndex === 0 ? "eager" : "lazy"}
+          decoding="async"
+          draggable={false}
+          className={`imprensa-book-slide${slideIndex === index ? " is-active" : ""}`}
+        />
+      ))}
+      <div className="imprensa-book-dots" role="tablist" aria-label="Escolher foto">
+        {BOOK_SLIDES.map((slide, slideIndex) => (
+          <button
+            key={slide.src}
+            type="button"
+            role="tab"
+            aria-selected={slideIndex === index}
+            aria-label={`Foto ${slideIndex + 1}`}
+            className={`imprensa-book-dot${slideIndex === index ? " is-active" : ""}`}
+            onClick={() => setIndex(slideIndex)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
 function NewsCardMedia({
   item,
@@ -118,36 +261,7 @@ export function NewsAndBook() {
       </div>
 
       <div className="imprensa-row">
-        <a
-          href={BOOK_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="imprensa-book mx-auto flex w-full max-w-md flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white shadow-lg transition hover:border-blue-500 hover:shadow-xl md:mx-0 md:max-w-lg"
-        >
-          <div className="flex min-h-0 w-full flex-1 items-center justify-center overflow-hidden bg-white">
-            <img
-              src={livroImg}
-              alt="Livro Fé e Política de Mãos Dadas, de Padre Kelmon"
-              width={500}
-              height={500}
-              loading="lazy"
-              decoding="async"
-              className="block h-auto w-full"
-              style={{ objectFit: "contain" }}
-            />
-          </div>
-          <div className="flex shrink-0 flex-wrap items-center justify-between gap-2 bg-white px-4 py-2.5 sm:px-5">
-            <span
-              className="text-sm font-black"
-              style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
-            >
-              Padre Kelmon
-            </span>
-            <span className="text-xs font-semibold uppercase tracking-wide text-gray-600">
-              Livro · Fé e Política de Mãos Dadas
-            </span>
-          </div>
-        </a>
+        <BookCarousel />
 
         <div className="imprensa-news-grid">
           {HOME_NEWS.map((item) => {
