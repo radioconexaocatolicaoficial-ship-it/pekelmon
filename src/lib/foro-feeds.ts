@@ -5,6 +5,7 @@ import {
   FORO_NEWS_URL,
   type ForoArticle,
 } from "@/data/foro-articles";
+import { isBlockedStateDeputyNews, rejectStateDeputyNews } from "@/lib/news-filters";
 
 export type ForoFeedsResult = {
   articles: ForoArticle[];
@@ -98,6 +99,9 @@ async function fetchLiveArticles(): Promise<ForoArticle[]> {
     const title = cleanText(post.title?.rendered ?? "");
     const url = post.link ?? "";
     if (!title || !url) continue;
+    if (isBlockedStateDeputyNews({ title, url, excerpt: cleanText(post.excerpt?.rendered ?? "") })) {
+      continue;
+    }
 
     articles.push({
       id: String(post.id),
@@ -116,7 +120,7 @@ async function fetchLiveArticles(): Promise<ForoArticle[]> {
 
 function fallbackResult(): ForoFeedsResult {
   return {
-    articles: FORO_ARTICLES,
+    articles: rejectStateDeputyNews(FORO_ARTICLES),
     sourceUrl: FORO_NEWS_URL,
     updatedAt: new Date().toISOString(),
     live: false,

@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 
 import { VV8_ARTICLES, VV8_SOURCE_URL } from "@/data/vv8-articles";
 import type { PressArticle } from "@/data/press-articles";
+import { isBlockedStateDeputyNews, rejectStateDeputyNews } from "@/lib/news-filters";
 
 export type Vv8FeedsResult = {
   articles: PressArticle[];
@@ -62,6 +63,7 @@ function parseSearchHtml(html: string): PressArticle[] {
     const title = cleanText(titleRaw ?? "");
     const eyebrow = cleanText(eyebrowRaw ?? "") || "Portal VV8";
     if (!url || !title || !mentionsKelmon(title, url)) continue;
+    if (isBlockedStateDeputyNews({ title, url })) continue;
     if (seen.has(id)) continue;
     seen.add(id);
 
@@ -99,7 +101,7 @@ async function fetchLiveArticles(): Promise<PressArticle[]> {
 
 function fallbackResult(): Vv8FeedsResult {
   return {
-    articles: VV8_ARTICLES,
+    articles: rejectStateDeputyNews(VV8_ARTICLES),
     sourceUrl: VV8_SOURCE_URL,
     updatedAt: new Date().toISOString(),
     live: false,

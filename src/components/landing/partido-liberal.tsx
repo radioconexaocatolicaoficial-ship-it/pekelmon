@@ -13,6 +13,7 @@ import {
 import plImg from "@/assets/kelmon-filiacao-pl.jpg";
 import { Button } from "@/components/ui/button";
 import { PARTIDO_LIBERAL } from "@/lib/campaign-data";
+import { rejectStateDeputyNews } from "@/lib/news-filters";
 import { getPlFeeds } from "@/lib/pl-feeds";
 import { PageShell, Reveal } from "./primitives";
 
@@ -26,7 +27,7 @@ export function PartidoLiberal() {
   }, []);
 
   const plQuery = useQuery({
-    queryKey: ["pl-feeds", "v1-partidoliberal-home"],
+    queryKey: ["pl-feeds", "v2-no-estadual-sp"],
     queryFn: () => getPlFeeds(),
     staleTime: PL_REFRESH_MS,
     refetchInterval: PL_REFRESH_MS,
@@ -35,8 +36,9 @@ export function PartidoLiberal() {
     enabled: ready,
   });
 
-  const news =
-    plQuery.data?.articles?.length ? plQuery.data.articles : PARTIDO_LIBERAL.news;
+  const news = rejectStateDeputyNews(
+    plQuery.data?.articles?.length ? plQuery.data.articles : PARTIDO_LIBERAL.news,
+  );
 
   return (
     <section

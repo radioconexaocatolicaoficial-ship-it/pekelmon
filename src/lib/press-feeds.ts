@@ -5,6 +5,7 @@ import {
   PRESS_SOURCE_URL,
   type PressArticle,
 } from "@/data/press-articles";
+import { isBlockedStateDeputyNews, rejectStateDeputyNews } from "@/lib/news-filters";
 
 export type PressFeedsResult = {
   articles: PressArticle[];
@@ -114,6 +115,7 @@ async function fetchLiveArticles(): Promise<PressArticle[]> {
     const title = cleanText(post.title?.rendered ?? "");
     const url = post.link ?? "";
     if (!title || !url || !mentionsKelmon(title, url)) continue;
+    if (isBlockedStateDeputyNews({ title, url })) continue;
 
     const image = featuredImage(post);
     articles.push({
@@ -133,7 +135,7 @@ async function fetchLiveArticles(): Promise<PressArticle[]> {
 
 function fallbackResult(): PressFeedsResult {
   return {
-    articles: PRESS_ARTICLES,
+    articles: rejectStateDeputyNews(PRESS_ARTICLES),
     sourceUrl: PRESS_SOURCE_URL,
     updatedAt: new Date().toISOString(),
     live: false,

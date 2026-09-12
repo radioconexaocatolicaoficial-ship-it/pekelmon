@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/carousel";
 import { PRESS_ARTICLES, PRESS_SOURCE_URL, type PressArticle } from "@/data/press-articles";
 import { VV8_ARTICLES, VV8_SOURCE_URL } from "@/data/vv8-articles";
+import { rejectStateDeputyNews } from "@/lib/news-filters";
 import { getPressFeeds } from "@/lib/press-feeds";
 import { getVv8Feeds } from "@/lib/vv8-feeds";
 import { getSocialFeeds, type SocialNetworkId, type SocialPost } from "@/lib/social-feeds";
@@ -570,7 +571,7 @@ export function Media({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
   });
 
   const pressQuery = useQuery({
-    queryKey: ["press-feeds", "v3-7minutos-aug2026"],
+    queryKey: ["press-feeds", "v4-no-estadual-sp"],
     queryFn: () => getPressFeeds(),
     staleTime: MEDIA_REFRESH_MS,
     refetchInterval: MEDIA_REFRESH_MS,
@@ -579,7 +580,7 @@ export function Media({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
   });
 
   const vv8Query = useQuery({
-    queryKey: ["vv8-feeds", "v2-portalvv8-aug2026"],
+    queryKey: ["vv8-feeds", "v3-no-estadual-sp"],
     queryFn: () => getVv8Feeds(),
     staleTime: MEDIA_REFRESH_MS,
     refetchInterval: MEDIA_REFRESH_MS,
@@ -591,13 +592,13 @@ export function Media({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
   const showSocialPlaceholders = ready && socialQuery.isLoading;
   const showPressPlaceholders = ready && pressQuery.isLoading;
   const showVv8Placeholders = ready && vv8Query.isLoading;
-  const pressArticles = pressQuery.data?.articles?.length
-    ? pressQuery.data.articles
-    : PRESS_ARTICLES;
+  const pressArticles = rejectStateDeputyNews(
+    pressQuery.data?.articles?.length ? pressQuery.data.articles : PRESS_ARTICLES,
+  );
   const pressSourceUrl = pressQuery.data?.sourceUrl ?? PRESS_SOURCE_URL;
-  const vv8Articles = vv8Query.data?.articles?.length
-    ? vv8Query.data.articles
-    : VV8_ARTICLES;
+  const vv8Articles = rejectStateDeputyNews(
+    vv8Query.data?.articles?.length ? vv8Query.data.articles : VV8_ARTICLES,
+  );
   const vv8SourceUrl = vv8Query.data?.sourceUrl ?? VV8_SOURCE_URL;
   const featuredVideoId = socialQuery.data?.featuredVideoId || "EI-bTS70q0U";
   const isRefreshing =

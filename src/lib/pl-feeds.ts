@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 
 import { PARTIDO_LIBERAL } from "@/lib/campaign-data";
+import { isBlockedStateDeputyNews, rejectStateDeputyNews } from "@/lib/news-filters";
 
 export type PlNewsItem = {
   source: string;
@@ -81,6 +82,7 @@ function parseHomeNews(html: string): PlNewsItem[] {
     const date = dateFromText(block) || dateFromText(image) || dateFromText(href);
 
     if (!href || !title || !isArticleUrl(href) || seen.has(href)) continue;
+    if (isBlockedStateDeputyNews({ title, href })) continue;
     seen.add(href);
 
     articles.push({
@@ -100,7 +102,7 @@ function parseHomeNews(html: string): PlNewsItem[] {
 
 function fallbackResult(): PlFeedsResult {
   return {
-    articles: [...PARTIDO_LIBERAL.news],
+    articles: rejectStateDeputyNews(PARTIDO_LIBERAL.news),
     sourceUrl: PL_HOME_URL,
     updatedAt: new Date().toISOString(),
     live: false,

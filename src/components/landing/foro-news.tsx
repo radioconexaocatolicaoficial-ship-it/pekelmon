@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import fotoPadreKelmonForo from "@/assets/banner-noticias-foro-padre-kelmon.jpg";
 import { FORO_ARTICLES } from "@/data/foro-articles";
 import { getForoFeeds } from "@/lib/foro-feeds";
+import { rejectStateDeputyNews } from "@/lib/news-filters";
 import { PageShell, Reveal } from "./primitives";
 
 const FORO_REFRESH_MS = 30 * 1000;
@@ -16,7 +17,7 @@ export function ForoNews() {
   }, []);
 
   const foroQuery = useQuery({
-    queryKey: ["foro-feeds", "v1-forobrasil-noticias"],
+    queryKey: ["foro-feeds", "v2-no-estadual-sp"],
     queryFn: () => getForoFeeds(),
     staleTime: FORO_REFRESH_MS,
     refetchInterval: FORO_REFRESH_MS,
@@ -25,7 +26,9 @@ export function ForoNews() {
     enabled: ready,
   });
 
-  const news = foroQuery.data?.articles?.length ? foroQuery.data.articles : FORO_ARTICLES;
+  const news = rejectStateDeputyNews(
+    foroQuery.data?.articles?.length ? foroQuery.data.articles : FORO_ARTICLES,
+  );
 
   return (
     <section
