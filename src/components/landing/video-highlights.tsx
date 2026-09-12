@@ -1,7 +1,8 @@
 import { Play } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import featuredVideoUrl from "@/assets/video-destaque-padre-kelmon.mp4?url";
+import { SeteSetembroArticleModal } from "@/components/landing/sete-setembro-article-modal";
 import {
   Dialog,
   DialogContent,
@@ -9,9 +10,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { SETE_SETEMBRO_REEL } from "@/data/sete-setembro-article";
 import { YOUTUBE_HIGHLIGHTS, YOUTUBE_PINNED_GRID_IDS, type YoutubeHighlight } from "@/data/youtube-highlights";
 
 const FEATURED_VIDEO_TITLE = "Padre Kelmon, vídeo em destaque";
+
+/** Reel do 7 de Setembro no destaque até 08/09/2026 00:00 (horário de Brasília). */
+const SETE_SETEMBRO_REEL_UNTIL_MS = Date.parse("2026-09-08T00:00:00-03:00");
+
+function shouldShowSeteSetembroReel(now = Date.now()) {
+  return now < SETE_SETEMBRO_REEL_UNTIL_MS;
+}
 
 const KICK_LIVE = {
   slug: "brunoaiubshowlive",
@@ -143,7 +152,79 @@ function KickLiveCard({ onOpen }: { onOpen: () => void }) {
   );
 }
 
-function FeaturedLocalVideo() {
+function FeaturedLocalVideo({
+  onReelOpenChange,
+}: {
+  onReelOpenChange?: (open: boolean) => void;
+}) {
+  const [showReel, setShowReel] = useState(shouldShowSeteSetembroReel);
+  const [reelOpen, setReelOpen] = useState(false);
+  const previewRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const sync = () => setShowReel(shouldShowSeteSetembroReel());
+    sync();
+    const remaining = SETE_SETEMBRO_REEL_UNTIL_MS - Date.now();
+    if (remaining <= 0) return;
+    const id = window.setTimeout(sync, remaining + 50);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  useEffect(() => {
+    if (!showReel) setReelOpen(false);
+  }, [showReel]);
+
+  useEffect(() => {
+    onReelOpenChange?.(reelOpen);
+  }, [onReelOpenChange, reelOpen]);
+
+  useEffect(() => {
+    if (reelOpen) {
+      previewRef.current?.pause();
+      return;
+    }
+    void previewRef.current?.play().catch(() => undefined);
+  }, [reelOpen]);
+
+  if (showReel) {
+    return (
+      <>
+        <div className="mx-auto flex w-[min(100%,20rem)] shrink-0 flex-col gap-2 md:mx-0 md:w-full">
+          <div className="group relative aspect-[1080/1920] w-full overflow-hidden rounded-xl bg-neutral-900">
+            <video
+              ref={previewRef}
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+              src={SETE_SETEMBRO_REEL.videoSrc}
+              width={1080}
+              height={1920}
+              muted
+              loop
+              playsInline
+              autoPlay
+              preload="metadata"
+              title={SETE_SETEMBRO_REEL.title}
+            />
+            <button
+              type="button"
+              onClick={() => setReelOpen(true)}
+              className="absolute inset-0 flex items-center justify-center bg-black/20 transition hover:bg-black/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
+              aria-label="Abrir Reel do Instagram e a matéria completa"
+            >
+              <span className="inline-flex size-14 items-center justify-center rounded-full bg-white/90 text-neutral-900 shadow-lg">
+                <Play className="size-7 fill-current" aria-hidden="true" />
+              </span>
+            </button>
+            <span className="pointer-events-none absolute left-2 top-2 z-10 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-white">
+              Instagram
+            </span>
+          </div>
+        </div>
+
+        <SeteSetembroArticleModal open={reelOpen} onOpenChange={setReelOpen} />
+      </>
+    );
+  }
+
   return (
     <div className="mx-auto w-[min(100%,20rem)] shrink-0 overflow-hidden rounded-xl md:mx-0 md:w-full">
       <div className="relative aspect-[1080/1920] w-full overflow-hidden rounded-xl bg-neutral-900">
@@ -173,6 +254,7 @@ export function VideoHighlights() {
   const [page, setPage] = useState(0);
   const [active, setActive] = useState<YoutubeHighlight | null>(null);
   const [kickOpen, setKickOpen] = useState(false);
+  const [reelOpen, setReelOpen] = useState(false);
 
   const pinned = useMemo(() => {
     const byId = new Map(YOUTUBE_HIGHLIGHTS.map((video) => [video.id, video]));
@@ -189,12 +271,12 @@ export function VideoHighlights() {
   const pageCount = Math.max(1, Math.ceil(rotatingVideos.length / ROTATING_SLOT_COUNT));
 
   useEffect(() => {
-    if (active || kickOpen || pageCount <= 1) return;
+    if (active || kickOpen || reelOpen || pageCount <= 1) return;
     const id = window.setInterval(() => {
       setPage((current) => (current + 1) % pageCount);
     }, SIDE_ROTATE_MS);
     return () => window.clearInterval(id);
-  }, [active, kickOpen, pageCount]);
+  }, [active, kickOpen, reelOpen, pageCount]);
 
   const rotatingPage = rotatingVideos.slice(
     page * ROTATING_SLOT_COUNT,
@@ -217,7 +299,7 @@ export function VideoHighlights() {
       </div>
 
       <div className="grid items-stretch gap-4 md:grid-cols-[20rem_minmax(0,1fr)] md:gap-5">
-        <FeaturedLocalVideo />
+        <FeaturedLocalVideo onReelOpenChange={setReelOpen} />
 
         <div className="grid min-h-0 min-w-0 grid-cols-2 grid-rows-2 gap-2 sm:gap-3 md:h-[calc(20rem*16/9)]">
           <KickLiveCard onOpen={() => setKickOpen(true)} />

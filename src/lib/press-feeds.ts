@@ -1,6 +1,7 @@
 import { createServerFn } from "@tanstack/react-start";
 
 import {
+  FEATURED_PRESS_ARTICLE,
   PRESS_ARTICLES,
   PRESS_SOURCE_URL,
   type PressArticle,
@@ -133,9 +134,14 @@ async function fetchLiveArticles(): Promise<PressArticle[]> {
   return articles;
 }
 
+function pinFeatured(articles: PressArticle[]): PressArticle[] {
+  const rest = articles.filter((article) => article.id !== FEATURED_PRESS_ARTICLE.id);
+  return [FEATURED_PRESS_ARTICLE, ...rest];
+}
+
 function fallbackResult(): PressFeedsResult {
   return {
-    articles: rejectStateDeputyNews(PRESS_ARTICLES),
+    articles: pinFeatured(rejectStateDeputyNews(PRESS_ARTICLES)),
     sourceUrl: PRESS_SOURCE_URL,
     updatedAt: new Date().toISOString(),
     live: false,
@@ -147,7 +153,7 @@ async function buildPressFeeds(): Promise<PressFeedsResult> {
     const articles = await fetchLiveArticles();
     if (articles.length === 0) return fallbackResult();
     return {
-      articles,
+      articles: pinFeatured(articles),
       sourceUrl: PRESS_SOURCE_URL,
       updatedAt: new Date().toISOString(),
       live: true,

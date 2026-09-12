@@ -68,6 +68,14 @@ export const PAGE_SEO = {
     description:
       "Redes oficiais de Padre Kelmon, candidato a Deputado Federal por São Paulo pelo PL. Instagram, TikTok, YouTube, Facebook, X e o site da campanha.",
   },
+  seteSetembro: {
+    path: "/imprensa/7-de-setembro",
+    title:
+      "7 de Setembro: Padre Kelmon chama São Paulo para a Paulista | Deputado Federal 2202",
+    description:
+      "Padre Kelmon convoca apoiadores para a Avenida Paulista às 15h no Dia da Independência, em ato com Flávio Bolsonaro na reta final da campanha.",
+    image: "/news/7-de-setembro-paulista.jpg",
+  },
 } as const;
 
 export function buildPageHead({

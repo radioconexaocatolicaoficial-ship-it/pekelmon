@@ -1,8 +1,22 @@
 import { Newspaper } from "lucide-react";
+import { useState, type CSSProperties } from "react";
 
 import livroImg from "@/assets/livro-fe-e-politica-kelmon.png";
+import { SeteSetembroArticleModal } from "@/components/landing/sete-setembro-article-modal";
+import { SETE_SETEMBRO_ARTICLE } from "@/data/sete-setembro-article";
 
 const HOME_NEWS = [
+  {
+    source: SETE_SETEMBRO_ARTICLE.source,
+    date: SETE_SETEMBRO_ARTICLE.date,
+    title: SETE_SETEMBRO_ARTICLE.title,
+    description: SETE_SETEMBRO_ARTICLE.lead,
+    url: SETE_SETEMBRO_ARTICLE.url,
+    image: SETE_SETEMBRO_ARTICLE.image,
+    objectPosition: SETE_SETEMBRO_ARTICLE.imagePosition,
+    opensModal: true,
+    external: false,
+  },
   {
     source: "Acesse Política",
     date: "04/08/2026",
@@ -12,6 +26,8 @@ const HOME_NEWS = [
     url: "https://acessepolitica.com.br/noticia/179453/baiano-padre-kelmon-tenta-chegar-a-camara-dos-deputados-apos-destaque-nos-debates-de-2022",
     image: "/news/acesse-politica-kelmon.webp",
     objectPosition: "center 18%",
+    opensModal: false,
+    external: true,
   },
   {
     source: "ND Mais",
@@ -22,6 +38,8 @@ const HOME_NEWS = [
     url: "https://ndmais.com.br/politica/candidatos-curiosos-que-marcaram-eleicoes-no-brasil/",
     image: "/news/ndmais-candidatos.jpg",
     objectPosition: "center 30%",
+    opensModal: false,
+    external: false,
   },
   {
     source: "7Minutos",
@@ -33,23 +51,59 @@ const HOME_NEWS = [
     url: "https://7minutos.com.br/noticias/padre-kelmon-reune-liderancas-cristas-em-apoio-a-pre-campanha-de-flavio-bolsonaro-e-celebra-11-anos-de-sacerdocio/",
     image: "/news/7minutos-liderancas.webp",
     objectPosition: "center center",
-  },
-  {
-    source: "7Minutos",
-    date: "07/2026",
-    title: "Padre Kelmon confirma candidatura à Câmara e recebe o Prêmio Notável",
-    description:
-      "A disputa por São Paulo veio acompanhada de reconhecimento nacional pelo trabalho público.",
-    url: "https://7minutos.com.br/noticias/padre-kelmon-confirma-candidatura-a-camara-federal-e-agora-recebe-reconhecimento-nacional-com-o-premio-notavel/",
-    image: "/news/7minutos-premio.webp",
-    objectPosition: "18% 22%",
+    opensModal: false,
+    external: false,
   },
 ] as const;
 
 const BOOK_URL =
   "https://7minutos.com.br/variedades/leitura/padre-kelmon-lanca-seu-livro-fe-e-politica-de-maos-dadas/";
 
+function NewsCardMedia({
+  item,
+}: {
+  item: (typeof HOME_NEWS)[number];
+}) {
+  return (
+    <>
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-200">
+        <img
+          src={item.image}
+          alt=""
+          width={640}
+          height={360}
+          loading="lazy"
+          decoding="async"
+          className="h-full w-full object-cover object-top"
+          style={{ objectPosition: item.objectPosition } as CSSProperties}
+        />
+      </div>
+      <div className="flex flex-col gap-0.5 p-1.5 sm:p-2">
+        <p className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-wide text-gray-500">
+          <Newspaper className="size-2.5 shrink-0" aria-hidden="true" />
+          {item.source} · {item.date}
+        </p>
+        <h3
+          className="line-clamp-2 text-[11px] font-bold leading-snug sm:text-xs"
+          style={{ color: "var(--blue-primary)" }}
+          title={item.title}
+        >
+          {item.title}
+        </h3>
+        <p className="line-clamp-2 text-[10px] leading-snug text-gray-600">
+          {item.description}
+        </p>
+      </div>
+    </>
+  );
+}
+
+const newsCardClassName =
+  "group flex h-full flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white text-left shadow-sm transition hover:border-blue-500 hover:shadow-md";
+
 export function NewsAndBook() {
+  const [articleOpen, setArticleOpen] = useState(false);
+
   return (
     <div className="mt-8 sm:mt-10">
       <div className="mb-4">
@@ -66,44 +120,33 @@ export function NewsAndBook() {
 
       <div className="flex flex-col gap-4 md:flex-row md:items-stretch md:gap-5">
         <div className="grid min-w-0 flex-1 grid-cols-2 gap-2">
-          {HOME_NEWS.map((item) => (
-            <a
-              key={item.url}
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white text-left shadow-sm transition hover:border-blue-500 hover:shadow-md"
-            >
-              <div className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-200">
-                <img
-                  src={item.image}
-                  alt=""
-                  width={640}
-                  height={360}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover"
-                  style={{ objectPosition: item.objectPosition }}
-                />
-              </div>
-              <div className="flex flex-col gap-0.5 p-1.5 sm:p-2">
-                <p className="flex items-center gap-1 text-[9px] font-bold uppercase tracking-wide text-gray-500">
-                  <Newspaper className="size-2.5 shrink-0" aria-hidden="true" />
-                  {item.source} · {item.date}
-                </p>
-                <h3
-                  className="line-clamp-2 text-[11px] font-bold leading-snug sm:text-xs"
-                  style={{ color: "var(--blue-primary)" }}
-                  title={item.title}
+          {HOME_NEWS.map((item) => {
+            if (item.opensModal) {
+              return (
+                <button
+                  key={item.url}
+                  type="button"
+                  onClick={() => setArticleOpen(true)}
+                  className={newsCardClassName}
                 >
-                  {item.title}
-                </h3>
-                <p className="line-clamp-2 text-[10px] leading-snug text-gray-600">
-                  {item.description}
-                </p>
-              </div>
-            </a>
-          ))}
+                  <NewsCardMedia item={item} />
+                </button>
+              );
+            }
+
+            const isExternal = item.url.startsWith("http");
+            return (
+              <a
+                key={item.url}
+                href={item.url}
+                target={isExternal ? "_blank" : undefined}
+                rel={isExternal ? "noopener noreferrer" : undefined}
+                className={newsCardClassName}
+              >
+                <NewsCardMedia item={item} />
+              </a>
+            );
+          })}
         </div>
 
         <a
@@ -136,6 +179,8 @@ export function NewsAndBook() {
           </div>
         </a>
       </div>
+
+      <SeteSetembroArticleModal open={articleOpen} onOpenChange={setArticleOpen} />
     </div>
   );
 }

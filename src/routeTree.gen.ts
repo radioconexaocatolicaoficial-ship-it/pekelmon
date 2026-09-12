@@ -17,6 +17,7 @@ import { Route as NumerosRouteImport } from './routes/numeros'
 import { Route as PautasRouteImport } from './routes/pautas'
 import { Route as SaibaMaisRouteImport } from './routes/saiba-mais'
 import { Route as SobreRouteImport } from './routes/sobre'
+import { Route as Imprensa7DeSetembroRouteImport } from './routes/imprensa.7-de-setembro'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -58,6 +59,11 @@ const SobreRoute = SobreRouteImport.update({
   path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Imprensa7DeSetembroRoute = Imprensa7DeSetembroRouteImport.update({
+  id: '/imprensa/7-de-setembro',
+  path: '/imprensa/7-de-setembro',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/pautas': typeof PautasRoute
   '/saiba-mais': typeof SaibaMaisRoute
   '/sobre': typeof SobreRoute
+  '/imprensa/7-de-setembro': typeof Imprensa7DeSetembroRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/pautas': typeof PautasRoute
   '/saiba-mais': typeof SaibaMaisRoute
   '/sobre': typeof SobreRoute
+  '/imprensa/7-de-setembro': typeof Imprensa7DeSetembroRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/pautas': typeof PautasRoute
   '/saiba-mais': typeof SaibaMaisRoute
   '/sobre': typeof SobreRoute
+  '/imprensa/7-de-setembro': typeof Imprensa7DeSetembroRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/pautas'
     | '/saiba-mais'
     | '/sobre'
+    | '/imprensa/7-de-setembro'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/pautas'
     | '/saiba-mais'
     | '/sobre'
+    | '/imprensa/7-de-setembro'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/pautas'
     | '/saiba-mais'
     | '/sobre'
+    | '/imprensa/7-de-setembro'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   PautasRoute: typeof PautasRoute
   SaibaMaisRoute: typeof SaibaMaisRoute
   SobreRoute: typeof SobreRoute
+  Imprensa7DeSetembroRoute: typeof Imprensa7DeSetembroRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -192,6 +205,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/imprensa/7-de-setembro': {
+      id: '/imprensa/7-de-setembro'
+      path: '/imprensa/7-de-setembro'
+      fullPath: '/imprensa/7-de-setembro'
+      preLoaderRoute: typeof Imprensa7DeSetembroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   PautasRoute: PautasRoute,
   SaibaMaisRoute: SaibaMaisRoute,
   SobreRoute: SobreRoute,
+  Imprensa7DeSetembroRoute: Imprensa7DeSetembroRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
