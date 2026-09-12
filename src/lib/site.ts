@@ -29,6 +29,7 @@ export const OG_IMAGE_HEIGHT = "630";
 export const TWITTER_HANDLE = "@PeKelmon";
 
 export function absoluteUrl(path = "/"): string {
+  if (/^https?:\/\//i.test(path)) return path;
   const normalized = path.startsWith("/") ? path : `/${path}`;
   if (!SITE_URL) return normalized;
   return `${SITE_URL}${normalized}`;
@@ -40,6 +41,17 @@ export type BreadcrumbItem = {
 };
 
 export const PAGE_SEO = {
+  biografia: {
+    path: "/biografia",
+    title: "Padre Kelmon | Biografia e História",
+    description:
+      "Biografia de Padre Kelmon: sacerdote, trajetória pública, Foro do Brasil e a candidatura a Deputado Federal por São Paulo pelo PL.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Biografia", path: "/biografia" },
+    ] satisfies BreadcrumbItem[],
+    schema: "profile" as const,
+  },
   sobre: {
     path: "/sobre",
     title: "Padre Kelmon | Biografia e História",
@@ -81,6 +93,86 @@ export const PAGE_SEO = {
       { name: "Notícias", path: "/midia" },
     ] satisfies BreadcrumbItem[],
   },
+  noticias: {
+    path: "/noticias",
+    title: "Padre Kelmon | Notícias",
+    description:
+      "Notícias e matérias sobre Padre Kelmon: convocações da campanha, imprensa e registros públicos da trajetória.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Notícias", path: "/noticias" },
+    ] satisfies BreadcrumbItem[],
+  },
+  agenda: {
+    path: "/agenda",
+    title: "Padre Kelmon | Agenda",
+    description:
+      "Agenda pública de Padre Kelmon. Eventos com data, horário e local confirmados, inclusive o arquivo histórico.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Agenda", path: "/agenda" },
+    ] satisfies BreadcrumbItem[],
+  },
+  eventos: {
+    path: "/eventos",
+    title: "Padre Kelmon | Eventos",
+    description:
+      "Eventos públicos de Padre Kelmon com informações verificáveis de data, horário e local.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Eventos", path: "/eventos" },
+    ] satisfies BreadcrumbItem[],
+  },
+  entrevistas: {
+    path: "/entrevistas",
+    title: "Padre Kelmon | Entrevistas",
+    description:
+      "Entrevistas reais de Padre Kelmon em podcasts e programas, com data, veículo e o vídeo oficial no YouTube.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Entrevistas", path: "/entrevistas" },
+    ] satisfies BreadcrumbItem[],
+  },
+  discursos: {
+    path: "/discursos",
+    title: "Padre Kelmon | Discursos e falas",
+    description:
+      "Falas e pronunciamentos públicos de Padre Kelmon com registro em vídeo oficial, sem reproduzir conteúdo de terceiros.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Discursos", path: "/discursos" },
+    ] satisfies BreadcrumbItem[],
+  },
+  conteudos: {
+    path: "/conteudos",
+    title: "Padre Kelmon | Conteúdos",
+    description:
+      "Textos, livro, projetos e materiais editoriais do site oficial de Padre Kelmon.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Conteúdos", path: "/conteudos" },
+    ] satisfies BreadcrumbItem[],
+  },
+  redesSociais: {
+    path: "/redes-sociais",
+    title: "Padre Kelmon | Redes Sociais Oficiais",
+    description:
+      "Perfis oficiais de Padre Kelmon no Instagram, TikTok, YouTube, Facebook e X.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Redes sociais", path: "/redes-sociais" },
+    ] satisfies BreadcrumbItem[],
+  },
+  mapaDoSite: {
+    path: "/mapa-do-site",
+    title: "Padre Kelmon | Mapa do site",
+    description:
+      "Mapa do site oficial de Padre Kelmon, com links para biografia, notícias, agenda, entrevistas e contato.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Mapa do site", path: "/mapa-do-site" },
+    ] satisfies BreadcrumbItem[],
+  },
   numeros: {
     path: "/numeros",
     title: "Padre Kelmon | Números e indicadores",
@@ -89,6 +181,17 @@ export const PAGE_SEO = {
     breadcrumbs: [
       { name: "Início", path: "/" },
       { name: "Números", path: "/numeros" },
+    ] satisfies BreadcrumbItem[],
+  },
+  discursosMissa: {
+    path: "/discursos/missa-de-lancamento-campanha",
+    title: "Padre Kelmon | Missa de lançamento da campanha",
+    description:
+      "Missa de lançamento da campanha de Padre Kelmon a Deputado Federal, com o vídeo oficial no YouTube.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Discursos", path: "/discursos" },
+      { name: "Missa de lançamento", path: "/discursos/missa-de-lancamento-campanha" },
     ] satisfies BreadcrumbItem[],
   },
   links: {
@@ -123,6 +226,50 @@ export const PAGE_SEO = {
       { name: "7 de Setembro", path: "/imprensa/7-de-setembro" },
     ] satisfies BreadcrumbItem[],
     schema: "article" as const,
+  },
+  politicaPrivacidade: {
+    path: "/politica-de-privacidade",
+    title: "Política de Privacidade | Padre Kelmon",
+    description:
+      "Como o site oficial de Padre Kelmon trata dados pessoais enviados pelo formulário de contato, em conformidade com a LGPD.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Política de Privacidade", path: "/politica-de-privacidade" },
+    ] satisfies BreadcrumbItem[],
+    robots: "noindex, follow",
+  },
+  termosDeUso: {
+    path: "/termos-de-uso",
+    title: "Termos de Uso | Padre Kelmon",
+    description:
+      "Condições de uso do site oficial de Padre Kelmon, da campanha a Deputado Federal por São Paulo.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Termos de Uso", path: "/termos-de-uso" },
+    ] satisfies BreadcrumbItem[],
+    robots: "noindex, follow",
+  },
+  politicaCookies: {
+    path: "/politica-de-cookies",
+    title: "Política de Cookies | Padre Kelmon",
+    description:
+      "Informações sobre o aviso de cookies usado no site oficial de Padre Kelmon.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Política de Cookies", path: "/politica-de-cookies" },
+    ] satisfies BreadcrumbItem[],
+    robots: "noindex, follow",
+  },
+  contatoSucesso: {
+    path: "/contato/sucesso",
+    title: "Mensagem enviada | Padre Kelmon",
+    description: "Seu cadastro foi enviado à campanha de Padre Kelmon.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Contato", path: "/contato" },
+      { name: "Enviado", path: "/contato/sucesso" },
+    ] satisfies BreadcrumbItem[],
+    robots: "noindex, follow",
   },
 } as const;
 

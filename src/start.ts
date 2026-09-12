@@ -1,6 +1,7 @@
 import { createStart, createCsrfMiddleware, createMiddleware } from "@tanstack/react-start";
 
 import { renderErrorPage } from "./lib/error-page";
+import { httpStatusFallbackResponse } from "./lib/http-status-fallback";
 
 const GOOGLE_SITE_VERIFICATION_PATH = "/google6e3cc8fc1fe21502.html";
 const GOOGLE_SITE_VERIFICATION_BODY =
@@ -13,6 +14,9 @@ const googleVerificationMiddleware = createMiddleware().server(async ({ next, re
     url.protocol = "https:";
     return Response.redirect(url.toString(), 301);
   }
+
+  const statusFallback = httpStatusFallbackResponse(request);
+  if (statusFallback) return statusFallback;
 
   const pathname = url.pathname.replace(/\/$/, "") || "/";
   if (pathname === GOOGLE_SITE_VERIFICATION_PATH) {

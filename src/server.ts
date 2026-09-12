@@ -2,6 +2,7 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { httpStatusFallbackResponse } from "./lib/http-status-fallback";
 
 type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
@@ -74,6 +75,9 @@ export default {
     try {
       const hostRedirect = canonicalHostRedirect(request);
       if (hostRedirect) return hostRedirect;
+
+      const statusFallback = httpStatusFallbackResponse(request);
+      if (statusFallback) return statusFallback;
 
       const { pathname } = new URL(request.url);
       if (pathname === GOOGLE_SITE_VERIFICATION_PATH) {
