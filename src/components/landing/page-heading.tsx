@@ -20,8 +20,12 @@ export function PageHeading({
         {kicker}
       </p>
       <h1
-        className="text-[1.75rem] font-black sm:text-4xl"
-        style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
+        className="font-black leading-tight"
+        style={{
+          fontFamily: "var(--font-display)",
+          color: "var(--blue-primary)",
+          fontSize: "clamp(1.5rem, 2.6vw, 2.5rem)",
+        }}
       >
         {title}
       </h1>

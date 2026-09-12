@@ -37,8 +37,8 @@ export function CallToAction() {
             Faça parte
           </p>
           <h2
-            className="mx-auto max-w-3xl text-[1.75rem] font-black leading-tight text-white sm:text-4xl lg:text-5xl"
-            style={{ fontFamily: "var(--font-display)" }}
+            className="display-heading mx-auto max-w-3xl font-black leading-tight text-white"
+            style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.5rem, 4vw, 2.75rem)" }}
           >
             O Brasil precisa de gente{" "}
             <span style={{ color: "var(--yellow-primary)" }}>de fé e de coragem</span>

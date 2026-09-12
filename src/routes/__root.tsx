@@ -10,6 +10,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import layoutCss from "../layout.css?url";
 import { Toaster } from "../components/ui/sonner";
 import { PwaRegister } from "../components/pwa-register";
 import { CookieBanner } from "../components/cookie-banner";
@@ -139,6 +140,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
+      { rel: "stylesheet", href: layoutCss },
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "icon", href: "/favicon-campanha.png?v=9", type: "image/png", sizes: "any" },
       { rel: "icon", href: "/favicon-32x32.png?v=9", type: "image/png", sizes: "32x32" },
@@ -158,6 +160,46 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="pt-BR">
       <head>
         <HeadContent />
+        <style>{`
+          .site-nav-desktop{display:none;align-items:center;justify-content:flex-end}
+          .site-nav-toggle{display:inline-flex}
+          .youtube-civic-row{display:grid;grid-template-columns:1fr;gap:1rem;align-items:start}
+          .civic-stack{display:flex;flex-direction:column;gap:.75rem}
+          .highlights-main{display:flex;flex-direction:column;min-width:0}
+          .highlights-main>:first-child{flex-shrink:0}
+          .imprensa-block{display:flex;flex-direction:column;margin-top:1.5rem}
+          .imprensa-row{display:flex;flex-direction:column;gap:1rem;min-height:0}
+          .imprensa-news-grid{display:grid;grid-template-columns:1fr;gap:.75rem;min-width:0}
+          .imprensa-news-card{display:flex;height:100%;min-height:0;flex-direction:column;overflow:hidden;border-radius:.75rem;border:2px solid #e5e7eb;background:#fff;text-align:left;box-shadow:0 1px 2px rgba(15,23,42,.06)}
+          .imprensa-news-copy{display:flex;flex:1;min-height:0;flex-direction:column;gap:.3rem;overflow:hidden;padding:.7rem .8rem .55rem}
+          .imprensa-news-meta{flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#6b7280}
+          .imprensa-news-title{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;flex-shrink:0;font-size:13px;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+          .imprensa-news-desc{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:6;overflow:hidden;flex:1;min-height:0;font-size:12px;line-height:1.4;color:#4b5563;overflow-wrap:break-word}
+          .civic-rail-spacer{display:none}
+          .youtube-grid-row{display:grid;grid-template-columns:1fr;gap:1rem;align-items:start}
+          .youtube-featured{position:relative;width:100%;max-width:20rem;margin-inline:auto;aspect-ratio:1080/1920;height:auto;overflow:hidden;border-radius:.75rem;background:#171717}
+          .youtube-featured video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+          .youtube-cards{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:.75rem;min-height:0}
+          .youtube-card-preview{aspect-ratio:1920/1080}
+          @media (min-width:768px){
+            .imprensa-news-grid{grid-template-columns:1fr 1fr}
+            .youtube-grid-row{grid-template-columns:minmax(0,1fr) minmax(14rem,20rem);align-items:stretch;gap:1.25rem}
+            .youtube-featured{margin-inline:0;max-width:none}
+            .youtube-cards{height:100%}
+          }
+          @media (min-width:1024px){
+            .site-nav-desktop{display:flex}
+            .site-nav-toggle,[data-mobile-bottom-nav]{display:none!important}
+            .cookie-banner{bottom:1rem}
+            .youtube-civic-row{grid-template-columns:minmax(16rem,20rem) minmax(0,1fr);gap:1.25rem;align-items:start}
+            .highlights-main{height:0;min-height:100%}
+            .imprensa-block,.imprensa-row{height:100%}
+            .imprensa-block{flex:1;min-height:0;margin-top:2rem}
+            .imprensa-row{flex:1;flex-direction:row;align-items:stretch;gap:1.25rem}
+            .imprensa-news-grid{flex:1;grid-template-columns:1fr 1fr;gap:.75rem}
+            .civic-rail-spacer{display:block}
+          }
+        `}</style>
       </head>
       <body>
         {children}

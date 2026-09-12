@@ -648,8 +648,12 @@ export function Media({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
                 Mídia
               </p>
               <Heading
-                className="mb-4 text-[1.75rem] font-black sm:text-4xl lg:text-5xl"
-                style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
+                className="display-heading mb-4 font-black"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  color: "var(--blue-primary)",
+                  fontSize: "clamp(1.5rem, 4vw, 2.75rem)",
+                }}
               >
                 Padre Kelmon nas Redes Sociais
               </Heading>

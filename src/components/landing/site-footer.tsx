@@ -64,7 +64,7 @@ export function SiteFooter() {
       />
 
       <PageShell className="relative py-6 sm:py-7 lg:py-8">
-        <div className="grid items-start gap-8 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.85fr)_minmax(0,0.85fr)_minmax(0,1.3fr)] lg:gap-x-12">
+        <div className="grid min-w-0 items-start gap-8 sm:grid-cols-2 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.85fr)_minmax(0,0.85fr)_minmax(0,1.3fr)] lg:gap-x-8 xl:gap-x-12">
           <div className="sm:col-span-2 lg:col-span-1">
             <Link
               to="/"

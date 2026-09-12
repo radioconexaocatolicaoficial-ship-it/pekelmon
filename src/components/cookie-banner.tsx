@@ -34,16 +34,13 @@ export function CookieBanner() {
       role="dialog"
       aria-live="polite"
       aria-label="Aviso de cookies"
-      className={`fixed inset-x-0 z-40 ${
-        isBio
-          ? "bottom-[calc(4.6rem+env(safe-area-inset-bottom,0px))] px-4"
-          : "bottom-[calc(4.6rem+env(safe-area-inset-bottom,0px))] px-3 sm:px-4 md:bottom-4 md:px-6"
-      }`}
+      className={`cookie-banner fixed inset-x-0 z-40 ${isBio ? "px-4" : "px-3 sm:px-4"}`}
     >
       <div
-        className={`mx-auto flex flex-col items-stretch gap-3 rounded-lg bg-white px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.12)] sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-5 sm:py-3.5 ${
-          isBio ? "max-w-[430px] py-2.5" : "max-w-6xl"
+        className={`mx-auto flex w-full flex-col items-stretch gap-3 rounded-lg bg-white px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.12)] sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-5 sm:py-3.5 ${
+          isBio ? "max-w-[430px] py-2.5" : ""
         }`}
+        style={isBio ? undefined : { maxWidth: "1280px" }}
       >
         <p className="text-sm leading-relaxed text-neutral-800 sm:text-[0.95rem]">
           Utilizamos cookies conforme o{" "}

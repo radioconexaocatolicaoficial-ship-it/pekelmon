@@ -46,8 +46,12 @@ export function SocialLinks() {
               Redes sociais
             </p>
             <h2
-              className="text-[1.75rem] font-black leading-tight sm:text-4xl lg:text-5xl"
-              style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
+              className="display-heading font-black leading-tight"
+              style={{
+                fontFamily: "var(--font-display)",
+                color: "var(--blue-primary)",
+                fontSize: "clamp(1.5rem, 4vw, 2.75rem)",
+              }}
             >
               Siga Padre Kelmon
             </h2>

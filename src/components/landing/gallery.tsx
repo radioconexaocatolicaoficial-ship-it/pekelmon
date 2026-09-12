@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Expand } from "lucide-react";
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { Reveal, SectionHeading } from "./primitives";
+import { PageShell, Reveal, SectionHeading } from "./primitives";
 import { GALLERY, type GalleryItem } from "@/lib/campaign-data";
 
 export function Gallery() {
@@ -10,15 +10,14 @@ export function Gallery() {
 
   return (
     <section id="galeria" className="section-y border-t border-border/50">
-      <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
-        <div className="px-5 lg:px-0">
+      <PageShell>
         <SectionHeading
           eyebrow="Galeria"
           title="Registros da caminhada"
           subtitle="Fotos da campanha e do perfil @pekelmon."
         />
 
-        <div className="mt-14 columns-1 gap-5 sm:columns-2 lg:columns-3 [&>*]:mb-5">
+        <div className="mt-8 columns-1 gap-5 sm:mt-12 sm:columns-2 lg:columns-3 [&>*]:mb-5">
           {GALLERY.map((item, i) => (
             <Reveal key={item.src} delay={0.04 * i} className="break-inside-avoid">
               <button
@@ -46,8 +45,7 @@ export function Gallery() {
             </Reveal>
           ))}
         </div>
-      </div>
-      </div>
+      </PageShell>
 
       <Dialog open={!!active} onOpenChange={(o) => !o && setActive(null)}>
         <DialogContent className="max-w-3xl border-border bg-card p-2">

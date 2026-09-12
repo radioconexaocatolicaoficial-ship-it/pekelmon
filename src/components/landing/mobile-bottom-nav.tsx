@@ -26,7 +26,7 @@ export function MobileBottomNav() {
       data-mobile-bottom-nav
       className={cn(
         "fixed inset-x-0 bottom-0 z-50 border-t border-black/5 bg-white/90 backdrop-blur-md",
-        isBio ? "mx-auto max-w-[430px]" : "md:hidden",
+        isBio ? "mx-auto max-w-[430px]" : "lg:hidden",
       )}
       style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
     >

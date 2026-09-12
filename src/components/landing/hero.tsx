@@ -2,8 +2,8 @@ import { motion } from "motion/react";
 
 import { PageShell } from "./primitives";
 import { HeroBannerCarousel } from "./hero-banner-carousel";
-import { HeroServiceCards } from "./hero-service-cards";
 import { HeroSocialBar } from "./hero-social-bar";
+import { HeroStoryCarousel } from "./hero-story-carousel";
 
 export function Hero({ embedded = false }: { embedded?: boolean }) {
   return (
@@ -24,10 +24,12 @@ export function Hero({ embedded = false }: { embedded?: boolean }) {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.55 }}
         >
-          <HeroBannerCarousel className="rounded-2xl shadow-lg" />
+          <div className="flex min-w-0 flex-col items-center gap-3 lg:flex-row lg:items-start">
+            <HeroBannerCarousel className="min-w-0 w-full flex-1 rounded-2xl shadow-lg" />
+            <HeroStoryCarousel className="min-w-0 max-w-full shrink-0 rounded-2xl shadow-lg" />
+          </div>
         </motion.div>
         <HeroSocialBar />
-        <HeroServiceCards />
       </PageShell>
     </section>
   );

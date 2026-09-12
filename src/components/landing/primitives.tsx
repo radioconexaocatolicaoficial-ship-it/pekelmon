@@ -1,7 +1,13 @@
 import { motion, useInView } from "motion/react";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
+
+const siteContainerStyle: CSSProperties = {
+  width: "min(calc(100% - clamp(32px, 5vw, 48px)), 1280px)",
+  marginInline: "auto",
+  minWidth: 0,
+};
 
 /** Container padrão do site — mesma largura/padding em todos os breakpoints */
 export function PageShell({
@@ -12,12 +18,7 @@ export function PageShell({
   className?: string;
 }) {
   return (
-    <div
-      className={cn(
-        "mx-auto w-full max-w-[1120px] px-4 sm:px-5 lg:px-6",
-        className,
-      )}
-    >
+    <div className={cn("site-container", className)} style={siteContainerStyle}>
       {children}
     </div>
   );
@@ -64,7 +65,12 @@ export function SectionHeading({
       {eyebrow ? (
         <p className="text-xs font-semibold uppercase tracking-[0.28em] text-primary">{eyebrow}</p>
       ) : null}
-      <Heading className="mt-3 text-[1.75rem] font-semibold leading-tight sm:text-3xl lg:text-4xl">
+      <Heading
+        className="mt-3 font-semibold leading-tight"
+        style={{
+          fontSize: headingAs === "h1" ? "clamp(1.5rem, 2.6vw, 2.5rem)" : "clamp(1.35rem, 2.2vw, 2.25rem)",
+        }}
+      >
         {title}
       </Heading>
       <div className={`gold-rule mt-4 sm:mt-5 ${align === "center" ? "mx-auto" : ""}`} />

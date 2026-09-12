@@ -1,8 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { Play } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import featuredVideoUrl from "@/assets/video-destaque-padre-kelmon.mp4?url";
-import { SeteSetembroArticleModal } from "@/components/landing/sete-setembro-article-modal";
 import {
   Dialog,
   DialogContent,
@@ -10,32 +9,53 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { SETE_SETEMBRO_REEL } from "@/data/sete-setembro-article";
 import { YOUTUBE_HIGHLIGHTS, YOUTUBE_PINNED_GRID_IDS, type YoutubeHighlight } from "@/data/youtube-highlights";
+import { getYoutubeGridVideos } from "@/lib/youtube-grid";
 
-const FEATURED_VIDEO_TITLE = "Padre Kelmon, vídeo em destaque";
+const FEATURED_WIDTH = 1080;
+const FEATURED_HEIGHT = 1920;
 
-/** Reel do 7 de Setembro no destaque até 08/09/2026 00:00 (horário de Brasília). */
-const SETE_SETEMBRO_REEL_UNTIL_MS = Date.parse("2026-09-08T00:00:00-03:00");
+const FEATURED_VIDEOS = [
+  {
+    id: 1,
+    src: "/destaques/video-destaque.mp4",
+    label: "Fé",
+    title: "Fé",
+  },
+  {
+    id: 2,
+    src: "/destaques/dr-marcelo-polegar.mp4",
+    label: "Marcelo Polegar",
+    title: "Marcelo Polegar",
+  },
+  {
+    id: 3,
+    src: "/destaques/autenticidade-crista.mp4",
+    label: "Cristiane Brasil",
+    title: "Cristiane Brasil",
+  },
+  {
+    id: 4,
+    src: "/destaques/padre-kelmon.mp4",
+    label: "Senador Marcos Pontes",
+    title: "Senador Marcos Pontes",
+  },
+] as const;
 
-function shouldShowSeteSetembroReel(now = Date.now()) {
-  return now < SETE_SETEMBRO_REEL_UNTIL_MS;
-}
-
-const KICK_LIVE = {
-  slug: "brunoaiubshowlive",
-  url: "https://kick.com/brunoaiubshowlive",
-  embedUrl: "https://player.kick.com/brunoaiubshowlive",
-  title: "Bruno Aiub Show Live",
-  description: "Transmissão ao vivo na Kick. Clique para assistir.",
-  thumbnail:
-    "https://files.kick.com/images/user/123489094/profile_image/conversion/35d82f83-d637-4964-a2cb-5a4e25845960-fullsize.webp",
-} as const;
+const PREVIEW_WIDTH = 1920;
+const PREVIEW_HEIGHT = 1080;
 
 const SIDE_PAGE_SIZE = 4;
-const KICK_SLOT_COUNT = 1;
+const LATEST_SLOT_COUNT = 1;
 const PINNED_SLOT_COUNT = YOUTUBE_PINNED_GRID_IDS.length;
-const ROTATING_SLOT_COUNT = SIDE_PAGE_SIZE - KICK_SLOT_COUNT - PINNED_SLOT_COUNT;
+const ROTATING_SLOT_COUNT = Math.max(
+  0,
+  SIDE_PAGE_SIZE - LATEST_SLOT_COUNT - PINNED_SLOT_COUNT,
+);
+
+function youtubePreviewSrc(id: string) {
+  return `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+}
 /** 1 minuto em cada conjunto de cards laterais antes de trocar. */
 const SIDE_ROTATE_MS = 60_000;
 /** Cards laterais em rotação (além dos vídeos fixos). */
@@ -78,15 +98,21 @@ function VideoCard({
       onClick={() => onOpen(video)}
       className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white text-left shadow-sm transition hover:border-blue-500 hover:shadow-md"
     >
-      <div className="relative min-h-0 w-full flex-1 overflow-hidden bg-gray-100">
+      <div
+        className="youtube-card-preview relative w-full shrink-0 overflow-hidden bg-gray-100"
+        style={{ aspectRatio: `${PREVIEW_WIDTH} / ${PREVIEW_HEIGHT}` }}
+      >
         <img
-          src={video.thumbnail}
+          src={youtubePreviewSrc(video.id)}
           alt=""
-          width={480}
-          height={360}
+          width={PREVIEW_WIDTH}
+          height={PREVIEW_HEIGHT}
           loading="lazy"
           decoding="async"
-          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+          className="absolute inset-0 h-full w-full object-cover object-center transition duration-300 group-hover:scale-105"
+          onError={(event) => {
+            event.currentTarget.src = video.thumbnail;
+          }}
         />
         <span className="absolute inset-0 flex items-center justify-center bg-black/25 transition group-hover:bg-black/35">
           <span className="inline-flex size-9 items-center justify-center rounded-full bg-red-600 text-white shadow-lg sm:size-10">
@@ -102,7 +128,7 @@ function VideoCard({
         >
           {video.title}
         </h3>
-        <p className="line-clamp-2 text-[11px] leading-snug text-gray-600 sm:text-xs">
+        <p className="line-clamp-1 text-[11px] leading-snug text-gray-600 sm:text-xs">
           {video.description}
         </p>
       </div>
@@ -110,173 +136,143 @@ function VideoCard({
   );
 }
 
-function KickLiveCard({ onOpen }: { onOpen: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onOpen}
-      className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white text-left shadow-sm transition hover:border-[#53FC18] hover:shadow-md"
-    >
-      <div className="relative min-h-0 w-full flex-1 overflow-hidden bg-neutral-950">
-        <img
-          src={KICK_LIVE.thumbnail}
-          alt=""
-          width={480}
-          height={360}
-          loading="lazy"
-          decoding="async"
-          className="h-full w-full object-cover object-center transition duration-300 group-hover:scale-105"
-        />
-        <span className="absolute inset-0 flex items-center justify-center bg-black/35 transition group-hover:bg-black/45">
-          <span className="inline-flex size-9 items-center justify-center rounded-full bg-[#53FC18] text-black shadow-lg sm:size-10">
-            <Play className="size-4 fill-current sm:size-5" aria-hidden="true" />
-          </span>
-        </span>
-        <span className="absolute left-2 top-2 rounded bg-[#53FC18] px-1.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-black sm:text-[11px]">
-          Kick
-        </span>
-      </div>
-      <div className="flex shrink-0 flex-col gap-1 p-2 sm:p-2.5">
-        <h3
-          className="line-clamp-2 text-xs font-bold leading-snug sm:text-sm"
-          style={{ color: "var(--blue-primary)" }}
-          title={KICK_LIVE.title}
-        >
-          {KICK_LIVE.title}
-        </h3>
-        <p className="line-clamp-2 text-[11px] leading-snug text-gray-600 sm:text-xs">
-          {KICK_LIVE.description}
-        </p>
-      </div>
-    </button>
-  );
+const FEATURED_ROTATE_MS = 2 * 60 * 1000;
+
+function pickRandomFeaturedId(currentId: (typeof FEATURED_VIDEOS)[number]["id"]) {
+  const others = FEATURED_VIDEOS.filter((item) => item.id !== currentId);
+  return others[Math.floor(Math.random() * others.length)]?.id ?? currentId;
 }
 
-function FeaturedLocalVideo({
-  onReelOpenChange,
-}: {
-  onReelOpenChange?: (open: boolean) => void;
-}) {
-  const [showReel, setShowReel] = useState(shouldShowSeteSetembroReel);
-  const [reelOpen, setReelOpen] = useState(false);
-  const previewRef = useRef<HTMLVideoElement>(null);
+function FeaturedVideoCarousel() {
+  const [selectedId, setSelectedId] = useState<(typeof FEATURED_VIDEOS)[number]["id"]>(
+    FEATURED_VIDEOS[0].id,
+  );
+  const selected = FEATURED_VIDEOS.find((item) => item.id === selectedId) ?? FEATURED_VIDEOS[0];
 
   useEffect(() => {
-    const sync = () => setShowReel(shouldShowSeteSetembroReel());
-    sync();
-    const remaining = SETE_SETEMBRO_REEL_UNTIL_MS - Date.now();
-    if (remaining <= 0) return;
-    const id = window.setTimeout(sync, remaining + 50);
-    return () => window.clearTimeout(id);
-  }, []);
-
-  useEffect(() => {
-    if (!showReel) setReelOpen(false);
-  }, [showReel]);
-
-  useEffect(() => {
-    onReelOpenChange?.(reelOpen);
-  }, [onReelOpenChange, reelOpen]);
-
-  useEffect(() => {
-    if (reelOpen) {
-      previewRef.current?.pause();
-      return;
-    }
-    void previewRef.current?.play().catch(() => undefined);
-  }, [reelOpen]);
-
-  if (showReel) {
-    return (
-      <>
-        <div className="mx-auto flex w-[min(100%,20rem)] shrink-0 flex-col gap-2 md:mx-0 md:w-full">
-          <div className="group relative aspect-[1080/1920] w-full overflow-hidden rounded-xl bg-neutral-900">
-            <video
-              ref={previewRef}
-              className="pointer-events-none absolute inset-0 h-full w-full object-cover"
-              src={SETE_SETEMBRO_REEL.videoSrc}
-              width={1080}
-              height={1920}
-              muted
-              loop
-              playsInline
-              autoPlay
-              preload="metadata"
-              title={SETE_SETEMBRO_REEL.title}
-            />
-            <button
-              type="button"
-              onClick={() => setReelOpen(true)}
-              className="absolute inset-0 flex items-center justify-center bg-black/20 transition hover:bg-black/35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/80"
-              aria-label="Abrir Reel do Instagram e a matéria completa"
-            >
-              <span className="inline-flex size-14 items-center justify-center rounded-full bg-white/90 text-neutral-900 shadow-lg">
-                <Play className="size-7 fill-current" aria-hidden="true" />
-              </span>
-            </button>
-            <span className="pointer-events-none absolute left-2 top-2 z-10 rounded bg-black/70 px-1.5 py-0.5 text-[10px] font-black uppercase tracking-wide text-white">
-              Instagram
-            </span>
-          </div>
-        </div>
-
-        <SeteSetembroArticleModal open={reelOpen} onOpenChange={setReelOpen} />
-      </>
-    );
-  }
+    const id = window.setInterval(() => {
+      setSelectedId((current) => pickRandomFeaturedId(current));
+    }, FEATURED_ROTATE_MS);
+    return () => window.clearInterval(id);
+  }, [selectedId]);
 
   return (
-    <div className="mx-auto w-[min(100%,20rem)] shrink-0 overflow-hidden rounded-xl md:mx-0 md:w-full">
-      <div className="relative aspect-[1080/1920] w-full overflow-hidden rounded-xl bg-neutral-900">
-        <video
-          className="absolute inset-0 h-full w-full object-cover object-[center_18%]"
-          src={featuredVideoUrl}
-          width={1080}
-          height={1920}
-          controls
-          playsInline
-          preload="auto"
-          title={FEATURED_VIDEO_TITLE}
-        >
-          Seu navegador não reproduz vídeo.{" "}
-          <a href={featuredVideoUrl} className="underline">
-            Baixar o vídeo em destaque
-          </a>
-          .
-        </video>
+    <div
+      className="youtube-featured"
+      style={{ aspectRatio: `${FEATURED_WIDTH} / ${FEATURED_HEIGHT}` }}
+    >
+      <video
+        key={selected.src}
+        src={selected.src}
+        width={FEATURED_WIDTH}
+        height={FEATURED_HEIGHT}
+        controls
+        playsInline
+        preload="metadata"
+        title={selected.title}
+        className="absolute inset-0 h-full w-full object-cover object-center"
+      >
+        Seu navegador não reproduz vídeo.{" "}
+        <a href={selected.src} className="underline">
+          Baixar {selected.title}
+        </a>
+        .
+      </video>
+
+      <div
+        role="tablist"
+        aria-label="Escolher vídeo"
+        className="absolute z-10 flex items-stretch overflow-hidden rounded-lg bg-white/95 shadow-sm"
+        style={{ top: "0.55rem", left: "5%", width: "90%", gap: 2, padding: 2 }}
+      >
+        {FEATURED_VIDEOS.map((item) => {
+          const isActive = item.id === selected.id;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-label={item.title}
+              onClick={() => setSelectedId(item.id)}
+              style={
+                isActive
+                  ? { flex: 1, minWidth: 0, height: 25 }
+                  : { width: 25, height: 25, flexShrink: 0 }
+              }
+              className={`flex items-center justify-center overflow-hidden rounded-md text-[0.58rem] font-black uppercase tracking-wide transition-all duration-300 ease-out ${
+                isActive
+                  ? "gap-1 bg-[var(--blue-primary)] px-1 text-white"
+                  : "text-[var(--blue-primary)] hover:bg-black/5"
+              }`}
+            >
+              {isActive ? (
+                <>
+                  <span
+                    className="grid shrink-0 place-items-center rounded-full bg-white font-black text-[var(--blue-primary)]"
+                    style={{ width: 18, height: 18, fontSize: "0.56rem" }}
+                  >
+                    {item.id}
+                  </span>
+                  <span className="truncate">{item.label}</span>
+                </>
+              ) : (
+                item.id
+              )}
+            </button>
+          );
+        })}
       </div>
     </div>
   );
 }
 
+const YOUTUBE_REFRESH_MS = 60_000;
+
 export function VideoHighlights() {
-  const ranked = useMemo(() => rankVideos(YOUTUBE_HIGHLIGHTS), []);
+  const youtubeQuery = useQuery({
+    queryKey: ["youtube-grid", "live-uploads"],
+    queryFn: () => getYoutubeGridVideos(),
+    staleTime: YOUTUBE_REFRESH_MS,
+    refetchInterval: YOUTUBE_REFRESH_MS,
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+    placeholderData: YOUTUBE_HIGHLIGHTS,
+  });
+  const videos = youtubeQuery.data ?? YOUTUBE_HIGHLIGHTS;
+  const ranked = useMemo(() => rankVideos(videos), [videos]);
   const [page, setPage] = useState(0);
   const [active, setActive] = useState<YoutubeHighlight | null>(null);
-  const [kickOpen, setKickOpen] = useState(false);
-  const [reelOpen, setReelOpen] = useState(false);
+
+  const latestVideo = videos[0];
 
   const pinned = useMemo(() => {
-    const byId = new Map(YOUTUBE_HIGHLIGHTS.map((video) => [video.id, video]));
+    const byId = new Map(videos.map((video) => [video.id, video]));
     return YOUTUBE_PINNED_GRID_IDS.map((id) => byId.get(id)).filter(
-      (video): video is YoutubeHighlight => Boolean(video),
+      (video): video is YoutubeHighlight => Boolean(video) && video.id !== latestVideo?.id,
     );
-  }, []);
+  }, [latestVideo, videos]);
   const pinnedIds = useMemo(() => new Set(pinned.map((video) => video.id)), [pinned]);
 
   const rotatingVideos = useMemo(
-    () => ranked.filter((video) => !pinnedIds.has(video.id)).slice(0, SIDE_ROTATION_LIMIT),
-    [ranked, pinnedIds],
+    () =>
+      ranked
+        .filter((video) => !pinnedIds.has(video.id) && video.id !== latestVideo?.id)
+        .slice(0, SIDE_ROTATION_LIMIT),
+    [ranked, pinnedIds, latestVideo],
   );
-  const pageCount = Math.max(1, Math.ceil(rotatingVideos.length / ROTATING_SLOT_COUNT));
+  const pageCount =
+    ROTATING_SLOT_COUNT > 0
+      ? Math.max(1, Math.ceil(rotatingVideos.length / ROTATING_SLOT_COUNT))
+      : 1;
 
   useEffect(() => {
-    if (active || kickOpen || reelOpen || pageCount <= 1) return;
+    if (active || pageCount <= 1) return;
     const id = window.setInterval(() => {
       setPage((current) => (current + 1) % pageCount);
     }, SIDE_ROTATE_MS);
     return () => window.clearInterval(id);
-  }, [active, kickOpen, reelOpen, pageCount]);
+  }, [active, pageCount]);
 
   const rotatingPage = rotatingVideos.slice(
     page * ROTATING_SLOT_COUNT,
@@ -285,25 +281,23 @@ export function VideoHighlights() {
   const sidePage = [...pinned, ...rotatingPage];
 
   return (
-    <div className="mb-8 space-y-4 sm:mb-10">
+    <div className="space-y-4">
       <div>
         <h2
           className="text-xl font-black sm:text-2xl"
           style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
         >
-          Padre Kelmon no YouTube
+          Padre Kelmon
         </h2>
         <p className="mt-1 text-sm text-gray-600">
-          Entrevistas, lives e podcasts. Clique para assistir.
+          Últimas notícias e novidades do Padre Kelmon
         </p>
       </div>
 
-      <div className="grid items-stretch gap-4 md:grid-cols-[20rem_minmax(0,1fr)] md:gap-5">
-        <FeaturedLocalVideo onReelOpenChange={setReelOpen} />
-
-        <div className="grid min-h-0 min-w-0 grid-cols-2 grid-rows-2 gap-2 sm:gap-3 md:h-[calc(20rem*16/9)]">
-          <KickLiveCard onOpen={() => setKickOpen(true)} />
-          {Array.from({ length: SIDE_PAGE_SIZE - KICK_SLOT_COUNT }, (_, index) => {
+      <div className="youtube-grid-row min-w-0">
+        <div className="youtube-cards">
+          {latestVideo ? <VideoCard video={latestVideo} onOpen={setActive} /> : null}
+          {Array.from({ length: SIDE_PAGE_SIZE - LATEST_SLOT_COUNT }, (_, index) => {
             const video = sidePage[index];
             if (!video) {
               return <div key={`empty-${index}`} className="rounded-xl bg-gray-50" />;
@@ -317,40 +311,8 @@ export function VideoHighlights() {
             );
           })}
         </div>
+        <FeaturedVideoCarousel />
       </div>
-
-      <Dialog open={kickOpen} onOpenChange={(open) => !open && setKickOpen(false)}>
-        <DialogContent className="max-w-3xl gap-3 border-0 bg-white p-3 sm:p-4">
-          <DialogHeader className="pr-8 text-left">
-            <DialogTitle className="line-clamp-2 text-base sm:text-lg">
-              {KICK_LIVE.title}
-            </DialogTitle>
-            <DialogDescription className="sr-only">
-              Reprodução da transmissão ao vivo na Kick
-            </DialogDescription>
-          </DialogHeader>
-          {kickOpen ? (
-            <div className="relative aspect-video w-full overflow-hidden rounded-lg bg-black">
-              <iframe
-                className="absolute inset-0 h-full w-full"
-                src={KICK_LIVE.embedUrl}
-                title={KICK_LIVE.title}
-                allow="autoplay; fullscreen; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          ) : null}
-          <a
-            href={KICK_LIVE.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-semibold underline-offset-2 hover:underline"
-            style={{ color: "var(--blue-primary)" }}
-          >
-            Assistir em kick.com/{KICK_LIVE.slug}
-          </a>
-        </DialogContent>
-      </Dialog>
 
       <Dialog open={Boolean(active)} onOpenChange={(open) => !open && setActive(null)}>
         <DialogContent className="max-w-3xl gap-3 border-0 bg-white p-3 sm:p-4">

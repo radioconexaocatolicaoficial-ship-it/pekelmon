@@ -158,8 +158,12 @@ export function SignupForm() {
                     Faça parte
                   </p>
                   <h2
-                    className="text-[1.75rem] font-black leading-tight sm:text-4xl"
-                    style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
+                    className="display-heading font-black leading-tight"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      color: "var(--blue-primary)",
+                      fontSize: "clamp(1.5rem, 4vw, 2.75rem)",
+                    }}
                   >
                     Junte-se a essa missão
                   </h2>
@@ -314,7 +318,7 @@ export function SignupForm() {
                     type="submit"
                     variant="yellow"
                     size="xl"
-                    className="mt-4 h-12 w-full text-base font-bold"
+                    className="mt-4 h-auto min-h-12 w-full whitespace-normal text-base font-bold"
                     disabled={loading}
                   >
                     {loading ? <Loader2 className="size-4 animate-spin" aria-hidden="true" /> : null}

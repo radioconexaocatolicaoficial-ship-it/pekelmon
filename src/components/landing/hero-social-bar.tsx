@@ -1,5 +1,6 @@
-import { Facebook, Instagram, Youtube } from "lucide-react";
+import { Facebook, Instagram, Pause, Play, Youtube } from "lucide-react";
 
+import { useJunglePlayer } from "@/hooks/use-jungle-player";
 import { CANDIDATE } from "@/lib/campaign-data";
 
 function XIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -27,6 +28,8 @@ const NETWORKS = [
 ] as const;
 
 export function HeroSocialBar() {
+  const { playing, toggle } = useJunglePlayer();
+
   return (
     <div
       data-cnpj-on-dark
@@ -44,7 +47,10 @@ export function HeroSocialBar() {
         >
           Acompanhe nas redes sociais
         </h2>
-        <ul className="grid min-w-0 grid-cols-5">
+        <ul
+          className="flex min-w-0 items-center"
+          style={{ display: "flex", flexWrap: "nowrap", justifyContent: "space-between", gap: "0.25rem" }}
+        >
           {NETWORKS.map(({ label, href, Icon, handle }) => (
             <li key={label} className="min-w-0">
               <a
@@ -52,7 +58,8 @@ export function HeroSocialBar() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`${label} de Padre Kelmon, ${handle}`}
-                className="group inline-flex min-h-11 max-w-full flex-col items-center justify-center gap-0.5 rounded-lg px-1 text-white transition hover:bg-white/10 sm:flex-row sm:gap-2"
+                className="group inline-flex min-h-11 max-w-full items-center justify-center rounded-lg px-1 text-white transition hover:bg-white/10"
+                style={{ display: "inline-flex", flexDirection: "row", alignItems: "center", gap: "0.5rem" }}
               >
                 <span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-white text-[var(--blue-primary)] shadow-sm transition group-hover:scale-105 sm:size-9">
                   <Icon className="size-4 sm:size-[1.05rem]" aria-hidden="true" />
@@ -64,6 +71,36 @@ export function HeroSocialBar() {
               </a>
             </li>
           ))}
+          <li className="min-w-0 shrink-0">
+            <button
+              type="button"
+              onClick={toggle}
+              aria-pressed={playing}
+              aria-label={playing ? "Parar jungle" : "Escute nossa jungle"}
+              className="group inline-flex min-h-11 max-w-full items-center justify-center rounded-lg px-1 text-white transition hover:bg-white/10"
+              style={{ display: "inline-flex", flexDirection: "row", alignItems: "center", gap: "0.5rem" }}
+            >
+              <span
+                className="inline-flex size-8 shrink-0 items-center justify-center rounded-full shadow-sm transition group-hover:scale-105 sm:size-9"
+                style={{
+                  backgroundColor: "var(--yellow-primary)",
+                  color: "var(--blue-primary)",
+                }}
+              >
+                {playing ? (
+                  <Pause className="size-4 sm:size-[1.05rem]" aria-hidden="true" />
+                ) : (
+                  <Play className="size-4 sm:size-[1.05rem]" aria-hidden="true" />
+                )}
+              </span>
+              <span
+                className="leading-none text-[10px] font-semibold tracking-wide sm:text-xs"
+                style={{ whiteSpace: "nowrap" }}
+              >
+                escute nossa jungle
+              </span>
+            </button>
+          </li>
         </ul>
       </nav>
     </div>

@@ -42,7 +42,7 @@ export function CnpjRail() {
     <aside
       ref={railRef}
       aria-hidden="true"
-      className="pointer-events-none fixed right-0 top-1/2 z-40 -translate-y-1/2 select-none pr-[max(0.15rem,env(safe-area-inset-right))]"
+      className="pointer-events-none fixed right-0 top-1/2 z-40 hidden -translate-y-1/2 select-none pr-[max(0.15rem,env(safe-area-inset-right))] lg:block"
     >
       <p
         className={`whitespace-nowrap text-[6.2px] font-semibold tracking-[0.1em] transition-colors duration-200 sm:text-[7.8px] sm:tracking-[0.12em] ${

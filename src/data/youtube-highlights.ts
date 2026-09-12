@@ -8,11 +8,21 @@ export type YoutubeHighlight = {
   published: string;
 };
 
-/** Vídeos do YouTube fixos após o primeiro card da grade 2×2 (o primeiro é a live da Kick). */
+/** Vídeos do YouTube fixos após o vídeo mais recente na grade 2×2. */
 export const YOUTUBE_PINNED_GRID_IDS = ['lmZkXZeEbBk', 'k8n5EIaJVlk'] as const;
 
 /** Videos do Padre Kelmon — destaque fixo + demais por data. */
 export const YOUTUBE_HIGHLIGHTS: YoutubeHighlight[] = [
+  {
+    id: 'qsuN8BSCiY0',
+    title: 'Novo Site | Padre Kelmon',
+    description:
+      'Agora você pode ficar por dentro de toda a trajetória do Padre Kelmon, novidades e tudo relacionado à sua candidatura e vida política. Acesse padrekelmon.com.br',
+    url: 'https://www.youtube.com/watch?v=qsuN8BSCiY0',
+    thumbnail: 'https://i.ytimg.com/vi/qsuN8BSCiY0/hqdefault.jpg',
+    views: 63,
+    published: '2026-09-12',
+  },
   {
     id: 'lmZkXZeEbBk',
     title: 'Missa de Lançamento da Campanha Padre Kelmon Deputado Federal.',

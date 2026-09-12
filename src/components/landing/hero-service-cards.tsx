@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
+import chapaCardImg from "@/assets/chapa-card-padre-kelmon.jpg";
 import type { CetRegion } from "@/lib/cet-traffic";
 import { getLocalNow, type LocalNowResult } from "@/lib/local-now";
 import { getMarketFuel, type FuelPrices, type MarketQuote } from "@/lib/market-fuel";
@@ -453,9 +454,11 @@ function FuelCard({ fuel, compact = false }: { fuel: FuelPrices; compact?: boole
 export function HeroServiceCards({
   className,
   compact = false,
+  slots = "all",
 }: {
   className?: string;
   compact?: boolean;
+  slots?: "all" | "civic" | "pulse" | "rail";
 }) {
   const localQuery = useQuery({
     queryKey: ["local-now", "sao-paulo"],
@@ -483,20 +486,50 @@ export function HeroServiceCards({
     brasil: { gasolina: "—", aditivada: "—", etanol: "—" },
   };
 
+  const showCivic = slots === "all" || slots === "civic" || slots === "rail";
+  const showPulse = slots === "all" || slots === "pulse" || slots === "rail";
+  const stacked = slots === "civic" || slots === "rail";
+
   return (
     <div
       className={cn(
-        "mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3",
+        stacked
+          ? "civic-stack"
+          : "mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3",
         compact && "items-stretch [&>*]:min-w-0",
         className,
       )}
+      style={
+        stacked
+          ? { display: "flex", flexDirection: "column", gap: "0.75rem" }
+          : undefined
+      }
     >
-      <VotingCard compact={compact} />
-      <TransportCard data={data} loading={loading} compact={compact} />
-      <TrafficCard data={data} loading={loading} compact={compact} />
-      <WeatherCard data={data} loading={loading} compact={compact} />
-      <MarketCard market={market} loading={marketQuery.isLoading} compact={compact} />
-      <FuelCard fuel={fuel} compact={compact} />
+      {showCivic ? (
+        <>
+          <VotingCard compact={compact} />
+          <TransportCard data={data} loading={loading} compact={compact} />
+          <TrafficCard data={data} loading={loading} compact={compact} />
+        </>
+      ) : null}
+      {showPulse ? (
+        <>
+          <WeatherCard data={data} loading={loading} compact={compact} />
+          <MarketCard market={market} loading={marketQuery.isLoading} compact={compact} />
+          <FuelCard fuel={fuel} compact={compact} />
+        </>
+      ) : null}
+      {slots === "rail" ? (
+        <figure className="m-0 overflow-hidden rounded-xl border border-[#d7e4f2] bg-white shadow-[0_6px_16px_rgba(30,91,184,0.08)]">
+          <img
+            src={chapaCardImg}
+            alt="Chapa Padre Kelmon 22022, senador André do Prado 2222 e presidente Flávio Bolsonaro 22"
+            width={768}
+            height={1024}
+            className="block h-auto w-full"
+          />
+        </figure>
+      ) : null}
     </div>
   );
 }

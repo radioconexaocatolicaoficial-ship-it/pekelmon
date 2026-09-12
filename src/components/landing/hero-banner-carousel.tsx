@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils";
 
 export function HeroBannerCarousel({
   className,
-  sizes = "(min-width: 1120px) 1120px, 100vw",
+  sizes = "(min-width: 1280px) 1280px, 100vw",
 }: {
   className?: string;
   sizes?: string;

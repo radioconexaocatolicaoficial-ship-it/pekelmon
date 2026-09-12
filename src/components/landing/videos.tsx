@@ -1,20 +1,19 @@
 import { PlayCircle } from "lucide-react";
 
-import { Reveal, SectionHeading } from "./primitives";
+import { PageShell, Reveal, SectionHeading } from "./primitives";
 import { VIDEOS } from "@/lib/campaign-data";
 
 export function Videos() {
   return (
     <section id="videos" className="section-y border-t border-border/50 bg-card/30">
-      <div className="mx-auto w-full" style={{ maxWidth: '1120px', paddingLeft: '0', paddingRight: '0' }}>
-        <div className="px-5 lg:px-0">
+      <PageShell>
         <SectionHeading
           eyebrow="Vídeos"
           title="Palavra e presença"
           subtitle="Vídeos oficiais no YouTube e no Instagram. Os cartões levam ao perfil."
         />
 
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3">
           {VIDEOS.map((v, i) => (
             <Reveal key={v.title} delay={0.06 * i}>
               <a
@@ -45,8 +44,7 @@ export function Videos() {
             </Reveal>
           ))}
         </div>
-      </div>
-      </div>
+      </PageShell>
     </section>
   );
 }
