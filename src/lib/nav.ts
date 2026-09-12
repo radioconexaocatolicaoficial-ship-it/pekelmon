@@ -1,7 +1,7 @@
 import { BookOpen, BookText, Film, Flag, Home, TrendingUp, type LucideIcon } from "lucide-react";
 
 export type NavLink = {
-  to: "/" | "/sobre" | "/saiba-mais" | "/pautas" | "/midia" | "/numeros" | "/links";
+  to: "/" | "/sobre" | "/saiba-mais" | "/pautas" | "/midia" | "/numeros" | "/links" | "/contato";
   hash?: "cadastro";
   sectionId: "inicio" | "historia" | "saiba-mais" | "bandeiras" | "midia" | "numeros";
   label: string;
@@ -28,5 +28,6 @@ export const FOOTER_NAV_LINKS = [
   { to: "/midia" as const, label: "Mídia" },
   { to: "/numeros" as const, label: "Indicadores" },
   { to: "/links" as const, label: "Links Padre" },
+  { to: "/contato" as const, label: "Contato" },
   { to: "/" as const, hash: "cadastro" as const, label: "Faça parte" },
 ];

@@ -81,6 +81,10 @@ export default defineConfig(async ({ command, mode }) => {
               "content-type": "text/html; charset=utf-8",
             },
           },
+          "/bio": { redirect: { to: "/links", statusCode: 301 } },
+          "/biografia": { redirect: { to: "/sobre", statusCode: 301 } },
+          "/noticias": { redirect: { to: "/midia", statusCode: 301 } },
+          "/redes-sociais": { redirect: { to: "/links", statusCode: 301 } },
         },
       }),
     );

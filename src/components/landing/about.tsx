@@ -124,7 +124,7 @@ export function About({
                 className="text-[1.75rem] font-black sm:text-4xl lg:text-5xl"
                 style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
               >
-                Uma Vida de Fé e Serviço
+                {standalone ? "Padre Kelmon – Biografia" : "Uma Vida de Fé e Serviço"}
               </Heading>
             </motion.div>
 

@@ -11,7 +11,7 @@ export const Route = createFileRoute("/saiba-mais")({
 
 function SaibaMaisPage() {
   return (
-    <InnerPage>
+    <InnerPage breadcrumbs={PAGE_SEO.saibaMais.breadcrumbs}>
       <SaibaMais />
     </InnerPage>
   );

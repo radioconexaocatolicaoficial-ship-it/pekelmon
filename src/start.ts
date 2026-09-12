@@ -7,7 +7,14 @@ const GOOGLE_SITE_VERIFICATION_BODY =
   "google-site-verification: google6e3cc8fc1fe21502.html\n";
 
 const googleVerificationMiddleware = createMiddleware().server(async ({ next, request }) => {
-  const pathname = new URL(request.url).pathname.replace(/\/$/, "") || "/";
+  const url = new URL(request.url);
+  if (url.hostname.toLowerCase() === "www.padrekelmon.com.br") {
+    url.hostname = "padrekelmon.com.br";
+    url.protocol = "https:";
+    return Response.redirect(url.toString(), 301);
+  }
+
+  const pathname = url.pathname.replace(/\/$/, "") || "/";
   if (pathname === GOOGLE_SITE_VERIFICATION_PATH) {
     return new Response(GOOGLE_SITE_VERIFICATION_BODY, {
       status: 200,

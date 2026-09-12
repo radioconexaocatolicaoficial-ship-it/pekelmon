@@ -11,7 +11,7 @@ export const Route = createFileRoute("/pautas")({
 
 function PautasPage() {
   return (
-    <InnerPage>
+    <InnerPage breadcrumbs={PAGE_SEO.pautas.breadcrumbs}>
       <Bandeiras headingAs="h1" />
     </InnerPage>
   );

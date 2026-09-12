@@ -1,22 +1,25 @@
 import { CANDIDATE, FORO_BRASIL } from "./campaign-data";
 
-/** URL canônica do site. Defina VITE_SITE_URL no .env de produção (ex.: https://www.dominio.com.br). */
+/** Domínio canônico de produção. www e http redirecionam no servidor. */
+export const CANONICAL_ORIGIN = "https://padrekelmon.com.br";
+
+/** URL canônica do site. Em produção use VITE_SITE_URL=https://padrekelmon.com.br */
 export const SITE_URL = (
-  typeof import.meta.env.VITE_SITE_URL === "string"
+  typeof import.meta.env.VITE_SITE_URL === "string" && import.meta.env.VITE_SITE_URL.trim()
     ? import.meta.env.VITE_SITE_URL
-    : ""
+    : CANONICAL_ORIGIN
 ).replace(/\/$/, "");
 
 export const SITE_NAME = "Padre Kelmon";
 
-export const SITE_TITLE = "Padre Kelmon | Candidato a Deputado Federal";
+export const SITE_TITLE = "Padre Kelmon | Site Oficial";
 
-/** Meta description distinta do title (~150–160 caracteres) para SEO e redes. */
+/** Meta description distinta do title (~140–160 caracteres) para SEO e redes. */
 export const SITE_DESCRIPTION =
-  "Padre Kelmon, candidato a Deputado Federal por São Paulo pelo PL. Fé, família e liberdade religiosa. Pautas da campanha e como apoiar.";
+  "Site oficial de Padre Kelmon. Conheça sua história, acompanhe notícias, entrevistas, redes oficiais e a candidatura a Deputado Federal por São Paulo.";
 
 export const SITE_KEYWORDS =
-  "Padre Kelmon, Deputado Federal, São Paulo, PL, Partido Liberal, candidato 2026, fé, família, liberdade religiosa, Foro do Brasil";
+  "Padre Kelmon, site oficial Padre Kelmon, biografia, notícias, entrevistas, redes sociais, sacerdote, Deputado Federal, São Paulo, PL";
 
 /** JPEG 1200×630 da arte de prévia. Nome novo para o WhatsApp não reusar o cache. */
 export const OG_IMAGE_PATH = "/og-banner-previa-kelmon.jpg";
@@ -31,50 +34,95 @@ export function absoluteUrl(path = "/"): string {
   return `${SITE_URL}${normalized}`;
 }
 
+export type BreadcrumbItem = {
+  name: string;
+  path: string;
+};
+
 export const PAGE_SEO = {
   sobre: {
     path: "/sobre",
-    title: "Sobre Padre Kelmon | Trajetória e candidatura a Deputado Federal",
+    title: "Padre Kelmon | Biografia e História",
     description:
-      "Biografia de Padre Kelmon: vida religiosa, Foro do Brasil e candidatura a Deputado Federal por São Paulo pelo PL em 2026.",
+      "Biografia de Padre Kelmon: sacerdote, trajetória pública, Foro do Brasil e a candidatura a Deputado Federal por São Paulo pelo PL.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Biografia", path: "/sobre" },
+    ] satisfies BreadcrumbItem[],
+    schema: "profile" as const,
   },
   saibaMais: {
     path: "/saiba-mais",
-    title: "Saiba mais | A vida e a missão de Padre Kelmon",
+    title: "Padre Kelmon | Vida, missão e projetos",
     description:
-      "A mobilização pró-vida de 2010 e o projeto Pâncreas Online, app em desenvolvimento para o cuidado da diabetes juvenil com pacientes, pais, professores e médicos.",
+      "A mobilização pró-vida de 2010 e o projeto Pâncreas Online, app em desenvolvimento para o cuidado da diabetes juvenil.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Saiba mais", path: "/saiba-mais" },
+    ] satisfies BreadcrumbItem[],
   },
   pautas: {
     path: "/pautas",
-    title: "Pautas de Padre Kelmon | Fé, família e liberdade em São Paulo",
+    title: "Padre Kelmon | Pautas e atuação pública",
     description:
-      "As pautas que Padre Kelmon defende como candidato a Deputado Federal por São Paulo: família, liberdade religiosa, valores cristãos e dignidade humana.",
+      "As pautas que Padre Kelmon defende: família, liberdade religiosa, valores cristãos e dignidade humana em São Paulo.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Pautas", path: "/pautas" },
+    ] satisfies BreadcrumbItem[],
   },
   midia: {
     path: "/midia",
-    title: "Mídia | Padre Kelmon nas redes, imprensa e vídeos",
+    title: "Padre Kelmon | Notícias e entrevistas",
     description:
-      "Padre Kelmon na imprensa, YouTube, Instagram, TikTok e demais redes. Notícias, vídeos e presença digital da campanha.",
+      "Notícias, entrevistas e redes oficiais de Padre Kelmon: imprensa, YouTube, Instagram, TikTok, Facebook e X.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Notícias", path: "/midia" },
+    ] satisfies BreadcrumbItem[],
   },
   numeros: {
     path: "/numeros",
-    title: "Números de Padre Kelmon | votos, fé e confiança",
+    title: "Padre Kelmon | Números e indicadores",
     description:
-      "Números públicos de Padre Kelmon: votos em 2022, décadas de fé e serviço, Foro do Brasil e candidatura a Deputado Federal por SP.",
+      "Números públicos de Padre Kelmon: votos em 2022, décadas de fé e serviço, Foro do Brasil e a campanha em São Paulo.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Números", path: "/numeros" },
+    ] satisfies BreadcrumbItem[],
   },
   links: {
     path: "/links",
-    title: "Links Padre Kelmon | redes oficiais",
+    title: "Padre Kelmon | Redes Sociais Oficiais",
     description:
-      "Redes oficiais de Padre Kelmon, candidato a Deputado Federal por São Paulo pelo PL. Instagram, TikTok, YouTube, Facebook, X e o site da campanha.",
+      "Canais oficiais de Padre Kelmon: Instagram, TikTok, YouTube, Facebook, X e o site da campanha a Deputado Federal.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Redes sociais", path: "/links" },
+    ] satisfies BreadcrumbItem[],
+  },
+  contato: {
+    path: "/contato",
+    title: "Padre Kelmon | Contato",
+    description:
+      "Fale com a campanha de Padre Kelmon. Envie seus dados pelo formulário oficial ou acompanhe pelos canais verificados.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Contato", path: "/contato" },
+    ] satisfies BreadcrumbItem[],
   },
   seteSetembro: {
     path: "/imprensa/7-de-setembro",
-    title:
-      "7 de Setembro: Padre Kelmon chama São Paulo para a Paulista | Deputado Federal 2202",
+    title: "Padre Kelmon | 7 de Setembro na Paulista",
     description:
-      "Padre Kelmon convoca apoiadores para a Avenida Paulista às 15h no Dia da Independência, em ato com Flávio Bolsonaro na reta final da campanha.",
+      "Padre Kelmon convoca São Paulo para o ato na Avenida Paulista às 15h no 7 de Setembro, Dia da Independência.",
     image: "/news/7-de-setembro-paulista.jpg",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Notícias", path: "/midia" },
+      { name: "7 de Setembro", path: "/imprensa/7-de-setembro" },
+    ] satisfies BreadcrumbItem[],
+    schema: "article" as const,
   },
 } as const;
 
@@ -85,6 +133,9 @@ export function buildPageHead({
   image,
   imageWidth,
   imageHeight,
+  breadcrumbs,
+  schema,
+  robots,
 }: {
   path: string;
   title: string;
@@ -92,11 +143,40 @@ export function buildPageHead({
   image?: string;
   imageWidth?: string;
   imageHeight?: string;
+  breadcrumbs?: readonly BreadcrumbItem[];
+  schema?: "profile" | "article";
+  robots?: string;
 }) {
   const pageUrl = absoluteUrl(path);
   const ogImage = absoluteUrl(image ?? OG_IMAGE_PATH);
   const width = imageWidth ?? OG_IMAGE_WIDTH;
   const height = imageHeight ?? OG_IMAGE_HEIGHT;
+  const isArticle = schema === "article";
+
+  const scripts: Array<{ type: string; children: string }> = [
+    {
+      type: "application/ld+json",
+      children: JSON.stringify(
+        schema === "profile"
+          ? buildProfilePageJsonLd({ path, title, description, image, imageWidth, imageHeight })
+          : buildWebPageJsonLd({ path, title, description, image, imageWidth, imageHeight }),
+      ),
+    },
+  ];
+
+  if (breadcrumbs?.length) {
+    scripts.push({
+      type: "application/ld+json",
+      children: JSON.stringify(buildBreadcrumbJsonLd(breadcrumbs)),
+    });
+  }
+
+  if (isArticle) {
+    scripts.push({
+      type: "application/ld+json",
+      children: JSON.stringify(buildNewsArticleJsonLd({ path, title, description, image })),
+    });
+  }
 
   return {
     meta: [
@@ -107,15 +187,16 @@ export function buildPageHead({
       {
         name: "robots",
         content:
+          robots ??
           "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
       },
-      { name: "googlebot", content: "index, follow" },
+      { name: "googlebot", content: robots?.includes("noindex") ? "noindex, follow" : "index, follow" },
       { name: "geo.region", content: "BR-SP" },
       { name: "geo.placename", content: "São Paulo" },
       { name: "language", content: "pt-BR" },
       { property: "og:title", content: title },
       { property: "og:description", content: description },
-      { property: "og:type", content: "website" },
+      { property: "og:type", content: isArticle ? "article" : "website" },
       { property: "og:url", content: pageUrl },
       { property: "og:locale", content: "pt_BR" },
       { property: "og:site_name", content: SITE_NAME },
@@ -127,9 +208,11 @@ export function buildPageHead({
       { property: "og:image:alt", content: title },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: TWITTER_HANDLE },
+      { name: "twitter:creator", content: TWITTER_HANDLE },
       { name: "twitter:title", content: title },
       { name: "twitter:description", content: description },
       { name: "twitter:image", content: ogImage },
+      { name: "twitter:image:alt", content: title },
     ],
     links: [
       { rel: "canonical", href: pageUrl },
@@ -137,14 +220,7 @@ export function buildPageHead({
       { rel: "alternate", hrefLang: "x-default", href: pageUrl },
       { rel: "image_src", href: ogImage },
     ],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify(
-          buildWebPageJsonLd({ path, title, description, image, imageWidth, imageHeight }),
-        ),
-      },
-    ],
+    scripts,
   };
 }
 
@@ -225,6 +301,115 @@ export function buildWebSiteJsonLd() {
   };
 }
 
+export function buildBreadcrumbJsonLd(items: readonly BreadcrumbItem[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: absoluteUrl(item.path),
+    })),
+  };
+}
+
+export function buildProfilePageJsonLd(page: {
+  path: string;
+  title: string;
+  description: string;
+  image?: string;
+  imageWidth?: string;
+  imageHeight?: string;
+}) {
+  const url = absoluteUrl(page.path);
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": `${url}#profile`,
+    name: page.title,
+    description: page.description,
+    url,
+    inLanguage: "pt-BR",
+    isPartOf: {
+      "@id": `${absoluteUrl("/")}#website`,
+    },
+    mainEntity: {
+      "@id": `${absoluteUrl("/")}#person`,
+    },
+    about: {
+      "@id": `${absoluteUrl("/")}#person`,
+    },
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: absoluteUrl(page.image ?? OG_IMAGE_PATH),
+      width: Number(page.imageWidth ?? OG_IMAGE_WIDTH),
+      height: Number(page.imageHeight ?? OG_IMAGE_HEIGHT),
+    },
+  };
+}
+
+export function buildNewsArticleJsonLd(page: {
+  path: string;
+  title: string;
+  description: string;
+  image?: string;
+  datePublished?: string;
+  dateModified?: string;
+}) {
+  const url = absoluteUrl(page.path);
+  return {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "@id": `${url}#article`,
+    headline: page.title,
+    description: page.description,
+    url,
+    inLanguage: "pt-BR",
+    datePublished: page.datePublished ?? "2026-09-07",
+    dateModified: page.dateModified ?? page.datePublished ?? "2026-09-07",
+    image: absoluteUrl(page.image ?? OG_IMAGE_PATH),
+    author: {
+      "@id": `${absoluteUrl("/")}#person`,
+    },
+    publisher: {
+      "@id": `${absoluteUrl("/")}#organization`,
+    },
+    mainEntityOfPage: {
+      "@id": `${url}#webpage`,
+    },
+  };
+}
+
+export function buildEventJsonLd() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: "Ato do 7 de Setembro na Avenida Paulista",
+    description:
+      "Convocação de Padre Kelmon para o ato na Avenida Paulista às 15h no Dia da Independência.",
+    startDate: "2026-09-07T15:00:00-03:00",
+    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+    eventStatus: "https://schema.org/EventScheduled",
+    url: absoluteUrl("/imprensa/7-de-setembro"),
+    image: absoluteUrl("/news/7-de-setembro-paulista.jpg"),
+    location: {
+      "@type": "Place",
+      name: "Avenida Paulista",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Avenida Paulista",
+        addressLocality: "São Paulo",
+        addressRegion: "SP",
+        addressCountry: "BR",
+      },
+    },
+    organizer: {
+      "@id": `${absoluteUrl("/")}#person`,
+    },
+  };
+}
+
 export function buildWebPageJsonLd(page?: {
   path?: string;
   title?: string;
@@ -282,7 +467,11 @@ export function buildOrganizationJsonLd() {
     url,
     logo: absoluteUrl("/Logo-Site-Padre-kelmon-campanha.png"),
     description: SITE_DESCRIPTION,
-    foundingDate: "2023-06-29",
+    identifier: {
+      "@type": "PropertyValue",
+      name: "CNPJ",
+      value: CANDIDATE.cnpj,
+    },
     areaServed: {
       "@type": "AdministrativeArea",
       name: "São Paulo, Brasil",

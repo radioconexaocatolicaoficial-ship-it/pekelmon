@@ -19,22 +19,59 @@ import { scrollToSection } from "../lib/scroll-to-section";
 
 function NotFoundComponent() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Página não encontrada</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          A página que você procura não existe ou foi movida.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+    <div className="flex min-h-dvh flex-col bg-white">
+      <title>Página não encontrada | Padre Kelmon</title>
+      <meta name="robots" content="noindex, follow" />
+      <main className="flex flex-1 items-center justify-center px-4 py-16">
+        <div className="max-w-lg text-center">
+          <p
+            className="text-sm font-bold uppercase tracking-widest"
+            style={{ color: "var(--yellow-primary)" }}
           >
-            Voltar ao início
-          </Link>
+            Erro 404
+          </p>
+          <h1
+            className="mt-3 text-3xl font-black sm:text-4xl"
+            style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
+          >
+            Página não encontrada
+          </h1>
+          <p className="mt-3 text-sm leading-relaxed text-gray-600 sm:text-base">
+            Este endereço não existe no site oficial de Padre Kelmon. Volte ao início
+            ou escolha uma das páginas abaixo.
+          </p>
+          <div className="mt-8 flex flex-wrap justify-center gap-2">
+            <Link
+              to="/"
+              className="inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-bold text-white"
+              style={{ backgroundColor: "var(--blue-primary)" }}
+            >
+              Ir para o início
+            </Link>
+            <Link
+              to="/sobre"
+              className="inline-flex items-center justify-center rounded-md border-2 px-4 py-2 text-sm font-bold"
+              style={{ borderColor: "var(--blue-primary)", color: "var(--blue-primary)" }}
+            >
+              Biografia
+            </Link>
+            <Link
+              to="/midia"
+              className="inline-flex items-center justify-center rounded-md border-2 px-4 py-2 text-sm font-bold"
+              style={{ borderColor: "var(--blue-primary)", color: "var(--blue-primary)" }}
+            >
+              Notícias
+            </Link>
+            <Link
+              to="/contato"
+              className="inline-flex items-center justify-center rounded-md border-2 px-4 py-2 text-sm font-bold"
+              style={{ borderColor: "var(--blue-primary)", color: "var(--blue-primary)" }}
+            >
+              Contato
+            </Link>
+          </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 }

@@ -29,7 +29,7 @@ const env = {
   ...process.env,
 };
 
-const siteUrl = String(env.VITE_SITE_URL || "")
+const siteUrl = String(env.VITE_SITE_URL || "https://padrekelmon.com.br")
   .trim()
   .replace(/\/$/, "");
 
@@ -45,6 +45,7 @@ const pages = [
   { path: "/numeros", priority: "0.8" },
   { path: "/imprensa/7-de-setembro", priority: "0.8" },
   { path: "/links", priority: "0.7" },
+  { path: "/contato", priority: "0.7" },
 ];
 
 const sitemapUrls = pages
@@ -86,10 +87,4 @@ Sitemap: ${sitemapUrl}
 writeFileSync(resolve(process.cwd(), "public/sitemap.xml"), sitemap, "utf8");
 writeFileSync(resolve(process.cwd(), "public/robots.txt"), robots, "utf8");
 
-if (!siteUrl) {
-  console.warn(
-    "[seo] VITE_SITE_URL não definido. Defina no .env / Hostinger (ex.: https://www.seudominio.com.br) para canonical, Open Graph e sitemap absolutos.",
-  );
-} else {
-  console.log(`[seo] sitemap e robots gerados para ${siteUrl}`);
-}
+console.log(`[seo] sitemap e robots gerados para ${siteUrl}`);

@@ -5,17 +5,21 @@ import { CallToAction } from "@/components/landing/call-to-action";
 import { ChapaNews } from "@/components/landing/chapa-news";
 import { ForoNews } from "@/components/landing/foro-news";
 import { Hero } from "@/components/landing/hero";
+import { PageBreadcrumbs } from "@/components/landing/page-breadcrumbs";
 import { SignupForm } from "@/components/landing/signup-form";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { SiteHeader } from "@/components/landing/site-header";
 import { SocialLinks } from "@/components/landing/social-links";
 import { SocialStrip } from "@/components/landing/social-strip";
+import type { BreadcrumbItem } from "@/lib/site";
 import { scrollToPageTop } from "@/lib/scroll-to-section";
 
 export function InnerPage({
   children,
+  breadcrumbs,
 }: {
   children: ReactNode;
+  breadcrumbs?: readonly BreadcrumbItem[];
 }) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -46,6 +50,7 @@ export function InnerPage({
         tabIndex={-1}
         className="overflow-x-clip pt-[4.25rem] outline-none sm:pt-[4.75rem]"
       >
+        {breadcrumbs?.length ? <PageBreadcrumbs items={breadcrumbs} /> : null}
         <Hero embedded />
         {children}
         <SocialStrip />

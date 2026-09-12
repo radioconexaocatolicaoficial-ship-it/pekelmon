@@ -11,10 +11,14 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BioRouteImport } from './routes/bio'
+import { Route as BiografiaRouteImport } from './routes/biografia'
+import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as LinksRouteImport } from './routes/links'
 import { Route as MidiaRouteImport } from './routes/midia'
+import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as NumerosRouteImport } from './routes/numeros'
 import { Route as PautasRouteImport } from './routes/pautas'
+import { Route as RedesSociaisRouteImport } from './routes/redes-sociais'
 import { Route as SaibaMaisRouteImport } from './routes/saiba-mais'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as Imprensa7DeSetembroRouteImport } from './routes/imprensa.7-de-setembro'
@@ -29,6 +33,16 @@ const BioRoute = BioRouteImport.update({
   path: '/bio',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BiografiaRoute = BiografiaRouteImport.update({
+  id: '/biografia',
+  path: '/biografia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LinksRoute = LinksRouteImport.update({
   id: '/links',
   path: '/links',
@@ -39,6 +53,11 @@ const MidiaRoute = MidiaRouteImport.update({
   path: '/midia',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NoticiasRoute = NoticiasRouteImport.update({
+  id: '/noticias',
+  path: '/noticias',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NumerosRoute = NumerosRouteImport.update({
   id: '/numeros',
   path: '/numeros',
@@ -47,6 +66,11 @@ const NumerosRoute = NumerosRouteImport.update({
 const PautasRoute = PautasRouteImport.update({
   id: '/pautas',
   path: '/pautas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RedesSociaisRoute = RedesSociaisRouteImport.update({
+  id: '/redes-sociais',
+  path: '/redes-sociais',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SaibaMaisRoute = SaibaMaisRouteImport.update({
@@ -68,10 +92,14 @@ const Imprensa7DeSetembroRoute = Imprensa7DeSetembroRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bio': typeof BioRoute
+  '/biografia': typeof BiografiaRoute
+  '/contato': typeof ContatoRoute
   '/links': typeof LinksRoute
   '/midia': typeof MidiaRoute
+  '/noticias': typeof NoticiasRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
+  '/redes-sociais': typeof RedesSociaisRoute
   '/saiba-mais': typeof SaibaMaisRoute
   '/sobre': typeof SobreRoute
   '/imprensa/7-de-setembro': typeof Imprensa7DeSetembroRoute
@@ -79,10 +107,14 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/bio': typeof BioRoute
+  '/biografia': typeof BiografiaRoute
+  '/contato': typeof ContatoRoute
   '/links': typeof LinksRoute
   '/midia': typeof MidiaRoute
+  '/noticias': typeof NoticiasRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
+  '/redes-sociais': typeof RedesSociaisRoute
   '/saiba-mais': typeof SaibaMaisRoute
   '/sobre': typeof SobreRoute
   '/imprensa/7-de-setembro': typeof Imprensa7DeSetembroRoute
@@ -91,10 +123,14 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/bio': typeof BioRoute
+  '/biografia': typeof BiografiaRoute
+  '/contato': typeof ContatoRoute
   '/links': typeof LinksRoute
   '/midia': typeof MidiaRoute
+  '/noticias': typeof NoticiasRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
+  '/redes-sociais': typeof RedesSociaisRoute
   '/saiba-mais': typeof SaibaMaisRoute
   '/sobre': typeof SobreRoute
   '/imprensa/7-de-setembro': typeof Imprensa7DeSetembroRoute
@@ -104,10 +140,14 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/bio'
+    | '/biografia'
+    | '/contato'
     | '/links'
     | '/midia'
+    | '/noticias'
     | '/numeros'
     | '/pautas'
+    | '/redes-sociais'
     | '/saiba-mais'
     | '/sobre'
     | '/imprensa/7-de-setembro'
@@ -115,10 +155,14 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/bio'
+    | '/biografia'
+    | '/contato'
     | '/links'
     | '/midia'
+    | '/noticias'
     | '/numeros'
     | '/pautas'
+    | '/redes-sociais'
     | '/saiba-mais'
     | '/sobre'
     | '/imprensa/7-de-setembro'
@@ -126,10 +170,14 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/bio'
+    | '/biografia'
+    | '/contato'
     | '/links'
     | '/midia'
+    | '/noticias'
     | '/numeros'
     | '/pautas'
+    | '/redes-sociais'
     | '/saiba-mais'
     | '/sobre'
     | '/imprensa/7-de-setembro'
@@ -138,10 +186,14 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BioRoute: typeof BioRoute
+  BiografiaRoute: typeof BiografiaRoute
+  ContatoRoute: typeof ContatoRoute
   LinksRoute: typeof LinksRoute
   MidiaRoute: typeof MidiaRoute
+  NoticiasRoute: typeof NoticiasRoute
   NumerosRoute: typeof NumerosRoute
   PautasRoute: typeof PautasRoute
+  RedesSociaisRoute: typeof RedesSociaisRoute
   SaibaMaisRoute: typeof SaibaMaisRoute
   SobreRoute: typeof SobreRoute
   Imprensa7DeSetembroRoute: typeof Imprensa7DeSetembroRoute
@@ -163,6 +215,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BioRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/biografia': {
+      id: '/biografia'
+      path: '/biografia'
+      fullPath: '/biografia'
+      preLoaderRoute: typeof BiografiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/links': {
       id: '/links'
       path: '/links'
@@ -177,6 +243,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MidiaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/noticias': {
+      id: '/noticias'
+      path: '/noticias'
+      fullPath: '/noticias'
+      preLoaderRoute: typeof NoticiasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/numeros': {
       id: '/numeros'
       path: '/numeros'
@@ -189,6 +262,13 @@ declare module '@tanstack/react-router' {
       path: '/pautas'
       fullPath: '/pautas'
       preLoaderRoute: typeof PautasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/redes-sociais': {
+      id: '/redes-sociais'
+      path: '/redes-sociais'
+      fullPath: '/redes-sociais'
+      preLoaderRoute: typeof RedesSociaisRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/saiba-mais': {
@@ -218,10 +298,14 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BioRoute: BioRoute,
+  BiografiaRoute: BiografiaRoute,
+  ContatoRoute: ContatoRoute,
   LinksRoute: LinksRoute,
   MidiaRoute: MidiaRoute,
+  NoticiasRoute: NoticiasRoute,
   NumerosRoute: NumerosRoute,
   PautasRoute: PautasRoute,
+  RedesSociaisRoute: RedesSociaisRoute,
   SaibaMaisRoute: SaibaMaisRoute,
   SobreRoute: SobreRoute,
   Imprensa7DeSetembroRoute: Imprensa7DeSetembroRoute,

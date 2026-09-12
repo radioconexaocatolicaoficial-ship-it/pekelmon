@@ -58,9 +58,23 @@ function googleSiteVerificationResponse(): Response {
   });
 }
 
+function canonicalHostRedirect(request: Request): Response | null {
+  const url = new URL(request.url);
+  const host = url.hostname.toLowerCase();
+  if (host === "www.padrekelmon.com.br") {
+    url.hostname = "padrekelmon.com.br";
+    url.protocol = "https:";
+    return Response.redirect(url.toString(), 301);
+  }
+  return null;
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const hostRedirect = canonicalHostRedirect(request);
+      if (hostRedirect) return hostRedirect;
+
       const { pathname } = new URL(request.url);
       if (pathname === GOOGLE_SITE_VERIFICATION_PATH) {
         return googleSiteVerificationResponse();

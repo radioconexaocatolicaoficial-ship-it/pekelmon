@@ -11,7 +11,7 @@ export const Route = createFileRoute("/numeros")({
 
 function NumerosPage() {
   return (
-    <InnerPage>
+    <InnerPage breadcrumbs={PAGE_SEO.numeros.breadcrumbs}>
       <Stats headingAs="h1" />
     </InnerPage>
   );

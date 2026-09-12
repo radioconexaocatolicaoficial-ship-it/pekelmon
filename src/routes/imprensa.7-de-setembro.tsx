@@ -4,11 +4,24 @@ import { SiteFooter } from "@/components/landing/site-footer";
 import { SiteHeader } from "@/components/landing/site-header";
 import { PageShell } from "@/components/landing/primitives";
 import { SETE_SETEMBRO_ARTICLE } from "@/data/sete-setembro-article";
-import { PAGE_SEO, buildPageHead } from "@/lib/site";
+import { PageBreadcrumbs } from "@/components/landing/page-breadcrumbs";
+import { PAGE_SEO, buildEventJsonLd, buildPageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/imprensa/7-de-setembro")({
   component: SeteSetembroPage,
-  head: () => buildPageHead(PAGE_SEO.seteSetembro),
+  head: () => {
+    const head = buildPageHead(PAGE_SEO.seteSetembro);
+    return {
+      ...head,
+      scripts: [
+        ...(head.scripts ?? []),
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(buildEventJsonLd()),
+        },
+      ],
+    };
+  },
 });
 
 function SeteSetembroPage() {
@@ -21,6 +34,7 @@ function SeteSetembroPage() {
         id="conteudo"
         className="overflow-x-clip pt-[4.25rem] outline-none sm:pt-[4.75rem]"
       >
+        <PageBreadcrumbs items={PAGE_SEO.seteSetembro.breadcrumbs} />
         <article className="section-pad bg-white">
           <PageShell className="max-w-3xl">
             <p
@@ -39,7 +53,8 @@ function SeteSetembroPage() {
               {article.lead}
             </p>
             <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-gray-500">
-              {article.source} · {article.date}
+              Por Padre Kelmon · {article.source} ·{" "}
+              <time dateTime="2026-09-07">{article.date}</time>
             </p>
 
             <figure className="mt-6 overflow-hidden rounded-2xl border-2 border-gray-200 shadow-lg">
@@ -99,13 +114,29 @@ function SeteSetembroPage() {
               ))}
             </div>
 
-            <Link
-              to="/midia"
-              className="mt-8 inline-flex text-sm font-bold underline decoration-2 underline-offset-4"
-              style={{ color: "var(--blue-primary)" }}
-            >
-              Voltar para Mídia
-            </Link>
+            <nav aria-label="Leia também" className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm font-bold">
+              <Link
+                to="/midia"
+                className="underline decoration-2 underline-offset-4"
+                style={{ color: "var(--blue-primary)" }}
+              >
+                Mais notícias e entrevistas
+              </Link>
+              <Link
+                to="/sobre"
+                className="underline decoration-2 underline-offset-4"
+                style={{ color: "var(--blue-primary)" }}
+              >
+                Biografia de Padre Kelmon
+              </Link>
+              <Link
+                to="/contato"
+                className="underline decoration-2 underline-offset-4"
+                style={{ color: "var(--blue-primary)" }}
+              >
+                Fale com a campanha
+              </Link>
+            </nav>
           </PageShell>
         </article>
       </main>

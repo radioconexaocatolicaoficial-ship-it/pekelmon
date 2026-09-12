@@ -11,7 +11,7 @@ export const Route = createFileRoute("/midia")({
 
 function MidiaPage() {
   return (
-    <InnerPage>
+    <InnerPage breadcrumbs={PAGE_SEO.midia.breadcrumbs}>
       <Media headingAs="h1" />
     </InnerPage>
   );
