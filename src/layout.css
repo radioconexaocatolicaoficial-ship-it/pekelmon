@@ -38,6 +38,13 @@
   width: 100%;
 }
 
+@media (max-width: 1023px) {
+  .hero-story-card {
+    width: 100% !important;
+    max-width: 100%;
+  }
+}
+
 .video-frame {
   position: relative;
   width: 100%;

@@ -161,6 +161,7 @@ function RootShell({ children }: { children: ReactNode }) {
       <head>
         <HeadContent />
         <style>{`
+          @media (max-width:1023px){.hero-story-card{width:100%!important;max-width:100%}}
           .site-nav-desktop{display:none;align-items:center;justify-content:flex-end}
           .site-nav-toggle{display:inline-flex}
           .youtube-civic-row{display:grid;grid-template-columns:1fr;gap:1rem;align-items:start}

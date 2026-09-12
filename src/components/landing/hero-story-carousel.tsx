@@ -152,11 +152,20 @@ export function HeroStoryCarousel({ className }: { className?: string }) {
 
     const sync = () => {
       const sideBySide = getComputedStyle(row).flexDirection === "row";
+      const bannerBox = banner.getBoundingClientRect();
       if (!sideBySide) {
-        setMatched(null);
+        const width = Math.round(bannerBox.width || row.clientWidth);
+        if (width < 8) {
+          setMatched(null);
+          return;
+        }
+        setMatched({
+          width,
+          height: Math.round(width * (HERO_STORY_HEIGHT / HERO_STORY_WIDTH)),
+        });
         return;
       }
-      const height = Math.round(banner.getBoundingClientRect().height);
+      const height = Math.round(bannerBox.height);
       if (height < 8) {
         setMatched(null);
         return;

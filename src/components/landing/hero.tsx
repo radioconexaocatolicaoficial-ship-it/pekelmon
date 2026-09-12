@@ -26,7 +26,7 @@ export function Hero({ embedded = false }: { embedded?: boolean }) {
         >
           <div className="flex min-w-0 flex-col items-center gap-3 lg:flex-row lg:items-start">
             <HeroBannerCarousel className="min-w-0 w-full flex-1 rounded-2xl shadow-lg" />
-            <HeroStoryCarousel className="min-w-0 max-w-full shrink-0 rounded-2xl shadow-lg" />
+            <HeroStoryCarousel className="hero-story-card min-w-0 max-w-full shrink-0 rounded-2xl shadow-lg" />
           </div>
         </motion.div>
         <HeroSocialBar />
