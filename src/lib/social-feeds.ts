@@ -155,7 +155,7 @@ const FALLBACK_POSTS: Record<SocialNetworkId, SocialPost[]> = {
 };
 
 let cache: { data: SocialFeedsResult; expiresAt: number } | null = null;
-const FEEDS_CACHE_VERSION = 19; // bump: YouTube seed + VV8/7Minutos atualizados
+const FEEDS_CACHE_VERSION = 20; // bump: feeds 12/09/2026 — YouTube, 7Minutos, VV8
 let cacheVersion = FEEDS_CACHE_VERSION;
 
 const UA =

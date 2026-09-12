@@ -5,6 +5,40 @@ export const VV8_SOURCE_URL = "https://portalvv8.com.br/busca/noticias/kelmon";
 
 export const VV8_ARTICLES: PressArticle[] = [
   {
+    id: "vv8-70697",
+    title: "Padre Kelmon detona condução do Senado e pede impeachment de Davi Alcolumbre",
+    eyebrow: "Eleições 2026",
+    url: "https://portalvv8.com.br/noticia/70697/padre-kelmon-detona-conducao-do-senado-e-pede-impeachment-de-davi-alcolumbre",
+    image: "https://portalvv8.com.br/images/noticias/70697/a3b5056688cb7a810ba54ad91fb48d80.webp",
+    source: "Portal VV8",
+  },
+  {
+    id: "vv8-70139",
+    title: "Padre Kelmon eleva o tom contra o PT e Dirceu recorre à justiça",
+    eyebrow: "Eleições 2026",
+    url: "https://portalvv8.com.br/noticia/70139/padre-kelmon-eleva-o-tom-contra-o-pt-e-dirceu-recorre-a-justica",
+    image: "https://portalvv8.com.br/images/noticias/70139/f9f7057be76e67fae697f55b220373c9.webp",
+    source: "Portal VV8",
+  },
+  {
+    id: "vv8-69488",
+    title:
+      "Padre Kelmon reage a Lula na Globo e manda recado aos eleitores: “O Brasil precisa acordar e não eleger o PT!”",
+    eyebrow: "Eleições 2026",
+    url: "https://portalvv8.com.br/noticia/69488/padre-kelmon-reage-a-lula-na-globo-e-manda-recado-aos-eleitores-lo-brasil-precisa-acordar-e-nao-eleger-o-pt-r",
+    image: "https://portalvv8.com.br/images/noticias/69488/f9dd64d1270533f7b15babb44c358eae.webp",
+    source: "Portal VV8",
+  },
+  {
+    id: "vv8-68570",
+    title:
+      "Padre Kelmon lança candidatura a deputado federal por São Paulo e defende união dos cristãos para “resgatar o Brasil”",
+    eyebrow: "Eleições 2026",
+    url: "https://portalvv8.com.br/noticia/68570/padre-kelmon-lanca-candidatura-a-deputado-federal-por-sao-paulo-e-defende-uniao-dos-cristaos-para-lresgatar-o-brasilr",
+    image: "https://portalvv8.com.br/images/noticias/68570/ec10b78b926c867bdeef9f4d65c7a059.webp",
+    source: "Portal VV8",
+  },
+  {
     id: "vv8-67930",
     title:
       "Padre Kelmon lança candidatura a deputado federal pelo PL e reforça defesa de pautas conservadoras",
@@ -98,22 +132,6 @@ export const VV8_ARTICLES: PressArticle[] = [
     eyebrow: "Pelo Brasil!",
     url: "https://portalvv8.com.br/noticia/49972/padre-kelmon-chama-populacao-a-caminhada-crista-na-paulista-dia-1o-e-fara-missa-em-brasilia-por-bolsonaro-e-pelos-herois-do-8-de-janeiro",
     image: "https://portalvv8.com.br/images/noticias/49972/3c39308c02a7aeded1dbcfd22c89785d.webp",
-    source: "Portal VV8",
-  },
-  {
-    id: "vv8-49908",
-    title: "Padre Kelmon se emociona e clama por justiça aos heróis do 8/1 e Bolsonaro",
-    eyebrow: "Acorda, Brasil!",
-    url: "https://portalvv8.com.br/noticia/49908/padre-kelmon-se-emociona-e-clama-por-justica-aos-herois-do-8-1-e-bolsonaro",
-    image: "https://portalvv8.com.br/images/noticias/49908/eba65551eed4e33e37059d1fa2fb3297.webp",
-    source: "Portal VV8",
-  },
-  {
-    id: "vv8-49265",
-    title: "Padre Kelmon lança Foro do Brasil Indígena em aldeia no Maranhão",
-    eyebrow: "Foro do Brasil",
-    url: "https://portalvv8.com.br/noticia/49265/padre-kelmon-lanca-foro-do-brasil-indigena-em-aldeia-no-maranhao",
-    image: "https://portalvv8.com.br/images/noticias/49265/30fa058d3db6d28a8d8f169dee6c1b0a.webp",
     source: "Portal VV8",
   },
 ];
