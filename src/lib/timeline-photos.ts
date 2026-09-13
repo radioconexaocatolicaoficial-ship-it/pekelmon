@@ -9,6 +9,7 @@ const MEDIA_EXT = new Set([...IMAGE_EXT, ...VIDEO_EXT]);
 const RAW_IMAGE_EXT = new Set([".jpg", ".jpeg", ".png", ".gif", ".avif"]);
 
 export const TIMELINE_FOLDERS = [
+  "historia-em-imagens",
   "minhas-raizes",
   "na-juventude",
   "seminario",

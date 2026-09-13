@@ -68,6 +68,16 @@ function pickHistoriaSlides(
 ): HistoriaSlide[] {
   if (!byFolder) return [];
   const slides: HistoriaSlide[] = [];
+  const historiaAcervo = (byFolder["historia-em-imagens"] ?? []).filter(
+    (file) => (file.kind ?? "image") !== "video",
+  );
+  historiaAcervo.forEach((file, index) => {
+    slides.push({
+      src: file.src,
+      alt: `Minha história em imagens — registro ${index + 1}`,
+      caption: "Minha história",
+    });
+  });
   for (const meta of TIMELINE_CARD_META) {
     const files = (byFolder[meta.folder] ?? []).filter((file) => (file.kind ?? "image") !== "video");
     if (files.length === 0) continue;
