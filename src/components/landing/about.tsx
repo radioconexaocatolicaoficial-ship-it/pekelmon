@@ -1,32 +1,54 @@
+import { useQuery } from "@tanstack/react-query";
 import { Quote } from "lucide-react";
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type PointerEvent } from "react";
 import { Link } from "@tanstack/react-router";
 
 import sobreRotating1 from "@/assets/sobre-rotating-1.webp";
 import sobreRotating2 from "@/assets/sobre-rotating-2.webp";
 import sobreRotating3 from "@/assets/sobre-rotating-3.webp";
 import { Button } from "@/components/ui/button";
+import { getTimelinePhotos } from "@/lib/timeline-photos";
 import { PageShell } from "./primitives";
-import { TimelineCards } from "./timeline-cards";
+import { TIMELINE_CARD_META, TimelineCards } from "./timeline-cards";
 import { cn } from "@/lib/utils";
 
 const SOBRE_PORTRAITS = [
   {
     src: sobreRotating1,
     alt: "Padre Kelmon, retrato com fundo amarelo",
+    caption: "Padre Kelmon",
   },
   {
     src: sobreRotating2,
     alt: "Padre Kelmon, retrato com fundo azul",
+    caption: "Padre Kelmon",
   },
   {
     src: sobreRotating3,
     alt: "Padre Kelmon, retrato com fundo verde",
+    caption: "Padre Kelmon",
   },
 ] as const;
 
-const SOBRE_ROTATE_MS = 5500;
+const HISTORIA_ROTATE_MS = 7000;
+const HISTORIA_HEIGHT = 600;
+const HISTORIA_SWIPE_PX = 40;
+
+const HISTORIA_LIMITS: Record<string, number> = {
+  "minhas-raizes": 4,
+  "na-juventude": 3,
+  "seminario": 2,
+  "ordenacao-diaconal": 2,
+  "associacao": 2,
+  "seminario-santana-dos-melquitas": 2,
+  "ordenacao-ortodoxa": 2,
+  "missao-ortodoxa-em-serrolandia": 2,
+  "pastoral-com-venezuelanos": 2,
+  "livro-fe-e-politica": 2,
+  "ilha-de-mare": 2,
+  "atividades-politicas": 2,
+};
 
 /** Preview curto — mesma altura aproximada do bloco atual (3 parágrafos). */
 const BIO_PREVIEW = [
@@ -35,41 +57,114 @@ const BIO_PREVIEW = [
   "Em 2026, confirma a candidatura a Deputado Federal por São Paulo pelo Partido Liberal (PL).",
 ];
 
-function SobrePortraitCarousel() {
+type HistoriaSlide = {
+  src: string;
+  alt: string;
+  caption: string;
+};
+
+function pickHistoriaSlides(
+  byFolder: Record<string, { src: string; name: string; kind?: "image" | "video" }[]> | undefined,
+): HistoriaSlide[] {
+  if (!byFolder) return [];
+  const slides: HistoriaSlide[] = [];
+  for (const meta of TIMELINE_CARD_META) {
+    const files = (byFolder[meta.folder] ?? []).filter((file) => (file.kind ?? "image") !== "video");
+    if (files.length === 0) continue;
+    const cover = meta.coverFile ? files.find((file) => file.name === meta.coverFile) : undefined;
+    const rest = cover ? files.filter((file) => file.name !== meta.coverFile) : files;
+    const ordered = cover ? [cover, ...rest] : rest;
+    const caption = meta.cardTitle ?? meta.title;
+    ordered.slice(0, HISTORIA_LIMITS[meta.folder] ?? 2).forEach((file, index) => {
+      slides.push({
+        src: file.src,
+        alt: index === 0 ? caption : `${caption} — registro ${index + 1}`,
+        caption,
+      });
+    });
+  }
+  return slides;
+}
+
+function HistoriaImagensCarousel() {
+  const photosQuery = useQuery({
+    queryKey: ["timeline-photos", "live-public-folder-v2"],
+    queryFn: () => getTimelinePhotos(),
+    staleTime: 30_000,
+    refetchOnWindowFocus: false,
+  });
+  const timelineSlides = useMemo(
+    () => pickHistoriaSlides(photosQuery.data?.byFolder),
+    [photosQuery.data?.byFolder],
+  );
+  const slides: HistoriaSlide[] = timelineSlides.length > 0 ? timelineSlides : [...SOBRE_PORTRAITS];
   const [active, setActive] = useState(0);
+  const pointer = useRef<{ id: number; x: number; y: number } | null>(null);
+  const index = active % slides.length;
 
   useEffect(() => {
+    if (slides.length < 2) return;
     const id = window.setInterval(() => {
-      setActive((current) => (current + 1) % SOBRE_PORTRAITS.length);
-    }, SOBRE_ROTATE_MS);
+      setActive((currentIndex) => (currentIndex + 1) % slides.length);
+    }, HISTORIA_ROTATE_MS);
     return () => window.clearInterval(id);
-  }, []);
+  }, [slides.length, index]);
+
+  const go = (direction: 1 | -1) => {
+    setActive((currentIndex) => (currentIndex + direction + slides.length) % slides.length);
+  };
 
   return (
-    <div className="relative aspect-[2/3] h-full min-h-[20rem] w-full overflow-hidden rounded-2xl bg-white shadow-2xl sm:min-h-[24rem]">
-      {SOBRE_PORTRAITS.map((portrait, index) => (
-        <img
-          key={portrait.src}
-          src={portrait.src}
-          alt={portrait.alt}
-          width={681}
-          height={1024}
-          loading={index === 0 ? "eager" : "lazy"}
-          decoding="async"
-          className={`absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-[1600ms] ease-in-out ${
-            index === active ? "opacity-100" : "opacity-0"
-          }`}
-        />
-      ))}
-      <div className="pointer-events-none absolute inset-0 rounded-2xl ring-2 ring-inset ring-white/10" />
-      <div className="absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 gap-1.5">
-        {SOBRE_PORTRAITS.map((portrait, index) => (
-          <span
-            key={portrait.src}
-            aria-hidden="true"
-            className={`h-1.5 rounded-full transition-all duration-500 ${
-              index === active ? "w-5 bg-white" : "w-1.5 bg-white/50"
-            }`}
+    <div className="flex h-full min-w-0 flex-col">
+      <p
+        className="mb-3 text-sm font-bold uppercase tracking-widest"
+        style={{ color: "var(--blue-primary)" }}
+      >
+        Minha história em imagens
+      </p>
+      <div
+        className="relative w-full overflow-hidden rounded-2xl bg-neutral-100"
+        style={{ height: HISTORIA_HEIGHT }}
+        role="region"
+        aria-roledescription="carrossel"
+        aria-label="Minha história em imagens"
+        onPointerDown={(event: PointerEvent<HTMLDivElement>) => {
+          pointer.current = { id: event.pointerId, x: event.clientX, y: event.clientY };
+          try {
+            event.currentTarget.setPointerCapture(event.pointerId);
+          } catch {
+            /* swipe still works from pointerup coordinates */
+          }
+        }}
+        onPointerUp={(event: PointerEvent<HTMLDivElement>) => {
+          const start = pointer.current;
+          pointer.current = null;
+          if (!start || start.id !== event.pointerId) return;
+          const dx = event.clientX - start.x;
+          const dy = event.clientY - start.y;
+          if (Math.abs(dx) >= HISTORIA_SWIPE_PX && Math.abs(dx) > Math.abs(dy)) {
+            go(dx < 0 ? 1 : -1);
+          }
+        }}
+        onPointerCancel={() => {
+          pointer.current = null;
+        }}
+      >
+        {slides.map((slide, slideIndex) => (
+          <img
+            key={slide.src}
+            src={slide.src}
+            alt={slide.alt}
+            width={800}
+            height={HISTORIA_HEIGHT}
+            loading={slideIndex === 0 ? "eager" : "lazy"}
+            decoding="async"
+            draggable={false}
+            className="absolute inset-0 h-full w-full object-cover object-center"
+            style={{
+              opacity: slideIndex === index ? 1 : 0,
+              transition: "opacity 1.4s ease",
+            }}
           />
         ))}
       </div>
@@ -104,7 +199,7 @@ export function About({
             viewport={{ once: true }}
             className="relative order-2 min-w-0 md:order-1"
           >
-            <SobrePortraitCarousel />
+            <HistoriaImagensCarousel />
           </motion.div>
 
           <div className="order-1 flex h-full min-w-0 flex-col justify-between md:order-2">
@@ -128,7 +223,7 @@ export function About({
                   fontSize: "clamp(1.5rem, 4vw, 2.75rem)",
                 }}
               >
-                {standalone ? "Padre Kelmon – Biografia" : "Uma Vida de Fé e Serviço"}
+                {standalone ? "Padre Kelmon Biografia" : "Uma Vida de Fé e Serviço"}
               </Heading>
             </motion.div>
 

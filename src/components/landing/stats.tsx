@@ -1,7 +1,8 @@
 import { ArrowUpRight, Quote } from "lucide-react";
 
 import confiancaImg from "@/assets/confianca-kelmon.webp";
-import { FORO_BRASIL, STATS, TRUST_PILLARS } from "@/lib/campaign-data";
+import { BrazilPresenceMap } from "./brazil-presence-map";
+import { FORO_BRASIL, FORO_PRESENCE_STATES, STATS, TRUST_PILLARS } from "@/lib/campaign-data";
 import { Counter, PageShell, Reveal } from "./primitives";
 
 export function Stats({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
@@ -118,7 +119,7 @@ export function Stats({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
           </div>
 
           {/* Números-chave */}
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {STATS.map((stat, index) => (
               <Reveal key={stat.label} delay={0.06 * index}>
                 <div
@@ -144,6 +145,112 @@ export function Stats({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
               </Reveal>
             ))}
           </div>
+
+          <Reveal delay={0.1}>
+            <div id="presenca-foro" className="presenca-foro-grid mt-12">
+                <div className="presenca-foro-copy min-w-0">
+                  <p
+                    className="text-sm font-bold uppercase tracking-widest"
+                    style={{ color: "var(--yellow-primary)" }}
+                  >
+                    Foro do Brasil
+                  </p>
+                  <h3
+                    className="mt-3 text-2xl font-black leading-tight sm:text-3xl"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      color: "var(--blue-primary)",
+                    }}
+                  >
+                    17 estados com presença organizada
+                  </h3>
+                  <p className="mt-3 text-base font-semibold text-gray-800">
+                    Diretórios estaduais em atuação no país
+                  </p>
+                  <p className="mt-4 text-sm leading-relaxed text-gray-700 sm:text-base">
+                    O Foro do Brasil está presente nestes estados, com atuação organizada e
+                    lideranças locais. Padre Kelmon é Presidente Nacional do movimento, fundado
+                    em 2023.
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-gray-600">
+                    {FORO_PRESENCE_STATES.map((state) => state.name).join(", ")}.
+                  </p>
+
+                  <div className="mt-5 grid gap-5 sm:grid-cols-2">
+                    <div>
+                      <p
+                        className="text-sm font-black"
+                        style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
+                      >
+                        Diretórios Nacionais
+                      </p>
+                      <ul className="mt-2 space-y-1.5">
+                        {FORO_BRASIL.nationalDirectories.map((item) => (
+                          <li key={item.href}>
+                            <a
+                              href={item.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 text-sm text-gray-700 hover:underline"
+                            >
+                              <span
+                                className="size-2 shrink-0 rounded-full"
+                                style={{ background: "var(--yellow-primary)" }}
+                              />
+                              {item.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p
+                        className="text-sm font-black"
+                        style={{ fontFamily: "var(--font-display)", color: "var(--blue-primary)" }}
+                      >
+                        Diretórios Internacionais
+                      </p>
+                      <ul className="mt-2 space-y-1.5">
+                        {FORO_BRASIL.internationalDirectories.map((item) => (
+                          <li key={item.href}>
+                            <a
+                              href={item.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 text-sm text-gray-700 hover:underline"
+                            >
+                              <span
+                                className="size-2 shrink-0 rounded-full"
+                                style={{ background: "var(--yellow-primary)" }}
+                              />
+                              {item.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <a
+                    href={FORO_BRASIL.directoriesUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold transition-transform hover:scale-105"
+                    style={{
+                      backgroundColor: "var(--yellow-primary)",
+                      color: "var(--blue-primary)",
+                    }}
+                  >
+                    Conheça o Foro do Brasil
+                    <ArrowUpRight className="size-4" />
+                  </a>
+                </div>
+
+                <div className="presenca-foro-map min-w-0">
+                  <BrazilPresenceMap />
+                </div>
+            </div>
+          </Reveal>
 
           {/* Destaque Foro do Brasil */}
           <Reveal delay={0.12}>

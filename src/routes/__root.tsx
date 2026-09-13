@@ -16,14 +16,24 @@ import { PwaRegister } from "../components/pwa-register";
 import { CookieBanner } from "../components/cookie-banner";
 import { CnpjRail } from "../components/landing/cnpj-rail";
 import { MobileBottomNav } from "../components/landing/mobile-bottom-nav";
+import { SiteFooter } from "../components/landing/site-footer";
+import { SiteHeader } from "../components/landing/site-header";
 import { scrollToSection } from "../lib/scroll-to-section";
+import {
+  GENERAL_META,
+  absoluteUrl,
+  buildOrganizationJsonLd,
+  buildPersonJsonLd,
+  buildWebSiteJsonLd,
+} from "../lib/site";
 
 function NotFoundComponent() {
   return (
     <div className="flex min-h-dvh flex-col bg-white">
       <title>Página não encontrada | Padre Kelmon</title>
       <meta name="robots" content="noindex, follow" />
-      <main className="flex flex-1 items-center justify-center px-4 py-16">
+      <SiteHeader />
+      <main className="flex flex-1 items-center justify-center px-4 py-16 pt-[5.5rem] sm:pt-24">
         <div className="max-w-lg text-center">
           <p
             className="text-sm font-bold uppercase tracking-widest"
@@ -57,7 +67,7 @@ function NotFoundComponent() {
               Biografia
             </Link>
             <Link
-              to="/midia"
+              to="/noticias"
               className="inline-flex items-center justify-center rounded-md border-2 px-4 py-2 text-sm font-bold"
               style={{ borderColor: "var(--blue-primary)", color: "var(--blue-primary)" }}
             >
@@ -73,6 +83,7 @@ function NotFoundComponent() {
           </div>
         </div>
       </main>
+      <SiteFooter />
     </div>
   );
 }
@@ -130,6 +141,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content: "82m9eas0exktmg3bfd42o6gdjxhpvv",
       },
       { name: "theme-color", content: "#1e5bb8" },
+      { name: "msapplication-TileColor", content: "#1e5bb8" },
       { name: "color-scheme", content: "light" },
       { name: "format-detection", content: "telephone=no" },
       { name: "mobile-web-app-capable", content: "yes" },
@@ -137,15 +149,32 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-status-bar-style", content: "default" },
       { name: "apple-mobile-web-app-title", content: "Padre Kelmon" },
       { name: "application-name", content: "Padre Kelmon" },
+      ...GENERAL_META,
     ],
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "stylesheet", href: layoutCss },
       { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "sitemap", type: "application/xml", href: absoluteUrl("/sitemap.xml") },
       { rel: "icon", href: "/favicon-campanha.png?v=9", type: "image/png", sizes: "any" },
       { rel: "icon", href: "/favicon-32x32.png?v=9", type: "image/png", sizes: "32x32" },
+      { rel: "icon", href: "/favicon-16x16.png?v=9", type: "image/png", sizes: "16x16" },
       { rel: "shortcut icon", href: "/favicon.ico?v=9" },
       { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png?v=9" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(buildPersonJsonLd()),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(buildOrganizationJsonLd()),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(buildWebSiteJsonLd()),
+      },
     ],
   }),
 
@@ -167,6 +196,9 @@ function RootShell({ children }: { children: ReactNode }) {
           .site-nav-toggle{display:inline-flex}
           .youtube-civic-row{display:grid;grid-template-columns:1fr;gap:1rem;align-items:start}
           .civic-stack{display:flex;flex-direction:column;gap:.75rem}
+          .presenca-foro-grid{display:grid;grid-template-columns:1fr;gap:2rem;align-items:start}
+          .brazil-presence-map-frame svg{width:100%;height:auto}
+          .brazil-presence-map-caption{margin-top:.5rem}
           .highlights-main{display:flex;flex-direction:column;min-width:0}
           .highlights-main>:first-child{flex-shrink:0}
           .imprensa-block{display:flex;flex-direction:column;margin-top:1.5rem}
@@ -201,6 +233,12 @@ function RootShell({ children }: { children: ReactNode }) {
             .site-nav-toggle,[data-mobile-bottom-nav]{display:none!important}
             .cookie-banner{bottom:1rem}
             .youtube-civic-row{grid-template-columns:minmax(0,1fr) minmax(16rem,20rem);gap:1.25rem;align-items:start}
+            .presenca-foro-grid{grid-template-columns:minmax(0,45fr) minmax(0,55fr);gap:2.5rem;align-items:stretch}
+            .presenca-foro-map{display:flex;flex-direction:column;height:0;min-height:100%}
+            .presenca-foro-map .brazil-presence-map{display:flex;flex:1;height:0;min-height:0;flex-direction:column}
+            .presenca-foro-map .brazil-presence-map-frame{flex:1;min-height:0;position:relative}
+            .presenca-foro-map .brazil-presence-map-frame svg{position:absolute;inset:0;width:100%;height:100%}
+            .presenca-foro-map .brazil-presence-map-caption{position:absolute;right:0;bottom:0;left:0;z-index:1;margin-top:0;padding-top:1.5rem;background:linear-gradient(to top,#fff 55%,rgba(255,255,255,0))}
             .highlights-main{height:0;min-height:100%}
             .imprensa-block,.imprensa-row{height:100%}
             .imprensa-block{flex:1;min-height:0;margin-top:2rem}

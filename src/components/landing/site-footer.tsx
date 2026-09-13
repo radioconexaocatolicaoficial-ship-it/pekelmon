@@ -13,8 +13,12 @@ const USEFUL_LINKS = [
   { href: CANDIDATE.instagram, label: "Instagram", external: true },
   { href: CANDIDATE.youtube, label: "YouTube", external: true },
   { href: "#cadastro", label: "Quero apoiar", external: false },
-  { href: "#privacidade", label: "Privacidade", external: false },
-];
+  { href: "/noticias", label: "Notícias", external: false },
+  { href: "/downloads", label: "Downloads", external: false },
+  { href: "/politica-de-privacidade", label: "Privacidade", external: false },
+  { href: "/termos-de-uso", label: "Termos de uso", external: false },
+  { href: "/mapa-do-site", label: "Mapa do site", external: false },
+] as const;
 
 function XIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -146,12 +150,12 @@ export function SiteFooter() {
                       {l.label}
                     </Link>
                   ) : (
-                    <a
-                      href={l.href}
+                    <Link
+                      to={l.href}
                       className="inline-flex min-h-9 items-center text-sm font-semibold text-white/85 transition-colors hover:text-white"
                     >
                       {l.label}
-                    </a>
+                    </Link>
                   )}
                 </li>
               ))}

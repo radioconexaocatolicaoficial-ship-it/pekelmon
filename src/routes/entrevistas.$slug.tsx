@@ -26,6 +26,14 @@ export const Route = createFileRoute("/entrevistas/$slug")({
         { name: "Entrevistas", path: "/entrevistas" },
         { name: interview.title, path: `/entrevistas/${interview.slug}` },
       ],
+      video: {
+        name: interview.title,
+        description: interview.description,
+        thumbnailUrl: `https://i.ytimg.com/vi/${interview.videoId}/hqdefault.jpg`,
+        uploadDate: interview.dateIso,
+        contentUrl: interview.url,
+        embedUrl: `https://www.youtube-nocookie.com/embed/${interview.videoId}`,
+      },
     });
   },
   component: EntrevistaPage,
@@ -89,11 +97,11 @@ function EntrevistaPage() {
             <Link to="/entrevistas" className="underline decoration-2 underline-offset-4" style={{ color: "var(--blue-primary)" }}>
               Todas as entrevistas
             </Link>
-            <Link to="/biografia" className="underline decoration-2 underline-offset-4" style={{ color: "var(--blue-primary)" }}>
-              Biografia
+            <Link to="/sobre" className="underline decoration-2 underline-offset-4" style={{ color: "var(--blue-primary)" }}>
+              Biografia de Padre Kelmon
             </Link>
             <Link to="/noticias" className="underline decoration-2 underline-offset-4" style={{ color: "var(--blue-primary)" }}>
-              Notícias
+              Notícias da campanha
             </Link>
           </nav>
         </PageShell>

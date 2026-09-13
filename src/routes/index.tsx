@@ -14,103 +14,22 @@ import { SocialLinks } from "@/components/landing/social-links";
 import { SiteFooter } from "@/components/landing/site-footer";
 import { scrollToSection } from "@/lib/scroll-to-section";
 import heroKvUrl from "@/assets/banner-kelmon-1-fe-para-servir.jpg?url";
-import {
-  SITE_DESCRIPTION,
-  SITE_KEYWORDS,
-  SITE_NAME,
-  SITE_TITLE,
-  OG_IMAGE_PATH,
-  OG_IMAGE_WIDTH,
-  OG_IMAGE_HEIGHT,
-  TWITTER_HANDLE,
-  absoluteUrl,
-  buildOrganizationJsonLd,
-  buildPersonJsonLd,
-  buildWebPageJsonLd,
-  buildWebSiteJsonLd,
-} from "@/lib/site";
+import { PAGE_SEO, buildPageHead } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
   // Feeds sociais carregam na seção Mídia — não bloqueiam a abertura da página.
   component: Index,
   head: () => {
-    const pageUrl = absoluteUrl("/");
-    const ogImage = absoluteUrl(OG_IMAGE_PATH);
-
+    const head = buildPageHead(PAGE_SEO.home);
     return {
-      meta: [
-        { title: SITE_TITLE },
-        { name: "description", content: SITE_DESCRIPTION },
-        { name: "keywords", content: SITE_KEYWORDS },
-        { name: "author", content: SITE_NAME },
-        {
-          name: "robots",
-          content:
-            "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-        },
-        { name: "googlebot", content: "index, follow" },
-        { name: "bingbot", content: "index, follow" },
-        { name: "geo.region", content: "BR-SP" },
-        { name: "geo.placename", content: "São Paulo" },
-        { name: "language", content: "pt-BR" },
-        { property: "og:title", content: SITE_TITLE },
-        { property: "og:description", content: SITE_DESCRIPTION },
-        { property: "og:type", content: "website" },
-        { property: "og:url", content: pageUrl },
-        { property: "og:locale", content: "pt_BR" },
-        { property: "og:site_name", content: SITE_NAME },
-        { property: "og:image", content: ogImage },
-        { property: "og:image:secure_url", content: ogImage },
-        { property: "og:image:type", content: "image/jpeg" },
-        { property: "og:image:width", content: OG_IMAGE_WIDTH },
-        { property: "og:image:height", content: OG_IMAGE_HEIGHT },
-        {
-          property: "og:image:alt",
-          content: SITE_TITLE,
-        },
-        { name: "twitter:card", content: "summary_large_image" },
-        { name: "twitter:site", content: TWITTER_HANDLE },
-        { name: "twitter:creator", content: TWITTER_HANDLE },
-        { name: "twitter:title", content: SITE_TITLE },
-        { name: "twitter:description", content: SITE_DESCRIPTION },
-        { name: "twitter:image", content: ogImage },
-        {
-          name: "twitter:image:alt",
-          content: SITE_TITLE,
-        },
-      ],
+      ...head,
       links: [
-        { rel: "canonical", href: pageUrl },
-        { rel: "alternate", hrefLang: "pt-BR", href: pageUrl },
-        { rel: "alternate", hrefLang: "x-default", href: pageUrl },
-        { rel: "image_src", href: ogImage },
-        { rel: "icon", href: "/favicon-campanha.png?v=9", type: "image/png", sizes: "any" },
-        { rel: "icon", href: "/favicon-32x32.png?v=9", type: "image/png", sizes: "32x32" },
-        { rel: "shortcut icon", href: "/favicon.ico?v=9" },
-        { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png?v=9" },
+        ...head.links,
         {
           rel: "preload",
           as: "image",
           href: heroKvUrl,
           type: "image/jpeg",
-        },
-      ],
-      scripts: [
-        {
-          type: "application/ld+json",
-          children: JSON.stringify(buildPersonJsonLd()),
-        },
-        {
-          type: "application/ld+json",
-          children: JSON.stringify(buildOrganizationJsonLd()),
-        },
-        {
-          type: "application/ld+json",
-          children: JSON.stringify(buildWebSiteJsonLd()),
-        },
-        {
-          type: "application/ld+json",
-          children: JSON.stringify(buildWebPageJsonLd()),
         },
       ],
     };

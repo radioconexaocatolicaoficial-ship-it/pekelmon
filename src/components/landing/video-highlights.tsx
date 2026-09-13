@@ -96,6 +96,7 @@ function VideoCard({
     <button
       type="button"
       onClick={() => onOpen(video)}
+      aria-label={`Assistir ${video.title}`}
       className="group flex h-full min-h-0 w-full flex-col overflow-hidden rounded-xl border-2 border-gray-200 bg-white text-left shadow-sm transition hover:border-blue-500 hover:shadow-md"
     >
       <div

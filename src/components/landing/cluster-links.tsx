@@ -3,14 +3,18 @@ import { Link } from "@tanstack/react-router";
 import { PageShell } from "./primitives";
 
 const CLUSTER = [
-  { to: "/biografia", label: "Biografia" },
+  { to: "/sobre", label: "Biografia" },
   { to: "/noticias", label: "Notícias" },
+  { to: "/pautas", label: "Pautas" },
+  { to: "/midia", label: "Mídia" },
+  { to: "/numeros", label: "Números" },
   { to: "/agenda", label: "Agenda" },
   { to: "/eventos", label: "Eventos" },
   { to: "/entrevistas", label: "Entrevistas" },
   { to: "/discursos", label: "Discursos" },
   { to: "/conteudos", label: "Conteúdos" },
-  { to: "/redes-sociais", label: "Redes sociais" },
+  { to: "/downloads", label: "Downloads" },
+  { to: "/links", label: "Redes sociais" },
   { to: "/contato", label: "Contato" },
 ] as const;
 

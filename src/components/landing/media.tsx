@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import { ExternalLink, Newspaper, Play } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 
@@ -659,7 +660,15 @@ export function Media({ headingAs = "h2" }: { headingAs?: "h1" | "h2" }) {
               </Heading>
               <p className="text-sm leading-relaxed text-gray-700 text-justify sm:text-base">
                 Acompanhe Instagram, Facebook, X, YouTube e TikTok com os posts e reels públicos
-                mais recentes. Os feeds usam conteúdo público e se atualizam sozinhos.
+                mais recentes. Os feeds usam conteúdo público e se atualizam sozinhos. Veja também as{" "}
+                <Link
+                  to="/noticias"
+                  className="font-semibold underline underline-offset-4"
+                  style={{ color: "var(--blue-primary)" }}
+                >
+                  notícias da campanha
+                </Link>
+                .
               </p>
               {hasUpdatedAt ? (
                 <p className="mt-3 text-xs text-gray-500">

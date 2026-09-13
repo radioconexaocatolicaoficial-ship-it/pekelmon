@@ -16,20 +16,23 @@ export const Route = createFileRoute("/mapa-do-site")({
 
 const HUBS = [
   { to: "/", label: "Início" },
-  { to: "/biografia", label: "Biografia" },
+  { to: "/sobre", label: "Biografia" },
   { to: "/noticias", label: "Notícias" },
   { to: "/agenda", label: "Agenda" },
   { to: "/eventos", label: "Eventos" },
   { to: "/entrevistas", label: "Entrevistas" },
   { to: "/discursos", label: "Discursos" },
   { to: "/conteudos", label: "Conteúdos" },
-  { to: "/redes-sociais", label: "Redes sociais" },
+  { to: "/downloads", label: "Downloads" },
+  { to: "/links", label: "Redes sociais" },
   { to: "/contato", label: "Contato" },
-  { to: "/sobre", label: "Sobre o site" },
   { to: "/saiba-mais", label: "Saiba mais" },
   { to: "/pautas", label: "Pautas" },
   { to: "/midia", label: "Mídia" },
   { to: "/numeros", label: "Números" },
+  { to: "/politica-de-privacidade", label: "Política de Privacidade" },
+  { to: "/politica-de-cookies", label: "Política de Cookies" },
+  { to: "/termos-de-uso", label: "Termos de Uso" },
 ] as const;
 
 function MapaDoSitePage() {
@@ -67,7 +70,7 @@ function MapaDoSitePage() {
               Notícias internas
             </h2>
             <ul className="mt-3 space-y-2">
-              {SITE_NEWS.filter((item) => item.internal).map((item) => (
+              {SITE_NEWS.map((item) => (
                 <li key={item.slug}>
                   <Link to={item.href} className="underline underline-offset-4" style={{ color: "var(--blue-primary)" }}>
                     {item.title}

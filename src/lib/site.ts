@@ -12,14 +12,30 @@ export const SITE_URL = (
 
 export const SITE_NAME = "Padre Kelmon";
 
-export const SITE_TITLE = "Padre Kelmon | Site Oficial";
+export const SITE_TITLE = "Padre Kelmon | Candidato a Deputado Federal por São Paulo";
 
 /** Meta description distinta do title (~140–160 caracteres) para SEO e redes. */
 export const SITE_DESCRIPTION =
-  "Site oficial de Padre Kelmon. Conheça sua história, acompanhe notícias, entrevistas, redes oficiais e a candidatura a Deputado Federal por São Paulo.";
+  "Site oficial de Padre Kelmon, candidato a Deputado Federal por São Paulo pelo PL. Conheça sua trajetória, pautas, posicionamentos, notícias, vídeos e materiais de campanha.";
 
 export const SITE_KEYWORDS =
-  "Padre Kelmon, site oficial Padre Kelmon, biografia, notícias, entrevistas, redes sociais, sacerdote, Deputado Federal, São Paulo, PL";
+  "Padre Kelmon, site oficial Padre Kelmon, biografia, notícias, entrevistas, redes sociais, sacerdote, Deputado Federal, São Paulo, PL, campanha 2026, fé e política";
+
+export const SITE_CLASSIFICATION = "Política, campanha eleitoral, fé cristã";
+
+export const SITE_COPYRIGHT = `© ${new Date().getFullYear()} Campanha Padre Kelmon`;
+
+/** Metadados comuns a todas as páginas. */
+export const GENERAL_META = [
+  { name: "referrer", content: "origin-when-cross-origin" },
+  { name: "rating", content: "general" },
+  { name: "classification", content: SITE_CLASSIFICATION },
+  { name: "publisher", content: SITE_NAME },
+  { name: "copyright", content: SITE_COPYRIGHT },
+  { name: "coverage", content: "São Paulo, Brasil" },
+  { name: "distribution", content: "global" },
+  { name: "revisit-after", content: "7 days" },
+] as const;
 
 /** JPEG 1200×630 da arte de prévia. Nome novo para o WhatsApp não reusar o cache. */
 export const OG_IMAGE_PATH = "/og-banner-previa-kelmon.jpg";
@@ -41,22 +57,28 @@ export type BreadcrumbItem = {
 };
 
 export const PAGE_SEO = {
+  home: {
+    path: "/",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    breadcrumbs: [{ name: "Início", path: "/" }] satisfies BreadcrumbItem[],
+  },
   biografia: {
-    path: "/biografia",
-    title: "Padre Kelmon | Biografia e História",
+    path: "/sobre",
+    title: "Quem é Padre Kelmon | Biografia e Trajetória",
     description:
-      "Biografia de Padre Kelmon: sacerdote, trajetória pública, Foro do Brasil e a candidatura a Deputado Federal por São Paulo pelo PL.",
+      "Conheça a trajetória de Padre Kelmon, sua formação, atuação pastoral, vida pública e participação política no Brasil.",
     breadcrumbs: [
       { name: "Início", path: "/" },
-      { name: "Biografia", path: "/biografia" },
+      { name: "Biografia", path: "/sobre" },
     ] satisfies BreadcrumbItem[],
     schema: "profile" as const,
   },
   sobre: {
     path: "/sobre",
-    title: "Padre Kelmon | Biografia e História",
+    title: "Quem é Padre Kelmon | Biografia e Trajetória",
     description:
-      "Biografia de Padre Kelmon: sacerdote, trajetória pública, Foro do Brasil e a candidatura a Deputado Federal por São Paulo pelo PL.",
+      "Conheça a trajetória de Padre Kelmon, sua formação, atuação pastoral, vida pública e participação política no Brasil.",
     breadcrumbs: [
       { name: "Início", path: "/" },
       { name: "Biografia", path: "/sobre" },
@@ -75,9 +97,9 @@ export const PAGE_SEO = {
   },
   pautas: {
     path: "/pautas",
-    title: "Padre Kelmon | Pautas e atuação pública",
+    title: "Pautas de Padre Kelmon | Família, Liberdade e Brasil",
     description:
-      "As pautas que Padre Kelmon defende: família, liberdade religiosa, valores cristãos e dignidade humana em São Paulo.",
+      "Conheça as principais pautas defendidas por Padre Kelmon, incluindo família, vida, liberdade religiosa, segurança, liberdade econômica e Brasil.",
     breadcrumbs: [
       { name: "Início", path: "/" },
       { name: "Pautas", path: "/pautas" },
@@ -85,17 +107,17 @@ export const PAGE_SEO = {
   },
   midia: {
     path: "/midia",
-    title: "Padre Kelmon | Notícias e entrevistas",
+    title: "Padre Kelmon na Mídia | Notícias, Entrevistas e Vídeos",
     description:
-      "Notícias, entrevistas e redes oficiais de Padre Kelmon: imprensa, YouTube, Instagram, TikTok, Facebook e X.",
+      "Acompanhe notícias, entrevistas, vídeos e participações de Padre Kelmon na imprensa e nos principais meios de comunicação.",
     breadcrumbs: [
       { name: "Início", path: "/" },
-      { name: "Notícias", path: "/midia" },
+      { name: "Mídia", path: "/midia" },
     ] satisfies BreadcrumbItem[],
   },
   noticias: {
     path: "/noticias",
-    title: "Padre Kelmon | Notícias",
+    title: "Notícias de Padre Kelmon | Campanha e imprensa",
     description:
       "Notícias e matérias sobre Padre Kelmon: convocações da campanha, imprensa e registros públicos da trajetória.",
     breadcrumbs: [
@@ -175,9 +197,9 @@ export const PAGE_SEO = {
   },
   numeros: {
     path: "/numeros",
-    title: "Padre Kelmon | Números e indicadores",
+    title: "Padre Kelmon | Trajetória, Votos e Atuação Pública",
     description:
-      "Números públicos de Padre Kelmon: votos em 2022, décadas de fé e serviço, Foro do Brasil e a campanha em São Paulo.",
+      "Conheça números, resultados e informações da trajetória pública e política de Padre Kelmon.",
     breadcrumbs: [
       { name: "Início", path: "/" },
       { name: "Números", path: "/numeros" },
@@ -222,10 +244,21 @@ export const PAGE_SEO = {
     image: "/news/7-de-setembro-paulista.jpg",
     breadcrumbs: [
       { name: "Início", path: "/" },
-      { name: "Notícias", path: "/midia" },
+      { name: "Notícias", path: "/noticias" },
       { name: "7 de Setembro", path: "/imprensa/7-de-setembro" },
     ] satisfies BreadcrumbItem[],
     schema: "article" as const,
+    datePublished: "2026-09-07",
+  },
+  downloads: {
+    path: "/downloads",
+    title: "Materiais de Campanha Padre Kelmon 2202 | Downloads",
+    description:
+      "Encontre materiais oficiais de Padre Kelmon, conteúdos para divulgação e materiais relacionados à campanha.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Downloads", path: "/downloads" },
+    ] satisfies BreadcrumbItem[],
   },
   politicaPrivacidade: {
     path: "/politica-de-privacidade",
@@ -273,6 +306,21 @@ export const PAGE_SEO = {
   },
 } as const;
 
+export type VideoObjectInput = {
+  name: string;
+  description: string;
+  thumbnailUrl: string;
+  uploadDate: string;
+  contentUrl?: string;
+  embedUrl?: string;
+};
+
+function ogImageType(src: string) {
+  if (/\.webp(?:$|\?)/i.test(src)) return "image/webp";
+  if (/\.png(?:$|\?)/i.test(src)) return "image/png";
+  return "image/jpeg";
+}
+
 export function buildPageHead({
   path,
   title,
@@ -283,6 +331,9 @@ export function buildPageHead({
   breadcrumbs,
   schema,
   robots,
+  datePublished,
+  dateModified,
+  video,
 }: {
   path: string;
   title: string;
@@ -293,6 +344,9 @@ export function buildPageHead({
   breadcrumbs?: readonly BreadcrumbItem[];
   schema?: "profile" | "article";
   robots?: string;
+  datePublished?: string;
+  dateModified?: string;
+  video?: VideoObjectInput;
 }) {
   const pageUrl = absoluteUrl(path);
   const ogImage = absoluteUrl(image ?? OG_IMAGE_PATH);
@@ -321,7 +375,23 @@ export function buildPageHead({
   if (isArticle) {
     scripts.push({
       type: "application/ld+json",
-      children: JSON.stringify(buildNewsArticleJsonLd({ path, title, description, image })),
+      children: JSON.stringify(
+        buildNewsArticleJsonLd({
+          path,
+          title,
+          description,
+          image,
+          datePublished,
+          dateModified,
+        }),
+      ),
+    });
+  }
+
+  if (video) {
+    scripts.push({
+      type: "application/ld+json",
+      children: JSON.stringify(buildVideoObjectJsonLd(video)),
     });
   }
 
@@ -331,6 +401,7 @@ export function buildPageHead({
       { name: "description", content: description },
       { name: "keywords", content: SITE_KEYWORDS },
       { name: "author", content: SITE_NAME },
+      ...GENERAL_META,
       {
         name: "robots",
         content:
@@ -346,13 +417,20 @@ export function buildPageHead({
       { property: "og:type", content: isArticle ? "article" : "website" },
       { property: "og:url", content: pageUrl },
       { property: "og:locale", content: "pt_BR" },
+      { property: "og:locale:alternate", content: "pt" },
       { property: "og:site_name", content: SITE_NAME },
       { property: "og:image", content: ogImage },
       { property: "og:image:secure_url", content: ogImage },
-      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:type", content: ogImageType(ogImage) },
       { property: "og:image:width", content: width },
       { property: "og:image:height", content: height },
       { property: "og:image:alt", content: title },
+      ...(datePublished
+        ? [
+            { property: "article:published_time", content: datePublished },
+            { property: "article:modified_time", content: dateModified ?? datePublished },
+          ]
+        : []),
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: TWITTER_HANDLE },
       { name: "twitter:creator", content: TWITTER_HANDLE },
@@ -366,6 +444,7 @@ export function buildPageHead({
       { rel: "alternate", hrefLang: "pt-BR", href: pageUrl },
       { rel: "alternate", hrefLang: "x-default", href: pageUrl },
       { rel: "image_src", href: ogImage },
+      { rel: "author", href: absoluteUrl("/") },
     ],
     scripts,
   };
@@ -443,7 +522,7 @@ export function buildWebSiteJsonLd() {
     description: SITE_DESCRIPTION,
     inLanguage: "pt-BR",
     publisher: {
-      "@id": `${url}#person`,
+      "@id": `${url}#organization`,
     },
   };
 }
@@ -505,26 +584,49 @@ export function buildNewsArticleJsonLd(page: {
   dateModified?: string;
 }) {
   const url = absoluteUrl(page.path);
+  const published = page.datePublished;
+  const modified = page.dateModified ?? page.datePublished;
+
   return {
     "@context": "https://schema.org",
-    "@type": "NewsArticle",
+    "@type": "Article",
     "@id": `${url}#article`,
     headline: page.title,
     description: page.description,
-    url,
-    inLanguage: "pt-BR",
-    datePublished: page.datePublished ?? "2026-09-07",
-    dateModified: page.dateModified ?? page.datePublished ?? "2026-09-07",
-    image: absoluteUrl(page.image ?? OG_IMAGE_PATH),
+    image: [absoluteUrl(page.image ?? OG_IMAGE_PATH)],
+    ...(published ? { datePublished: published } : {}),
+    ...(modified ? { dateModified: modified } : {}),
     author: {
-      "@id": `${absoluteUrl("/")}#person`,
+      "@type": "Person",
+      name: SITE_NAME,
+      url: absoluteUrl("/"),
     },
     publisher: {
-      "@id": `${absoluteUrl("/")}#organization`,
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: absoluteUrl("/"),
+      logo: {
+        "@type": "ImageObject",
+        url: absoluteUrl("/Logo-Site-Padre-kelmon-campanha.png"),
+      },
     },
     mainEntityOfPage: {
-      "@id": `${url}#webpage`,
+      "@type": "WebPage",
+      "@id": url,
     },
+  };
+}
+
+export function buildVideoObjectJsonLd(video: VideoObjectInput) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    name: video.name,
+    description: video.description,
+    thumbnailUrl: video.thumbnailUrl,
+    uploadDate: video.uploadDate,
+    ...(video.contentUrl ? { contentUrl: video.contentUrl } : {}),
+    ...(video.embedUrl ? { embedUrl: video.embedUrl } : {}),
   };
 }
 
@@ -581,13 +683,13 @@ export function buildWebPageJsonLd(page?: {
     url,
     inLanguage: "pt-BR",
     isPartOf: {
-      "@id": `${url}#website`,
+      "@id": `${absoluteUrl("/")}#website`,
     },
     about: {
-      "@id": `${url}#person`,
+      "@id": `${absoluteUrl("/")}#person`,
     },
     primaryEntity: {
-      "@id": `${url}#person`,
+      "@id": `${absoluteUrl("/")}#person`,
     },
     primaryImageOfPage: {
       "@type": "ImageObject",

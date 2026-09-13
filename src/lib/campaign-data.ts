@@ -306,16 +306,10 @@ export const STATS: StatItem[] = [
     note: "Alcance nacional em 19 dias de campanha. Resultado oficial do TSE.",
   },
   {
-    value: 2,
+    value: 3,
     suffix: "+",
     label: "Anos liderando o Foro do Brasil",
     note: "Movimento fundado em 29/06/2023; Instituto constituído em 2025",
-  },
-  {
-    value: 6,
-    suffix: "+",
-    label: "Estados com presença organizada",
-    note: "Diretórios e caravanas em SP, RJ, SC, MG, PR e outros estados",
   },
   {
     value: 30,
@@ -324,6 +318,30 @@ export const STATS: StatItem[] = [
     note: "Da formação na juventude e nas missões à defesa pública da fé cristã",
   },
 ];
+
+export const FORO_PRESENCE_STATES = [
+  { uf: "RR", name: "Roraima" },
+  { uf: "AM", name: "Amazonas" },
+  { uf: "PA", name: "Pará" },
+  { uf: "CE", name: "Ceará" },
+  { uf: "RN", name: "Rio Grande do Norte" },
+  { uf: "PB", name: "Paraíba" },
+  { uf: "PE", name: "Pernambuco" },
+  { uf: "BA", name: "Bahia" },
+  { uf: "TO", name: "Tocantins" },
+  { uf: "GO", name: "Goiás" },
+  { uf: "DF", name: "Distrito Federal" },
+  { uf: "MG", name: "Minas Gerais" },
+  { uf: "ES", name: "Espírito Santo" },
+  { uf: "RJ", name: "Rio de Janeiro" },
+  { uf: "SP", name: "São Paulo" },
+  { uf: "SC", name: "Santa Catarina" },
+  { uf: "RS", name: "Rio Grande do Sul" },
+] as const;
+
+export const FORO_PRESENCE_UFS = new Set<string>(
+  FORO_PRESENCE_STATES.map((state) => state.uf),
+);
 
 /** Pilares de confiança para o eleitor — sem controvérsias, só qualificações públicas. */
 export const TRUST_PILLARS: TrustPillar[] = [
@@ -417,6 +435,15 @@ export const FORO_BRASIL = {
     { label: "Indígena", href: "https://forobrasil.org/foro-do-brasil-indigena/" },
     { label: "Equador", href: "https://forobrasil.org/foro-do-brasil-equador/" },
     { label: "Peru", href: "https://forobrasil.org/foro-do-brasil-peru/" },
+  ],
+  nationalDirectories: [
+    { label: "Foro do Brasil Mulher", href: "https://forobrasil.org/foro-do-brasil-mulher/" },
+    { label: "Foro do Brasil Juventude", href: "https://forobrasil.org/foro-do-brasil-juventude/" },
+    { label: "Foro do Brasil Indígena", href: "https://forobrasil.org/foro-do-brasil-indigena/" },
+  ],
+  internationalDirectories: [
+    { label: "Foro do Brasil Equador", href: "https://forobrasil.org/foro-do-brasil-equador/" },
+    { label: "Foro do Brasil Peru", href: "https://forobrasil.org/foro-do-brasil-peru/" },
   ],
 };
 

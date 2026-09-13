@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { Loader2, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -301,13 +302,13 @@ export function SignupForm() {
                       />
                       <span className="text-gray-600">
                         Autorizo o uso dos meus dados conforme a{" "}
-                        <a
-                          href="#privacidade"
+                        <Link
+                          to="/politica-de-privacidade"
                           className="font-semibold underline underline-offset-4"
                           style={{ color: "var(--blue-primary)" }}
                         >
                           Política de Privacidade
-                        </a>{" "}
+                        </Link>{" "}
                         e a LGPD.
                       </span>
                     </label>

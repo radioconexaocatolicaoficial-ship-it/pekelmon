@@ -45,8 +45,7 @@ export function CookieBanner() {
         <p className="text-sm leading-relaxed text-neutral-800 sm:text-[0.95rem]">
           Utilizamos cookies conforme o{" "}
           <Link
-            to="/"
-            hash="privacidade"
+            to="/politica-de-cookies"
             className="font-medium underline underline-offset-2 transition-opacity hover:opacity-80"
             style={{ color: "var(--blue-primary)" }}
           >

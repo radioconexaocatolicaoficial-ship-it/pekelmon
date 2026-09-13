@@ -9,7 +9,18 @@ const speech = SITE_SPEECHES[0];
 
 export const Route = createFileRoute("/discursos/missa-de-lancamento-campanha")({
   component: MissaPage,
-  head: () => buildPageHead(PAGE_SEO.discursosMissa),
+  head: () =>
+    buildPageHead({
+      ...PAGE_SEO.discursosMissa,
+      video: {
+        name: speech.title,
+        description: speech.description,
+        thumbnailUrl: `https://i.ytimg.com/vi/${speech.videoId}/hqdefault.jpg`,
+        uploadDate: speech.dateIso,
+        contentUrl: speech.url,
+        embedUrl: `https://www.youtube-nocookie.com/embed/${speech.videoId}`,
+      },
+    }),
 });
 
 function MissaPage() {
@@ -67,8 +78,8 @@ function MissaPage() {
             <Link to="/discursos" className="underline decoration-2 underline-offset-4" style={{ color: "var(--blue-primary)" }}>
               Todos os discursos
             </Link>
-            <Link to="/biografia" className="underline decoration-2 underline-offset-4" style={{ color: "var(--blue-primary)" }}>
-              Biografia
+            <Link to="/sobre" className="underline decoration-2 underline-offset-4" style={{ color: "var(--blue-primary)" }}>
+              Biografia de Padre Kelmon
             </Link>
             <Link to="/agenda" className="underline decoration-2 underline-offset-4" style={{ color: "var(--blue-primary)" }}>
               Agenda

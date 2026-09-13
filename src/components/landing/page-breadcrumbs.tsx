@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 import type { BreadcrumbItem } from "@/lib/site";
 import { PageShell } from "./primitives";
 
@@ -22,12 +24,12 @@ export function PageBreadcrumbs({ items }: { items: readonly BreadcrumbItem[] })
                     {item.name}
                   </span>
                 ) : (
-                  <a
-                    href={item.path}
+                  <Link
+                    to={item.path}
                     className="transition-colors hover:text-[var(--blue-primary)]"
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 )}
               </li>
             );

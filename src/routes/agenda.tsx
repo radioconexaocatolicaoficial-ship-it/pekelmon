@@ -36,7 +36,7 @@ function AgendaPage() {
             {upcoming.length === 0 ? (
               <p className="mt-3 text-sm leading-relaxed text-gray-700 sm:text-base">
                 Não há evento futuro confirmado neste momento. Acompanhe as{" "}
-                <Link to="/redes-sociais" className="font-semibold underline underline-offset-4" style={{ color: "var(--blue-primary)" }}>
+                <Link to="/links" className="font-semibold underline underline-offset-4" style={{ color: "var(--blue-primary)" }}>
                   redes oficiais
                 </Link>{" "}
                 e volte a esta página.

@@ -94,7 +94,8 @@ export function Counter({
 }) {
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
-  const [display, setDisplay] = useState(0);
+  const [display, setDisplay] = useState(value);
+  const formatted = `${prefix}${value.toLocaleString("pt-BR")}${suffix}`;
 
   useEffect(() => {
     if (!inView) return;
@@ -112,10 +113,15 @@ export function Counter({
   }, [inView, value]);
 
   return (
-    <span ref={ref} className="tabular-nums">
-      {prefix}
-      {display.toLocaleString("pt-BR")}
-      {suffix}
+    <span ref={ref} className="relative inline-block tabular-nums" data-value={value}>
+      <span className={inView ? "invisible" : undefined}>{formatted}</span>
+      {inView ? (
+        <span className="absolute inset-0" aria-hidden="true">
+          {prefix}
+          {display.toLocaleString("pt-BR")}
+          {suffix}
+        </span>
+      ) : null}
     </span>
   );
 }

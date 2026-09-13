@@ -16,6 +16,7 @@ import { Route as BiografiaRouteImport } from './routes/biografia'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ConteudosRouteImport } from './routes/conteudos'
 import { Route as DiscursosRouteImport } from './routes/discursos'
+import { Route as DownloadsRouteImport } from './routes/downloads'
 import { Route as EntrevistasRouteImport } from './routes/entrevistas'
 import { Route as EventosRouteImport } from './routes/eventos'
 import { Route as LinksRouteImport } from './routes/links'
@@ -39,6 +40,8 @@ import { Route as EntrevistasSlugRouteImport } from './routes/entrevistas.$slug'
 import { Route as EventosIndexRouteImport } from './routes/eventos.index'
 import { Route as Eventos7DeSetembroNaPaulistaRouteImport } from './routes/eventos.7-de-setembro-na-paulista'
 import { Route as Imprensa7DeSetembroRouteImport } from './routes/imprensa.7-de-setembro'
+import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
+import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -73,6 +76,11 @@ const ConteudosRoute = ConteudosRouteImport.update({
 const DiscursosRoute = DiscursosRouteImport.update({
   id: '/discursos',
   path: '/discursos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DownloadsRoute = DownloadsRouteImport.update({
+  id: '/downloads',
+  path: '/downloads',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EntrevistasRoute = EntrevistasRouteImport.update({
@@ -192,6 +200,16 @@ const Imprensa7DeSetembroRoute = Imprensa7DeSetembroRouteImport.update({
   path: '/imprensa/7-de-setembro',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => NoticiasRoute,
+} as any)
+const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => NoticiasRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -201,12 +219,13 @@ export interface FileRoutesByFullPath {
   '/contato': typeof ContatoRouteWithChildren
   '/conteudos': typeof ConteudosRoute
   '/discursos': typeof DiscursosRouteWithChildren
+  '/downloads': typeof DownloadsRoute
   '/entrevistas': typeof EntrevistasRouteWithChildren
   '/eventos': typeof EventosRouteWithChildren
   '/links': typeof LinksRoute
   '/mapa-do-site': typeof MapaDoSiteRoute
   '/midia': typeof MidiaRoute
-  '/noticias': typeof NoticiasRoute
+  '/noticias': typeof NoticiasRouteWithChildren
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
   '/politica-de-cookies': typeof PoliticaDeCookiesRoute
@@ -220,10 +239,12 @@ export interface FileRoutesByFullPath {
   '/entrevistas/$slug': typeof EntrevistasSlugRoute
   '/eventos/7-de-setembro-na-paulista': typeof Eventos7DeSetembroNaPaulistaRoute
   '/imprensa/7-de-setembro': typeof Imprensa7DeSetembroRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
   '/contato/': typeof ContatoIndexRoute
   '/discursos/': typeof DiscursosIndexRoute
   '/entrevistas/': typeof EntrevistasIndexRoute
   '/eventos/': typeof EventosIndexRoute
+  '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -231,10 +252,10 @@ export interface FileRoutesByTo {
   '/bio': typeof BioRoute
   '/biografia': typeof BiografiaRoute
   '/conteudos': typeof ConteudosRoute
+  '/downloads': typeof DownloadsRoute
   '/links': typeof LinksRoute
   '/mapa-do-site': typeof MapaDoSiteRoute
   '/midia': typeof MidiaRoute
-  '/noticias': typeof NoticiasRoute
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
   '/politica-de-cookies': typeof PoliticaDeCookiesRoute
@@ -248,10 +269,12 @@ export interface FileRoutesByTo {
   '/entrevistas/$slug': typeof EntrevistasSlugRoute
   '/eventos/7-de-setembro-na-paulista': typeof Eventos7DeSetembroNaPaulistaRoute
   '/imprensa/7-de-setembro': typeof Imprensa7DeSetembroRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
   '/contato': typeof ContatoIndexRoute
   '/discursos': typeof DiscursosIndexRoute
   '/entrevistas': typeof EntrevistasIndexRoute
   '/eventos': typeof EventosIndexRoute
+  '/noticias': typeof NoticiasIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -262,12 +285,13 @@ export interface FileRoutesById {
   '/contato': typeof ContatoRouteWithChildren
   '/conteudos': typeof ConteudosRoute
   '/discursos': typeof DiscursosRouteWithChildren
+  '/downloads': typeof DownloadsRoute
   '/entrevistas': typeof EntrevistasRouteWithChildren
   '/eventos': typeof EventosRouteWithChildren
   '/links': typeof LinksRoute
   '/mapa-do-site': typeof MapaDoSiteRoute
   '/midia': typeof MidiaRoute
-  '/noticias': typeof NoticiasRoute
+  '/noticias': typeof NoticiasRouteWithChildren
   '/numeros': typeof NumerosRoute
   '/pautas': typeof PautasRoute
   '/politica-de-cookies': typeof PoliticaDeCookiesRoute
@@ -281,10 +305,12 @@ export interface FileRoutesById {
   '/entrevistas/$slug': typeof EntrevistasSlugRoute
   '/eventos/7-de-setembro-na-paulista': typeof Eventos7DeSetembroNaPaulistaRoute
   '/imprensa/7-de-setembro': typeof Imprensa7DeSetembroRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
   '/contato/': typeof ContatoIndexRoute
   '/discursos/': typeof DiscursosIndexRoute
   '/entrevistas/': typeof EntrevistasIndexRoute
   '/eventos/': typeof EventosIndexRoute
+  '/noticias/': typeof NoticiasIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -296,6 +322,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/conteudos'
     | '/discursos'
+    | '/downloads'
     | '/entrevistas'
     | '/eventos'
     | '/links'
@@ -315,10 +342,12 @@ export interface FileRouteTypes {
     | '/entrevistas/$slug'
     | '/eventos/7-de-setembro-na-paulista'
     | '/imprensa/7-de-setembro'
+    | '/noticias/$slug'
     | '/contato/'
     | '/discursos/'
     | '/entrevistas/'
     | '/eventos/'
+    | '/noticias/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -326,10 +355,10 @@ export interface FileRouteTypes {
     | '/bio'
     | '/biografia'
     | '/conteudos'
+    | '/downloads'
     | '/links'
     | '/mapa-do-site'
     | '/midia'
-    | '/noticias'
     | '/numeros'
     | '/pautas'
     | '/politica-de-cookies'
@@ -343,10 +372,12 @@ export interface FileRouteTypes {
     | '/entrevistas/$slug'
     | '/eventos/7-de-setembro-na-paulista'
     | '/imprensa/7-de-setembro'
+    | '/noticias/$slug'
     | '/contato'
     | '/discursos'
     | '/entrevistas'
     | '/eventos'
+    | '/noticias'
   id:
     | '__root__'
     | '/'
@@ -356,6 +387,7 @@ export interface FileRouteTypes {
     | '/contato'
     | '/conteudos'
     | '/discursos'
+    | '/downloads'
     | '/entrevistas'
     | '/eventos'
     | '/links'
@@ -375,10 +407,12 @@ export interface FileRouteTypes {
     | '/entrevistas/$slug'
     | '/eventos/7-de-setembro-na-paulista'
     | '/imprensa/7-de-setembro'
+    | '/noticias/$slug'
     | '/contato/'
     | '/discursos/'
     | '/entrevistas/'
     | '/eventos/'
+    | '/noticias/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -389,12 +423,13 @@ export interface RootRouteChildren {
   ContatoRoute: typeof ContatoRouteWithChildren
   ConteudosRoute: typeof ConteudosRoute
   DiscursosRoute: typeof DiscursosRouteWithChildren
+  DownloadsRoute: typeof DownloadsRoute
   EntrevistasRoute: typeof EntrevistasRouteWithChildren
   EventosRoute: typeof EventosRouteWithChildren
   LinksRoute: typeof LinksRoute
   MapaDoSiteRoute: typeof MapaDoSiteRoute
   MidiaRoute: typeof MidiaRoute
-  NoticiasRoute: typeof NoticiasRoute
+  NoticiasRoute: typeof NoticiasRouteWithChildren
   NumerosRoute: typeof NumerosRoute
   PautasRoute: typeof PautasRoute
   PoliticaDeCookiesRoute: typeof PoliticaDeCookiesRoute
@@ -455,6 +490,13 @@ declare module '@tanstack/react-router' {
       path: '/discursos'
       fullPath: '/discursos'
       preLoaderRoute: typeof DiscursosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/downloads': {
+      id: '/downloads'
+      path: '/downloads'
+      fullPath: '/downloads'
+      preLoaderRoute: typeof DownloadsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/entrevistas': {
@@ -618,6 +660,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Imprensa7DeSetembroRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/noticias/': {
+      id: '/noticias/'
+      path: '/'
+      fullPath: '/noticias/'
+      preLoaderRoute: typeof NoticiasIndexRouteImport
+      parentRoute: typeof NoticiasRoute
+    }
+    '/noticias/$slug': {
+      id: '/noticias/$slug'
+      path: '/$slug'
+      fullPath: '/noticias/$slug'
+      preLoaderRoute: typeof NoticiasSlugRouteImport
+      parentRoute: typeof NoticiasRoute
+    }
   }
 }
 
@@ -676,6 +732,20 @@ const EventosRouteChildren: EventosRouteChildren = {
 const EventosRouteWithChildren =
   EventosRoute._addFileChildren(EventosRouteChildren)
 
+interface NoticiasRouteChildren {
+  NoticiasSlugRoute: typeof NoticiasSlugRoute
+  NoticiasIndexRoute: typeof NoticiasIndexRoute
+}
+
+const NoticiasRouteChildren: NoticiasRouteChildren = {
+  NoticiasSlugRoute: NoticiasSlugRoute,
+  NoticiasIndexRoute: NoticiasIndexRoute,
+}
+
+const NoticiasRouteWithChildren = NoticiasRoute._addFileChildren(
+  NoticiasRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgendaRoute: AgendaRoute,
@@ -684,12 +754,13 @@ const rootRouteChildren: RootRouteChildren = {
   ContatoRoute: ContatoRouteWithChildren,
   ConteudosRoute: ConteudosRoute,
   DiscursosRoute: DiscursosRouteWithChildren,
+  DownloadsRoute: DownloadsRoute,
   EntrevistasRoute: EntrevistasRouteWithChildren,
   EventosRoute: EventosRouteWithChildren,
   LinksRoute: LinksRoute,
   MapaDoSiteRoute: MapaDoSiteRoute,
   MidiaRoute: MidiaRoute,
-  NoticiasRoute: NoticiasRoute,
+  NoticiasRoute: NoticiasRouteWithChildren,
   NumerosRoute: NumerosRoute,
   PautasRoute: PautasRoute,
   PoliticaDeCookiesRoute: PoliticaDeCookiesRoute,
