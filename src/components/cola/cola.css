@@ -307,7 +307,9 @@ button.cola-card {
   width: 72px;
   height: 72px;
   border-radius: 16px;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  background: #f5f7fa;
 }
 
 .cola-photo-fallback {
@@ -331,11 +333,18 @@ button.cola-card {
   line-height: 1.5;
 }
 
+.cola-profile-photo-wrap {
+  display: grid;
+  place-items: center;
+}
+
 .cola-profile-photo {
-  width: 112px;
-  height: 112px;
+  width: 140px;
+  height: 140px;
   border-radius: 28px;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
+  background: #f5f7fa;
 }
 
 .cola-source {

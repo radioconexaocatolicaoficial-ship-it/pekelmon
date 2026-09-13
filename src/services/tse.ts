@@ -5,10 +5,16 @@ import {
   type PositionKey,
 } from "@/data/cola-candidates";
 
+function officeOrder(position: PositionKey) {
+  return POSITIONS.find((item) => item.key === position)?.order ?? 99;
+}
+
 /** Camada pronta para trocar dados de demonstração por fonte oficial do TSE. */
 export async function getCandidates(): Promise<Candidate[]> {
   return [...COLA_CANDIDATES].sort((a, b) => {
-    const byNumber = a.number.localeCompare(b.number, "pt-BR");
+    const byOffice = officeOrder(a.position) - officeOrder(b.position);
+    if (byOffice !== 0) return byOffice;
+    const byNumber = a.number.localeCompare(b.number, "pt-BR", { numeric: true });
     if (byNumber !== 0) return byNumber;
     return a.ballotName.localeCompare(b.ballotName, "pt-BR");
   });

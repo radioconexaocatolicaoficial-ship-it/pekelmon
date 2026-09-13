@@ -7,7 +7,6 @@ import {
   type Candidate,
   type PositionKey,
 } from "@/data/cola-candidates";
-import { answerCandidateQuestion, type AssistantReply } from "@/lib/cola-assistant";
 import {
   clearColaSelection,
   countColaProgress,
@@ -17,7 +16,6 @@ import {
 } from "@/lib/cola-store";
 import { downloadColaImage, generateColaImage, shareColaImage } from "@/lib/cola-image";
 import { getCandidates } from "@/services/tse";
-import { openWhatsApp } from "@/services/whatsapp";
 import { candidateInitials, formatColaDate, nextEmptyPosition, uniqueSorted } from "@/utils/cola";
 import colaLogo from "@/assets/minha-colinha-logo.png";
 
@@ -32,8 +30,7 @@ type ColaView =
   | "review"
   | "done"
   | "info"
-  | "compare"
-  | "ask";
+  | "compare";
 
 const STEPS = [
   "Escolha o cargo",
@@ -41,12 +38,6 @@ const STEPS = [
   "Escolha seus candidatos",
   "Monte sua cola",
   "Salve no celular",
-];
-
-const ASK_SUGGESTIONS = [
-  "Quais são os principais temas apresentados por este candidato?",
-  "Qual é a trajetória cadastrada?",
-  "Quais fontes oficiais estão registradas?",
 ];
 
 export function ColaApp() {
@@ -70,8 +61,6 @@ export function ColaApp() {
   const [lockPosition, setLockPosition] = useState(false);
   const [compareA, setCompareA] = useState("");
   const [compareB, setCompareB] = useState("");
-  const [askText, setAskText] = useState("");
-  const [askReply, setAskReply] = useState<AssistantReply | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [previewBlob, setPreviewBlob] = useState<Blob | null>(null);
   const [busy, setBusy] = useState(false);
@@ -160,8 +149,6 @@ export function ColaApp() {
 
   function openProfile(id: string) {
     setCurrentCandidateId(id);
-    setAskReply(null);
-    setAskText("");
     setView("profile");
   }
 
@@ -242,7 +229,7 @@ export function ColaApp() {
   }
 
   const navActive =
-    view === "candidates" || view === "profile" || view === "compare" || view === "ask"
+    view === "candidates" || view === "profile" || view === "compare"
       ? "candidates"
       : view === "cola" || view === "assemble" || view === "review" || view === "done"
         ? "cola"
@@ -290,7 +277,6 @@ export function ColaApp() {
             byId={byId}
             onAssemble={openAssemble}
             onCandidates={openAllCandidates}
-            onWhatsApp={() => openWhatsApp()}
           />
         )}
 
@@ -350,27 +336,6 @@ export function ColaApp() {
             selected={Object.values(selection).includes(currentCandidate.id)}
             onBack={() => setView("candidates")}
             onChoose={() => chooseCandidate(currentCandidate)}
-            onAsk={() => {
-              setAskReply(null);
-              setAskText("");
-              setView("ask");
-            }}
-            onWhatsApp={() =>
-              openWhatsApp(
-                `Quero conhecer ${currentCandidate.ballotName}, número ${currentCandidate.number}.`,
-              )
-            }
-          />
-        )}
-
-        {view === "ask" && currentCandidate && (
-          <AskScreen
-            candidate={currentCandidate}
-            question={askText}
-            reply={askReply}
-            onQuestion={setAskText}
-            onAsk={(text) => setAskReply(answerCandidateQuestion(currentCandidate, text))}
-            onBack={() => setView("profile")}
           />
         )}
 
@@ -484,13 +449,11 @@ function HomeScreen({
   byId,
   onAssemble,
   onCandidates,
-  onWhatsApp,
 }: {
   selection: ColaSelection;
   byId: CandidateMap;
   onAssemble: () => void;
   onCandidates: () => void;
-  onWhatsApp: () => void;
 }) {
   return (
     <div className="cola-screen">
@@ -510,9 +473,6 @@ function HomeScreen({
             </button>
             <button type="button" className="cola-btn cola-btn-secondary" onClick={onCandidates}>
               Conhecer os candidatos
-            </button>
-            <button type="button" className="cola-btn cola-btn-ghost" onClick={onWhatsApp}>
-              Conhecer pelo WhatsApp
             </button>
           </div>
         </div>
@@ -544,7 +504,7 @@ function HomeScreen({
           ))}
         </div>
         <p className="cola-note">
-          Os dados atuais são de demonstração e devem ser confirmados em fonte oficial do TSE.
+          As informações vêm de fontes públicas e devem ser confirmadas no TSE.
         </p>
       </section>
     </div>
@@ -657,7 +617,7 @@ function CandidatesScreen({
         Voltar
       </button>
       <h1>{title}</h1>
-      <p className="cola-note">Ordem neutra por número e nome. Sem ranking e sem recomendação.</p>
+      <p className="cola-note">Ordem dos cargos da urna. Sem ranking e sem recomendação.</p>
       <label className="sr-only" htmlFor="cola-search">
         Pesquisar candidato
       </label>
@@ -768,15 +728,11 @@ function ProfileScreen({
   selected,
   onBack,
   onChoose,
-  onAsk,
-  onWhatsApp,
 }: {
   candidate: Candidate;
   selected: boolean;
   onBack: () => void;
   onChoose: () => void;
-  onAsk: () => void;
-  onWhatsApp: () => void;
 }) {
   const position = POSITIONS.find((item) => item.key === candidate.position);
 
@@ -797,12 +753,6 @@ function ProfileScreen({
         <div className="cola-actions">
           <button type="button" className="cola-btn cola-btn-primary" onClick={onChoose}>
             {selected ? "Manter na cola" : "Escolher"}
-          </button>
-          <button type="button" className="cola-btn cola-btn-secondary" onClick={onAsk}>
-            Pergunte sobre o candidato
-          </button>
-          <button type="button" className="cola-btn cola-btn-ghost" onClick={onWhatsApp}>
-            Conhecer pelo WhatsApp
           </button>
         </div>
       </div>
@@ -841,61 +791,6 @@ function ProfileScreen({
         <p className="cola-note">Última atualização: {formatColaDate(candidate.updatedAt)}</p>
       </section>
     </article>
-  );
-}
-
-function AskScreen({
-  candidate,
-  question,
-  reply,
-  onQuestion,
-  onAsk,
-  onBack,
-}: {
-  candidate: Candidate;
-  question: string;
-  reply: AssistantReply | null;
-  onQuestion: (value: string) => void;
-  onAsk: (value: string) => void;
-  onBack: () => void;
-}) {
-  return (
-    <section className="cola-screen cola-section">
-      <button type="button" className="cola-back" onClick={onBack}>
-        Voltar
-      </button>
-      <h1>Pergunte sobre o candidato</h1>
-      <p className="cola-note">
-        As respostas usam só as fontes cadastradas. O sistema não recomenda voto.
-      </p>
-      <div className="cola-actions">
-        {ASK_SUGGESTIONS.map((item) => (
-          <button key={item} type="button" className="cola-chip" onClick={() => onQuestion(item)}>
-            {item}
-          </button>
-        ))}
-      </div>
-      <label htmlFor="cola-ask">Sua pergunta</label>
-      <textarea
-        id="cola-ask"
-        className="cola-ask"
-        value={question}
-        onChange={(event) => onQuestion(event.target.value)}
-      />
-      <div className="cola-actions">
-        <button type="button" className="cola-btn cola-btn-primary" onClick={() => onAsk(question)}>
-          Perguntar
-        </button>
-      </div>
-      {reply && (
-        <div className="cola-card">
-          <p>{reply.answer}</p>
-          <h2>Fontes utilizadas</h2>
-          <SourceList sources={reply.sources} />
-        </div>
-      )}
-      <p className="cola-note">{candidate.ballotName}</p>
-    </section>
   );
 }
 
@@ -1191,21 +1086,20 @@ function ProgressBlock({ progress }: { progress: number }) {
 function CandidatePhoto({ candidate, large }: { candidate: Candidate; large?: boolean }) {
   const [failed, setFailed] = useState(false);
   const className = large ? "cola-profile-photo" : "cola-photo";
-  if (!candidate.photo || failed) {
-    return (
+  const photo =
+    !candidate.photo || failed ? (
       <div className={large ? "cola-photo-fallback cola-profile-photo" : "cola-photo-fallback"} aria-hidden>
         {candidateInitials(candidate)}
       </div>
+    ) : (
+      <img
+        className={className}
+        src={candidate.photo}
+        alt={`Foto de ${candidate.ballotName}`}
+        onError={() => setFailed(true)}
+      />
     );
-  }
-  return (
-    <img
-      className={className}
-      src={candidate.photo}
-      alt={`Foto de ${candidate.ballotName}`}
-      onError={() => setFailed(true)}
-    />
-  );
+  return large ? <div className="cola-profile-photo-wrap">{photo}</div> : photo;
 }
 
 function SourceList({ sources }: { sources: Candidate["sources"] }) {
