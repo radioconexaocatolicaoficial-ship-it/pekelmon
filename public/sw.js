@@ -1,10 +1,14 @@
 /* Service Worker — Padre Kelmon PWA */
-const CACHE_VERSION = "kelmon-pwa-v5";
+const CACHE_VERSION = "kelmon-pwa-v6";
 const PRECACHE = [
   "/",
+  "/colinha",
   "/manifest.webmanifest",
+  "/cola-manifest.webmanifest",
   "/pwa-192.png",
   "/pwa-512.png",
+  "/cola-icon-192.png",
+  "/cola-icon-512.png",
   "/favicon-campanha.png",
   "/favicon.ico",
   "/apple-touch-icon.png",

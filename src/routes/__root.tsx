@@ -260,6 +260,8 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const locationHref = useRouterState({ select: (s) => s.location.href });
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isColaApp = pathname.startsWith("/colinha");
 
   // Hash (#cadastro) rola até o formulário; sem hash, cada aba abre no topo.
   useEffect(() => {
@@ -277,8 +279,8 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
-      <CnpjRail />
-      <MobileBottomNav />
+      {!isColaApp && <CnpjRail />}
+      {!isColaApp && <MobileBottomNav />}
       <CookieBanner />
       <PwaRegister />
       <Toaster position="top-center" richColors />

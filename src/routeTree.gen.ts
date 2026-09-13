@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AgendaRouteImport } from './routes/agenda'
 import { Route as BioRouteImport } from './routes/bio'
 import { Route as BiografiaRouteImport } from './routes/biografia'
+import { Route as ColinhaRouteImport } from './routes/colinha'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as ConteudosRouteImport } from './routes/conteudos'
 import { Route as DiscursosRouteImport } from './routes/discursos'
@@ -61,6 +62,11 @@ const BioRoute = BioRouteImport.update({
 const BiografiaRoute = BiografiaRouteImport.update({
   id: '/biografia',
   path: '/biografia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ColinhaRoute = ColinhaRouteImport.update({
+  id: '/colinha',
+  path: '/colinha',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContatoRoute = ContatoRouteImport.update({
@@ -216,6 +222,7 @@ export interface FileRoutesByFullPath {
   '/agenda': typeof AgendaRoute
   '/bio': typeof BioRoute
   '/biografia': typeof BiografiaRoute
+  '/colinha': typeof ColinhaRoute
   '/contato': typeof ContatoRouteWithChildren
   '/conteudos': typeof ConteudosRoute
   '/discursos': typeof DiscursosRouteWithChildren
@@ -251,6 +258,7 @@ export interface FileRoutesByTo {
   '/agenda': typeof AgendaRoute
   '/bio': typeof BioRoute
   '/biografia': typeof BiografiaRoute
+  '/colinha': typeof ColinhaRoute
   '/conteudos': typeof ConteudosRoute
   '/downloads': typeof DownloadsRoute
   '/links': typeof LinksRoute
@@ -282,6 +290,7 @@ export interface FileRoutesById {
   '/agenda': typeof AgendaRoute
   '/bio': typeof BioRoute
   '/biografia': typeof BiografiaRoute
+  '/colinha': typeof ColinhaRoute
   '/contato': typeof ContatoRouteWithChildren
   '/conteudos': typeof ConteudosRoute
   '/discursos': typeof DiscursosRouteWithChildren
@@ -319,6 +328,7 @@ export interface FileRouteTypes {
     | '/agenda'
     | '/bio'
     | '/biografia'
+    | '/colinha'
     | '/contato'
     | '/conteudos'
     | '/discursos'
@@ -354,6 +364,7 @@ export interface FileRouteTypes {
     | '/agenda'
     | '/bio'
     | '/biografia'
+    | '/colinha'
     | '/conteudos'
     | '/downloads'
     | '/links'
@@ -384,6 +395,7 @@ export interface FileRouteTypes {
     | '/agenda'
     | '/bio'
     | '/biografia'
+    | '/colinha'
     | '/contato'
     | '/conteudos'
     | '/discursos'
@@ -420,6 +432,7 @@ export interface RootRouteChildren {
   AgendaRoute: typeof AgendaRoute
   BioRoute: typeof BioRoute
   BiografiaRoute: typeof BiografiaRoute
+  ColinhaRoute: typeof ColinhaRoute
   ContatoRoute: typeof ContatoRouteWithChildren
   ConteudosRoute: typeof ConteudosRoute
   DiscursosRoute: typeof DiscursosRouteWithChildren
@@ -469,6 +482,13 @@ declare module '@tanstack/react-router' {
       path: '/biografia'
       fullPath: '/biografia'
       preLoaderRoute: typeof BiografiaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/colinha': {
+      id: '/colinha'
+      path: '/colinha'
+      fullPath: '/colinha'
+      preLoaderRoute: typeof ColinhaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contato': {
@@ -751,6 +771,7 @@ const rootRouteChildren: RootRouteChildren = {
   AgendaRoute: AgendaRoute,
   BioRoute: BioRoute,
   BiografiaRoute: BiografiaRoute,
+  ColinhaRoute: ColinhaRoute,
   ContatoRoute: ContatoRouteWithChildren,
   ConteudosRoute: ConteudosRoute,
   DiscursosRoute: DiscursosRouteWithChildren,

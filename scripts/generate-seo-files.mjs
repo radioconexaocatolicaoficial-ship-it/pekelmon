@@ -66,6 +66,7 @@ const pages = [
   { path: "/discursos", priority: "0.7" },
   { path: "/conteudos", priority: "0.6" },
   { path: "/mapa-do-site", priority: "0.6" },
+  { path: "/colinha", priority: "0.7" },
 ];
 
 const newsHrefs = extractQuoted(src("data", "site-news.ts"), "href").filter(

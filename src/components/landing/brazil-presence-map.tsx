@@ -24,8 +24,9 @@ export function BrazilPresenceMap() {
   const [hovered, setHovered] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
 
-  const selectedState = BRAZIL_STATE_PATHS.find((state) => state.uf === selected);
-  const selectedShift = selected ? (LABEL_SHIFT[selected] ?? { x: 0, y: 0 }) : { x: 0, y: 0 };
+  const activeUf = hovered ?? selected;
+  const activeState = BRAZIL_STATE_PATHS.find((state) => state.uf === activeUf);
+  const activeShift = activeUf ? (LABEL_SHIFT[activeUf] ?? { x: 0, y: 0 }) : { x: 0, y: 0 };
 
   return (
     <div className="brazil-presence-map relative mx-auto w-full">
@@ -90,12 +91,12 @@ export function BrazilPresenceMap() {
           })}
         </svg>
 
-        {selectedState ? (
+        {activeState ? (
           <div
             className="pointer-events-none absolute"
             style={{
-              left: `${((selectedState.cx + selectedShift.x) / 520) * 100}%`,
-              top: `${((selectedState.cy + selectedShift.y) / 500) * 100}%`,
+              left: `${((activeState.cx + activeShift.x) / 520) * 100}%`,
+              top: `${((activeState.cy + activeShift.y) / 500) * 100}%`,
               transform: "translate(-50%, -115%)",
               width: 132,
             }}
@@ -121,7 +122,7 @@ export function BrazilPresenceMap() {
           </p>
         ) : (
           <p className="text-center text-xs text-gray-500">
-            Clique em um estado para ver o Foro do Brasil
+            Passe o mouse ou clique em um estado para ver o Foro do Brasil
           </p>
         )}
         <div className="mt-2 flex flex-wrap items-center justify-center gap-4 text-xs font-semibold text-gray-600">

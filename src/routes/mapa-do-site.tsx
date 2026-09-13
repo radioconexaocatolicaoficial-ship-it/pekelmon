@@ -24,6 +24,7 @@ const HUBS = [
   { to: "/discursos", label: "Discursos" },
   { to: "/conteudos", label: "Conteúdos" },
   { to: "/downloads", label: "Downloads" },
+  { to: "/colinha", label: "Minha Cola 2026" },
   { to: "/links", label: "Redes sociais" },
   { to: "/contato", label: "Contato" },
   { to: "/saiba-mais", label: "Saiba mais" },

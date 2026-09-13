@@ -32,7 +32,7 @@ export function MobileBottomNav() {
     >
       <div
         ref={bottomNavRef}
-        className="mx-auto flex w-full max-w-md items-stretch justify-center gap-0.5 px-1.5 py-1"
+        className="mx-auto flex w-full max-w-lg items-stretch justify-center gap-0.5 px-1.5 py-1"
       >
         {NAV_LINKS.map((l) => {
           const Icon = l.icon;

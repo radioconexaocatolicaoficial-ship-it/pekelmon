@@ -250,6 +250,16 @@ export const PAGE_SEO = {
     schema: "article" as const,
     datePublished: "2026-09-07",
   },
+  colinha: {
+    path: "/colinha",
+    title: "Minha Cola 2026 | Organize sua cola eleitoral",
+    description:
+      "Conheça candidatos e organize sua cola eleitoral. Você escolhe. O sistema apenas organiza as informações.",
+    breadcrumbs: [
+      { name: "Início", path: "/" },
+      { name: "Minha Cola 2026", path: "/colinha" },
+    ] satisfies BreadcrumbItem[],
+  },
   downloads: {
     path: "/downloads",
     title: "Materiais de Campanha Padre Kelmon 2202 | Downloads",
