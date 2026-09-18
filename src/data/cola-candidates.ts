@@ -1,5 +1,5 @@
 import kelmonPhoto from "@/assets/padre-kelmon-original.jpg";
-import ninaPhoto from "@/assets/nina-braga.jpg";
+import ninaPhoto from "@/assets/nina-braga.png";
 
 export const COLA_LEGAL_LINE =
   "ELEICAO 2026 KELMON LUIS DA SILVA SOUZA DEPUTADO FEDERAL · CNPJ 68.353.198/0001-20 COLIGAÇÃO CORAGEM PARA SEGUIR AVANÇANDO (Republicanos + MDB + PL + Federação União Progressista (União Brasil / Progressistas) + PSD + Federação Renovação Solidária (Solidariedade / PRD) + Democrata + Avante)";
