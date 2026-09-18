@@ -295,7 +295,8 @@ button.cola-card {
   margin: 10px 0 14px;
 }
 
-.cola-candidate {
+.cola-candidate,
+.cola-slot {
   display: grid;
   grid-template-columns: 72px 1fr;
   gap: 12px;
@@ -478,8 +479,35 @@ button.cola-card {
   color: var(--cola-blue);
 }
 
+.cola-poster {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 10px;
+  width: min(420px, 100%);
+  margin: 22px 0 0;
+}
+
+.cola-legal-rail {
+  margin: 0;
+  flex: 0 0 auto;
+  align-self: stretch;
+  max-width: 3.6rem;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  text-align: left;
+  color: var(--cola-navy);
+  font-size: 7.2px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
 .cola-preview {
-  width: min(320px, 100%);
+  display: block;
+  width: 100%;
+  min-width: 0;
   border-radius: 18px;
   box-shadow: 0 16px 40px rgba(11, 31, 58, 0.18);
 }

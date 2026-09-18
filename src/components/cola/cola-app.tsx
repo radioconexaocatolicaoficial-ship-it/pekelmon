@@ -3,10 +3,12 @@ import { useEffect, useMemo, useState } from "react";
 
 import {
   COLA_DEMO_DISCLAIMER,
+  COLA_LEGAL_LINE,
   POSITIONS,
   type Candidate,
   type PositionKey,
 } from "@/data/cola-candidates";
+import colaOficial from "@/assets/colinha-oficial.jpg";
 import {
   clearColaSelection,
   countColaProgress,
@@ -897,20 +899,23 @@ function ColaScreen({
         {POSITIONS.map((item) => {
           const chosen = selection[item.key] ? byId[selection[item.key] as string] : null;
           return (
-            <div className="cola-card" key={item.key}>
-              <em>{item.label}</em>
-              {chosen ? (
-                <>
-                  <strong style={{ display: "block", fontSize: 28 }}>{chosen.number}</strong>
-                  <div>{chosen.ballotName}</div>
-                </>
-              ) : (
-                <p className="cola-empty">Não escolhido</p>
-              )}
-              <div className="cola-actions">
-                <button type="button" className="cola-btn cola-btn-secondary" onClick={() => onChange(item.key)}>
-                  {chosen ? "Alterar" : "Escolher candidato"}
-                </button>
+            <div className={chosen ? "cola-card cola-slot" : "cola-card"} key={item.key}>
+              {chosen && <CandidatePhoto candidate={chosen} />}
+              <div>
+                <em>{item.label}</em>
+                {chosen ? (
+                  <>
+                    <strong style={{ display: "block", fontSize: 28 }}>{chosen.number}</strong>
+                    <div>{chosen.ballotName}</div>
+                  </>
+                ) : (
+                  <p className="cola-empty">Não escolhido</p>
+                )}
+                <div className="cola-actions">
+                  <button type="button" className="cola-btn cola-btn-secondary" onClick={() => onChange(item.key)}>
+                    {chosen ? "Alterar" : "Escolher candidato"}
+                  </button>
+                </div>
               </div>
             </div>
           );
@@ -957,13 +962,16 @@ function ReviewScreen({
         {POSITIONS.map((item) => {
           const chosen = selection[item.key] ? byId[selection[item.key] as string] : null;
           return (
-            <div className="cola-card" key={item.key}>
-              <strong>{item.label.toUpperCase()}</strong>
-              <div style={{ fontSize: 32, fontWeight: 800 }}>{chosen?.number ?? "—"}</div>
-              <div>{chosen?.ballotName ?? "Não escolhido"}</div>
-              <button type="button" className="cola-btn cola-btn-ghost" onClick={() => onChange(item.key)}>
-                Alterar
-              </button>
+            <div className={chosen ? "cola-card cola-slot" : "cola-card"} key={item.key}>
+              {chosen && <CandidatePhoto candidate={chosen} />}
+              <div>
+                <strong>{item.label.toUpperCase()}</strong>
+                <div style={{ fontSize: 32, fontWeight: 800 }}>{chosen?.number ?? "—"}</div>
+                <div>{chosen?.ballotName ?? "Não escolhido"}</div>
+                <button type="button" className="cola-btn cola-btn-ghost" onClick={() => onChange(item.key)}>
+                  Alterar
+                </button>
+              </div>
             </div>
           );
         })}
@@ -973,6 +981,7 @@ function ReviewScreen({
           {busy ? "Gerando..." : "Gerar minha cola"}
         </button>
       </div>
+      <ColaPoster src={colaOficial} alt="Colinha 2026: candidatos da família Bolsonaro" />
     </section>
   );
 }
@@ -1008,8 +1017,8 @@ function DoneScreen({
           Voltar ao início
         </button>
       </div>
-      {previewUrl && (
-        <img className="cola-preview" src={previewUrl} alt="Prévia da Minha Cola 2026 gerada pelo eleitor" />
+      {(previewUrl || colaOficial) && (
+        <ColaPoster src={previewUrl ?? colaOficial} alt="Colinha 2026: candidatos da família Bolsonaro" />
       )}
     </section>
   );
@@ -1080,6 +1089,15 @@ function ProgressBlock({ progress }: { progress: number }) {
         <span style={{ width: `${(progress / 6) * 100}%` }} />
       </div>
     </div>
+  );
+}
+
+function ColaPoster({ src, alt }: { src: string; alt: string }) {
+  return (
+    <figure className="cola-poster">
+      <p className="cola-legal-rail">{COLA_LEGAL_LINE}</p>
+      <img className="cola-preview" src={src} alt={alt} />
+    </figure>
   );
 }
 

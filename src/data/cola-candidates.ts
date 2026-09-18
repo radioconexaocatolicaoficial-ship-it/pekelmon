@@ -1,4 +1,8 @@
 import kelmonPhoto from "@/assets/padre-kelmon-original.jpg";
+import ninaPhoto from "@/assets/nina-braga.jpg";
+
+export const COLA_LEGAL_LINE =
+  "ELEICAO 2026 KELMON LUIS DA SILVA SOUZA DEPUTADO FEDERAL · CNPJ 68.353.198/0001-20 COLIGAÇÃO CORAGEM PARA SEGUIR AVANÇANDO (Republicanos + MDB + PL + Federação União Progressista (União Brasil / Progressistas) + PSD + Federação Renovação Solidária (Solidariedade / PRD) + Democrata + Avante)";
 
 export const COLA_DEMO_DISCLAIMER =
   "DADO DE DEMONSTRAÇÃO — confirmar em fonte oficial.";
@@ -49,7 +53,7 @@ export const POSITIONS: PositionSlot[] = [
   {
     key: "estadual",
     order: 2,
-    label: "Deputado Estadual / Distrital",
+    label: "Deputada Estadual",
     shortLabel: "Dep. Estadual",
     digits: 5,
   },
@@ -115,42 +119,42 @@ export const COLA_CANDIDATES: Candidate[] = [
     demo: false,
   },
   {
-    id: "polegar-15084",
-    name: "Marcelo Aparecido Alves de Souza",
-    ballotName: "Marcelo Polegar",
-    number: "15084",
-    party: "MDB",
+    id: "nina-22090",
+    name: "Marina Pereira Braga",
+    ballotName: "Nina Braga",
+    number: "22090",
+    party: "PL",
     position: "estadual",
     state: "SP",
-    photo: "/news/marcelo-polegar.png",
+    photo: ninaPhoto,
     biography:
-      "Advogado, professor e comunicador. Candidato a Deputado Estadual por São Paulo pelo MDB, com o número 15084. Declarou ao TSE escolaridade superior completa, estado civil casado e a ocupação de advogado.",
+      "Vereadora de São Bernardo do Campo. Candidata a Deputada Estadual por São Paulo pelo Partido Liberal (PL), com o número 22090. Declarou ao TSE escolaridade superior completa, estado civil casada e a ocupação de vereadora.",
     trajectory:
-      "Nasceu em Santo André (SP), em 15 de julho de 1975. Ficou conhecido nacionalmente como integrante do Grupo Polegar. Formou-se em Direito e atua como advogado. É professor universitário, palestrante e apresenta o podcast Poder Sem Limites, com debates sobre cidadania, inclusão e empreendedorismo. Pai atípico, dedica-se à conscientização sobre o Transtorno do Espectro Autista e ao acolhimento de famílias. Em 2026, registrou candidatura à Assembleia Legislativa de São Paulo, com registro deferido em fichas públicas baseadas no TSE.",
+      "Nasceu em Belo Horizonte (MG), em 26 de fevereiro de 1986. É vereadora em São Bernardo do Campo pelo PL, eleita em 2024 com 4.707 votos. Aproxima-se da família Bolsonaro após 2022 e integrou o PL Mulher a convite de Michelle Bolsonaro. Em 2026, registrou candidatura à Assembleia Legislativa de São Paulo, com registro deferido em fichas públicas baseadas no TSE.",
     proposals: [
-      "Inclusão e direitos das pessoas com deficiência",
-      "Acolhimento de famílias atípicas",
+      "Proteção da infância e da família",
+      "Segurança pública",
       "Educação",
-      "Saúde",
-      "Fortalecimento das famílias",
+      "Liberdade de expressão",
+      "Combate às drogas",
     ],
     electoralInfo:
-      "Deputado Estadual por São Paulo, número 15084, MDB. Registro deferido, segundo fichas públicas com dados do TSE. Confirmar a situação atual no DivulgaCand.",
+      "Deputada Estadual por São Paulo, número 22090, PL. Registro deferido, segundo fichas públicas com dados do TSE. Confirmar a situação atual no DivulgaCand.",
     status: "Registro deferido, segundo fichas públicas com dados do TSE.",
     sources: [
       {
         name: "O TEMPO — ficha 2026 (dados TSE)",
-        url: "https://www.otempo.com.br/eleicoes/2026/candidatos/sao-paulo/deputado-estadual/marcelo-polegar-15084",
+        url: "https://www.otempo.com.br/eleicoes/2026/candidatos/sao-paulo/deputado-estadual/nina-braga-22090",
         consultedAt: CONSULTED,
       },
       {
         name: "Nexo — candidatos 2026",
-        url: "https://candidatos.nexojornal.com.br/2026/sp/marcelo-polegar-250002534233/",
+        url: "https://candidatos.nexojornal.com.br/2026/sp/nina-braga-250002536345/",
         consultedAt: CONSULTED,
       },
       {
-        name: "Ego Brazil — anúncio da candidatura",
-        url: "https://egobrazil.com.br/marcelo-polegar-ex-grupo-polegar-anuncia-novo-desafio-na-carreira-e-entra-para-a-politica/",
+        name: "Repórter Diário — pré-candidatura",
+        url: "https://www.reporterdiario.com.br/noticia/3863070/nina-braga-mira-alesp-e-diz-que-direita-do-abc-esta-sem-representacao/",
         consultedAt: CONSULTED,
       },
     ],

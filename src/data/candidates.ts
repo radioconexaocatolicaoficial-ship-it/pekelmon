@@ -2,6 +2,7 @@
 export {
   COLA_CANDIDATES as candidates,
   COLA_DEMO_DISCLAIMER,
+  COLA_LEGAL_LINE,
   EMPTY_SELECTION,
   POSITIONS,
 } from "./cola-candidates";
