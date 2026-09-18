@@ -19,12 +19,23 @@ export async function generateColaImage(
   const img = await loadImage(colaOficial);
   if (!img) throw new Error("Não foi possível gerar a imagem");
 
+  const W = 1080;
+  const H = 1920;
   const canvas = document.createElement("canvas");
-  canvas.width = img.naturalWidth;
-  canvas.height = img.naturalHeight;
+  canvas.width = W;
+  canvas.height = H;
   const ctx = canvas.getContext("2d");
   if (!ctx) throw new Error("Canvas indisponível");
-  ctx.drawImage(img, 0, 0);
+
+  ctx.fillStyle = "#0050b8";
+  ctx.fillRect(0, 0, W, H);
+
+  const scale = Math.min(W / img.naturalWidth, H / img.naturalHeight);
+  const dw = img.naturalWidth * scale;
+  const dh = img.naturalHeight * scale;
+  const dx = (W - dw) / 2;
+  const dy = (H - dh) / 2;
+  ctx.drawImage(img, dx, dy, dw, dh);
 
   return new Promise<Blob>((resolve, reject) => {
     canvas.toBlob((blob) => {

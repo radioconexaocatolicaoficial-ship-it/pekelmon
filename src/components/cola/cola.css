@@ -480,36 +480,20 @@ button.cola-card {
 }
 
 .cola-poster {
-  display: flex;
-  align-items: stretch;
-  justify-content: flex-start;
-  gap: 10px;
-  width: min(420px, 100%);
+  width: min(360px, 100%);
   margin: 22px 0 0;
-}
-
-.cola-legal-rail {
-  margin: 0;
-  flex: 0 0 auto;
-  align-self: stretch;
-  max-width: 3.6rem;
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  text-align: left;
-  color: var(--cola-navy);
-  font-size: 7.2px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  line-height: 1.35;
-  text-transform: uppercase;
 }
 
 .cola-preview {
   display: block;
   width: 100%;
-  min-width: 0;
+  height: auto;
+  aspect-ratio: 1080 / 1920;
+  object-fit: contain;
+  object-position: center;
   border-radius: 18px;
   box-shadow: 0 16px 40px rgba(11, 31, 58, 0.18);
+  background: #0050b8;
 }
 
 .cola-ask {

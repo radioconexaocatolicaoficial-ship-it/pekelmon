@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 
 import {
   COLA_DEMO_DISCLAIMER,
-  COLA_LEGAL_LINE,
   POSITIONS,
   type Candidate,
   type PositionKey,
@@ -1095,8 +1094,7 @@ function ProgressBlock({ progress }: { progress: number }) {
 function ColaPoster({ src, alt }: { src: string; alt: string }) {
   return (
     <figure className="cola-poster">
-      <p className="cola-legal-rail">{COLA_LEGAL_LINE}</p>
-      <img className="cola-preview" src={src} alt={alt} />
+      <img className="cola-preview" src={src} alt={alt} width={1080} height={1920} />
     </figure>
   );
 }
